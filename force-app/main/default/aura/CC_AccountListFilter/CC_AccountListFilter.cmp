@@ -1,0 +1,61 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute
+    name="filterButtonLabel"
+    type="string"
+    default="Use Filter(s)"
+  />
+  <aura:attribute name="showFilters" type="boolean" default="false" />
+  <aura:attribute name="showUseFilters" type="boolean" default="true" />
+  <aura:attribute name="showSortBy" type="boolean" default="true" />
+  <aura:attribute name="sortByList" type="List" />
+  <aura:attribute name="cvifId" type="string" />
+  <aura:attribute name="parentCvifId" type="string" />
+  <aura:attribute name="accountOwner" type="string" />
+  <aura:attribute name="salesRepRegions" type="string" />
+  <aura:attribute name="accountTypes" type="List" />
+  <aura:attribute name="accountType" type="string" />
+  <aura:attribute name="searchRegion" type="string" />
+  <aura:attribute name="searchAccountId" type="String" />
+  <aura:attribute name="searchparentAccountId" type="String" />
+  <aura:attribute name="searchAccountName" type="String" />
+  <aura:attribute name="searchparentAccountName" type="String" />
+
+  <aura:registerEvent name="sortEvent" type="c:CC_SortByEvt" />
+
+  <div class="filter-header block-view">
+    <aura:if isTrue="{!v.showUseFilters}">
+      <lightning:button
+        label="{!v.filterButtonLabel}"
+        iconName="utility:filterList"
+        onclick="{! c.handleUseFilter}"
+        class="use-filter-button"
+      />
+    </aura:if>
+    <aura:if isTrue="{!v.showSortBy}">
+      <select class="sort-filter-select pull-left" onchange="{!c.handleSort}">
+        <option>Sort By</option>
+        <aura:iteration items="{!v.sortByList}" var="item">
+          <option value="{!item.value}">{!item.label}</option>
+        </aura:iteration>
+      </select>
+    </aura:if>
+  </div>
+  <aura:if isTrue="{!v.showFilters}">
+    <c:CC_AccountListFilterFields
+      cvifId="{!v.cvifId}"
+      parentCvifId="{!v.parentCvifId}"
+      accountOwner="{!v.accountOwner}"
+      salesRepRegions="{!v.salesRepRegions}"
+      accountTypes="{!v.accountTypes}"
+      accountType="{!v.accountType}"
+      searchRegion="{!v.searchRegion}"
+      searchAccountId="{!v.searchAccountId}"
+      searchparentAccountId="{!v.searchparentAccountId}"
+      searchAccountName="{!v.searchAccountName}"
+      searchparentAccountName="{!v.searchparentAccountName}"
+    />
+  </aura:if>
+</aura:component>

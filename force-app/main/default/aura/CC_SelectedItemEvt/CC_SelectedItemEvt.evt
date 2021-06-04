@@ -1,0 +1,10 @@
+<aura:event type="COMPONENT" description="By this event we are passing the selected Item in the parent component" >
+	<aura:attribute name="selectedItem" type="String"/>
+    <aura:attribute name="selectedItemID" type="String"/>
+    <aura:attribute name="selectedObjLabel" type="String" />
+    <aura:attribute name="index" type="String" />
+    <aura:attribute name="functionality" type="String" />
+    <aura:attribute name="accountType" type="String" />
+    <aura:attribute name="selectedObj" type="Location__c" default="{}" />
+    <aura:attribute name="selectedFlag" type="String" />
+</aura:event>

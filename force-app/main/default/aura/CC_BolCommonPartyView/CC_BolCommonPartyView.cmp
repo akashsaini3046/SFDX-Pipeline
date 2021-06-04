@@ -1,0 +1,111 @@
+<aura:component controller="BOLEditController">
+  <aura:attribute name="data" type="object" />
+  <aura:attribute name="header" type="string" />
+
+  <div class="cr_shadow">
+    <h6 class="bold">{!v.header}</h6>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <div>
+          <span class="bol-view-labels">Reference Number :</span>
+          <b class="bol-view-values">
+            <aura:iteration
+              items="{!v.data.referenceNumbers}"
+              var="refNumber"
+              indexVar="index"
+            >
+              {!(refNumber.strRefNumber ? refNumber.strRefNumber : 'NA' )}<br />
+            </aura:iteration>
+
+            <aura:if
+              isTrue="{!or(v.data.referenceNumbers.length == 0, v.data.referenceNumbers.length == 'undefined')}"
+            >
+              NA<br />
+            </aura:if>
+          </b>
+        </div>
+
+        <div>
+          <span class="bol-view-labels">Name :</span>
+          <b class="bol-view-values"
+            >{!((empty(v.data.name) || (v.data.name == null)) ? 'NA' :
+            v.data.name)}</b
+          >
+        </div>
+        <div>
+          <span class="bol-view-labels">Complete Address :</span>
+          <b class="bol-view-values"
+            >{!((empty(v.data.addressLine1) || (v.data.addressLine1 == null)) ?
+            'NA' : v.data.addressLine1)} <br />{!v.data.addressLine2}
+            <br />{!v.data.addressLine3} <br />{!v.data.addressLine4}</b
+          >
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <aura:if isTrue="{!v.header == 'Consignee'}">
+          <div>
+            <span class="bol-view-labels">Destination Tax ID :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.destinationTaxIdType) ||
+              (v.data.destinationTaxIdType == null)) ? '' :
+              v.data.destinationTaxIdType+'- ')}
+              {!v.data.destinationTaxIdNumber}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">Registration ID :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.registrationId) || (v.data.registrationId ==
+              null)) ? 'NA' : v.data.registrationId)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">Tax ID Number :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.taxIdNumber) || (v.data.taxIdNumber == null)) ?
+              'NA' : v.data.taxIdNumber)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">EIN/ SS Number :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.EINSSNumber) || (v.data.EINSSNumber == null)) ?
+              'NA' : v.data.EINSSNumber)}</b
+            >
+          </div>
+        </aura:if>
+        <aura:if isTrue="{!v.header == 'Forwarding Agent'}">
+          <div>
+            <span class="bol-view-labels">FMC Number :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.FMCNumber) || (v.data.FMCNumber == null)) ? 'NA'
+              : v.data.FMCNumber)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">CHB Number :</span>
+            <b class="bol-view-values"
+              >{!((empty(v.data.CHBNumber) || (v.data.CHBNumber == null)) ? 'NA'
+              : v.data.CHBNumber)}</b
+            >
+          </div>
+        </aura:if>
+        <div>
+          <span class="bol-view-labels">Email ID :</span>
+          <b class="bol-view-values word-break-all"
+            >{!((empty(v.data.email) || (v.data.email == null)) ? 'NA' :
+            v.data.email)}</b
+          >
+        </div>
+        <div>
+          <span class="bol-view-labels">Phone Number :</span>
+          <b class="bol-view-values"
+            >{!((empty(v.data.phone) || (v.data.phone == null)) ? 'NA' :
+            v.data.phone)}</b
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

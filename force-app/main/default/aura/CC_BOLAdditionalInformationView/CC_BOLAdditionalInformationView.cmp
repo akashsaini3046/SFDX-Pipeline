@@ -1,0 +1,120 @@
+<aura:component>
+  <aura:attribute
+    name="data"
+    type="object"
+    default='{"additionalInformation":{}}'
+  />
+  <aura:attribute name="header" type="string" />
+
+  <div class="cr_shadow">
+    <h6 class="bold">{!v.header}</h6>
+    <hr />
+
+    <table class="rate-det-tbl">
+      <tr class="view-additionl-info-tbl">
+        <td>Document Type</td>
+        <td>Freighted</td>
+        <td>Print Cargo</td>
+        <td>Prnt Excl Charg</td>
+        <td>Prnt INB NBR</td>
+        <td>Letter Of Credit</td>
+        <td>Prnt ISS Date</td>
+        <td>Print Relays</td>
+        <td>Print Move Type</td>
+      </tr>
+      <tr>
+        <td>
+          <aura:if isTrue="{!v.data.boolOriginalBillOfLading}">
+            <div><b>ORIGINAL BILL OF LADING</b></div>
+          </aura:if>
+          <aura:if isTrue="{!v.data.boolWayBill}">
+            <div><b>WAYBILL</b></div>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="{!v.data.boolFreighted}">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="{!v.data.boolPrintCargo}">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="{!v.data.boolPrintExclCharge}">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="{!v.data.boolPrintInbNumber}">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="{!v.data.boolLetterOfCredit}">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+        <td>
+          <aura:if isTrue="">
+            <div><b>Yes</b></div>
+            <aura:set attribute="else">
+              <div><b>No</b></div>
+            </aura:set>
+          </aura:if>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <span class="bol-view-labels">Comments :</span>
+          <b class="bol-view-values">{!v.data.comments}</b>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <span class="bol-view-labels">Release Instructions :</span>
+          <b class="bol-view-values">{!v.data.releaseInstructions}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

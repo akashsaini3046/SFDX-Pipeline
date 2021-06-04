@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>A_new_address_record_is_created</fullName>
+        <ccEmails>Data_Governance@Crowley.com</ccEmails>
+        <description>A new address record is created</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_Business_Location_Created</template>
+    </alerts>
+    <alerts>
+        <fullName>Address_Updated_Email_Alert</fullName>
+        <ccEmails>Data_Governance@Crowley.com</ccEmails>
+        <description>Address Updated Email Alert</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_Business_Location_Updated</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>BL_Record_Type_CDM_Updated</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>CDM_Updated</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>BL Record Type - CDM Updated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>BL_Record_Type_Edit_Record</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Edit_Record</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>BL Record Type - Edit Record</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>BL Record Type - CDM Updated</fullName>
+        <actions>
+            <name>BL_Record_Type_CDM_Updated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Address__c.CDM_Location_Id__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Address__c.CVIF_Location_Id__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>BL Record Type - Edit Record</fullName>
+        <actions>
+            <name>BL_Record_Type_Edit_Record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Address__c.CDM_Location_Id__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Address__c.CVIF_Location_Id__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Governance Team - Address Created</fullName>
+        <actions>
+            <name>A_new_address_record_is_created</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+	NOT(Created_from_Lead_Conversion__c),
+	NOT(CONTAINS($Profile.Name , &apos;Data Steward&apos;)),
+	NOT(CONTAINS($Profile.Name , &apos;Integration User&apos;)),
+	NOT(ISPICKVAL(Account_Type__c , &apos;Prospect&apos;))
+)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Governance Team - Address Updated</fullName>
+        <actions>
+            <name>Address_Updated_Email_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( 	NOT(ISNEW()), NOT(ISCHANGED(OwnerId)), 	NOT(CONTAINS( $Profile.Name , &apos;Data Steward&apos;)), 	NOT(ISPICKVAL( Account_Type__c , &apos;Prospect&apos;) ), 	NOT(CONTAINS( $Profile.Name , &apos;Integration User&apos;)), 	OR( 		ISCHANGED(Account__c),         ISCHANGED(CDM_Location_Id__c), 		ISCHANGED(CVIF_Location_Id__c),  ISCHANGED(Active__c),                        		ISCHANGED(Address_Line_1__c), 		ISCHANGED(Account_Type__c), 		ISCHANGED(LocationType__c), 		ISCHANGED(Address_Line_2__c), 		ISCHANGED(Address_Line_3__c), 		ISCHANGED(City__c), 		ISCHANGED(Country__c), 		ISCHANGED(State_Picklist__c), 		ISCHANGED(Postal_Code__c), 		ISCHANGED(Fax__c) 	) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,45 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="routeRecord" type="string" />
+  <aura:attribute name="scheduleItems" type="List" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler name="change" value="{!v.routeRecord}" action="{!c.doInit}" />
+  <aura:if isTrue="{!not(empty(v.scheduleItems))}">
+    <aura:iteration items="{!v.scheduleItems}" var="schItem" indexVar="index">
+      <div class="schedules-table">
+        <h4>{!$Label.c.CC_VC_RouteDet_Sch_Schedule}&nbsp;{!index + 1}</h4>
+        <div class="schedules-table-container">
+          <div class="row">
+            <div class="col-7">
+              <div class="row">
+                <div class="col-5 text-center">
+                  <b>{!$Label.c.CC_VC_RouteDet_Sch_Departure} </b>
+                  <br /><span>{!schItem.departureDate} </span>
+                </div>
+                <div class="col-2 text-center">-</div>
+                <div class="col-5 text-center">
+                  <b>{!$Label.c.CC_VC_RouteDet_Sch_Arrival}</b>
+                  <br /><span>{!schItem.arrivalDate}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 text-center">
+              <b>{!$Label.c.CC_VC_RouteDet_Sch_Transit_Time} </b> <br />
+              <aura:if isTrue="{!schItem.transitTime > 0}"
+                >{!schItem.transitTime}&nbsp;{!$Label.c.CC_VC_RouteDet_Sch_Day}{!if(schItem.transitTime
+                > 1 , 's', '')}&nbsp;</aura:if
+              >
+              <aura:if isTrue="{!schItem.transitTimeHrs > 0}"
+                >{!schItem.transitTimeHrs}&nbsp;{!$Label.c.CC_VC_RouteDet_Sch_Hrs}{!if(schItem.transitTimeHrs
+                > 1 , 's', '')}</aura:if
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </aura:iteration>
+  </aura:if>
+</aura:component>

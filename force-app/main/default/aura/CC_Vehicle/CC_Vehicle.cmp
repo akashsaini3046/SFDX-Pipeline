@@ -1,0 +1,966 @@
+<aura:component controller="CC_CargoController">
+  <aura:attribute name="screen" type="String" default="CreateBooking" />
+  <aura:attribute name="measureFT_M" type="String" default="ft" />
+  <aura:attribute name="measureIN_CM" type="String" default="in" />
+  <aura:attribute name="weightUnit" type="String" default="lb" />
+  <aura:attribute name="unitMeasure" type="Boolean" default="false" />
+  <aura:attribute name="cargoList" type="CC_BookingWrapper.CargoWrapper[]" />
+  <aura:attribute name="listVehicles" type="List" />
+  <aura:attribute name="sizeVehicle" type="Integer" default="1" />
+  <aura:attribute name="listManufacture" type="List" />
+  <aura:attribute name="errorMsg" type="String" default="" />
+  <aura:attribute name="modelData" type="List" default="[]" />
+  <aura:attribute name="yearData" type="List" default="[]" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+  <aura:attribute name="lstMarineCargoInsur" type="List" />
+  <aura:attribute name="vehicleCommodities" type="List" />
+  <aura:attribute name="commodityOptions" type="List" default="[]" />
+  <aura:attribute name="commodityTypes" type="List" default="[]" />
+  <aura:attribute name="commodityCode" type="String" default="" />
+  <aura:attribute name="commodityName" type="String" default="" />
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute
+    name="displayContractedCommodity"
+    type="Boolean"
+    default="false"
+  />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:registerEvent name="cmpEvent" type="c:CC_QuoteEvt" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+
+  <aura:if isTrue="{!v.errorMsg !=''}">
+    <div class="error-message">{!v.errorMsg}</div>
+  </aura:if>
+
+  <aura:if isTrue="{!v.screen != 'CreateBooking'}">
+    <aura:iteration
+      items="{!v.cargoList[0].listFreightDetailWrapper}"
+      var="vehicle"
+      indexVar="index"
+    >
+      <div>
+        <div class="row">
+          <div class="col-sm-2 grey-bg-search">
+            <lightning:select
+              label="Type of Vehicle"
+              name="{!index}"
+              aura:id="selectId"
+              onchange="{!c.getManufacturer}"
+              required="true"
+              value="{!vehicle.typeOfPackage}"
+            >
+              <option value="" disabled="true" selected="true" hidden="true">
+                Select Type
+              </option>
+              <!--Edit:001-->
+              <!--option value="">Select type</option-->
+              <option value="CVEH">Commercial</option>
+              <option value="PVEH">Passenger</option>
+            </lightning:select>
+          </div>
+          <aura:if isTrue="{!v.isPostLogin}">
+            <div class="col-sm-2 without-label">
+              <label
+                ><span class="slds-required">*</span>Commodity Type
+                <lightning:helptext
+                  content="Select Vehicle Commodity."
+                  class="nor-icon"
+                /> </label
+              ><br />
+              <c:CC_CustomSelectBoxCmp
+                aura:id="commodityTypesId"
+                index="{!index}"
+                infoText="{!vehicle.commodityDesc}"
+                containerCode="{!vehicle.commodityCode}"
+                options="{!v.commodityOptions}"
+                isRequired="true"
+                functionality="Container:Size_Type"
+              />
+            </div>
+          </aura:if>
+          <div class="col-sm-2 grey-bg-search">
+            <lightning:select
+              label="Year"
+              required="true"
+              aura:id="selectId"
+              value="{!vehicle.freightDetail.Year__c}"
+            >
+              <option value="">Select Year</option>
+              <aura:iteration items="{!v.yearData}" var="year">
+                <option
+                  value="{!year.value}"
+                  selected="{!vehicle.freightDetail.Year__c==year.value}"
+                >
+                  {!year.label}
+                </option>
+              </aura:iteration>
+            </lightning:select>
+          </div>
+          <div class="col-sm-2 grey-bg-search">
+            <lightning:select
+              label="Manufacturer"
+              name="{!index}"
+              aura:id="selectId"
+              onchange="{!c.getModel}"
+              required="true"
+              value="{!vehicle.freightDetail.Manufacturer__c}"
+            >
+              <aura:if isTrue="{!vehicle.typeOfPackage=='PVEH'}">
+                <option value="" disabled="true" selected="true" hidden="true">
+                  Select Manufacturer
+                </option>
+                <!--Edit:001-->
+                <!--option value="">Select manufacturer</option-->
+                <aura:iteration items="{!v.listManufacture}" var="manufacture">
+                  <option
+                    value="{!manufacture}"
+                    selected="{!vehicle.freightDetail.Manufacturer__c == manufacture}"
+                  >
+                    {!manufacture}
+                  </option>
+                </aura:iteration>
+                <option value="other">Others</option>
+              </aura:if>
+              <aura:if isTrue="{!vehicle.typeOfPackage=='CVEH'}">
+                <option value="other">Others</option>
+              </aura:if>
+            </lightning:select>
+          </div>
+          <div class="col-sm-2 grey-bg-search">
+            <lightning:select
+              label="Model"
+              required="true"
+              aura:id="selectId"
+              value="{!vehicle.freightDetail.Model__c}"
+              name="{!index}"
+              onchange="{!c.populateVehicleDetail}"
+            >
+              <aura:if
+                isTrue="{!and(vehicle.typeOfPackage=='PVEH',vehicle.freightDetail.Manufacturer__c!='other')}"
+              >
+                <option value="" disabled="true" selected="true" hidden="true">
+                  Select Model
+                </option>
+                <!--Edit:001-->
+                <!--option value="">Select Model</option-->
+                <aura:iteration
+                  items="{!v.modelData}"
+                  var="modelData"
+                  indexVar="key"
+                >
+                  <aura:if isTrue="{!index==key}">
+                    <aura:iteration items="{!modelData}" var="model">
+                      <option value="{!model.Model__c}">
+                        {!model.Model_Name__c}
+                      </option>
+                    </aura:iteration>
+                    <option value="other">Others</option>
+                  </aura:if>
+                </aura:iteration>
+              </aura:if>
+              <aura:if
+                isTrue="{!vehicle.freightDetail.Manufacturer__c=='other'}"
+              >
+                <option value="other">Others</option>
+              </aura:if>
+            </lightning:select>
+          </div>
+          <div class="col-sm-1 grey-bg-search">
+            <lightning:input
+              type="number"
+              label="Quantity"
+              aura:id="inputFieldId"
+              placeholder=""
+              required="true"
+              value="{!vehicle.freightDetail.Freight_Quantity__c}"
+              pattern="[0-9]*"
+              messageWhenPatternMismatch="Please enter whole number"
+              min="1"
+              maxlength="3"
+            />
+          </div>
+          <div class="col-sm-1">
+            <label class="block-view">&nbsp;</label>
+            <aura:if isTrue="{!index!=0}">
+              <a
+                href=""
+                id="{!index}"
+                class="removeButton"
+                onclick="{!c.removeItem}"
+                >- Remove</a
+              >
+            </aura:if>
+          </div>
+
+          <aura:if isTrue="{!vehicle.freightDetail.Model__c!=''}">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <lightning:input
+                    type="number"
+                    label="Length"
+                    value="{!vehicle.freightDetail.Length_Major__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="2"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can be not greater than 25' : 'Value can not be greater than 83'}"
+                  />
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">ft</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">m</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <label></label>
+                  <aura:if isTrue="{!vehicle.freightDetail.Length_Major__c>0}">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Length_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="3"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                    />
+
+                    <aura:set attribute="else">
+                      <lightning:input
+                        type="number"
+                        label=""
+                        value="{!vehicle.freightDetail.Length_Minor__c}"
+                        name="{!index}"
+                        aura:id="inputFieldId"
+                        disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                        pattern="[0-9]*"
+                        messageWhenPatternMismatch="Please enter whole number"
+                        maxlength="4"
+                        max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                        messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                      />
+                    </aura:set>
+                  </aura:if>
+
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">in</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">cm</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <lightning:input
+                    type="number"
+                    label="Width"
+                    value="{!vehicle.freightDetail.Width_Major__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="2"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can be not greater than 83'}"
+                  />
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">ft</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">m</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <label></label>
+                  <aura:if isTrue="{!vehicle.freightDetail.Width_Major__c>0}">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Width_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="3"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                    />
+
+                    <aura:set attribute="else">
+                      <lightning:input
+                        type="number"
+                        label=""
+                        value="{!vehicle.freightDetail.Width_Minor__c}"
+                        name="{!index}"
+                        aura:id="inputFieldId"
+                        disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                        pattern="[0-9]*"
+                        messageWhenPatternMismatch="Please enter whole number"
+                        maxlength="4"
+                        max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                        messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                      />
+                    </aura:set>
+                  </aura:if>
+
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">in</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">cm</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <lightning:input
+                    type="number"
+                    label="Height"
+                    value="{!vehicle.freightDetail.Height_Major__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="2"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can not be greater than 83'}"
+                  />
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">ft</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">m</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 measurement-unit-col">
+                  <label></label>
+                  <aura:if isTrue="{!vehicle.freightDetail.Height_Major__c>0}">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Height_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="3"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                    />
+
+                    <aura:set attribute="else">
+                      <lightning:input
+                        type="number"
+                        label=""
+                        value="{!vehicle.freightDetail.Height_Minor__c}"
+                        name="{!index}"
+                        aura:id="inputFieldId"
+                        disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                        pattern="[0-9]*"
+                        messageWhenPatternMismatch="Please enter whole number"
+                        maxlength="4"
+                        max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                        messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                      />
+                    </aura:set>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">in</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">cm</span>
+                  </aura:if>
+                </div>
+                <!--div class="col-sm-2 grey-bg-search">
+                        <lightning:input type="number" label="{!'Weight (in '+v.weightUnit+')'}" value="{!vehicle.freightDetail.Declared_Weight_Value__c}" disabled="{!(vehicle.freightDetail.Model__c!='other')}"/>
+                    </div-->
+                <div class="col-sm-2 col-6 measurement-unit-col">
+                  <lightning:input
+                    type="number"
+                    label="Weight"
+                    placeholder=""
+                    required="true"
+                    aura:id="inputFieldId"
+                    value="{!vehicle.freightDetail.Declared_Weight_Value__c}"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    maxlength="5"
+                    min="1"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '36288' : '80000'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 36,288' : 'Value can not be greater than 80,000'}"
+                  />
+                  <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                    <span class="measurement-unit">lb</span>
+                  </aura:if>
+                  <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                    <span class="measurement-unit">kg</span>
+                  </aura:if>
+                </div>
+                <div class="col-sm-1 col-6 without-label">
+                  <!--<label class="no-wrap">lb/ft - kg/m</label>
+                        <lightning:input styleclass="toggleCls" type="toggle"  name="{!index}"
+                        messageToggleActive="kg/m" messageToggleInactive="lb/ft" onchange="{!c.getUnitOfMeasure}" checked="{!(vehicle.measureUnit=='kg/m')}" disabled="{!(vehicle.freightDetail.Model__c!='other')}"/>
+                        -->
+                  <label class="no-wrap"></label><br />
+                  <lightning:buttonGroup>
+                    <lightning:button
+                      name="{!index}"
+                      variant="{!(vehicle.measureUnit=='lb/ft') ? 'brand' : 'brand-outline'}"
+                      label="lb/ft"
+                      onclick="{!c.setUnitLBFT}"
+                    />
+                    <lightning:button
+                      name="{!index}"
+                      variant="{!(vehicle.measureUnit=='kg/m') ? 'brand' : 'brand-outline'}"
+                      label="kg/m"
+                      onclick="{!c.setUnitKGM}"
+                    />
+                  </lightning:buttonGroup>
+                </div>
+              </div>
+            </div>
+          </aura:if>
+          <aura:if
+            isTrue="{!or(vehicle.freightDetail.Manufacturer__c == 'other',vehicle.freightDetail.Model__c == 'other')}"
+          >
+            <div class="col-sm-11 grey-bg-search">
+              <lightning:textarea
+                label="Description"
+                placeholder="{!$Label.c.CC_VehicleDescription}"
+                value="{!vehicle.freightDetail.Description__c}"
+                maxlength="500"
+              />
+            </div>
+          </aura:if>
+        </div>
+        <!--Optional Services Section: START-->
+        <div class="row">
+          <c:CC_OptionalServices
+            aura:id="optionalServiceComp"
+            index="{!index}"
+            masterObjServices="{!vehicle.freightDetail}"
+            lstMarineCargoInsur="{!v.lstMarineCargoInsur}"
+          />
+        </div>
+        <!--Optional Services Section: END-->
+        <div class="separator-line"></div>
+      </div>
+    </aura:iteration>
+    <!--For Booking Screen-->
+    <aura:set attribute="else">
+      <aura:iteration
+        items="{!v.cargoList[0].listFreightDetailWrapper}"
+        var="vehicle"
+        indexVar="index"
+      >
+        <div>
+          <div class="row">
+            <div class="col-sm-2 grey-bg-search">
+              <lightning:select
+                label="Type of Vehicle"
+                name="{!index}"
+                aura:id="selectId"
+                onchange="{!c.getManufacturer}"
+                required="true"
+                value="{!vehicle.typeOfPackage}"
+              >
+                <option value="" disabled="true" selected="true" hidden="true">
+                  Select Type
+                </option>
+                <!--Edit:001-->
+                <option value="CVEH">Commercial</option>
+                <option value="PVEH">Passenger</option>
+              </lightning:select>
+            </div>
+            <div class="col-sm-2 grey-bg-search">
+              <lightning:select
+                label="Manufacturer"
+                name="{!index}"
+                aura:id="selectId"
+                onchange="{!c.getModel}"
+                required="true"
+                value="{!vehicle.freightDetail.Manufacturer__c}"
+              >
+                <aura:if isTrue="{!vehicle.typeOfPackage=='PVEH'}">
+                  <option
+                    value=""
+                    disabled="true"
+                    selected="true"
+                    hidden="true"
+                  >
+                    Select Manufacturer
+                  </option>
+                  <!--Edit:001-->
+                  <!--option value="">Select Manufacturer</option-->
+                  <aura:iteration
+                    items="{!v.listManufacture}"
+                    var="manufacture"
+                  >
+                    <option
+                      value="{!manufacture}"
+                      selected="{!vehicle.freightDetail.Manufacturer__c == manufacture}"
+                    >
+                      {!manufacture}
+                    </option>
+                  </aura:iteration>
+                  <option value="other">Others</option>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.typeOfPackage=='CVEH'}">
+                  <option value="other">Others</option>
+                </aura:if>
+              </lightning:select>
+            </div>
+            <div class="col-sm-2 grey-bg-search">
+              <lightning:select
+                label="Model"
+                required="true"
+                aura:id="selectId"
+                value="{!vehicle.freightDetail.Model__c}"
+                name="{!index}"
+                onchange="{!c.populateVehicleDetail}"
+              >
+                <aura:if
+                  isTrue="{!and(vehicle.typeOfPackage=='PVEH',vehicle.freightDetail.Manufacturer__c!='other')}"
+                >
+                  <option
+                    value=""
+                    disabled="true"
+                    selected="true"
+                    hidden="true"
+                  >
+                    Select Model
+                  </option>
+                  <!--Edit:001-->
+                  <!--option value="">Select Model</option-->
+                  <aura:iteration
+                    items="{!v.modelData}"
+                    var="modelData"
+                    indexVar="key"
+                  >
+                    <aura:if isTrue="{!index==key}">
+                      <aura:iteration items="{!modelData}" var="model">
+                        <option value="{!model.Model__c}">
+                          {!model.Model_Name__c}
+                        </option>
+                      </aura:iteration>
+                      <option value="other">Others</option>
+                    </aura:if>
+                  </aura:iteration>
+                </aura:if>
+                <aura:if
+                  isTrue="{!vehicle.freightDetail.Manufacturer__c=='other'}"
+                >
+                  <option value="other">Others</option>
+                </aura:if>
+              </lightning:select>
+            </div>
+            <div class="col-sm-2 grey-bg-search">
+              <lightning:input
+                type="number"
+                label="Quantity"
+                aura:id="inputFieldId"
+                id="{!index}"
+                placeholder=""
+                required="true"
+                value="{!vehicle.freightDetail.Freight_Quantity__c}"
+                pattern="[0-9]*"
+                messageWhenPatternMismatch="Please enter whole number"
+                min="1"
+                maxlength="3"
+                onchange="{!c.onQuantityChange}"
+              />
+            </div>
+            <div class="col-sm-2 col-2">
+              <div class="cargo-toggle-sections" style="width: auto">
+                <label
+                  >Hazardous
+                  <lightning:helptext
+                    content="Hazardous indicator will be applicable for all containers."
+                    class="nor-icon"
+                  />
+                </label>
+                <lightning:input
+                  styleclass="toggleCls"
+                  type="toggle"
+                  name="toggleButton"
+                  aura:id="hazardousbtn"
+                  id="hazardousbtn"
+                  messageToggleActive="Yes"
+                  messageToggleInactive="No"
+                  checked="{!v.cargoList[0].isHazardous}"
+                  value="{!v.cargoList[0].isHazardous}"
+                />
+              </div>
+              <div class="cargo-toggle-sections" style="width: auto">
+                <label>Over Dim</label>
+                <lightning:input
+                  styleclass="toggleCls"
+                  type="toggle"
+                  name="toggleButton"
+                  aura:id="overDimbtn"
+                  messageToggleActive="Yes"
+                  messageToggleInactive="No"
+                  checked="{!vehicle.freightDetail.Over_Dimension__c}"
+                />
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <label class="block-view">&nbsp;</label>
+              <aura:if isTrue="{!index!=0}">
+                <a
+                  href=""
+                  id="{!index}"
+                  class="removeButton"
+                  onclick="{!c.removeItem}"
+                  >- Remove</a
+                >
+              </aura:if>
+            </div>
+            <aura:if isTrue="{!vehicle.freightDetail.Model__c!=''}">
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <lightning:input
+                  type="number"
+                  label="Length"
+                  value="{!vehicle.freightDetail.Length_Major__c}"
+                  name="{!index}"
+                  aura:id="inputFieldId"
+                  disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                  pattern="[0-9]*"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  maxlength="2"
+                  max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                  messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can be not greater than 25' : 'Value can not be greater than 83'}"
+                />
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">ft</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">m</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <label></label>
+                <aura:if isTrue="{!vehicle.freightDetail.Length_Major__c>0}">
+                  <lightning:input
+                    type="number"
+                    label=""
+                    value="{!vehicle.freightDetail.Length_Minor__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="3"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                  />
+
+                  <aura:set attribute="else">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Length_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="4"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                    />
+                  </aura:set>
+                </aura:if>
+
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">in</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">cm</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <lightning:input
+                  type="number"
+                  label="Width"
+                  value="{!vehicle.freightDetail.Width_Major__c}"
+                  name="{!index}"
+                  aura:id="inputFieldId"
+                  disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                  pattern="[0-9]*"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  maxlength="2"
+                  max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                  messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can be not greater than 83'}"
+                />
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">ft</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">m</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <label></label>
+                <aura:if isTrue="{!vehicle.freightDetail.Width_Major__c>0}">
+                  <lightning:input
+                    type="number"
+                    label=""
+                    value="{!vehicle.freightDetail.Width_Minor__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="3"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                  />
+
+                  <aura:set attribute="else">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Width_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="4"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                    />
+                  </aura:set>
+                </aura:if>
+
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">in</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">cm</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <lightning:input
+                  type="number"
+                  label="Height"
+                  value="{!vehicle.freightDetail.Height_Major__c}"
+                  name="{!index}"
+                  aura:id="inputFieldId"
+                  disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                  pattern="[0-9]*"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  maxlength="2"
+                  max="{!vehicle.measureUnit== 'kg/m' ? '25' : '83'}"
+                  messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can not be greater than 83'}"
+                />
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">ft</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">m</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 measurement-unit-col">
+                <label></label>
+                <aura:if isTrue="{!vehicle.freightDetail.Height_Major__c>0}">
+                  <lightning:input
+                    type="number"
+                    label=""
+                    value="{!vehicle.freightDetail.Height_Minor__c}"
+                    name="{!index}"
+                    aura:id="inputFieldId"
+                    disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    maxlength="3"
+                    max="{!vehicle.measureUnit== 'kg/m' ? '99' : '11'}"
+                    messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+                  />
+
+                  <aura:set attribute="else">
+                    <lightning:input
+                      type="number"
+                      label=""
+                      value="{!vehicle.freightDetail.Height_Minor__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                      disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                      maxlength="4"
+                      max="{!vehicle.measureUnit== 'kg/m' ? '2530' : '999'}"
+                      messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+                    />
+                  </aura:set>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">in</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">cm</span>
+                </aura:if>
+              </div>
+              <!--div class="col-sm-2 grey-bg-search">
+                                <lightning:input type="number" label="{!'Weight (in '+v.weightUnit+')'}" value="{!vehicle.freightDetail.Declared_Weight_Value__c}" disabled="{!(vehicle.freightDetail.Model__c!='other')}"/>
+                            </div-->
+              <div class="col-sm-2 col-6 measurement-unit-col">
+                <lightning:input
+                  type="number"
+                  label="Weight"
+                  placeholder=""
+                  required="true"
+                  aura:id="inputFieldId"
+                  value="{!vehicle.freightDetail.Declared_Weight_Value__c}"
+                  disabled="{!(vehicle.freightDetail.Model__c!='other')}"
+                  maxlength="5"
+                  min="1"
+                  max="{!vehicle.measureUnit== 'kg/m' ? '36288' : '80000'}"
+                  messageWhenRangeOverflow="{!vehicle.measureUnit== 'kg/m' ? 'Value can not be greater than 36,288' : 'Value can not be greater than 80,000'}"
+                />
+                <aura:if isTrue="{!vehicle.measureUnit=='lb/ft'}">
+                  <span class="measurement-unit">lb</span>
+                </aura:if>
+                <aura:if isTrue="{!vehicle.measureUnit=='kg/m'}">
+                  <span class="measurement-unit">kg</span>
+                </aura:if>
+              </div>
+              <div class="col-sm-1 col-6 without-label">
+                <!--<label class="no-wrap">lb/ft - kg/m</label>
+                                <lightning:input styleclass="toggleCls" type="toggle"  name="{!index}"
+                                messageToggleActive="kg/m" messageToggleInactive="lb/ft" onchange="{!c.getUnitOfMeasure}" checked="{!(vehicle.measureUnit=='kg/m')}" disabled="{!(vehicle.freightDetail.Model__c!='other')}"/>
+                                -->
+                <label class="no-wrap"></label><br />
+                <lightning:buttonGroup>
+                  <lightning:button
+                    name="{!index}"
+                    variant="{!(vehicle.measureUnit=='lb/ft') ? 'brand' : 'brand-outline'}"
+                    label="lb/ft"
+                    onclick="{!c.setUnitLBFT}"
+                  />
+                  <lightning:button
+                    name="{!index}"
+                    variant="{!(vehicle.measureUnit=='kg/m') ? 'brand' : 'brand-outline'}"
+                    label="kg/m"
+                    onclick="{!c.setUnitKGM}"
+                  />
+                </lightning:buttonGroup>
+              </div>
+            </aura:if>
+            <aura:if
+              isTrue="{!or(vehicle.freightDetail.Manufacturer__c == 'other',vehicle.freightDetail.Model__c == 'other')}"
+            >
+              <div class="col-sm-11 grey-bg-search">
+                <lightning:textarea
+                  label="Description"
+                  placeholder="{!$Label.c.CC_VehicleDescription}"
+                  value="{!vehicle.freightDetail.Description__c}"
+                />
+              </div>
+            </aura:if>
+          </div>
+
+          <!--ADD VIN Section Wrapper: START-->
+          <div class="row">
+            <div class="col-sm-12">
+              <lightning:accordion
+                aura:id="accordion"
+                activeSectionName=""
+                allowMultipleSectionsOpen="true"
+              >
+                <lightning:accordionSection name="addVins" label="ADD VIN">
+                  <div class="row">
+                    <aura:iteration
+                      items="{!vehicle.lstVinWrapper}"
+                      var="vinDetail"
+                      indexVar="key"
+                    >
+                      <div class="col-sm-4">
+                        <div class="row">
+                          <div class="col-6">
+                            <lightning:input
+                              autocomplete="off"
+                              type="text"
+                              aura:id="{!index+':'+key}"
+                              id="{!index+':'+key}"
+                              label="{!'VIN '+ (key+1)}"
+                              value="{!vinDetail.Vin}"
+                              maxlength="250"
+                            />
+                          </div>
+                          <div class="col-6">
+                            <lightning:select
+                              aura:id="InputSelectSingle"
+                              label="UN Number"
+                              value="{!vinDetail.UnNumber}"
+                            >
+                              <option value="UN3166 - Gasoline">
+                                UN3166 - Gasoline
+                              </option>
+                              <option value="UN3171 - Electric">
+                                UN3171 - Electric
+                              </option>
+                              <option value="Not Applicable">
+                                Not Applicable
+                              </option>
+                            </lightning:select>
+                          </div>
+                        </div>
+                      </div>
+                    </aura:iteration>
+                  </div>
+                </lightning:accordionSection>
+              </lightning:accordion>
+            </div>
+          </div>
+          <!--ADD VIN Section: END-->
+
+          <!--Optional Services Section: START-->
+          <div class="row">
+            <c:CC_OptionalServices
+              aura:id="optionalServiceComp"
+              index="{!index}"
+              masterObjServices="{!vehicle.freightDetail}"
+              lstMarineCargoInsur="{!v.lstMarineCargoInsur}"
+            />
+          </div>
+          <!--Optional Services Section: END-->
+
+          <div class="separator-line"></div>
+        </div>
+      </aura:iteration>
+    </aura:set>
+  </aura:if>
+  <lightning:button
+    variant="brand"
+    label="ADD MORE +"
+    class="comment-post-btn"
+    title="ADD MORE"
+    onclick="{!c.addItem}"
+  />
+  <aura:method
+    name="validateVehicleInfo"
+    action="{!c.validateVehicleInfo}"
+    access="public"
+  >
+    <aura:attribute name="isValidVehicle" type="boolean" default="false" />
+  </aura:method>
+</aura:component>

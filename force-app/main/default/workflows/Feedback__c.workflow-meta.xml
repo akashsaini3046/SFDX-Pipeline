@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alert_feedback_record_Owner_on_Status_Resolved</fullName>
+        <description
+    >Alert feedback record Owner on Status Resolved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Feedback_Resolved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Sent_when_Feedback_is_Resolved</fullName>
+        <description>Email Sent when Feedback is Resolved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Service_Cloud_Email_Templates/Feedback_resolved</template>
+    </alerts>
+    <alerts>
+        <fullName>MP_email_alert</fullName>
+        <description>MP email alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>maria.perez@crowley.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>FB_email_alert/Comment</template>
+    </alerts>
+    <rules>
+        <fullName>On Feedback Resolved</fullName>
+        <actions>
+            <name>Email_Sent_when_Feedback_is_Resolved</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Feedback__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Resolved</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>On Resolved alert Owner</fullName>
+        <actions>
+            <name>Alert_feedback_record_Owner_on_Status_Resolved</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Feedback__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Resolved</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

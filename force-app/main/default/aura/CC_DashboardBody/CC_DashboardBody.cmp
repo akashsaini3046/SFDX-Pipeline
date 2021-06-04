@@ -1,0 +1,10 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute name="userLevel" type="String" default="0" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:if isTrue="{!v.userLevel=='0'}">
+    <c:levelZeroDashboard></c:levelZeroDashboard>
+  </aura:if>
+</aura:component>

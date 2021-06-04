@@ -1,0 +1,16 @@
+.THIS .font-blue {
+  color: blue !important;
+}
+
+.THIS .font-bold {
+  font-weight: bold !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}
+
+.THIS .font_size {
+  font-size: 11px !important;
+}

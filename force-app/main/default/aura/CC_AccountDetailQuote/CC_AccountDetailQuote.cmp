@@ -1,0 +1,117 @@
+<aura:component
+  controller="CC_AccountDetailController"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="accountId" type="String" />
+  <aura:attribute name="accountName" type="String" />
+  <aura:attribute name="childAccounts" type="List" />
+  <aura:attribute name="showChildAccounts" type="boolean" default="false" />
+  <aura:attribute name="selectedTab" type="string" />
+  <aura:attribute name="searchFieldSetQuotes" type="List" />
+
+  <aura:attribute name="selectedAccountId" type="string" />
+  <aura:attribute name="selectedContractId" type="string" />
+  <aura:attribute name="statusSelected" type="string" default="all" />
+  <aura:attribute name="originMovementType" type="string" />
+  <aura:attribute name="destMovementType" type="string" default="" />
+  <aura:attribute name="originLocationId" type="string" />
+  <aura:attribute name="destinationLocationId" type="string" />
+  <aura:attribute name="departureFromDate" type="string" />
+  <aura:attribute name="departureToDate" type="string" />
+  <aura:attribute name="hazQuote" type="string" />
+  <aura:attribute name="comoditySelected" type="string" />
+  <aura:attribute name="vessalSelected" type="string" />
+
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="showRecords" type="Integer" default="10" />
+  <aura:attribute name="totalRange" type="Integer" default="350" />
+  <aura:attribute name="startRange" type="Integer" default="1" />
+  <aura:attribute name="endRange" type="Integer" />
+  <aura:attribute name="searchKeyWord" type="String" />
+  <aura:attribute name="originMovementTypes" type="List" />
+  <aura:attribute name="destMovementTypes" type="List" />
+  <aura:attribute name="statuses" type="List" />
+  <aura:attribute name="disableStatus" type="boolean" default="false" />
+  <aura:attribute name="commodities" type="List" />
+  <aura:attribute name="vessals" type="List" />
+  <aura:attribute name="containerTypes" type="List" />
+  <aura:attribute name="showClearAll" type="boolean" default="true" />
+  <aura:attribute name="containerTypeSelected" type="String" />
+  <aura:attribute name="contractInput" type="String" />
+  <aura:attribute name="showChildAcc" type="String" />
+  <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+  <aura:attribute name="showNoResult" type="boolean" default="false" />
+  <aura:attribute name="showStatusfilter" type="boolean" default="true" />
+  <aura:attribute name="showFilters" type="boolean" default="true" />
+  <aura:attribute name="showAccountFilters" type="boolean" default="false" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="paginationEvent"
+    event="c:CC_PaginationEvt"
+    action="{!c.handlePaginationEvent}"
+  />
+  <aura:handler
+    name="filterEvent"
+    event="c:CC_FilterEvt"
+    action="{!c.handleFilterEvent}"
+  />
+  <aura:handler
+    name="searchListEvent"
+    event="c:CC_SearchListEvt"
+    action="{!c.handleSearchList}"
+  />
+
+  <aura:if isTrue="{!v.showLoadingSpinner}">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+  <aura:if isTrue="{!v.showFilters}">
+    <c:CC_AccountFilter
+      accountId="{!v.accountId}"
+      selectedTab="{!v.selectedTab}"
+      accountName="{!v.accountName}"
+      originMovementTypes="{!v.originMovementTypes}"
+      destMovementTypes="{!v.destMovementTypes}"
+      statuses="{!v.statuses}"
+      containerTypes="{!v.containerTypes}"
+      vessals="{!v.vessals}"
+      commodities="{!v.commodities}"
+    />
+    <aura:if isTrue="{!not(empty(v.data))}">
+      <div class="pagination-wrapper">
+        <div class="account-pagination">
+          <c:CC_Pagination
+            aura:id="pagination1"
+            endRange="{!v.endRange}"
+            showRecords="{!v.showRecords}"
+            totalRange="{!v.totalRange}"
+            startRange="{!v.startRange}"
+          />
+        </div>
+      </div>
+      <aura:set attribute="else">
+        <c:CC_NoRecordsFound
+          message="{!$Label.c.CC_AD_Quote_No_Record_Found}"
+        />
+      </aura:set>
+    </aura:if>
+    <c:CC_QuoteListData data="{!v.data}" />
+    <aura:if isTrue="{!not(empty(v.data))}">
+      <div class="pagination-wrapper">
+        <c:CC_Pagination
+          aura:id="pagination2"
+          endRange="{!v.endRange}"
+          showRecords="{!v.showRecords}"
+          totalRange="{!v.totalRange}"
+          startRange="{!v.startRange}"
+        />
+      </div>
+    </aura:if>
+    <aura:set attribute="else">
+      <c:CC_NoRecordsFound message="{!$Label.c.CC_AD_No_Quotes_Found}" />
+    </aura:set>
+  </aura:if>
+</aura:component>

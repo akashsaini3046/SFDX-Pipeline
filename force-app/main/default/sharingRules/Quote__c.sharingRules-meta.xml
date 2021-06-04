@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Quote_Agent</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Agent</label>
+        <sharedTo>
+            <group>Agent</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Agent_Login</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Agent Login</label>
+        <sharedTo>
+            <group>Agent_Login</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Community_Super_User</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Community Super User</label>
+        <sharedTo>
+            <group>Community_Super_User</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Community_Super_User_Login</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Community Super User Login</label>
+        <sharedTo>
+            <group>Community_Super_User_Login</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Customer_Operations</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Customer Operations</label>
+        <sharedTo>
+            <group>Customer_Operations</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Customer_Operations_Login</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Customer Operations Login</label>
+        <sharedTo>
+            <group>Customer_Operations_Login</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Customer_Support</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Customer Support</label>
+        <sharedTo>
+            <group>Customer_Support</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Customer_Support_Login</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Customer Support Login</label>
+        <sharedTo>
+            <group>Customer_Support_Login</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Documentation</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Documentation</label>
+        <sharedTo>
+            <group>Documentation</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Quote_Documentation_Login</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Quote Documentation Login</label>
+        <sharedTo>
+            <group>Documentation_Login</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

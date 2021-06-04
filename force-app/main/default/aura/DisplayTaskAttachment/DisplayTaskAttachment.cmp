@@ -1,0 +1,193 @@
+<aura:component
+  controller="GetTaskAttachemnt"
+  implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+>
+  <aura:attribute name="ccemail" type="String" />
+  <aura:attribute name="bccemail" type="String" />
+  <aura:attribute name="caseRec" type="Case" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="subject" type="String" />
+  <aura:attribute name="description" type="String" />
+  <aura:attribute name="error" type="String" default="" />
+  <aura:attribute name="taskList" type="Task[]" />
+  <aura:attribute name="attachmentList" type="Object[]" />
+  <aura:attribute name="regionList" type="String[]" />
+  <aura:attribute name="destinationList" type="Object[]" />
+  <aura:attribute name="emailMapping" type="Object[]" />
+  <aura:attribute name="emails" type="List" />
+  <aura:attribute name="issearching" type="Boolean" default="false" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <div class="slds-page-header custom">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__body">
+            <div class="slds-page-header__name">
+              <div class="slds-page-header__name-title">
+                <h1>
+                  <span class="slds-page-header__title slds-truncate"
+                    >Send Documents</span
+                  >
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aura:if
+    isTrue="{!and(or(v.caseRec.Ha__c,v.caseRec.Destination_Approval__c),not(v.caseRec.Hacienda_Mail_Sent__c))}"
+  >
+    <aura:if isTrue="{!not(empty(v.attachmentList))}">
+      <lightning:card title="Please select Attachments">
+        <lightning:recordForm recordId="{!v.recordId}" objectApiName="Case" />
+      </lightning:card>
+      <table
+        class="slds-table slds-table--bordered slds-table--cell-buffer"
+        role="grid"
+      >
+        <thead>
+          <tr class="slds-text-title--caps">
+            <th>
+              <!--<label class="slds-checkbox">
+                        <ui:inputCheckbox value="{!v.isSelectAll}" aura:id="selectAll"/>
+                        <span class="slds-checkbox-faux" />
+                        <span class="slds-form-element__label"></span>
+                    </label>-->
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Name">Attachment Name</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <aura:iteration items="{!v.attachmentList}" var="attch">
+            <tr>
+              <th>
+                <label class="slds-checkbox">
+                  <ui:inputCheckbox
+                    aura:id="checkContact"
+                    value=""
+                    text="{!attch.attachId}"
+                  />
+                  <span class="slds-checkbox--faux" />
+                  <span class="slds-form-element__label"></span>
+                </label>
+              </th>
+              <th scope="row">
+                <div class="slds-truncate" title="{!attch.attachId}">
+                  {!attch.attName}
+                </div>
+              </th>
+            </tr>
+          </aura:iteration>
+        </tbody>
+      </table>
+      <aura:set attribute="else">
+        <h2>This record contains no attachments!</h2>
+      </aura:set>
+    </aura:if>
+
+    <br />
+    <div>
+      <div class="slds-form-element">
+        <label class="slds-form-element__label" for="destinationEmails"
+          >Destination Team</label
+        >
+        <div class="slds-form-element__control">
+          <div class="slds-select_container">
+            <select
+              class="slds-select"
+              onchange="{!c.updateEmails}"
+              id="destinationEmails"
+            >
+              <option selected="true">--None--</option>
+              <aura:iteration items="{!v.regionList}" var="key">
+                <optgroup label="{!key}">
+                  <aura:iteration items="{!v.destinationList}" var="subkey">
+                    <aura:if isTrue="{!key == subkey.region}">
+                      <option value="{!subkey.value}">{!subkey.label}</option>
+                    </aura:if>
+                  </aura:iteration>
+                </optgroup>
+              </aura:iteration>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="slds-form-element">
+        <label class="slds-form-element__label" for="destinationEmails"
+          >To</label
+        >
+        <div class="slds-form-element__control">
+          <lightning:pillContainer
+            items="{!v.emails}"
+            onitemremove="{!c.removeEmail}"
+          ></lightning:pillContainer>
+        </div>
+      </div>
+      <lightning:input
+        label="CC"
+        fieldLevelHelp="Please enter semicolon separated values!"
+        value="{!v.ccemail}"
+      />
+      <lightning:input
+        label="BCC"
+        fieldLevelHelp="Please enter semicolon separated values!"
+        value="{!v.bccemail}"
+      />
+      <lightning:input
+        label="Subject"
+        required="true"
+        value="{!v.subject}"
+        messageWhenValueMissing="Please enter a subject!"
+      />
+
+      <div onkeyup="{! c.handleKeyUp }">
+        <lightning:input
+          aura:id="enter-search"
+          name="enter-search"
+          label="Search Email Template"
+          isLoading="{! v.issearching }"
+          type="search"
+        />
+        <div>
+          <ul
+            aria-label="single select listbox slds-hide"
+            aura:id="template-list"
+            class="template-list slds-border_top slds-border_right slds-border_bottom slds-border_left"
+            role="listbox"
+          >
+            <aura:iteration items="{!v.emailMapping}" var="key">
+              <li
+                aria-selected="false"
+                class="slds-p-around_xx-small"
+                draggable="false"
+                id="0"
+                role="option"
+                tabindex="-1"
+                data-body="{!key.templateBody}"
+                onclick="{!c.handleClick}"
+              >
+                {!key.templateName}
+              </li>
+            </aura:iteration>
+          </ul>
+        </div>
+      </div>
+      <!--slds-color__background_gray-4-->
+      <label class="slds-form-element__label" for="text-input-id-1"
+        >Description</label
+      >
+      <lightning:inputRichText
+        value="{!v.description}"
+      /><!-- label="Description" -->
+      <!--<lightning:textarea name="description" label="Description" required="true" value="{!v.description}"/>-->
+      <br />
+      <lightning:button label="Send" onclick="{!c.sendMail}" />
+    </div>
+    <aura:set attribute="else"> {!v.error} </aura:set>
+  </aura:if>
+</aura:component>

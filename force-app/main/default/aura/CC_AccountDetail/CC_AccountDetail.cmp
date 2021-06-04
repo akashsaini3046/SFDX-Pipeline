@@ -1,0 +1,243 @@
+<aura:component
+  controller="CC_AccountDetailController"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="componentName" type="string" default="CC_Account" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="account" type="Account" />
+  <aura:attribute name="teamMembersText" type="string" default="Show All" />
+  <aura:attribute name="displayTeamMembers" type="boolean" default="false" />
+  <aura:attribute name="teamMembers" type="List" />
+  <aura:attribute name="isParentAccount" type="boolean" default="true" />
+  <aura:attribute name="hasChildAccounts" type="boolean" default="true" />
+  <aura:attribute name="numberOfChildAccounts" type="integer" default="10" />
+  <aura:attribute name="childAccounts" type="List" />
+  <aura:attribute name="showChildAccounts" type="boolean" default="false" />
+  <aura:attribute name="isContactTab" type="boolean" default="false" />
+  <aura:attribute name="isQuoteTab" type="boolean" default="false" />
+  <aura:attribute name="isBookingTab" type="boolean" default="false" />
+  <aura:attribute name="isBolTab" type="boolean" default="false" />
+  <aura:attribute name="isContractTab" type="boolean" default="false" />
+  <aura:attribute name="isChildAccountTab" type="boolean" default="true" />
+  <aura:attribute name="showChildAccountTab" type="boolean" default="true" />
+  <aura:attribute name="selectedTabId" type="string" default="ChildAccounts" />
+  <aura:attribute name="searchFieldSetChildAcc" type="List" />
+  <aura:attribute name="searchFieldSetContacts" type="List" />
+  <aura:attribute name="searchFieldSetQuotes" type="List" />
+  <aura:attribute name="searchFieldSetContracts" type="List" />
+  <aura:attribute name="searchFieldSetBookings" type="List" />
+  <aura:attribute name="searchFieldSetBol" type="List" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    event="c:CC_GlobalSearchEvent"
+    action="{!c.handleSearchEvent}"
+  />
+
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.handleRefreshCmp}"
+  />
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+
+  <div class="breadcrumbs-search-row block-view">
+    <div class="pull-left">
+      <h5>Account</h5>
+      <lightning:breadcrumbs>
+        <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+        <lightning:breadcrumb
+          label="Accounts"
+          onclick="{!c.navigateToAccount}"
+        />
+        <lightning:breadcrumb
+          label="{!v.account.Name}"
+          onclick="{!c.navigateToRecord}"
+        />
+      </lightning:breadcrumbs>
+    </div>
+  </div>
+  <div class="accounts-page-wrapper">
+    <div class="account-details">
+      <div class="accountname-header block-view">
+        <div class="pull-left">
+          <lightning:icon iconName="utility:company" class="pull-left" />
+          <span class="acc-name">{!v.account.Name}</span>
+          <span class="slds-badge parent-child-account">
+            <aura:if isTrue="{!v.isParentAccount}">
+              <span> {!$Label.c.CC_AD_Parent_Account} </span>
+              <aura:set attribute="else">
+                <span> {!$Label.c.CC_AD_Child_Account} </span>
+              </aura:set>
+            </aura:if>
+          </span>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="account-data">
+        <div class="account-data-col owner-col">
+          <label>{!$Label.c.CC_AD_Account_Owner_Details}</label>
+          <div class="weight-500">
+            {!v.account.Owner.FirstName}&nbsp;{!v.account.Owner.LastName}
+          </div>
+        </div>
+        <aura:if isTrue="{!!v.isParentAccount}">
+          <div class="account-data-col parent-acc-col">
+            <label>{!$Label.c.CC_AD_Parent_Account_Details}</label>
+            <div class="weight-500">
+              <a onclick="{!c.navigateToParentRecord}"
+                >{!v.account.Parent.Name}</a
+              >
+            </div>
+          </div>
+        </aura:if>
+        <div class="account-data-col team-det-col">
+          <label>{!$Label.c.CC_AD_Team_Details}</label>
+          <div class="weight-500">
+            {!v.teamMembers.length}&nbsp; {!$Label.c.CC_AD_Team_Members_Details
+            + if(v.teamMembers.length > 1, 's', '')}
+            <a class="show-all-members" onclick="{!c.showTeamMembers}"
+              >{!v.teamMembersText}</a
+            >
+          </div>
+        </div>
+        <div class="account-data-col cvif-det-col">
+          <label>{!$Label.c.CC_AD_CVIF_ID_Details}</label>
+          <div class="weight-500">{!v.account.CVIF__c}</div>
+        </div>
+        <div class="account-data-col region-col">
+          <label>{!$Label.c.CC_AD_Sales_Rep_Region_Details}</label>
+          <div class="weight-500">{!v.account.Sales_Rep_Region__c}</div>
+        </div>
+        <div class="account-data-col type-col">
+          <label>{!$Label.c.CC_AD_Type_Details}</label>
+          <div class="weight-500">{!v.account.Type}</div>
+        </div>
+        <div class="account-data-col mkt-seg-col">
+          <label>{!$Label.c.CC_AD_Market_Segment_Details}</label>
+          <div class="weight-500">{!v.account.Industry}</div>
+        </div>
+      </div>
+    </div>
+    <aura:if isTrue="{!v.displayTeamMembers}">
+      <div class="team-members-container block-view">
+        <h2>
+          {!v.teamMembers.length} Team Member{!if(v.teamMembers.length > 1, 's',
+          '')}
+          <lightning:icon
+            iconName="utility:close"
+            size="small"
+            class="pull-right"
+            onclick="{!c.closeTeamMembers}"
+          />
+        </h2>
+        <aura:iteration items="{!v.teamMembers}" var="member" indexVar="index">
+          <div class="team-members-row">
+            <span>{!add(index,1)}</span>
+            <span><i class="userIcon"></i></span>
+            <span class="member-name-col"
+              >{!member.User.FirstName}&nbsp;{!member.User.LastName}</span
+            >
+            <span class="member-role-col">{!member.TeamMemberRole}</span>
+          </div>
+        </aura:iteration>
+      </div>
+    </aura:if>
+    <aura:if isTrue="{!and(v.hasChildAccounts, !v.isChildAccountTab) }">
+      <div class="show-hide-child-acc-data">
+        <label class="slds-checkbox_toggle slds-grid">
+          <span class="slds-form-element__label slds-m-bottom_none"
+            >Show Child Accounts Data</span
+          >
+          <lightning:input
+            type="toggle"
+            name="checkbox-toggle-16"
+            checked="{!v.showChildAccounts}"
+            aria-describedby="checkbox-toggle-16"
+            disabled="{!!and(v.hasChildAccounts, !v.isChildAccountTab) }"
+            messageToggleActive=""
+            messageToggleInactive=""
+            onchange="{!c.showChildAccountsData}"
+          />
+        </label>
+      </div>
+    </aura:if>
+    <lightning:tabset
+      aura:id="accountTabSet"
+      variant="scoped"
+      onselect="{!c.handleselect}"
+      selectedTabId="{!v.selectedTabId}"
+    >
+      <aura:if isTrue="{!v.showChildAccountTab}">
+        <lightning:tab
+          label="{!$Label.c.CC_AD_Child_Account_Tab}"
+          id="ChildAccounts"
+        >
+          <aura:if isTrue="{!v.isChildAccountTab}">
+            <aura:if isTrue="{!v.hasChildAccounts}">
+              <c:CC_AccountDetailChildAcc
+                accountId="{!v.recordId}"
+                searchFieldSetChildAcc="{!v.searchFieldSetChildAcc}"
+                numberOfChildAccounts="{!v.numberOfChildAccounts}"
+                selectedTab="{!v.selectedTabId}"
+              />
+              <aura:set attribute="else">
+                <c:CC_NoRecordsFound
+                  message="{!$Label.c.CC_AD_Child_Acc_Not_Found}"
+                />
+              </aura:set>
+            </aura:if>
+          </aura:if>
+        </lightning:tab>
+      </aura:if>
+      <lightning:tab label="{!$Label.c.CC_AD_Contact_Tab}" id="Contacts">
+        <aura:if isTrue="{!v.isContactTab}">
+          <c:CC_AccountDetailContacts
+            childAccounts="{!v.childAccounts}"
+            accountId="{!v.recordId}"
+            searchFieldSetContacts="{!v.searchFieldSetContacts}"
+            showChildAccounts="{!v.showChildAccounts}"
+            selectedTab="{!v.selectedTabId}"
+            isParentAccount="{!v.isParentAccount}"
+          />
+        </aura:if>
+      </lightning:tab>
+      <lightning:tab label="{!$Label.c.CC_AD_Quotes_Tab}" id="Quotes">
+        <aura:if isTrue="{!v.isQuoteTab}">
+          <c:CC_AccountDetailQuote
+            childAccounts="{!v.childAccounts}"
+            accountId="{!v.recordId}"
+            searchFieldSetQuotes="{!v.searchFieldSetQuotes}"
+            showChildAccounts="{!v.showChildAccounts}"
+            selectedTab="{!v.selectedTabId}"
+            accountName="{!v.account.Name}"
+          />
+        </aura:if>
+      </lightning:tab>
+      <!-- <lightning:tab label="{!$Label.c.CC_AD_Contracts_Tab}" id="Contracts">
+                <aura:if isTrue="{!v.isContractTab}">
+                    <c:CC_AccountDetailContracts childAccounts="{!v.childAccounts}" accountId="{!v.recordId}"
+                        searchFieldSetContracts="{!v.searchFieldSetContracts}"
+                        showChildAccounts="{!v.showChildAccounts}" selectedTab="{!v.selectedTabId}" />
+                                   </aura:if>
+            </lightning:tab>
+            <lightning:tab label="{!$Label.c.CC_AD_Bookings_Tab}" id="Bookings">
+                <aura:if isTrue="{!v.isBookingTab}">
+                    <c:CC_AccountDetailBooking childAccounts="{!v.childAccounts}" accountId="{!v.recordId}"
+                        searchFieldSetBookings="{!v.searchFieldSetBookings}" showChildAccounts="{!v.showChildAccounts}"
+                        selectedTab="{!v.selectedTabId}" accountName="{!v.account.Name}" />
+                </aura:if>
+            </lightning:tab>
+            <lightning:tab label="{!$Label.c.CC_AD_Bol_Tab}" id="Bill Of Lading">
+                <aura:if isTrue="{!v.isBolTab}">
+                    <c:CC_UnderMaintenance showIdeaButton="false" />
+                </aura:if>
+            </lightning:tab>
+	-->
+    </lightning:tabset>
+  </div>
+</aura:component>

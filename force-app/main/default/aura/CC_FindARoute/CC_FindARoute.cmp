@@ -1,0 +1,147 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+  controller="CC_FindARouteController"
+>
+  <ltng:require styles="{!$Resource.NewStyle}" />
+  <ltng:require styles="{!$Resource.Crowley_theme}" />
+  <aura:attribute name="minDate" type="Date" />
+  <aura:attribute name="FCLButtonVariant" type="String" default="Brand" />
+  <aura:attribute name="LCLButtonVariant" type="String" default="Base" />
+  <aura:attribute name="selectedOriginLocation" type="String" />
+  <aura:attribute name="selectedDestinationLocation" type="String" />
+  <aura:attribute name="numberOfSchedules" type="Integer" default="0" />
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="routeList" type="CC_SoftshipRatingResponse" />
+  <aura:attribute
+    name="schedules"
+    type="CC_SoftshipRatingResponse.Schedules[]"
+  />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="originMove" type="String" />
+  <aura:attribute name="destinationMove" type="String" />
+  <aura:attribute name="originSubLocation" type="List" />
+  <aura:attribute name="destinationSubLocation" type="List" />
+  <aura:attribute name="showErrorMessage" type="Boolean" default="false" />
+  <aura:attribute name="errorMessage" type="String" default="" />
+  <aura:attribute name="enableSearchButton" type="Boolean" default="false" />
+  <aura:attribute name="isGuestUser" type="Boolean" />
+  <aura:attribute name="searchKeywordPOL" type="String" default="" />
+  <aura:attribute name="searchKeywordPOD" type="String" default="" />
+  <aura:attribute name="clickedItemOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemIdOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemDestination" type="String" default="" />
+  <aura:attribute name="clickedItemIdDestination" type="String" default="" />
+  <aura:attribute name="clickedItemPol" type="String" default="" />
+  <aura:attribute name="clickedItemIdPol" type="String" default="" />
+  <aura:attribute name="clickedItemPod" type="String" default="" />
+  <aura:attribute name="clickedItemIdPod" type="String" default="" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+  <lightning:navigation aura:id="navigationService" />
+  <div class="ship-background-image-container">
+    <aura:if isTrue="{!(v.isGuestUser)}">
+      <h5 class="quote-heading slds-no-print">Find a Route</h5>
+    </aura:if>
+    <aura:if isTrue="{!not(v.isGuestUser)}">
+      <div class="breadcrumbs-search-row block-view slds-no-print">
+        <div class="pull-left">
+          <h5>Find a Route</h5>
+          <lightning:breadcrumbs class="slds-no-print">
+            <lightning:breadcrumb label="Home" onclick="{! c.navigateToHome}" />
+            <lightning:breadcrumb label="Find a Route" href="" />
+          </lightning:breadcrumbs>
+        </div>
+      </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isLoading }">
+      <div class="crowley-loader">
+        <div class="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+        <h1 class="text-center">
+          Please wait, we are finding the best routing options for you.
+        </h1>
+      </div>
+    </aura:if>
+    <div class="c-container get-quote-container" id="containerId">
+      <!-- selectedOriginLocation="{!v.selectedOriginLocation}" -->
+      <c:CC_OriginDestination
+        bookingWrapper="{!v.bookingWrapper}"
+        originMove="{!v.originMove}"
+        destinationMove="{!v.destinationMove}"
+        screen="FindARoute"
+        enableSearchButton="{!v.enableSearchButton}"
+        numberOfSchedules="{!v.numberOfSchedules}"
+        showErrorMessageInRouteFinder="{!v.showErrorMessage}"
+        searchKeywordPOL="{!v.searchKeywordPOL}"
+        searchKeywordPOD="{!v.searchKeywordPOD}"
+        clickedItemOrigin="{!v.clickedItemOrigin}"
+        clickedItemIdOrigin="{!v.clickedItemIdOrigin}"
+        clickedItemDestination="{!v.clickedItemDestination}"
+        clickedItemIdDestination="{!v.clickedItemIdDestination}"
+        clickedItemPol="{!v.clickedItemPol}"
+        clickedItemIdPol="{!v.clickedItemIdPol}"
+        clickedItemPod="{!v.clickedItemPod}"
+        clickedItemIdPod="{!v.clickedItemIdPod}"
+      />
+      <div class="clearfix"></div>
+      <div class="c-container p-t-0 slds-no-print">
+        <div class="row">
+          <div class="col-sm-3">
+            <lightning:button
+              label="SEARCH"
+              onclick="{!c.searchFindRoute}"
+              class="slds-button_destructive searchButton"
+              variant="brand"
+              disabled="{!not(v.enableSearchButton)}"
+            />
+
+            <br /><br />
+            <aura:if isTrue="{!v.showErrorMessage}">
+              <div class="error-message">{!v.errorMessage}</div>
+            </aura:if>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <aura:if isTrue="{!v.numberOfSchedules>0}">
+        <c:CC_RouteResult
+          schedules="{!v.schedules}"
+          booking="{!v.bookingWrapper.booking}"
+          selectedDestinationLocation="{!v.selectedDestinationLocation}"
+          startPoint="{!v.bookingWrapper.booking.Customer_Origin_Code__c}"
+          selectedOriginLocation="{!v.selectedOriginLocation}"
+          endPoint="{!v.bookingWrapper.booking.Customer_Destination_Code__c}"
+          originMove="{!v.originMove}"
+          searchKeywordPOL="{!v.searchKeywordPOL}"
+          searchKeywordPOD="{!v.searchKeywordPOD}"
+          destinationMove="{!v.destinationMove}"
+          numberOfSchedules="{!v.numberOfSchedules}"
+          isGuestUser="{!v.isGuestUser}"
+          clickedItemOrigin="{!v.clickedItemOrigin}"
+          clickedItemIdOrigin="{!v.clickedItemIdOrigin}"
+          clickedItemDestination="{!v.clickedItemDestination}"
+          clickedItemIdDestination="{!v.clickedItemIdDestination}"
+          clickedItemPol="{!v.clickedItemPol}"
+          clickedItemIdPol="{!v.clickedItemIdPol}"
+          clickedItemPod="{!v.clickedItemPod}"
+          clickedItemIdPod="{!v.clickedItemIdPod}"
+        />
+      </aura:if>
+    </div>
+    <div class="clearfix"></div>
+    <aura:if isTrue="{!v.numberOfSchedules==0}">
+      <div class="shipGif">
+        <i></i>
+        <h5>Please select Origin &amp; Destination <br />for finding routes</h5>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="selectedItemId" type="String"/>
+    <aura:attribute name="selectedObjLabel" type="String" />
+</aura:event>

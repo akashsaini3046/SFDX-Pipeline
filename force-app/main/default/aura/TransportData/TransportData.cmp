@@ -1,0 +1,23 @@
+<aura:component>
+  <aura:attribute name="transports" type="List" />
+
+  <aura:handler name="init" value="{! this}" action="{! c.doInit }" />
+
+  <lightning:layout multipleRows="true">
+    <aura:iteration items="{!v.transports}" var="transportList">
+      <aura:iteration items="{!transportList}" var="item">
+        <aura:if isTrue="{!item.label == 'Transport Name'}">
+          <lightning:layoutItem size="12" class="type-name">
+            <b> {!item.value} </b>
+          </lightning:layoutItem>
+        </aura:if>
+      </aura:iteration>
+      <aura:iteration items="{!transportList}" var="item">
+        <lightning:layoutItem size="2">
+          <b>{!item.label}:</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+      </aura:iteration>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

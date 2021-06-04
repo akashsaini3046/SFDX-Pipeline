@@ -1,0 +1,850 @@
+<aura:component controller="CC_OriginDestinationCtrl">
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute name="tariffsCommodities" type="List" />
+  <aura:attribute name="tariffsEquipments" type="List" />
+  <aura:attribute name="vehichleCommodities" type="List" />
+  <aura:attribute name="minDate" type="Date" />
+  <aura:attribute name="selectedOriginLocation" type="String" />
+  <aura:attribute name="selectedAccountPol" type="String" />
+  <aura:attribute name="selectedContactPol" type="String" />
+  <aura:attribute name="selectedAddressPol" type="String" />
+  <aura:attribute name="selectedContractPol" type="String" />
+  <aura:attribute name="selectedAccountPolId" type="String" />
+  <aura:attribute name="contractsList" type="List" />
+  <aura:attribute
+    name="isDisableContractAndContact"
+    type="Boolean"
+    default="true"
+  />
+  <aura:attribute name="selectedContactPolId" type="String" />
+  <aura:attribute name="selectedAddressPolId" type="String" />
+  <aura:attribute name="selectedContractPolId" type="String" />
+  <aura:attribute name="selectedDestinationLocation" type="String" />
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="originMove" type="String" />
+  <aura:attribute name="destinationMove" type="String" />
+  <aura:attribute name="originSubLocation" type="List" />
+  <aura:attribute name="destinationSubLocation" type="List" />
+  <aura:attribute name="originCountry" type="String" />
+  <aura:attribute name="destinationCountry" type="String" />
+  <aura:attribute name="showErrorMessage" type="Boolean" default="false" />
+  <aura:attribute name="errorMessage" type="String" default="" />
+  <aura:attribute name="screen" type="String" />
+  <aura:attribute name="enableSearchButton" type="Boolean" />
+  <aura:attribute name="numberOfSchedules" type="Integer" default="0" />
+  <aura:attribute
+    name="showErrorMessageInRouteFinder"
+    type="Boolean"
+    default="false"
+  />
+  <aura:attribute name="isDateValid" type="Boolean" default="false" />
+  <aura:attribute name="isOriginValid" type="Boolean" default="false" />
+  <aura:attribute name="isDestinationValid" type="Boolean" default="false" />
+  <aura:attribute name="showCreateProspect" type="boolean" default="false" />
+  <aura:attribute name="showCreateAddress" type="boolean" default="false" />
+  <aura:attribute name="showCreateContact" type="boolean" default="false" />
+  <aura:attribute name="showCrossDockExport" type="boolean" default="false" />
+  <aura:attribute name="showCrossDockImport" type="boolean" default="false" />
+  <aura:attribute name="searchKeywordPOL" type="String" default="" />
+  <aura:attribute name="searchKeywordPOD" type="String" default="" />
+  <aura:attribute name="clickedItemOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemIdOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemDestination" type="String" default="" />
+  <aura:attribute name="clickedItemIdDestination" type="String" default="" />
+  <aura:attribute name="clickedItemPol" type="String" default="" />
+  <aura:attribute name="clickedItemIdPol" type="String" default="" />
+  <aura:attribute name="clickedItemPod" type="String" default="" />
+  <aura:attribute name="clickedItemIdPod" type="String" default="" />
+  <aura:attribute name="clickedItemAccount" type="String" default="" />
+  <aura:attribute name="clickedItemIdAccount" type="String" default="" />
+  <aura:attribute name="clickedItemContact" type="String" default="" />
+  <aura:attribute name="clickedItemIdContact" type="String" default="" />
+  <aura:attribute
+    name="clickedItemContainerTypeSize"
+    type="String"
+    default=""
+  />
+  <aura:attribute
+    name="clickedItemIdContainerTypeSize"
+    type="String"
+    default=""
+  />
+  <aura:attribute name="allObjects" type="Object" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedAccountPolId}"
+    action="{!c.handleSelectedAccountPolIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedContactPolId}"
+    action="{!c.handleSelectedContactPolIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedAddressPolId}"
+    action="{!c.handleSelectedAddressPolIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.allObjects}"
+    action="{!c.handleAllObjectsChange}"
+  />
+
+  <aura:method name="ReinitaliseData" action="{!c.doInit}" access="public" />
+  <aura:method name="setContractRelatedData" action="{!c.handleContractChange}">
+    <aura:attribute name="contractId" type="String" />
+  </aura:method>
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+  <div class="c-container slds-no-print" id="containerId">
+    <form autocomplete="off">
+      <div class="route-form">
+        <!-- Booking Party Section-->
+        <aura:if isTrue="{!v.screen=='CreateBooking'}">
+          <div class="row">
+            <div class="col-sm-1">
+              <h6>Booking Party</h6>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="customerNameId"
+                    label="Contact Name"
+                    placeholder="Enter name"
+                    required="true"
+                    value="{!v.bookingWrapper.booking.Contact_Name__c}"
+                    maxlength="250"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="customerPhoneId"
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                    required="true"
+                    value="{!v.bookingWrapper.booking.Contact_Number__c}"
+                    messageWhenPatternMismatch="Please enter a valid Phone Number."
+                    maxlength="15"
+                    pattern="[+\-()0-9]*"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="email"
+                    aura:id="customerEmailId"
+                    required="true"
+                    label="Email ID"
+                    placeholder="Enter email address"
+                    value="{!v.bookingWrapper.booking.Customer_Email__c}"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </aura:if>
+
+        <!-- Account Detail Section-->
+        <aura:if isTrue="{!and(not(v.screen=='FindARoute'), v.isPostLogin)}">
+          <div class="row">
+            <div class="col-sm-1">
+              <h6>Account Details</h6>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-4 grey-bg-search">
+                  <c:CC_CustomLookupInput
+                    fieldLabel="Account Name"
+                    placeholder="{!if(v.screen=='CreateBooking', 'Search', 'Search Account')}"
+                    requiredInput="{!v.screen=='CreateBooking'}"
+                    functionality="Booking:PostLoginAccount"
+                    SearchKeyWord="{!v.selectedAccountPol}"
+                    aura:id="accountId"
+                    showCreateProspect="{!v.showCreateProspect}"
+                    hasCreateProspectButton="{!if(v.screen=='CreateBooking', true, false)}"
+                    displayType="NameAndButton"
+                    clickedItem="{!v.clickedItemAccount}"
+                    clickedItemId="{!v.clickedItemIdAccount}"
+                  />
+                </div>
+                <aura:if isTrue="{!v.screen=='CreateBooking'}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Address"
+                      placeholder="Search"
+                      isDisabled="{!v.isDisableContractAndContact}"
+                      requiredInput="true"
+                      functionality="Booking:BusinessLocationAccountDependent"
+                      dependentId="{!v.selectedAccountPolId}"
+                      SearchKeyWord="{!v.selectedAddressPol}"
+                      aura:id="addressId"
+                      showCreateAddress="{!v.showCreateAddress}"
+                      hasCreateAddressButton="true"
+                      displayType="NameAndButton"
+                    />
+                  </div>
+                  <div class="col-sm-4 grey-bg-search">
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Contact Name"
+                      placeholder="Search Contact"
+                      isDisabled="{!v.isDisableContractAndContact}"
+                      requiredInput="true"
+                      dependentId="{!v.selectedAccountPolId}"
+                      functionality="Booking:ContactAccountDependent"
+                      hasCreateContactButton="true"
+                      displayType="NameAndButton"
+                      SearchKeyWord="{!v.selectedContactPol}"
+                      showCreateContact="{!v.showCreateContact}"
+                      aura:id="contactId"
+                    />
+                  </div>
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Contract Number"
+                      onchange="{!c.handleContractChange}"
+                      value="{!v.bookingWrapper.booking.Contract__c}"
+                      disabled="{!v.isDisableContractAndContact}"
+                    >
+                      <option value="">-- None --</option>
+                      <aura:iteration items="{!v.contractsList}" var="item">
+                        <aura:if
+                          isTrue="{!if(not(empty(item.Name)), true, false)}"
+                        >
+                          <option
+                            value="{!item.Id}"
+                            selected="{!item.Id==v.bookingWrapper.booking.Contract__c}"
+                          >
+                            {!item.Name}
+                            <aura:if isTrue="{!not(empty(item.RegionTxt__c))}">
+                              , <span>{!item.RegionTxt__c}</span></aura:if
+                            >
+                          </option>
+                        </aura:if>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!not(v.screen=='CreateBooking')}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Contract Number"
+                      onchange="{!c.handleContractChange}"
+                      value="{!v.bookingWrapper.booking.Contract__c}"
+                      disabled="{!v.isDisableContractAndContact}"
+                    >
+                      <option value="">-- None --</option>
+                      <aura:iteration items="{!v.contractsList}" var="item">
+                        <aura:if
+                          isTrue="{!if(not(empty(item.Name)), true, false)}"
+                        >
+                          <option
+                            value="{!item.Id}"
+                            selected="{!item.Id==v.bookingWrapper.booking.Contract__c}"
+                          >
+                            {!item.Name}
+                            <aura:if isTrue="{!not(empty(item.RegionTxt__c))}">
+                              , <span>{!item.RegionTxt__c}</span></aura:if
+                            >
+                          </option>
+                        </aura:if>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                  <div class="col-sm-4 grey-bg-search">
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Contact Name"
+                      placeholder="Search Contact"
+                      isDisabled="{!v.isDisableContractAndContact}"
+                      requiredInput="false"
+                      functionality="Quote:PostLoginContact"
+                      SearchKeyWord="{!v.selectedContactPol}"
+                      aura:id="contactId"
+                      clickedItem="{!v.clickedItemContact}"
+                      clickedItemId="{!v.clickedItemIdContact}"
+                    />
+                  </div>
+                </aura:if>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </aura:if>
+        <!-- Contact Detail Section-->
+        <aura:if
+          isTrue="{!and(not(v.screen=='FindARoute'), not(v.screen=='CreateBooking'))}"
+        >
+          <div class="row">
+            <div class="col-sm-1">
+              <h6>Contact Details</h6>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="email"
+                    aura:id="customerEmailId"
+                    required="true"
+                    label="Email ID"
+                    placeholder="Enter email address"
+                    value="{!v.bookingWrapper.booking.Customer_Email__c}"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="customerNameId"
+                    label="Name"
+                    placeholder="Enter name"
+                    value="{!v.bookingWrapper.booking.Contact_Name__c}"
+                    maxlength="250"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="customerCompanyId"
+                    label="Company Name"
+                    placeholder="Enter company name"
+                    value="{!v.bookingWrapper.booking.Company_Name__c}"
+                    maxlength="250"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="customerPhoneId"
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                    value="{!v.bookingWrapper.booking.Contact_Number__c}"
+                    messageWhenPatternMismatch="Please enter a valid Phone Number."
+                    maxlength="15"
+                    pattern="[+\-()0-9]*"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </aura:if>
+        <!-- Shipping Detail Section-->
+        <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+          <div class="row">
+            <div class="col-sm-1">
+              <h6>Shipping Details</h6>
+            </div>
+
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="readyDate grey-bg-search">
+                    <lightning:input
+                      autocomplete="off"
+                      type="date"
+                      aura:id="readyDateId"
+                      required="true"
+                      label="{!$Label.c.CC_VC_QuoSum_ReadyDate}"
+                      placeholder="Select Date"
+                      value="{!v.bookingWrapper.booking.Ready_Date__c}"
+                      min="{!v.minDate}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aura:if>
+        <!-- Origin Section-->
+        <aura:if isTrue="{!(v.screen=='FindARoute')}">
+          <div class="row">
+            <div class="col-sm-3">
+              <div
+                class="readyDate grey-bg-search"
+                onchange="{!c.validateOriginDestinationForRoute}"
+              >
+                <lightning:input
+                  autocomplete="off"
+                  type="date"
+                  aura:id="readyDateIdRoute"
+                  required="true"
+                  label="{!$Label.c.CC_VC_QuoSum_ReadyDate}"
+                  placeholder="Select Date"
+                  value="{!v.bookingWrapper.booking.Ready_Date__c}"
+                  min="{!v.minDate}"
+                  dateStyle="long"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-9">
+              <div class="row">
+                <div
+                  class="col-sm-4 grey-bg-search"
+                  onchange="{!c.validateOriginDestinationForRoute}"
+                >
+                  <c:CC_CustomLookupInput
+                    fieldLabel="Origin"
+                    placeholder="Search by city/ zip code / port code"
+                    requiredInput="true"
+                    functionality="Quote:Origin"
+                    aura:id="originId"
+                    clickedItem="{!v.clickedItemOrigin}"
+                    clickedItemId="{!v.clickedItemIdOrigin}"
+                  />
+                  <!--SearchKeyWord="{!v.selectedOriginLocation}" -->
+                </div>
+                <aura:if isTrue="{!or(v.originMove=='R')}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Origin Sublocation"
+                      required="true"
+                      aura:Id="requiredId"
+                      value="{!v.bookingWrapper.booking.Pickup_Location__c}"
+                    >
+                      <aura:iteration items="{!v.originSubLocation}" var="item">
+                        <option
+                          value="{!item.Name}"
+                          selected="{!v.bookingWrapper.booking.Pickup_Location__c == item.Name}"
+                        >
+                          {!item.SubLocation_Name__c} ({!item.Name})
+                        </option>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!or(v.originMove=='D')}">
+                  <div
+                    class="col-sm-4 grey-bg-search"
+                    onchange="{!c.refreshSchedulesCount}"
+                  >
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Via Port"
+                      placeholder="Search here"
+                      requiredInput="false"
+                      functionality="Quote:POL"
+                      SearchKeyWord=""
+                      aura:id="POLId"
+                      clickedItem="{!v.clickedItemPol}"
+                      clickedItemId="{!v.clickedItemIdPol}"
+                    />
+                  </div>
+                  <aura:if
+                    isTrue="{!v.bookingWrapper.booking.Customer_Origin_Country__c=='US'}"
+                  >
+                    <div
+                      class="col grey-bg-search"
+                      onchange="{!c.refreshSchedulesCount}"
+                    >
+                      <lightning:select
+                        label="{!$Label.c.CC_VC_QuoSum_ReceiptType}"
+                        aura:id="originReceiptTypeId"
+                        disabled="{!!or(v.originMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Transportation_Management_System_Origin__c}"
+                      >
+                        <option value="">All</option>
+                        <option value="A">All Motor</option>
+                        <option value="M">Motor/Rail</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                  <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+                    <div class="col grey-bg-search">
+                      <lightning:select
+                        label="Drayage Options"
+                        disabled="{!!or(v.originMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Origin_Drayage__c}"
+                      >
+                        <!--option value="DP">Drop and Pull</option-->
+                        <option value="LL">Live Load</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                </aura:if>
+              </div>
+            </div>
+          </div>
+        </aura:if>
+        <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+          <div class="row">
+            <div class="col-sm-1">
+              <aura:if isTrue="{!v.screen=='CreateBooking'}">
+                <h6>Origin Details</h6>
+              </aura:if>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div class="col-sm-4 grey-bg-search">
+                  <c:CC_CustomLookupInput
+                    fieldLabel="Origin"
+                    placeholder="Search by city/ zip code / port code"
+                    requiredInput="true"
+                    functionality="Quote:Origin"
+                    SearchKeyWord="{!v.selectedOriginLocation}"
+                    aura:id="originId"
+                    clickedItem="{!v.clickedItemOrigin}"
+                    clickedItemId="{!v.clickedItemIdOrigin}"
+                  />
+                </div>
+                <aura:if isTrue="{!or(v.originMove=='R')}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Origin Sublocation"
+                      required="true"
+                      aura:Id="requiredId"
+                      value="{!v.bookingWrapper.booking.Pickup_Location__c}"
+                    >
+                      <aura:iteration items="{!v.originSubLocation}" var="item">
+                        <option
+                          value="{!item.Name}"
+                          selected="{!v.bookingWrapper.booking.Pickup_Location__c == item.Name}"
+                        >
+                          {!item.SubLocation_Name__c} ({!item.Name})
+                        </option>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!or(v.originMove=='D')}">
+                  <div
+                    class="col-sm-4 grey-bg-search"
+                    onchange="{!c.refreshSchedulesCount}"
+                  >
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Via Port"
+                      placeholder="Search here"
+                      requiredInput="false"
+                      functionality="Quote:POL"
+                      SearchKeyWord=""
+                      aura:id="POLId"
+                      clickedItem="{!v.clickedItemPol}"
+                      clickedItemId="{!v.clickedItemIdPol}"
+                    />
+                  </div>
+                  <aura:if
+                    isTrue="{!v.bookingWrapper.booking.Customer_Origin_Country__c=='US'}"
+                  >
+                    <div
+                      class="col grey-bg-search"
+                      onchange="{!c.refreshSchedulesCount}"
+                    >
+                      <lightning:select
+                        label="{!$Label.c.CC_VC_QuoSum_ReceiptType}"
+                        aura:id="originReceiptTypeId"
+                        disabled="{!!or(v.originMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Transportation_Management_System_Origin__c}"
+                      >
+                        <option value="">All</option>
+                        <option value="A">All Motor</option>
+                        <option value="M">Motor/Rail</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                  <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+                    <div class="col grey-bg-search">
+                      <lightning:select
+                        label="Drayage Options"
+                        disabled="{!!or(v.originMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Origin_Drayage__c}"
+                      >
+                        <!--option value="DP">Drop and Pull</option-->
+                        <option value="LL">Live Load</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                </aura:if>
+              </div>
+              <!--
+					<aura:if isTrue="{!v.screen=='CreateBooking'}">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <lightning:input autocomplete="off" type="text"
+                                                         aura:id="transportInstructions" label="Transport Instructions"
+                                                         placeholder="Type here" required="false" value="{!v.bookingWrapper.transportOrigin.transport.Transport_Instructions__c}" maxlength="250" />
+                                    </div>
+                                    <div class="col-sm-4 without-label">
+                                        <label class="block-view">&nbsp;</label>
+                                        <div class="slds-checkbox">
+                                            <input type="checkbox" id="showCrossDockExport" value="Yes"
+                                                   checked="{!v.showCrossDockExport}"
+                                                   onchange="{!c.handleCrossDockExport}" />
+                                            <label class="slds-checkbox__label" for="showCrossDockExport">
+                                                <span class="slds-checkbox_faux"></span>
+                                                <span class="slds-form-element__label">Cross Dock Export</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!or(v.originMove=='D')}">
+                                        <div class="col-sm-12">
+                                            <c:CC_OriginDestStopsCmp section="origin" aura:id="originDestStopId"
+                                                                     stopsList="{!v.bookingWrapper.transportOrigin.listStop}" />
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </aura:if>
+                        -->
+            </div>
+          </div>
+        </aura:if>
+        <!-- Destination Section-->
+        <aura:if isTrue="{!v.screen=='FindARoute'}">
+          <div class="row">
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-4 grey-bg-search">
+                  <c:CC_CustomLookupInput
+                    fieldLabel="Destination"
+                    placeholder="Search by city/ zip code / port code"
+                    requiredInput="true"
+                    functionality="Quote:Destination"
+                    clickedItem="{!v.clickedItemDestination}"
+                    clickedItemId="{!v.clickedItemIdDestination}"
+                    SearchKeyWord="{!v.selectedDestinationLocation}"
+                    aura:id="destinationId"
+                  />
+                </div>
+                <aura:if isTrue="{!or(v.destinationMove=='R')}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Destination Sublocation"
+                      required="true"
+                      aura:Id="requiredId"
+                      value="{!v.bookingWrapper.booking.Delivery_Location__c}"
+                    >
+                      <aura:iteration
+                        items="{!v.destinationSubLocation}"
+                        var="item"
+                      >
+                        <option
+                          value="{!item.Name}"
+                          selected="{!v.bookingWrapper.booking.Delivery_Location__c == item.Name}"
+                        >
+                          {!item.SubLocation_Name__c} ({!item.Name})
+                        </option>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!or(v.destinationMove=='D')}">
+                  <div
+                    class="col-sm-4 grey-bg-search"
+                    onchange="{!c.refreshSchedulesCount}"
+                  >
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Via Port"
+                      placeholder="Search here"
+                      requiredInput="false"
+                      functionality="Quote:POD"
+                      SearchKeyWord=""
+                      aura:id="PODId"
+                      clickedItem="{!v.clickedItemPod}"
+                      clickedItemId="{!v.clickedItemIdPod}"
+                    />
+                  </div>
+                  <aura:if
+                    isTrue="{!v.bookingWrapper.booking.Customer_Destination_Country__c=='US'}"
+                  >
+                    <div
+                      class="col grey-bg-search"
+                      onchange="{!c.refreshSchedulesCount}"
+                    >
+                      <lightning:select
+                        label="{!$Label.c.CC_VC_QuoSum_DeliveryType}"
+                        aura:id="destinationReceiptTypeId"
+                        disabled="{!!or(v.destinationMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Transportation_Management_System_Destina__c}"
+                      >
+                        <option value="">All</option>
+                        <option value="A">All Motor</option>
+                        <option value="M">Motor/Rail</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                  <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+                    <div class="col grey-bg-search">
+                      <lightning:select
+                        label="Drayage Options"
+                        disabled="{!!or(v.destinationMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Destination_Drayage__c}"
+                      >
+                        <!--option value="DP">Drop and Pull</option-->
+                        <option value="LL">Live Load</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                </aura:if>
+              </div>
+            </div>
+          </div>
+        </aura:if>
+        <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+          <div class="row">
+            <div class="col-sm-1">
+              <aura:if isTrue="{!v.screen=='CreateBooking'}">
+                <h6>Destination Details</h6>
+              </aura:if>
+            </div>
+            <div class="col-sm-11">
+              <div class="row">
+                <div
+                  class="col-sm-4 grey-bg-search"
+                  onchange="{!c.validateOriginDestinationForRoute}"
+                >
+                  <c:CC_CustomLookupInput
+                    fieldLabel="Destination"
+                    placeholder="Search by city/ zip code / port code"
+                    requiredInput="true"
+                    functionality="Quote:Destination"
+                    clickedItem="{!v.clickedItemDestination}"
+                    clickedItemId="{!v.clickedItemIdDestination}"
+                    SearchKeyWord="{!v.selectedDestinationLocation}"
+                    aura:id="destinationId"
+                  />
+                </div>
+                <aura:if isTrue="{!or(v.destinationMove=='R')}">
+                  <div class="col-sm-4 grey-bg-search">
+                    <lightning:select
+                      label="Destination Sublocation"
+                      required="true"
+                      aura:Id="requiredId"
+                      value="{!v.bookingWrapper.booking.Delivery_Location__c}"
+                    >
+                      <aura:iteration
+                        items="{!v.destinationSubLocation}"
+                        var="item"
+                      >
+                        <option
+                          value="{!item.Name}"
+                          selected="{!v.bookingWrapper.booking.Delivery_Location__c == item.Name}"
+                        >
+                          {!item.SubLocation_Name__c} ({!item.Name})
+                        </option>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </aura:if>
+                <aura:if isTrue="{!or(v.destinationMove=='D')}">
+                  <div
+                    class="col-sm-4 grey-bg-search"
+                    onchange="{!c.refreshSchedulesCount}"
+                  >
+                    <c:CC_CustomLookupInput
+                      fieldLabel="Via Port"
+                      placeholder="Search here"
+                      requiredInput="false"
+                      functionality="Quote:POD"
+                      SearchKeyWord=""
+                      aura:id="PODId"
+                      clickedItem="{!v.clickedItemPod}"
+                      clickedItemId="{!v.clickedItemIdPod}"
+                    />
+                  </div>
+                  <aura:if
+                    isTrue="{!v.bookingWrapper.booking.Customer_Destination_Country__c=='US'}"
+                  >
+                    <div
+                      class="col grey-bg-search"
+                      onchange="{!c.refreshSchedulesCount}"
+                    >
+                      <lightning:select
+                        label="{!$Label.c.CC_VC_QuoSum_DeliveryType}"
+                        aura:id="destinationReceiptTypeId"
+                        disabled="{!!or(v.destinationMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Transportation_Management_System_Destina__c}"
+                      >
+                        <option value="">All</option>
+                        <option value="A">All Motor</option>
+                        <option value="M">Motor/Rail</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                  <aura:if isTrue="{!not(v.screen=='FindARoute')}">
+                    <div class="col grey-bg-search">
+                      <lightning:select
+                        label="Drayage Options"
+                        disabled="{!!or(v.destinationMove=='D')}"
+                        value="{!v.bookingWrapper.booking.Destination_Drayage__c}"
+                      >
+                        <!--option value="DP">Drop and Pull</option-->
+                        <option value="LL">Live Load</option>
+                      </lightning:select>
+                    </div>
+                  </aura:if>
+                </aura:if>
+              </div>
+              <!-- <aura:if isTrue="{!v.screen=='CreateBooking'}">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <lightning:input autocomplete="off" type="text"
+                                                         aura:id="transportInstructions" label="Transport Instructions"
+                                                         placeholder="Type here" required="false" value="{!v.bookingWrapper.transportDestination.transport.Transport_Instructions__c}" maxlength="250" />
+                                    </div>
+                                    <div class="col-sm-4 without-label">
+                                        <label class="block-view">&nbsp;</label>
+                                        <div class="slds-checkbox">
+                                            <input type="checkbox" id="showCrossDockImport" value="Yes"
+                                                   checked="{!v.showCrossDockImport}"
+                                                   onchange="{!c.handleCrossDockImport}" />
+                                            <label class="slds-checkbox__label" for="showCrossDockImport">
+                                                <span class="slds-checkbox_faux"></span>
+                                                <span class="slds-form-element__label">Cross Dock Import</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!or(v.destinationMove=='D')}">
+                                        <div class="col-sm-12">
+                                            <c:CC_OriginDestStopsCmp section="destination" aura:id="originDestStopId"
+                                                                     stopsList="{!v.bookingWrapper.transportDestination.listStop}" />
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </aura:if>
+   							 -->
+            </div>
+          </div>
+        </aura:if>
+      </div>
+    </form>
+  </div>
+  <aura:method
+    name="validateOriginDestination"
+    action="{!c.validateOriginDestination}"
+    access="public"
+  >
+    <aura:attribute
+      name="isValidOriginDestination"
+      type="boolean"
+      default="false"
+    />
+  </aura:method>
+  <aura:method
+    name="resetOriginDestination"
+    action="{!c.resetOriginDestination}"
+    access="public"
+  >
+  </aura:method>
+</aura:component>

@@ -1,0 +1,122 @@
+<aura:component
+  controller="CC_VelozRoutesCtrl"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="responseWrapper" type="Object" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="rateMapping" type="List" />
+  <aura:attribute name="showRates" type="boolean" default="false" />
+  <aura:attribute name="scheduleNumberRoutesMap" type="List" />
+
+  <aura:attribute name="screen" type="String" default="Quote" />
+  <aura:attribute name="originObject" type="Object" />
+  <aura:attribute name="destinationObject" type="Object" />
+  <aura:attribute name="selectedRoutesList" type="List" />
+  <aura:attribute name="selectedSchedulesList" type="List" />
+  <aura:attribute name="routes" type="List" />
+  <aura:attribute name="schedules" type="List" />
+  <aura:attribute name="sortBy" type="string" />
+  <aura:attribute name="sortByDirection" type="string" />
+  <aura:attribute name="sortingTransitClass" type="String" default="" />
+  <aura:attribute name="sortingPriceClass" type="String" default="active asc" />
+  <aura:attribute name="termsAndConditions" type="List" />
+  <aura:attribute name="disableCheckBox" type="boolean" default="false" />
+  <aura:attribute name="disableNext" type="boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="change"
+    value="{!v.responseWrapper}"
+    action="{!c.doInit}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedRoutesList}"
+    action="{!c.handleSelectedRouteListChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedSchedulesList}"
+    action="{!c.selectedSchedulesListChange}"
+  />
+
+  <aura:if isTrue="{!v.showRates}">
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <aura:if isTrue="{!v.screen=='Quote'}">
+          <h6 class="line-height-40">
+            {!v.routes.length}&nbsp;{!$Label.c.CC_VC_Routes_Route}{!if(v.routes.length
+            > 1, 's', '')}&nbsp;<span class="grey-text-9"
+              ><i>{!$Label.c.CC_VC_Routes_Max_Message}</i></span
+            >
+          </h6>
+        </aura:if>
+        <aura:if isTrue="{!v.screen=='CreateBooking'}">
+          <h6 class="line-height-40">
+            {!v.schedules.length}&nbsp;Schedule{!if(v.schedules.length > 1, 's',
+            '')}&nbsp;<span class="grey-text-9"
+              ><i>{!$Label.c.CC_VC_Schedules_Max_Message}</i></span
+            >
+          </h6>
+        </aura:if>
+      </div>
+      <div class="col-sm-6 text-right">
+        <span>Sort By : </span>
+        <span class="sorting-options">
+          <a
+            onclick="{!c.handleSorting}"
+            id="Price"
+            class="{!v.sortingPriceClass}"
+            >{!$Label.c.CC_VC_Routes_Price}
+            <!--<aura:if isTrue="{!v.sortBy == 'Price'}">
+                            <aura:if isTrue="{!v.sortByDirection == 'asc'}">↓<aura:set attribute="else">↑</aura:set>
+                            </aura:if>
+                        </aura:if>-->
+          </a>
+        </span>
+        <span class="sorting-options">
+          <a
+            onclick="{!c.handleSorting}"
+            id="Duration"
+            class="{!v.sortingTransitClass}"
+            >{!$Label.c.CC_VC_Routes_Duration}
+            <!--<aura:if isTrue="{!v.sortBy == 'Duration'}">
+                            <aura:if isTrue="{!v.sortByDirection == 'asc'}">↓<aura:set attribute="else">↑</aura:set>
+                            </aura:if>
+                        </aura:if>-->
+          </a>
+        </span>
+      </div>
+    </div>
+    <aura:if isTrue="{!v.screen=='Quote'}">
+      <aura:iteration items="{!v.routes}" var="route" indexVar="index">
+        <c:CC_VelozRouteParent
+          routeRecord="{!route}"
+          recordIndex="{!index + 1}"
+          selectedRoutesList="{!v.selectedRoutesList}"
+          rateMapping="{!v.rateMapping}"
+          termsAndConditions="{!v.termsAndConditions}"
+          originObject="{!v.originObject}"
+          destinationObject="{!v.destinationObject}"
+          disableCheckBox="{!v.disableCheckBox}"
+          screen="{!v.screen}"
+        />
+      </aura:iteration>
+    </aura:if>
+    <!--  <aura:if isTrue="{!v.screen=='CreateBooking'}">
+            <aura:iteration items="{!v.schedules}" var="schedule" indexVar="index">
+                <aura:iteration items="{!v.scheduleNumberRoutesMap}" var="mapItem">
+                    <aura:if isTrue="{!mapItem.key==schedule.sequenceNumber}">
+                        <c:CC_BookingRouteParent aura:id="{!'BookingRouteComp:'+(index+1)}" routeRecord="{!mapItem.value}" recordIndex="{!(index + 1)}" screen="{!v.screen}"
+                                                 selectedSchedulesList="{!v.selectedSchedulesList}" rateMapping="{!v.rateMapping}" bookingWrapper="{!v.bookingWrapper}"
+                                                 termsAndConditions="{!v.termsAndConditions}" originObject="{!v.originObject}" scheduleRecord="{!schedule}"
+                                                 destinationObject="{!v.destinationObject}" disableCheckBox="{!v.disableCheckBox}"
+                                                 />
+                    </aura:if>
+                </aura:iteration>
+            </aura:iteration>
+        </aura:if> -->
+  </aura:if>
+</aura:component>

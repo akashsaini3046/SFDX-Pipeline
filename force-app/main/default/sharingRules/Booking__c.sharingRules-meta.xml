@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Booking_Agent</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Booking_Agent</label>
+        <sharedTo>
+            <group>Agent</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Booking_Community_Super_user</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Booking Community Super user</label>
+        <sharedTo>
+            <group>Community_Super_User</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Booking_Customer_Operations</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Booking Customer Operations</label>
+        <sharedTo>
+            <group>Customer_Operations</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Booking_Customer_Support</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Booking Customer Support</label>
+        <sharedTo>
+            <group>Customer_Support</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Booking_Documentation</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Booking Documentation</label>
+        <sharedTo>
+            <group>Documentation</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

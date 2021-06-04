@@ -1,0 +1,310 @@
+<aura:component controller="ADMasterFilterController">
+  <aura:attribute name="lstFilterByOptions" type="List" />
+  <aura:attribute name="lstOppSizeFilterOperator" type="List" />
+  <aura:attribute name="strSelectedOppSizeFilterOperator" type="String" />
+  <aura:attribute name="strShowDiv" type="String" />
+  <aura:attribute name="strSelectedFilterBy" type="String" />
+  <aura:attribute name="strSelectedYear" type="String" />
+  <aura:attribute name="lstFilterYear" type="List" />
+  <aura:attribute name="boolShowFilterModal" type="Boolean" default="false" />
+  <aura:attribute name="lstChildAccounts" type="List" />
+  <aura:attribute name="lstAccountOwners" type="List" />
+  <aura:attribute name="strError" type="String" />
+  <aura:attribute name="boolInputError" type="Boolean" default="false" />
+  <aura:attribute name="strOppSizeVal" type="String" />
+  <aura:attribute
+    name="strSelectedFilterString"
+    type="String"
+    default="All Accounts"
+  />
+  <aura:attribute name="strSelectedCount" type="String" />
+  <aura:attribute name="idAccountId" type="Id" />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute name="strYearToShowOnTop" type="String" />
+  <aura:attribute name="strCopySelectedFilterBy" type="String" />
+  <aura:attribute name="strCopyChildAccounts" type="String" />
+  <aura:attribute name="strCopySelectedYear" type="String" />
+  <aura:attribute name="strCopyOppSizeVal" type="String" />
+  <aura:attribute name="strCopyAccountOwners" type="String" />
+  <aura:attribute name="strCopySelectedOppSizeFilterOperator" type="String" />
+  <aura:attribute name="boolSelectAllAccount" type="Boolean" default="false" />
+  <aura:attribute
+    name="boolCopySelectAllAccount"
+    type="Boolean"
+    default="false"
+  />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="boolInit" type="Boolean" default="false" />
+
+  <!--aura:attribute name="selectedAccounts" type="List" /-->
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:registerEvent name="evtMasterEvent" type="c:AD_EVTMasterFilter" />
+
+  <!-- Filter icon -->
+  <div class="slds-grid slds-wrap" style="margin-top: -10px">
+    <div
+      class="slds-size--10-of-12 slds-medium-size--10-of-12 slds-large-size--10-of-12"
+    >
+      <div class="slds-float_left" style="width: 100%">
+        <div
+          class="slds-float_left slds-p-top_none slds-truncate"
+          style="width: 100% !important"
+        >
+          For Year: {!v.strYearToShowOnTop}
+        </div>
+        <div
+          class="slds-float_left slds-p-top_none slds-truncate"
+          style="width: 100% !important"
+        >
+          {!v.strSelectedFilterString}
+        </div>
+      </div>
+    </div>
+    <div
+      class="slds-size--2-of-12 slds-medium-size--2-of-12 slds-large-size--2-of-12"
+    >
+      <div
+        class="slds-float_left padding-top-six slds-p-left_x-small font-blue font-bold"
+      >
+        {!v.strSelectedCount}
+      </div>
+      <div class="slds-float_right">
+        <lightning:button
+          variant="base"
+          label="{!$Label.c.AD_LABEL_BUTTON_FILTER_BY}"
+          title="{!$Label.c.AD_LABEL_BUTTON_FILTER_BY}"
+          iconName="utility:filterList"
+          onclick="{! c.handleFilterClick }"
+          class="font-blue font-bold"
+        />
+      </div>
+    </div>
+  </div>
+  <hr class="hr-margin-top hr-margin-bottom" />
+
+  <!-- Modal dialog starts -->
+  <aura:if isTrue="{!v.boolShowFilterModal}">
+    <div style="max-height: 490px !important">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-label="Master filter modal"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+            style="max-height: 490px !important"
+          >
+            <div
+              class="slds-float_left blueFontColour font-bold font-size-sixteen-px"
+            >
+              {!$Label.c.AD_LABEL_BUTTON_FILTER_BY}
+            </div>
+            <div class="slds-p-bottom_x-large">
+              <!--<lightning:button class="slds-float_right" variant="base" iconName="utility:close" title="Close" onclick="{!c.handleFilterCloseClick}" />-->
+              <lightning:button
+                class="slds-float_right"
+                variant="base"
+                title="{!$Label.c.AD_LABEL_CLOSE}"
+                onclick="{!c.handleFilterCloseClick}"
+              >
+                <lightning:icon
+                  iconName="utility:close"
+                  class="manageCloseIcon"
+                />
+              </lightning:button>
+            </div>
+
+            <!-- Modal dialog content starts -->
+
+            <aura:if isTrue="{!v.boolInputError}">
+              <div
+                class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+                role="alert"
+              >
+                <span class="slds-assistive-text"
+                  >{!$Label.c.AD_LABEL_ERROR}</span
+                >
+                <h2>{!v.strError}</h2>
+              </div>
+            </aura:if>
+
+            <lightning:combobox
+              variant="label-hidden"
+              name="filterBy"
+              placeholder="Select an Option"
+              value="{!v.strSelectedFilterBy}"
+              options="{!v.lstFilterByOptions}"
+              onchange="{!c.handleFilterByOptionsChange}"
+              class="slds-size_10-of-12 slds-medium-size--5-of-12 slds-large-size--5-of-12 accnameownerpicklist-dummy-class slds-p-top_xx-small slds-p-bottom_small"
+            />
+
+            <!-- <lightning:checkboxGroup value="{!v.selectedAccounts}" options="{!v.lstChildAccounts}" />-->
+            <aura:if
+              isTrue="{!v.strSelectedFilterBy == $Label.c.AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_NAME}"
+            >
+              <lightning:input
+                type="checkbox"
+                class="slds-p-top_x-small"
+                label="{!$Label.c.AD_PICKLIST_VAL_ALL_ACCOUNTS}"
+                checked="{!v.boolSelectAllAccount}"
+                onchange="{!c.handleSelectAllAccounts}"
+              />
+              <div
+                id="filteredRecordsDiv"
+                class="slds-scrollable_y slds-m-bottom_small slds-p-top_medium"
+                style="max-height: 215px"
+              >
+                <aura:if isTrue="{!not(empty(v.lstChildAccounts))}">
+                  <aura:iteration
+                    items="{!v.lstChildAccounts}"
+                    var="objAccount"
+                    indexVar="indx"
+                  >
+                    <lightning:input
+                      type="checkbox"
+                      label="{!indx == 0 ? objAccount.Name +  ' ' + $Label.c.AD_PARENT_ACCOUT_APPEND_WITH : objAccount.Name}"
+                      name="{!objAccount.Id}"
+                      checked="{!objAccount.Selected}"
+                      onchange="{!c.handleAccountChange}"
+                      class="{!indx == 0 ? 'font-bold' : ''}"
+                    />
+                    <hr class="hr-margin-top-chld hr-margin-bottom-chld" />
+                  </aura:iteration>
+                  <aura:set attribute="else">
+                    <span class="slds-p-left_small"
+                      >{!$Label.c.AD_MESSAGE_NO_CHILD_ACCOUNT_EXIST}</span
+                    >
+                  </aura:set>
+                </aura:if>
+              </div>
+            </aura:if>
+
+            <aura:if
+              isTrue="{!v.strSelectedFilterBy == $Label.c.AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_OWNER}"
+            >
+              <div
+                id="filteredRecordsDiv_1"
+                class="slds-scrollable_y slds-m-bottom_small slds-p-top_medium"
+                style="max-height: 215px"
+              >
+                <aura:if isTrue="{!not(empty(v.lstAccountOwners))}">
+                  <aura:iteration items="{!v.lstAccountOwners}" var="objUser">
+                    <lightning:input
+                      type="checkbox"
+                      label="{!objUser.Name}"
+                      name="{!objUser.Id}"
+                      checked="{!objUser.Selected}"
+                    />
+                    <hr class="hr-margin-top-chld hr-margin-bottom-chld" />
+                  </aura:iteration>
+                  <aura:set attribute="else">
+                    <span class="slds-p-left_small"
+                      >{!$Label.c.AD_MESSAGE_NO_ACTIVE_USER_EXIST}</span
+                    >
+                  </aura:set>
+                </aura:if>
+              </div>
+            </aura:if>
+
+            <div class="slds-grid slds-wrap">
+              <div
+                class="slds-col slds-size_8-of-12 slds-medium-size--8-of-12 slds-large-size--8-of-12"
+              >
+                <div class="slds-grid slds-wrap">
+                  <div
+                    class="slds-float_left slds-p-bottom_xx-small slds-text-title_bold slds-col slds-size_12-of-12 slds-p-top_none"
+                  >
+                    {!$Label.c.AD_LABEL_OPPORTUNITY_SIZE}
+                  </div>
+                  <div
+                    class="slds-col slds-p-right_x-small slds-size_6-of-12 slds-medium-size--6-of-12 slds-large-size--6-of-12"
+                  >
+                    <lightning:combobox
+                      variant="label-hidden"
+                      name="opportunitySizeFilterOperator"
+                      placeholder="Select an Option"
+                      value="{!v.strSelectedOppSizeFilterOperator}"
+                      options="{!v.lstOppSizeFilterOperator}"
+                      onchange="{!c.handleOpportunitySizeOperatorChange}"
+                      dropdownAlignment="bottom-left"
+                    />
+                  </div>
+                  <div
+                    class="slds-col slds-size_3-of-12 slds-medium-size--3-of-12 slds-large-size--3-of-12 slds-p-around_none"
+                  >
+                    <lightning:input
+                      aura:id="idInputopportunitysize"
+                      value="{!v.strOppSizeVal}"
+                      name="opportunitySizeValue"
+                      variant="label-hidden"
+                    />
+                  </div>
+                  <div
+                    class="slds-col slds-p-left_x-small slds-size_3-of-12 slds-medium-size--3-of-12 slds-large-size--3-of-12 padding-top-six"
+                  >
+                    <span class="font-bold">{!$Label.c.AD_UNIT_NAME}</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="slds-col slds-size_4-of-12 slds-medium-size--4-of-12 slds-large-size--4-of-12"
+              >
+                <div class="slds-grid slds-wrap">
+                  <div
+                    class="slds-float_left slds-p-bottom_xx-small slds-p-left_small slds-text-title_bold slds-col slds-size_12-of-12 slds-p-top_none"
+                  >
+                    {!$Label.c.AD_LABEL_YEAR}
+                  </div>
+                  <div
+                    class="slds-col slds-p-right_small slds-p-left_small slds-size_12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12"
+                  >
+                    <lightning:combobox
+                      variant="label-hidden"
+                      name="yearFilter"
+                      placeholder="Select Year"
+                      value="{!v.strSelectedYear}"
+                      options="{!v.lstFilterYear}"
+                      dropdownAlignment="bottom-left"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal dialog content ends -->
+            <div class="slds-p-top_x-large">
+              <lightning:button
+                variant="brand"
+                class="slds-float_right slds-m-right_small background-blue border-color-white"
+                title="{!$Label.c.AD_LABEL_BUTTON_APPLY}"
+                label="{!$Label.c.AD_LABEL_BUTTON_APPLY}"
+                onclick="{!c.handleFilterApplyClick}"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+  <!-- Modal dialog ends -->
+  <aura:if isTrue="{!v.boolSpinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

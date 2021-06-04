@@ -1,0 +1,150 @@
+<aura:component
+  controller="OpportunitySplitController"
+  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+  access="global"
+>
+  <aura:attribute name="lstOpportunityLineItem" type="List" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="objCurrentOpportunity" type="Opportunity" />
+  <aura:attribute
+    name="boolShowComponentMessage"
+    type="Boolean"
+    default="false"
+  />
+  <aura:attribute name="boolShowFilterModal" type="Boolean" default="false" />
+  <aura:attribute name="strComponentMessage" type="String" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="strSource" type="String" default="MOBILE" />
+  <aura:attribute name="decWonOppSize" type="Decimal" />
+  <aura:attribute name="decLostOppSize" type="Decimal" />
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:if
+    isTrue="{!and(v.boolShowComponentMessage, not(empty(v.strComponentMessage)))}"
+  >
+    <h1>{!v.strComponentMessage}</h1>
+    <div class="slds-docked-form-footer">
+      <lightning:button
+        variant="brand"
+        class="slds-float_right slds-m-right_small background-green border-color-white"
+        title="{!$Label.c.OPS_LABEL_CLOSE}"
+        label="{!$Label.c.OPS_LABEL_CLOSE}"
+        onclick="{!c.handleCloselClick}"
+      />
+    </div>
+  </aura:if>
+
+  <!--Split modal starts here-->
+  <aura:if isTrue="{!v.boolShowFilterModal}">
+    <aura:iteration items="{!v.lstOpportunityLineItem}" var="objOppLineItem">
+      <lightning:card
+        title="{!objOppLineItem.strProductName}"
+        iconName="standard:product"
+        footer=""
+        class="no-padding-mobile"
+      >
+        <aura:set attribute="actions">
+          <lightning:input
+            type="toggle"
+            label=""
+            name="{!objOppLineItem.idLineItem}"
+            checked="{!objOppLineItem.boolServiceStatus}"
+            messageToggleActive="{!$Label.c.OPS_SERVICE_STATUS_WON}"
+            messageToggleInactive="{!$Label.c.OPS_SERVICE_STATUS_LOST}"
+            onchange="{!c.serviceStatusChangeHandler}"
+          />
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+          <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12">
+              <div class="slds-grid slds-wrap">
+                <div
+                  class="slds-col slds-size_6-of-12 slds-truncate slds-p-right_xx-small"
+                >
+                  <span>{!$Label.c.OPS_LABEL_TRADE}:</span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-truncate">
+                  <span>{!objOppLineItem.strTrade}</span>
+                </div>
+                <div
+                  class="slds-col slds-size_6-of-12 slds-truncate slds-p-right_xx-small"
+                >
+                  <span>{!$Label.c.OPS_LABEL_ORIGIN_COUNTRY}:</span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-truncate">
+                  <span>{!objOppLineItem.strOriginCountry}</span>
+                </div>
+                <div
+                  class="slds-col slds-size_6-of-12 slds-truncate slds-p-right_xx-small"
+                >
+                  <span>{!$Label.c.OPS_LABEL_DESTINATION_COUNTRY}:</span>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-truncate">
+                  <span>{!objOppLineItem.strDestinationCountry}</span>
+                </div>
+                <div
+                  class="slds-col slds-size_6-of-12 slds-truncate slds-p-right_xx-small"
+                >
+                  <span>{!$Label.c.OPS_LABEL_QUOTED_PRICE}:</span>
+                </div>
+                <div
+                  class="slds-col slds-size_6-of-12 slds-truncate slds-p-bottom_large"
+                >
+                  <span>{!objOppLineItem.decTotalPrice}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p> </lightning:card
+      ><br />
+    </aura:iteration>
+
+    <div class="slds-docked-form-footer" style="height: 55px">
+      <lightning:button
+        variant="Neutral"
+        class="slds-float_right slds-m-right_xx-small background-green border-color-white"
+        title="{!$Label.c.OPS_LABEL_MARK_ALL_WON}"
+        label="{!$Label.c.OPS_LABEL_WON_ALL}"
+        onclick="{!c.handleWonAllClick}"
+      />
+      <lightning:button
+        variant="Neutral"
+        class="slds-float_right slds-m-right_xx-small background-green border-color-white"
+        title="{!$Label.c.OPS_LABEL_MARK_ALL_LOST}"
+        label="{!$Label.c.OPS_LABEL_ALL_LOST}"
+        onclick="{!c.handleLostAllClick}"
+      />
+      <lightning:button
+        variant="brand"
+        class="slds-float_right slds-m-right_xx-small background-green border-color-white"
+        title="{!$Label.c.OPS_LABEL_SPLIT}"
+        label="{!$Label.c.OPS_LABEL_SPLIT}"
+        onclick="{!c.handleSaveSplitClick}"
+      />
+      <div style="width: 110px">
+        <span class="slds-truncate"
+          >Won:<ui:outputCurrency value="{!v.decWonOppSize}" />
+        </span>
+        <p class="slds-truncate">
+          Lost:<ui:outputCurrency value="{!v.decLostOppSize}" />
+        </p>
+      </div>
+    </div>
+  </aura:if>
+  <!--Split modal ends here-->
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

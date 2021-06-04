@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>lovesh.tomar@nagarro.com</contactEmail>
+    <label>CICD</label>
+    <oauthConfig>
+        <callbackUrl>https://www.salesforce.com</callbackUrl>
+        <certificate
+    >MIIDtTCCAp0CFG3xCf52zhy3hR9GRXpYyBq+s7m4MA0GCSqGSIb3DQEBCwUAMIGVMQswCQYDVQQGEwJVUzEQMA4GA1UECAwHRmxvcmlkYTEVMBMGA1UEBwwMSmFja3NvbnZpbGxlMSUwIwYDVQQKDBxDcm93bGV5IE1hcml0aW1lIENvcnBvcmF0aW9uMRMwEQYDVQQLDApTYWxlc2ZvcmNlMSEwHwYDVQQDDBhodHRwczovL3d3dy5jcm93bGV5LmNvbS8wIBcNMjEwMjA4MDcwODM3WhgPMzAyMDA2MTEwNzA4MzdaMIGVMQswCQYDVQQGEwJVUzEQMA4GA1UECAwHRmxvcmlkYTEVMBMGA1UEBwwMSmFja3NvbnZpbGxlMSUwIwYDVQQKDBxDcm93bGV5IE1hcml0aW1lIENvcnBvcmF0aW9uMRMwEQYDVQQLDApTYWxlc2ZvcmNlMSEwHwYDVQQDDBhodHRwczovL3d3dy5jcm93bGV5LmNvbS8wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDADURJETRot0fZf5JEmcRkFuc4IZdQ6h2a/nOKOhTizv2OmdbvppKT96NJrnoAeTQRzO8gAjtsGZJuEBWyCmDeRi5tK/IHJUk32wMwclPznh3C2QOwKDLUATMHjc4cLgdrhju+6U+723MAAec+FL7K1zSuCT81Y4pQnYmxE3grXGLGJcijyUF26fNy/zHstK5hs5pEdq+0/ON25/BDn4BbY/EllmPJsjvx40XLHNTk8B8Bl+aKCvVpJLwABrfvO3JYzvXJXA2A/8dGtTA7EPFSi8H2mmAKVm7KDs0piW7SR8WPY22axR9FjIXI4ensMBusC9Q1UHHLsvaTl24LMOAPAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAFS13IpArVbJA4gOir4RISyBHXpNrC4qvMc0079CV673RpjbdB1TCqF8xfqC9BkrkCykgLlcQflnKpElz207nHe5LLxEZAKQC0YXhHJJqtsYuq+iSe3cQONyVevNYrDteGH3ySJg2OfRytUrse6PDIJ0VK2kREu94wY9FipFaYWe5s/k6hvno/wdZJBlbelLeUQKYx7aqlAZYUixAxFwMlWZ2L870qzbQTKQcHF5mR70a6tN5AlKdJvJM9c6nG0jIWG2Ad7XvMEVcMj//zGPs9rzIoJRGV12XeV3szGDTf2j9x+ORTP04f9P9jmzT3qig0E20mGUCmUBFl6hQPWexa0=</certificate>
+        <consumerKey
+    >3MVG90D5vR7UtjbqV5d7pG9oIPIhD58kWeIY47s32wjttd8yomE3wK0Y6M96OVq92XPRoLKAWQ5zkyb0dlJwj</consumerKey>
+        <isAdminApproved>true</isAdminApproved>
+        <isConsumerSecretOptional>true</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <scopes>Full</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <refreshTokenPolicy>zero</refreshTokenPolicy>
+    </oauthPolicy>
+    <profileName>Customer Operations</profileName>
+    <profileName>Community Super User</profileName>
+    <profileName>Agent</profileName>
+    <profileName>Visitors - Sales Manager</profileName>
+    <profileName>Documentation</profileName>
+    <profileName>Chatter Free User</profileName>
+    <profileName>Customer Support</profileName>
+    <profileName>Visitors - Sales Rep</profileName>
+    <profileName>Standard User</profileName>
+    <profileName>System Administrator</profileName>
+    <profileName>CC - Account Manager</profileName>
+    <profileName>CC - Account Rep</profileName>
+    <profileName>Quality Assurance</profileName>
+    <profileName>Pricing Manager</profileName>
+    <profileName>CC - Account Leader</profileName>
+    <profileName>Pricing Agent old</profileName>
+    <profileName>Super User</profileName>
+    <profileName>Minimum Access - Salesforce</profileName>
+    <profileName>Analytics Cloud Integration User</profileName>
+    <profileName>Analytics Cloud Security User</profileName>
+    <profileName>Service Manager_old</profileName>
+    <profileName>Visitors - Sales Leader</profileName>
+    <profileName>Service Leader_old</profileName>
+    <profileName>Pricing Agent</profileName>
+    <profileName>Minimum Access - Salesforce</profileName>
+    <profileName>Service Trainer</profileName>
+    <profileName>Identity User</profileName>
+    <profileName>Sales Leader</profileName>
+    <profileName>Guest License User</profileName>
+    <profileName>Sales Manager</profileName>
+    <profileName>crowley Profile</profileName>
+    <profileName>Non Sales Users</profileName>
+    <profileName>Agent Login</profileName>
+    <profileName>Sales Rep</profileName>
+    <profileName>SingleSignOnError Profile</profileName>
+    <profileName>Admin w/o Deployment</profileName>
+    <profileName>Account Manager</profileName>
+    <profileName>Crowley_CustomerCommunity Profile</profileName>
+    <profileName>ChatSite Profile</profileName>
+    <profileName>Account Leader</profileName>
+    <profileName>Service Leader</profileName>
+    <profileName>Service Agent</profileName>
+    <profileName>Temp Call Center</profileName>
+    <profileName>Crowley Marketing Team</profileName>
+    <profileName>Customer Community Plus User Custom</profileName>
+    <profileName>Customer Community Plus Login User Custom</profileName>
+    <profileName>Service Administrator</profileName>
+    <profileName>Account Rep</profileName>
+    <profileName>Integration User</profileName>
+    <profileName>Developer Profile</profileName>
+    <profileName>Service Manager</profileName>
+    <profileName>Employees Profile</profileName>
+    <profileName>Service Admin</profileName>
+    <profileName>Customer Support Login</profileName>
+    <profileName>Documentation Login</profileName>
+    <profileName>Community Super User Login</profileName>
+    <profileName>Customer Operations Login</profileName>
+    <profileName>API Only User</profileName>
+    <profileName>Call Center</profileName>
+    <profileName>Data Steward</profileName>
+    <profileName>Customer Community Plus Login User</profileName>
+    <profileName>Chatter Moderator User</profileName>
+    <profileName>Customer Community Plus User</profileName>
+    <profileName>Chatter External User</profileName>
+    <profileName>Solution Manager</profileName>
+    <profileName>Read Only</profileName>
+    <profileName>Power BI Admin</profileName>
+    <profileName>Contract Manager</profileName>
+    <profileName>Sales Agent</profileName>
+    <profileName>Marketing User</profileName>
+</ConnectedApp>

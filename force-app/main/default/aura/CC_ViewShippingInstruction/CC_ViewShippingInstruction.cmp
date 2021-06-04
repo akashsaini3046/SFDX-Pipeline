@@ -1,0 +1,211 @@
+<aura:component
+  controller="BOLEditController"
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute name="strBookingId" type="String" />
+  <aura:attribute name="strBolId" type="String" />
+  <aura:attribute name="currentDate" type="Date" />
+  <aura:attribute name="screen" type="string" default="BOLShippingInst" />
+  <aura:attribute name="shippingURL" type="String" />
+  <aura:attribute name="showSendEmail" type="boolean" default="false" />
+  <aura:attribute name="headerVal" type="String" />
+  <aura:attribute name="typeOfEmail" type="String" />
+  <aura:attribute name="emailTemplateName" type="String" />
+  <aura:attribute type="Boolean" name="boolSpinner" default="false" />
+  <aura:attribute
+    name="componentName"
+    type="string"
+    default="CC_BillofLading"
+  />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+
+  <aura:attribute name="BOL" type="object" />
+  <aura:attribute name="partyList" type="CC_BolPartyWrapper[]" />
+  <lightning:navigation aura:id="navigationService" />
+  <div class="bol-screens">
+    <div class="breadcrumbs-search-row block-view">
+      <div class="pull-left">
+        <h5>Shipping Instructions</h5>
+        <lightning:breadcrumbs>
+          <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+          <lightning:breadcrumb
+            label="Bills of Lading"
+            onclick="{!c.navigateToBOL}"
+          />
+          <lightning:breadcrumb
+            label="{!v.BOL.customerReference.billOfLadingNumber}"
+          />
+        </lightning:breadcrumbs>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="cr-head breadcrumbs-search-row block-view">
+      <div class="pull-left">
+        <h5>
+          <span class="color-blue">
+            <b>{!v.BOL.customerReference.billOfLadingNumber}</b>
+          </span>
+          <span class="grey-text-9 status-icon">
+            <aura:if
+              isTrue="{!equals(v.BOL.customerReference.bolStatus, 'SUBMITTED')}"
+            >
+              Submitted
+              <aura:set attribute="else">
+                {!v.BOL.customerReference.bolStatus}
+              </aura:set>
+            </aura:if>
+          </span>
+        </h5>
+      </div>
+      <div class="pull-right createquote-actions m-0">
+        <lightning:button
+          variant="neutral"
+          class="width-unset slds-button_neutral"
+          label="Email"
+          onclick="{!c.handleEmailModal}"
+        />
+        <lightning:button
+          variant="neutral"
+          class="width-unset slds-button_neutral m-l-10"
+          label="Download"
+          onclick="{!c.handleDownloadPDF}"
+        />
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="col-sm-6">
+        <c:CC_BolCustomerReferenceView
+          BOL="{!v.BOL.customerReference}"
+          header="Customer Reference Information"
+        />
+
+        <aura:iteration items="{!v.BOL.shipperLst}" var="shipper">
+          <c:CC_BolCommonPartyView
+            data="{!shipper}"
+            header="Shipper / Exporter"
+          />
+        </aura:iteration>
+
+        <aura:iteration items="{!v.BOL.consigneeLst}" var="consignee">
+          <c:CC_BolCommonPartyView data="{!consignee}" header="Consignee" />
+        </aura:iteration>
+
+        <aura:if isTrue="{!not(empty(v.BOL.routingDetails))}">
+          <c:CC_BolRouteDetailsView
+            aura:id="routeDetailId"
+            data="{!v.BOL.routingDetails}"
+            header="Route Details"
+          />
+        </aura:if>
+
+        <aura:if isTrue="{!not(empty(v.BOL))}">
+          <c:CC_BOLCargoEquipmentView
+            data="{!v.BOL}"
+            header="Cargo and Equipment Details"
+          />
+        </aura:if>
+      </div>
+      <div class="col-sm-6">
+        <aura:iteration items="{!v.BOL.forwarderLst}" var="forwarder">
+          <c:CC_BolCommonPartyView
+            data="{!forwarder}"
+            header="Forwarding Agent"
+          />
+        </aura:iteration>
+
+        <aura:iteration items="{!v.BOL.notifyPartyLst}" var="notifyParty">
+          <c:CC_BolCommonPartyView
+            data="{!notifyParty}"
+            header="Notify Party"
+          />
+        </aura:iteration>
+
+        <aura:iteration
+          items="{!v.BOL.alsoNotifyPartyLst}"
+          var="alsoNotifyParty"
+        >
+          <c:CC_BolCommonPartyView
+            data="{!alsoNotifyParty}"
+            header="Also Notify"
+          />
+        </aura:iteration>
+
+        <c:CC_BOLRoutingInstruction
+          data="{!v.BOL.routingInstructions}"
+          header="Routing and Instructions"
+          isViewOnly="true"
+        />
+
+        <aura:if isTrue="{!not(empty(v.BOL))}">
+          <c:CC_InvoiceInstruction
+            data="{!v.BOL.chargeLine}"
+            isViewOnly="true"
+          />
+        </aura:if>
+
+        <aura:if isTrue="{!not(empty(v.BOL))}">
+          <c:CC_BOLAdditionalInformationView
+            data="{!v.BOL.additionalInformation}"
+            header="Additional Information"
+          />
+        </aura:if>
+      </div>
+    </div>
+
+    <br />
+    <!--div class="m-b-10">
+            <h6 class="bold">Declaration</h6>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <b>Recieved by the Carrier as described on the reverse hereof from the above named shipper. The goods,
+                    or packages said to contain goods, herein described above, in apparent good order and condition
+                    unless otherwise noted hereon, to be held and transported subject to all written, typed, printed or
+                    stamped provisions of this Bill of Lading. On this and on the reverse side hereof, to the port or
+                    place of discharge named above or so near there unto as the ship can always safely get and leave
+                    always afloat at all stages and conditions of water and weather and there to be delivered or
+                    transhipped on payment of the charges hereon.
+                </b>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12">
+                <div><span class="bol-view-labels">Dated :</span> <b>
+                        <lightning:formattedDateTime value="{!v.currentDate}" />
+                    </b></div>
+                <div><span class="bol-view-labels">SIGNED ON BEHALF OF CARRIER :</span> <b>-</b></div>
+                <div><span class="bol-view-labels">BY :</span> <b>-</b></div>
+            </div>
+        </div> -->
+
+    <aura:if isTrue="{!v.showSendEmail}">
+      <c:CC_BOLShippingInstructionEmail
+        bookingId="{!v.strBookingId}"
+        showEmail="{!v.showSendEmail}"
+        bolId="{!v.strBolId}"
+        bolName="{!v.BOL.customerReference.billOfLadingNumber}"
+      />
+    </aura:if>
+
+    <aura:if isTrue="{!v.boolSpinner}">
+      <div aura:id="spinnerId" class="slds-spinner_container">
+        <div
+          class="slds-spinner-|-brand slds-spinner slds-spinner-|-large slds-is-relative"
+          role="alert"
+        >
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

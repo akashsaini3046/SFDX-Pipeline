@@ -1,0 +1,136 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+  controller="CC_AccountBusinessContactCtrl"
+>
+  <aura:attribute name="accountLabel" type="String" default="Account" />
+  <aura:attribute name="addressLabel" type="String" default="Address" />
+  <aura:attribute name="contactLabel" type="String" default="Contact" />
+  <aura:attribute name="createAccountButtonLabel" type="String" default="" />
+  <aura:attribute name="createAddressButtonLabel" type="String" default="" />
+  <aura:attribute name="createContactButtonLabel" type="String" default="" />
+  <aura:attribute name="accountPlaceholder" type="String" default="Account" />
+  <aura:attribute name="addressPlaceholder" type="String" default="Address" />
+  <aura:attribute name="contactPlaceholder" type="String" default="Contact" />
+  <aura:attribute name="isAccountRequired" type="Boolean" default="false" />
+  <aura:attribute name="isAddressRequired" type="Boolean" default="false" />
+  <aura:attribute name="isContactRequired" type="Boolean" default="false" />
+  <aura:attribute name="selectedAccount" type="String" />
+  <aura:attribute name="selectedAddress" type="String" />
+  <aura:attribute name="selectedContact" type="String" />
+  <aura:attribute name="selectedAccountId" type="String" />
+  <aura:attribute name="selectedAddressId" type="String" />
+  <aura:attribute name="selectedContactId" type="String" />
+  <aura:attribute name="account" type="Account" />
+  <aura:attribute name="address" type="Address__c" />
+  <aura:attribute name="contact" type="Contact" />
+  <aura:attribute name="isDisableDependent" type="Boolean" default="true" />
+  <aura:attribute name="showCreateProspect" type="boolean" default="false" />
+  <aura:attribute name="showCreateAddress" type="boolean" default="false" />
+  <aura:attribute name="showCreateContact" type="boolean" default="false" />
+  <aura:attribute name="allObjects" type="Object" />
+  <aura:attribute name="isAccountChanged" type="boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.handleSelectedItemEvent}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedAccountId}"
+    action="{!c.handleSelectedAccountIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedAddressId}"
+    action="{!c.handleSelectedAddressIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.selectedContactId}"
+    action="{!c.handleSelectedContactIdChange}"
+  />
+  <aura:handler
+    name="change"
+    value="{!v.allObjects}"
+    action="{!c.handleAllObjectsChange}"
+  />
+
+  <div class="col-sm-4 grey-bg-search">
+    <c:CC_CustomLookupInput
+      fieldLabel="{!v.accountLabel}"
+      placeholder="{!v.accountPlaceholder}"
+      requiredInput="{!v.isAccountRequired}"
+      functionality="Combo:Account"
+      SearchKeyWord="{!v.selectedAccount}"
+      aura:id="accountId"
+      showCreateProspect="{!v.showCreateProspect}"
+      hasCreateProspectButton="true"
+      displayType="NameAndButton"
+      createAccountButtonLabel="{!v.createAccountButtonLabel}"
+    />
+  </div>
+  <div class="col-sm-4 grey-bg-search">
+    <c:CC_CustomLookupInput
+      fieldLabel="{!v.addressLabel}"
+      placeholder="{!v.addressPlaceholder}"
+      requiredInput="{!v.isAddressRequired}"
+      functionality="Combo:Address"
+      SearchKeyWord="{!v.selectedAddress}"
+      aura:id="addressId"
+      isDisabled="{!v.isDisableDependent}"
+      dependentId="{!v.selectedAccountId}"
+      showCreateAddress="{!v.showCreateAddress}"
+      hasCreateAddressButton="true"
+      displayType="NameAndButton"
+      createAddressButtonLabel="{!v.createAddressButtonLabel}"
+    />
+  </div>
+  <div class="col-sm-4 grey-bg-search">
+    <c:CC_CustomLookupInput
+      fieldLabel="{!v.contactLabel}"
+      placeholder="{!v.contactPlaceholder}"
+      requiredInput="{!v.isContactRequired}"
+      functionality="Combo:Contact"
+      SearchKeyWord="{!v.selectedContact}"
+      aura:id="contactId"
+      isDisabled="{!v.isDisableDependent}"
+      dependentId="{!v.selectedAccountId}"
+      hasCreateContactButton="true"
+      displayType="NameAndButton"
+      showCreateContact="{!v.showCreateContact}"
+      createContactButtonLabel="{!v.createContactButtonLabel}"
+    />
+  </div>
+
+  <aura:if isTrue="{!v.showCreateProspect}">
+    <c:CC_CreateProspect
+      showCreateProspect="{!v.showCreateProspect}"
+      allObjects="{!v.allObjects}"
+    />
+  </aura:if>
+  <aura:if isTrue="{!v.showCreateAddress}">
+    <c:CC_CreateProspect
+      showCreateAddress="{!v.showCreateAddress}"
+      allObjects="{!v.allObjects}"
+      selectedAccountPol="{!v.selectedAccount}"
+      selectedAccountPolId="{!v.selectedAccountId}"
+      disableAcount="true"
+    />
+  </aura:if>
+  <aura:if isTrue="{!v.showCreateContact}">
+    <c:CC_CreateProspect
+      showCreateContact="{!v.showCreateContact}"
+      allObjects="{!v.allObjects}"
+      selectedAccountPol="{!v.selectedAccount}"
+      selectedAccountPolId="{!v.selectedAccountId}"
+      disableAcount="true"
+    />
+  </aura:if>
+
+  <aura:method name="doValidityCheck" action="{!c.doValidate}" access="public">
+    <aura:attribute name="isValid" type="boolean" default="false" />
+  </aura:method>
+</aura:component>

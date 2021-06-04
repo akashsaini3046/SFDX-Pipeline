@@ -1,0 +1,48 @@
+<!--
+* Name: AD_OpportunityConversionRateComponent 
+* Purpose: Lightning Component which shows oppoprtunity conversion rate
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component controller="ADOpportunityConversionRateController">
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute name="idAccountId" type="Id" />
+  <aura:attribute name="strOpportunityConvertionRateVal" type="String" />
+  <aura:attribute name="strYearToShow" type="String" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    event="c:AD_EVTMasterFilter"
+    action="{!c.handleMasterFilterEvent}"
+  />
+
+  <div class="slds-grid slds-wrap">
+    <div
+      class="slds-size--7-of-12 slds-medium-size--8-of-12 slds-large-size--9-of-12 slds-p-top_x-small slds-p-left_none slds-p-right_small slds-p-bottom_x-small"
+    >
+      <p class="">Opportunity<br /> Conversion rate</p>
+      <!--<p style="font-size:11px" class="slds-p-top_xx-small">({!v.strYearToShow})</p> -->
+    </div>
+    <div
+      class="slds-size--5-of-12 slds-medium-size--4-of-12 slds-large-size--3-of-12 slds-p-top_x-small slds-p-right_x-small slds-p-bottom_x-small"
+    >
+      <p class="revenueValueCSS">{!v.strOpportunityConvertionRateVal}%</p>
+    </div>
+  </div>
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

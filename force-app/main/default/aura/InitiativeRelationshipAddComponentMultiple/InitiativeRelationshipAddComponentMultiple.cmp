@@ -1,0 +1,241 @@
+<aura:component
+  controller="InitiativeRelationshipAddCmpController"
+  implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+>
+  <aura:attribute name="boolShowFilterModal" type="Boolean" default="true" />
+  <aura:attribute name="lstAccountsWrapper" type="List" />
+  <aura:attribute name="lstLeadsWrapper" type="List" />
+  <aura:attribute name="strSearchedString" type="String" />
+  <aura:attribute name="strAlertMessage" type="String" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="boolDisabledSaveButton" type="Boolean" default="true" />
+  <aura:attribute name="lstSelectedAccountValue" type="List" />
+  <aura:attribute name="lstSelectedLeadValue" type="List" />
+  <aura:attribute name="strCalledFor" type="String" />
+  <aura:attribute name="strRecordId" type="String" />
+  <aura:attribute name="lstSearchFiled" type="List" />
+  <aura:attribute name="strSelectedFieldAccount" type="String" default="Name" />
+  <aura:attribute name="strSelectedFieldLead" type="String" default="Company" />
+  <aura:attribute name="boolparentWithChild" type="Boolean" default="false" />
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <!-- Modal dialog starts -->
+  <aura:if isTrue="{!v.boolShowFilterModal}">
+    <div class="demo-only" style="height: 440px">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="quick-action-width-desktop slds-modal__container">
+          <header class="slds-modal__header">
+            <h2
+              id="modal-heading-01"
+              class="slds-text-heading_medium slds-hyphenate"
+              style="font-weight: initial"
+            >
+              Add {!v.strCalledFor}s
+            </h2>
+            <div style="padding-top: 1%">
+              <aura:if
+                isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_ACCOUNT}"
+              >
+                <div style="float: left; padding-bottom: 1%">
+                  <lightning:input
+                    type="checkbox"
+                    label="{!$Label.c.AINI_LABEL_PARENT_WITH_CHILD}"
+                    name="parentWithChild"
+                    checked="{!v.boolparentWithChild}"
+                    title="{!$Label.c.AINI_PARENT_WITH_CHILD_TOOL_TIP}"
+                  />
+                </div>
+              </aura:if>
+              <div style="width: 90%; float: left">
+                <div style="width: 40%; float: left">
+                  <div style="width: 70%; float: left">
+                    <aura:if
+                      isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_ACCOUNT}"
+                    >
+                      <lightning:combobox
+                        name="selectField"
+                        variant="label-hidden"
+                        label=""
+                        placeholder="Select Field"
+                        options="{!v.lstSearchFiled}"
+                        value="{!v.strSelectedFieldAccount}"
+                      />
+                    </aura:if>
+                    <aura:if
+                      isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_LEAD}"
+                    >
+                      <lightning:combobox
+                        name="selectField"
+                        variant="label-hidden"
+                        label=""
+                        placeholder="Select Field"
+                        options="{!v.lstSearchFiled}"
+                        value="{!v.strSelectedFieldLead}"
+                      />
+                    </aura:if>
+                  </div>
+                  <div style="width: 30%; float: right; padding-top: 7px">
+                    {!$Label.c.AINI_LABEL_CONTAINS}
+                  </div>
+                </div>
+                <div style="width: 60%; float: right">
+                  <lightning:input
+                    name="search-input-account-by-name"
+                    type="search"
+                    variant="label-hidden"
+                    value="{!v.strSearchedString}"
+                    placeholder="{!'Search ' + v.strCalledFor + '..'}"
+                  />
+                  <span
+                    style="
+                      float: left;
+                      padding-top: 5px;
+                      font-size: 11px;
+                      color: red;
+                      text-align: left;
+                    "
+                    >{!v.strAlertMessage}</span
+                  >
+                </div>
+              </div>
+              <div style="width: 10%; float: right">
+                <lightning:button
+                  variant="brand"
+                  class="slds-float_right slds-m-right_small"
+                  title="Search"
+                  iconName="utility:search"
+                  label=""
+                  onclick="{!c.handleSearchClick}"
+                />
+              </div>
+            </div>
+          </header>
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+            style="
+              min-height: 150px !important;
+              background: rgb(241, 241, 241);
+              padding-top: 13px !important;
+            "
+          >
+            <p style="width: 103%; margin-left: -20px; padding-left: 3%">
+              <!-- Modal dialog content starts -->
+              <aura:if
+                isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_ACCOUNT}"
+              >
+                <lightning:dualListbox
+                  name="selectAccounts"
+                  sourceLabel="Available Accounts"
+                  selectedLabel="Selected Accounts"
+                  options="{!v.lstAccountsWrapper}"
+                  value="{!v.lstSelectedAccountValue}"
+                  onchange="{!c.handleSelectChange}"
+                  disableReordering="true"
+                />
+              </aura:if>
+              <aura:if
+                isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_LEAD}"
+              >
+                <lightning:dualListbox
+                  name="selectLeads"
+                  sourceLabel="Available Leads"
+                  selectedLabel="Selected Leads"
+                  options="{!v.lstLeadsWrapper}"
+                  value="{!v.lstSelectedLeadValue}"
+                  onchange="{!c.handleSelectChange}"
+                  disableReordering="true"
+                />
+              </aura:if>
+              <!-- Modal dialog content ends -->
+            </p>
+          </div>
+          <footer class="slds-modal__footer">
+            <aura:if
+              isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_LEAD}"
+            >
+              <div style="float: left; padding-top: 8px; padding-right: 2px">
+                <lightning:icon iconName="utility:info_alt" size="x-small" />
+              </div>
+              <span
+                style="
+                  float: left;
+                  padding-top: 10px;
+                  font-size: 11px;
+                  color: red;
+                  text-align: left;
+                "
+                >{!$Label.c.AINI_LEAD_SEARCH_INFORMATION}</span
+              >
+            </aura:if>
+            <aura:if
+              isTrue="{!v.strCalledFor == $Label.c.AINI_CALLED_FOR_ACCOUNT}"
+            >
+              <div style="float: left; padding-top: 8px; padding-right: 2px">
+                <lightning:icon iconName="utility:info_alt" size="x-small" />
+              </div>
+              <span
+                style="
+                  float: left;
+                  padding-top: 10px;
+                  font-size: 11px;
+                  color: red;
+                  text-align: left;
+                "
+                >{!$Label.c.AINI_ACCOUNT_SEARCH_INFORMATION}</span
+              >
+            </aura:if>
+            <div class="slds-p-top_x-small">
+              <lightning:button
+                variant="brand"
+                class="slds-float_right slds-m-right_small"
+                title="{!$Label.c.OPS_LABEL_SPLIT}"
+                label="{!$Label.c.OPS_LABEL_SPLIT}"
+                onclick="{!c.handleSaveClick}"
+                disabled="{!v.boolDisabledSaveButton}"
+              />
+              <lightning:button
+                variant="Neutral"
+                class="slds-float_right slds-m-right_small"
+                title="{!$Label.c.OPS_LABEL_CLOSE}"
+                label="{!$Label.c.OPS_LABEL_CLOSE}"
+                onclick="{!c.handleCloselClick}"
+              />
+            </div>
+          </footer>
+        </div>
+      </section>
+      <div
+        class="slds-backdrop slds-backdrop_open slds-backdrop_open-quickaction"
+      ></div>
+    </div>
+  </aura:if>
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <lightning:spinner
+      size="large"
+      variant="brand"
+      style="background-color: transparent"
+    />
+    <div aura:id="spinnerId" class="spinner-quickaction slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

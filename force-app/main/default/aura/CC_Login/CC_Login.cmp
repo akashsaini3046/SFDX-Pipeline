@@ -1,0 +1,128 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+  extensible="true"
+  controller="CC_LoginController"
+>
+  <ltng:require styles="{!$Resource.NewStyle}" />
+  <ltng:require styles="{!$Resource.Crowley_theme}" />
+  <aura:attribute name="Username" type="String" />
+  <aura:attribute name="Password" type="String" />
+  <aura:attribute name="showpassword" type="Boolean" default="false" />
+  <aura:attribute name="showErrorMessage" type="Boolean" default="false" />
+  <aura:attribute name="errorMessage" type="String" />
+  <aura:attribute name="test" type="Boolean" />
+  <aura:attribute name="deviceHeight" type="String" />
+  <aura:attribute name="currentUrl" type="String" />
+  <lightning:navigation aura:id="navService" />
+  <aura:handler name="render" value="{!this}" action="{!c.handleRenderer}" />
+
+  <div class="user-onboard" aura:id="getDeviceHeight">
+    <a href="#" class="veloz-logo" onclick="#">Veloz</a>
+    <div class="crowley-highlights">
+      <!-- <div class="user-onboard-text">
+                <h2>Crowley’s Speed to Market is Your Competitive Advantage</h2>
+                <p>Crowley can help make your supply chain seamless and more efficient, and your business more
+                    profitable, with a full suite of integrated transportation and logistics solutions – all provided
+                    under a single source of accountability.</p>
+            </div>
+            <div class="crowleyLogoRed"></div>  -->
+      <div>
+        <c:CC_LoginCarousel />
+      </div>
+    </div>
+    <div class="user-onboard-form">
+      <div class="white-shadow"></div>
+      <div class="user-onboard-form-v-h-box">
+        <aura:if isTrue="{!v.showErrorMessage}">
+          <div class="col-sm-12">
+            <div class="error-message">{!v.errorMessage}</div>
+          </div>
+        </aura:if>
+        <h1>Sign In</h1>
+        <div class="Crowley-employee-login">
+          <div class="crowley-emp-login">
+            <p class="sign-in-heading">
+              Single Sign on with Crowley Credentials
+            </p>
+            <br />
+            <lightning:button onclick="{!c.handleLogIn}" variant="destructive">
+              Sign In</lightning:button
+            >
+          </div>
+        </div>
+        <div aria-labelledby="Loginform">
+          <h1>Sign In</h1>
+          <div class="Crowley-employee-login">
+            <p class="sign-in-heading">Sign in with your Logistics Account</p>
+          </div>
+          <br />
+          <form>
+            <div onkeypress="{!c.keyCheck}">
+              <div class="slds-form-element">
+                <lightning:input
+                  aura:id="FormVal"
+                  placeholder="username@example.com"
+                  type="email"
+                  value="{!v.Username}"
+                  name="Username"
+                  required="true"
+                  label="Username"
+                />
+              </div>
+              <div
+                class="slds-form-element slds-form-element__control slds-input-has-icon slds-input-has-icon--right"
+              >
+                <lightning:input
+                  aura:id="FormVal"
+                  placeholder="Password"
+                  type="{!v.showpassword ? 'text':'password'}"
+                  value="{!v.Password}"
+                  name="Password"
+                  required="true"
+                  label="Password"
+                />
+
+                <lightning:buttonIcon
+                  class="show-password slds-button slds-input__icon slds-text-color--default"
+                  iconName="{!v.showpassword ? 'utility:hide':'utility:preview'}"
+                  alternativeText="{!v.coborrowerSSNCB ? 'Hide':'Show'}"
+                  onclick="{!c.togglePassword}"
+                  size="x-large"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="slds-clearfix">
+          <div class="login-form-buttons">
+            <lightning:button
+              class="slds-button slds-button_destructive pull-right"
+              onclick="{!c.getInput}"
+              >Sign In</lightning:button
+            >
+          </div>
+          <div class="slds-form-element forgot-password">
+            <a
+              href="javascript:void(0);"
+              class="pull-right slds-card__header-link slds-truncate"
+              title="Forget Password"
+              onclick="{!c.navigateToForgetPasswordScreen}"
+            >
+              <div>{!$Label.c.CC_ForgetPassword}</div>
+            </a>
+          </div>
+        </div>
+        <br /> <br />
+        <div class="contact-support">
+          {!$Label.c.CC_ContactSupport_Text}&nbsp;
+          <lightning:formattedEmail
+            value="{!$Label.c.CC_ContactSupport_Email}"
+            label="{!$Label.c.CC_ContactSupport_Email}"
+            hideIcon="false"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

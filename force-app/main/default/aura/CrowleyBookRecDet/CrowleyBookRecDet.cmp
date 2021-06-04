@@ -1,0 +1,204 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+  controller="CrowleyBookRecDetCtrl"
+>
+  <aura:attribute name="selectedItem" type="String" />
+  <aura:attribute name="currentContent" type="String" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="booking" type="Booking__c" />
+  <aura:attribute name="bookingFieldNameValue" type="Map" />
+  <aura:attribute name="bookingServiceTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingIMTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingTMSTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingCustomerOriginFieldNameValue" type="Map" />
+  <aura:attribute name="bookingCustomerDestinationFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectingCarrierFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectAtLocFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectToLocFieldNameValue" type="Map" />
+  <aura:attribute name="partyFieldNameValue" type="Map" />
+  <aura:attribute name="partyList" type="List" />
+  <aura:attribute name="transportList" type="List" />
+  <aura:attribute name="bookingRemarkList" type="List" />
+  <aura:attribute name="shipmentList" type="List" />
+  <aura:attribute name="dockReceiptList" type="List" />
+  <aura:attribute name="customerNotificationList" type="List" />
+  <aura:attribute name="voyageList" type="List" />
+  <aura:attribute name="freightDetailList" type="List" />
+  <aura:attribute name="commodityList" type="List" />
+  <aura:attribute name="requirementList" type="List" />
+  <aura:attribute name="equipmentList" type="List" />
+  <aura:attribute name="stopList" type="List" />
+  <aura:attribute name="ratingList" type="List" />
+  <aura:attribute name="spinner" type="boolean" default="FALSE" />
+
+  <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+
+  <aura:method
+    name="reInit"
+    action="{!c.doInit}"
+    description="Runs the init method again "
+  />
+
+  <!--loading spinner start-->
+  <aura:if isTrue="{!v.spinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">Loading...</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+  <!-- Loading spinner end-->
+
+  <div class="brn-container">
+    <lightning:layout multipleRows="true">
+      <lightning:layoutItem
+        size="12"
+        smallDeviceSize="2"
+        mediumDeviceSize="2"
+        largeDeviceSize="2"
+        padding="around-small"
+      >
+        <lightning:verticalNavigation
+          selectedItem="{! v.selectedItem }"
+          shaded="false"
+          onselect="{! c.handleSelect }"
+          class="navigation"
+        >
+          <lightning:verticalNavigationSection label="Booking">
+            <lightning:verticalNavigationItem label="Details" name="details" />
+            <lightning:verticalNavigationItem label="Parties" name="parties" />
+            <lightning:verticalNavigationItem
+              label="Transports"
+              name="transports"
+            />
+            <lightning:verticalNavigationItem label="Stops" name="stops" />
+            <lightning:verticalNavigationItem
+              label="Booking Remarks"
+              name="bookingRemarks"
+            />
+            <lightning:verticalNavigationItem
+              label="Bill of Lading Numbers"
+              name="bolNumbers"
+            />
+            <lightning:verticalNavigationItem
+              label="Shipment"
+              name="shipment"
+            />
+            <lightning:verticalNavigationItem
+              label="Customer Notifications"
+              name="customerNotifications"
+            />
+            <lightning:verticalNavigationItem label="Voyages" name="voyages" />
+            <lightning:verticalNavigationItem
+              label="Dock Receipts"
+              name="dockReceipts"
+            />
+            <lightning:verticalNavigationItem
+              label="Cargo Details"
+              name="freightDetails"
+            />
+            <lightning:verticalNavigationItem
+              label="Commodities"
+              name="commodities"
+            />
+            <lightning:verticalNavigationItem
+              label="Requirements"
+              name="requirements"
+            />
+            <lightning:verticalNavigationItem
+              label="Equipments"
+              name="equipments"
+            />
+            <lightning:verticalNavigationItem label="Rating" name="rating" />
+            <lightning:verticalNavigationItem
+              label="Documents"
+              name="documents"
+            />
+          </lightning:verticalNavigationSection>
+        </lightning:verticalNavigation>
+      </lightning:layoutItem>
+
+      <lightning:layoutItem
+        size="12"
+        smallDeviceSize="10"
+        mediumDeviceSize="10"
+        largeDeviceSize="10"
+      >
+        <div class="rate-validate">
+          <aura:if isTrue="{!v.currentContent == 'details'}">
+            <c:BookingData
+              bookingFieldNameValue="{!v.bookingFieldNameValue}"
+              bookingServiceTypeFieldNameValue="{!v.bookingServiceTypeFieldNameValue}"
+              bookingIMTypeFieldNameValue="{!v.bookingIMTypeFieldNameValue}"
+              bookingTMSTypeFieldNameValue="{!v.bookingTMSTypeFieldNameValue}"
+              bookingCustomerOriginFieldNameValue="{!v.bookingCustomerOriginFieldNameValue}"
+              bookingCustomerDestinationFieldNameValue="{!v.bookingCustomerDestinationFieldNameValue}"
+              bookingConnectAtLocFieldNameValue="{!v.bookingConnectAtLocFieldNameValue}"
+              bookingConnectToLocFieldNameValue="{!v.bookingConnectToLocFieldNameValue}"
+              bookingConnectingCarrierFieldNameValue="{!v.bookingConnectingCarrierFieldNameValue}"
+            />
+          </aura:if>
+          <aura:if isTrue="{!v.currentContent == 'parties'}">
+            <c:PartyData parties="{!v.partyList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'transports'}">
+            <c:TransportData transports="{!v.transportList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'bookingRemarks'}">
+            <c:BookingRemarkData bookingRemarks="{!v.bookingRemarkList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'shipment'}">
+            <c:ShipmentData shipments="{!v.shipmentList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'dockReceipts'}">
+            <c:DockReceiptData dockReceipts="{!v.dockReceiptList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'customerNotifications'}">
+            <c:CustomerNotificationData
+              customerNotifications="{!v.customerNotificationList}"
+            />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'voyages'}">
+            <c:VoyageData voyages="{!v.voyageList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'freightDetails'}">
+            <c:FreightDetailData freightDetails="{!v.freightDetailList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'commodities'}">
+            <c:CommodityData commodities="{!v.commodityList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'requirements'}">
+            <c:RequirementData requirements="{!v.requirementList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'equipments'}">
+            <c:EquipmentData equipments="{!v.equipmentList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent == 'stops'}">
+            <c:StopData stops="{!v.stopList}" />
+          </aura:if>
+
+          <aura:if isTrue="{!v.currentContent =='rating'}">
+            <c:RatingData ratings="{!ratingList}" />
+          </aura:if>
+        </div>
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
+</aura:component>

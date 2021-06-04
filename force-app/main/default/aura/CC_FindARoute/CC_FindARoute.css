@@ -1,0 +1,9 @@
+@media print {
+  .THIS page {
+    display: none;
+  }
+
+  /*.THIS page :header { 
+        display: none;
+    }*/
+}

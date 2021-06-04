@@ -1,0 +1,12 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:hasPageReference,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="message" type="string" default="No Records Found" />
+
+  <div class="under-maintanance">
+    <div class="under-maintanance-content">
+      <h3>{!v.message}</h3>
+    </div>
+  </div>
+</aura:component>

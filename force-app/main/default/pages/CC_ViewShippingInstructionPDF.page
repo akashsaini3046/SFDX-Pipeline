@@ -1,0 +1,782 @@
+<apex:page
+  controller="CC_BillOfLadingVFController"
+  showHeader="false"
+  sidebar="false"
+  renderAs="pdf"
+  applyBodyTag="false"
+>
+  <head>
+    <style type="text/css" media="print">
+           * {
+               font-family: sans-serif;"
+           }
+               @page {
+                   @top-center {
+                       content: element(header);
+                   }
+
+                   @bottom-left {
+                       content: element(footer);
+                   }
+               }
+
+               div.header {
+                   text-align: center;
+                   position: running(header);
+                   width: 100%;
+               }
+
+
+               div.footer {
+                   display: block;
+                   padding: 5px;
+                   position: running(footer);
+               }
+
+               .pagenumber:before {
+                   content: counter(page);
+              }
+
+               .pagecount:before {
+                   content: counter(pages);
+               }
+
+               .centered {
+                   text-align: center;
+               }
+               .labeltext{
+               	color: #999;
+               }
+               html, body, div, span, applet, object, iframe,
+               h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+               a, abbr, acronym, address, big, cite, code,
+               del, dfn, em, img, ins, kbd, q, s, samp,
+               small, strike, strong, sub, sup, tt, var,
+               b, u, i, center,
+               dl, dt, dd, ol, ul, li,
+               fieldset, form, label, legend,
+               table, caption, tbody, tfoot, thead, tr, th, td,
+               article, aside, canvas, details, embed,
+               figure, figcaption, footer, header, hgroup,
+               menu, nav, output, ruby, section, summary,
+               time, mark, audio, video {
+                   margin: 0;
+                   padding: 0;
+                   border: 0;
+                   font-size: 100%;
+                   font: inherit;
+                   vertical-align: baseline;
+               }
+               table {
+                   border-collapse: collapse;
+                   border-spacing: 0;
+                   vertical-align: top;
+               }
+               td{
+                   vertical-align:top;
+                   padding:3px 0px 3px 0px;
+               }
+               .page{
+                   padding:20px;
+               }
+               .tb-header{
+                   width:100%;
+                   border:0px none;
+
+               }
+               .algn-left{
+                   text-align: left;
+               	padding:3px 3px 3px 0px;
+               }
+               .c999{
+                   color:#999999;
+               }
+               .invoicing-instructions th{
+                   text-align: left;
+                   padding:4px;
+                   background-color: #f7f7f7;
+                   border-bottom: 1px solid #636363;
+                   vertical-align:top;
+               }
+      .invoicing-instructions td{
+               	padding:4px !important;
+               }
+               .invoicing-instructions-total{
+                   text-align: center;
+                   padding:10px 5px 10px 5px !important;
+                   background-color: #f7f7f7;
+                   vertical-align:middle;
+                   font-weight: bold;
+               }
+               .additional-information th{
+                   text-align: left;
+                   padding:3px 0px 3px 0px;
+                   vertical-align:top;
+               }
+               .add-info th, .add-info td{
+                   text-align: left;
+                   padding:3px 6px 3px 0px;
+                   vertical-align:top;
+               }
+               table.helloworld {
+               	border-collapse: collapse;
+               }
+               .helloworld th,.helloworld td {
+                   border: 1px solid orange;
+                   padding: 0px;
+                   text-align: left;
+               }
+               .routed th,.routed td {
+                   padding: 1px 0px 1px 0px;
+                   text-align: left;
+               	word-wrap: break-word;
+               }
+               .routed .algn-left{
+               	width:50%;
+               }
+               .table-breathe td {
+                   padding-top: 4px !important;
+                   padding-bottom: 4px !important;
+               }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span
+        style="
+          float: left;
+          width: 100%;
+          padding: 10px 0px 0px 0px;
+          display: none;
+        "
+      >
+        <apex:image
+          value="{!$Resource.velozLogoGreyPng}"
+          alt="Crowley Logo"
+          width="700px"
+        />
+      </span>
+    </div>
+    <div class="footer">
+      <div
+        style="
+          width: 100%;
+          float: left;
+          border-top: 1px solid #ccc;
+          padding-top: 10px;
+          font-family: sans-serif;
+          font-size: 12px;
+        "
+      >
+        <table width="100%">
+          <tr>
+            <td style="width: 33%; text-align: left">
+              <a
+                class="contact-us-link"
+                href="https://www.crowley.com/contact-us/list-of-offices/"
+                target="_blank"
+                style="color: #000; text-decoration: none"
+                >Contact Us</a
+              >&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                href="https://www.crowley.com/"
+                target="_blank"
+                class="website-link"
+                style="color: #d3232a; text-decoration: none"
+                >Crowley.com</a
+              >
+            </td>
+            <td style="width: 34%; text-align: center">
+              Page <span class="pagenumber" /> / <span class="pagecount" />
+            </td>
+            <td style="width: 33%; text-align: right">
+              &copy;&nbsp;2020 Crowley Maritime Corporation
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="content">
+      <!-- Start Page -->
+      <div
+        style="
+          margin: 0px auto;
+          padding: 0px;
+          font-family: sans-serif;
+          line-height: 14px;
+          font-size: 12px;
+          display: block;
+        "
+      >
+        <div
+          style="
+            width: 100%;
+            float: left;
+            padding-bottom: 10px;
+            display: block;
+            position: relative;
+          "
+        >
+          <div
+            style="
+              float: left;
+              width: 60%;
+              font-family: sans-serif;
+              font-size: 16px;
+              text-align: left;
+              display: inline-block;
+              position: absolute;
+              top: 0px;
+              left: 0px;
+            "
+          >
+            <span
+              style="
+                float: left;
+                width: 100%;
+                padding: 0px 0px 0px 0px;
+                z-index: 100;
+              "
+            >
+              <apex:image
+                value="{!$Resource.velozLogoGreyPng}"
+                alt="Crowley Logo"
+                width="700px"
+              />
+            </span>
+          </div>
+          <div
+            style="
+              float: right;
+              width: 40%;
+              text-align: right;
+              font-family: sans-serif;
+              font-size: 16px;
+              display: inline-block;
+              position: absolute;
+              top: 0px;
+              right: 0px;
+            "
+          >
+            <span style="z-index: 200">
+              Created on :
+              <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                <apex:param value="{!objBolView.customerReference.sentDate}" />
+              </apex:outputText>
+            </span>
+          </div>
+        </div>
+        <br /><br /><br /><br />
+
+        <!-- Start Status -->
+        <table style="width: 100%">
+          <tr>
+            <td style="width: 100%; text-align: left; font-size: 14px">
+              <span
+                style="
+                  color: #028fa0;
+                  margin: 0px 0px 10px 0px;
+                  padding: 0px 0px 10px 0px;
+                  font-size: 16px;
+                  font-weight: bold;
+                "
+                >{!objBolView.customerReference.billOfLadingNumber}</span
+              >
+              <br /><br /> <span style="color: #545859">Status : </span
+              ><span style="color: #545859"
+                >{!objBolView.customerReference.bolStatus}</span
+              >
+            </td>
+          </tr>
+        </table>
+        <br /><br />
+        <!-- End Status -->
+
+        <!-- Start Customer Reference Information -->
+        <h3
+          style="
+            border-bottom: 2px solid #ccc;
+            font-size: 18px;
+            padding: 0px 0px 10px 0px;
+          "
+        >
+          Customer Reference Information
+        </h3>
+        <table
+          style="width: 100%; margin: 10px 0px 0px 0px"
+          class="table-outer"
+        >
+          <tr>
+            <td style="width: 50%; text-align: left" class="table-col-1">
+              <table style="width: 100%">
+                <tr>
+                  <td class="algn-left c999" width="50%">
+                    Customer Sent Date :
+                  </td>
+                  <td class="algn-left" width="50%">
+                    <apex:outputText value="{0,date,MMM dd, yyyy}">
+                      <apex:param
+                        value="{!objBolView.customerReference.sentDate}"
+                      />
+                    </apex:outputText>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Contract Number :</td>
+                  <td class="algn-left">
+                    {!objBolView.customerReference.contractNumber}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">SCAC Code :</td>
+                  <td class="algn-left">
+                    {!objBolView.customerReference.scacCode}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">
+                    Cargo Available for Transport :
+                  </td>
+                  <td class="algn-left" width="50%">
+                    <apex:outputText value="{0,date,MMM dd, yyyy}">
+                      <apex:param
+                        value="{!objBolView.customerReference.cargoAvailableForTransportDate}"
+                      />
+                    </apex:outputText>
+                  </td>
+                </tr>
+                <apex:repeat
+                  value="{!objBolView.customerReference.inbondList}"
+                  var="inb"
+                >
+                  <tr>
+                    <td class="algn-left c999">Inbond Type :</td>
+                    <td class="algn-left">{!inb.inbondType}</td>
+                  </tr>
+                  <tr>
+                    <td class="algn-left c999">Inbond Number :</td>
+                    <td class="algn-left">{!inb.inbondNumber}</td>
+                  </tr>
+                </apex:repeat>
+                <tr>
+                  <td class="algn-left c999">Exemption Clause :</td>
+                  <td class="algn-left">
+                    {!objBolView.customerReference.exemptionClause}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Option 4 Date :</td>
+                  <td class="algn-left">
+                    <apex:outputText value="{0,date,MMM dd, yyyy}">
+                      <apex:param
+                        value="{!objBolView.customerReference.option4Date}"
+                      />
+                    </apex:outputText>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="width: 50%; text-align: left" class="table-col-2">
+              <table style="width: 100%">
+                <tr>
+                  <td class="algn-left c999" style="width: 50%">
+                    Booking Number :
+                  </td>
+                  <td class="algn-left" style="width: 50%">
+                    {!objBolView.customerReference.bookingNumber}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">ITN Number :</td>
+                  <td class="algn-left">
+                    <apex:repeat
+                      value="{!objBolView.customerReference.itnNumberLst}"
+                      var="itn"
+                    >
+                      {!itn.strItnNumber}<br />
+                    </apex:repeat>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <apex:repeat
+                      value="{!objBolView.customerReference.partyList}"
+                      var="cusref"
+                    >
+                      <apex:outputPanel
+                        rendered="{!IF((cusref.partyType == 'CON'), true, false)}"
+                      >
+                        <table style="width: 100%">
+                          <tr>
+                            <td class="algn-left c999" style="width: 50%">
+                              Consignee Ref No. :
+                            </td>
+                            <td class="algn-left" style="width: 50%">
+                              {!cusref.referenceNumber}
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:outputPanel>
+                      <apex:outputPanel
+                        rendered="{!IF((cusref.partyType == 'SHP'), true, false)}"
+                      >
+                        <table style="width: 100%">
+                          <tr>
+                            <td class="algn-left c999" style="width: 50%">
+                              Exporter Ref No. :
+                            </td>
+                            <td class="algn-left" style="width: 50%">
+                              {!cusref.referenceNumber}
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:outputPanel>
+                      <apex:outputPanel
+                        rendered="{!IF((cusref.partyType == 'NO2'), true, false)}"
+                      >
+                        <table style="width: 100%">
+                          <tr>
+                            <td class="algn-left c999" style="width: 50%">
+                              Also Notify Ref No. :
+                            </td>
+                            <td class="algn-left" style="width: 50%">
+                              {!cusref.referenceNumber}
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:outputPanel>
+                      <apex:outputPanel
+                        rendered="{!IF((cusref.partyType == 'NOT'), true, false)}"
+                      >
+                        <table style="width: 100%">
+                          <tr>
+                            <td class="algn-left c999" style="width: 50%">
+                              Notify Ref No. :
+                            </td>
+                            <td class="algn-left" style="width: 50%">
+                              {!cusref.referenceNumber}
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:outputPanel>
+                      <apex:outputPanel
+                        rendered="{!IF((cusref.partyType == 'FOR'), true, false)}"
+                      >
+                        <table style="width: 100%">
+                          <tr>
+                            <td class="algn-left c999" style="width: 50%">
+                              Forwarder Ref No. :
+                            </td>
+                            <td class="algn-left" style="width: 50%">
+                              {!cusref.referenceNumber}
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:outputPanel>
+                    </apex:repeat>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="algn-left c999" style="width: 50%">
+                    EIN Number :
+                  </td>
+                  <td class="algn-left" style="width: 50%">
+                    {!objBolView.customerReference.einNumber}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left" colspan="2">
+                    <apex:image
+                      value="{!IF(objBolView.customerReference.eeiSupport == true,$Resource.CC_Checked,$Resource.CC_UnChecked)}"
+                      width="10px"
+                    />&nbsp;EEI preparation support required
+                  </td>
+                  <!--<td class="algn-left" colspan="2" style="width:100%">EEI preparation support required</td>-->
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <br />
+        <!-- End Customer Reference Information -->
+
+        <!-- Start Shipper / Exporter -->
+        <apex:repeat value="{!objBolView.shipperLst}" var="shipper">
+          <c:CC_BolCommonPartyViewPDF
+            data="{!shipper}"
+            header="Shipper / Exporter"
+          />
+        </apex:repeat>
+        <br />
+        <!-- End Shipper / Exporter -->
+
+        <!-- Start Consignee -->
+        <apex:repeat value="{!objBolView.consigneeLst}" var="consignee">
+          <c:CC_BolCommonPartyViewPDF data="{!consignee}" header="Consignee" />
+        </apex:repeat>
+        <br />
+        <!-- End Consignee -->
+
+        <!-- Start Forwarding Agent -->
+        <apex:repeat value="{!objBolView.forwarderLst}" var="forwarder">
+          <c:CC_BolCommonPartyViewPDF
+            data="{!forwarder}"
+            header="Forwarding Agent"
+          />
+        </apex:repeat>
+        <!-- End Forwarding Agent -->
+
+        <!-- Start Notify Party -->
+        <apex:repeat value="{!objBolView.notifyPartyLst}" var="notifyParty">
+          <c:CC_BolCommonPartyViewPDF
+            data="{!notifyParty}"
+            header="Notify Party"
+          />
+        </apex:repeat>
+        <!-- End Notify Party -->
+
+        <!-- Start Also Notify Party -->
+        <apex:repeat
+          value="{!objBolView.alsoNotifyPartyLst}"
+          var="alsoNotifyParty"
+        >
+          <c:CC_BolCommonPartyViewPDF
+            data="{!alsoNotifyParty}"
+            header="Also Notify"
+          />
+        </apex:repeat>
+        <!-- End Also Notify Party -->
+
+        <!-- Start Route Details -->
+        <h3
+          style="
+            border-bottom: 2px solid #ccc;
+            font-size: 18px;
+            padding: 0px 0px 10px 0px;
+          "
+        >
+          Route Details
+        </h3>
+        <table
+          style="width: 100%; margin: 10px 0px 0px 0px"
+          class="table-outer routed"
+        >
+          <tr>
+            <td style="width: 50%; text-align: left" class="table-col-1">
+              <table style="width: 100%">
+                <tr>
+                  <td class="algn-left c999">Vessel Name :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.vesselName}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Voyage Number :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.voyageNumber}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Flag :</td>
+                  <td class="algn-left">{!objBolView.routingDetails.flag}</td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Place of Receipt :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.placeOfReciept}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Port of Loading :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.portOfLoading}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Port of Discharge :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.portOfDischarge}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Originals to be released at :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.originalsToBeReleasedAt}
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="width: 50%; text-align: left" class="table-col-2">
+              <table style="width: 100%">
+                <tr>
+                  <td class="algn-left c999">Relay Point :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.relayPoint}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">
+                    Point &amp; Country of Origin of Goods :
+                  </td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.pointAndCountry}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Routing Details :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.routingDetails}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Loading Pier :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.loadingPier}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="algn-left c999">Place of Delivery :</td>
+                  <td class="algn-left">
+                    {!objBolView.routingDetails.placeOfDelivery}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <br /><br />
+        <!-- End Route Details -->
+
+        <!-- Start Routing Instructions -->
+        <h3
+          style="
+            border-bottom: 2px solid #ccc;
+            font-size: 18px;
+            padding: 0px 0px 10px 0px;
+          "
+        >
+          Routing &amp; Instructions
+        </h3>
+        <table
+          style="width: 100%; margin: 10px 0px 0px 0px"
+          class="table-outer"
+        >
+          <tr>
+            <td style="width: 50%; text-align: left" class="table-col-1">
+              {!objBolView.routingInstructions}
+            </td>
+          </tr>
+        </table>
+        <br /><br />
+        <!-- End Routing Instructions -->
+
+        <!-- Start Cargo and Equipment Details -->
+        <c:CC_BOLCargoEquipmentViewPDF
+          data="{!objBolView.cargoEquipment}"
+          emergencyName="{!objBolView.emergencyContactName}"
+          emergencyNumber="{!objBolView.emergencyContactPhone}"
+          header="Cargo and Equipment Details"
+        />
+        <br /><br />
+        <!-- End Cargo and Equipment Details -->
+
+        <!-- Start Invoicing Instructions -->
+        <h3
+          style="
+            border-bottom: 2px solid #ccc;
+            font-size: 18px;
+            padding: 0px 0px 10px 0px;
+          "
+        >
+          Invoicing Instructions
+        </h3>
+        <table
+          style="width: 100%; margin: 10px 0px 0px 0px"
+          class="table-outer invoicing-instructions table-breathe"
+        >
+          <apex:repeat value="{!lstInvoices}" var="chargeLine">
+            <!--<tr>
+                    	<td colspan="8" class="algn-left">
+                        	<apex:outputText value="{!chargeLine.label}" escape="false"/>
+                            <br/><br/>
+                        </td>
+                    </tr>-->
+            <tr>
+              <th>Freight Charges</th>
+              <th>Rated As <span class="no-wrap">(in USD)</span></th>
+              <th style="padding-left: 0; padding-right: 4px">Per</th>
+              <th>Rate Tariffs</th>
+              <th>Payment Terms</th>
+              <th>Payer Name</th>
+              <th>Payment Location</th>
+              <th>Value<br /><span class="no-wrap">(in USD)</span></th>
+            </tr>
+            <apex:repeat value="{!chargeLine.value}" var="charge">
+              <tr>
+                <td style="padding: 0 3px">{!charge.strFreightCharge}</td>
+                <td>$&nbsp;{!charge.strRatedAs}</td>
+                <td style="padding-left: 4px; padding-right: 4px">
+                  {!charge.strPer}
+                </td>
+                <td style="padding: 0 5px">$&nbsp;{!charge.strRateTarrif}</td>
+                <td style="padding: 0 3px">
+                  <table>
+                    <tr>
+                      <td style="padding: 0">
+                        <apex:outputLabel
+                          rendered="{!IF((charge.strPaymentTerm == 'CC'),true,false)}"
+                        >
+                          COLLECT
+                        </apex:outputLabel>
+                        <apex:outputLabel
+                          rendered="{!IF((charge.strPaymentTerm == 'PP'),true,false)}"
+                        >
+                          PREPAID
+                        </apex:outputLabel>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>{!charge.strPayerName}</td>
+                <td>{!charge.strPaymentLocation}</td>
+                <td>$&nbsp;{!charge.strValue}</td>
+              </tr>
+            </apex:repeat>
+            <tr>
+              <td colspan="6" class="invoicing-instructions-total"></td>
+              <td
+                class="invoicing-instructions-total"
+                style="text-align: left; padding-left: 0"
+              >
+                Total
+              </td>
+              <td
+                class="invoicing-instructions-total no-wrap"
+                style="text-align: left; padding-left: 0"
+              >
+                $&nbsp;{!chargeLine.amount}
+              </td>
+            </tr>
+          </apex:repeat>
+          <!--apex:outputLabel rendered="{!IF((lstInvoices.size > 0), true, false)}">
+                        <div style="width: 100%;">
+                            <span  class="invoicing-instructions-total" style="width:30%; text-align:right; float: left; box-sizing: border-box; padding:3px 0 3px 10px;">Gross Total</span>
+                            <span  class="invoicing-instructions-total" style="text-align:right; width: 67.5%; float: left; box-sizing: border-box; padding:3px 6px 3px 2px;">$&nbsp;{!totalSum}</span>
+                        </div>
+                    </apex:outputLabel-->
+        </table>
+        <div style="clear: both"></div>
+        <br /><br />
+        <!-- End Invoicing Instructions -->
+
+        <!-- Start Additional Information -->
+        <c:CC_BOLAdditionalInformationViewPDF
+          data="{!objBolView.additionalInformation}"
+          header="Additional Information"
+        />
+        <!-- End Additional Information -->
+      </div>
+      <!-- End Page -->
+    </div>
+  </body>
+</apex:page>

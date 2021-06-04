@@ -1,0 +1,49 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+  controller="CC_CustomTableCtrl"
+>
+  <aura:attribute name="recordIdNoHyperlink" type="string" />
+  <aura:attribute name="tableJson" type="String" />
+  <aura:attribute name="columns" type="List" />
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="cardClassName" type="string" />
+  <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+  <aura:attribute name="sortByDirection" type="string" />
+
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:method name="refreshTableData" action="{!c.doInit}" access="PUBLIC" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <div class="accounts-table block-view">
+    <aura:if isTrue="{!v.showLoadingSpinner}">
+      <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+    <div class="table-body">
+      <aura:iteration items="{!v.data}" var="rec">
+        <div class="{!v.cardClassName}">
+          <aura:iteration items="{!rec}" var="recElement">
+            <aura:if isTrue="{!recElement.dataType == 'url'}">
+              <div class="{!recElement.className}">
+                <label>{!recElement.label}</label>
+                <a id="{!recElement.redirectUrl}" onclick="{!c.viewdetail}"
+                  >{!recElement.value}</a
+                >
+              </div>
+              <aura:set attribute="else">
+                <div class="{!recElement.className}">
+                  <label>{!recElement.label}</label>
+                  {!recElement.value}
+                </div>
+              </aura:set>
+            </aura:if>
+          </aura:iteration>
+        </div>
+      </aura:iteration>
+    </div>
+  </div>
+</aura:component>

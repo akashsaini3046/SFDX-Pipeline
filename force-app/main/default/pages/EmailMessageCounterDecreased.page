@@ -1,0 +1,6 @@
+<apex:page
+  standardController="EmailMessage"
+  extensions="EmailMessageCounterDecreased"
+  action="{!updateparentcase}"
+>
+</apex:page>

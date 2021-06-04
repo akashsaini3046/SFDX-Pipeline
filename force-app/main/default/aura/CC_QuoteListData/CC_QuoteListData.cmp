@@ -1,0 +1,152 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+  controller="CC_QuoteListCtrl"
+>
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="modifiedData" type="List" />
+  <aura:attribute name="viewPage" type="string" default="QuoteList" />
+  <aura:attribute name="showSendEmail" type="boolean" default="false" />
+  <aura:attribute name="recordId" type="string" />
+  <aura:attribute name="downloadFile" type="boolean" default="false" />
+  <aura:attribute name="downloadURL" type="string" default="" />
+  <aura:attribute name="quoteName" type="string" />
+
+  <aura:handler
+    name="change"
+    value="{!v.data}"
+    action="{!c.handleDataValueChange}"
+  />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:iteration items="{!v.modifiedData}" var="item">
+    <div class="booking-list-data-row quote-data-row">
+      <div class="booking-cols id-status">
+        <div
+          class="booking-id"
+          id="{!item.quote.Id}"
+          onclick="{!c.handleQuoteNumberClick}"
+        >
+          <span><a>{!item.quote.Name}</a></span>
+        </div>
+        <aura:if isTrue="{!item.quote.Status__c == 'Sent to Pricing'}">
+          <div class="booking-status sent-pricing">{!item.quote.Status__c}</div>
+          <aura:set attribute="else">
+            <div class="booking-status confirmed">{!item.quote.Status__c}</div>
+          </aura:set>
+        </aura:if>
+      </div>
+      <div class="booking-cols date-col">
+        <div>
+          <span class="date-label">{!$Label.c.CC_QuoteList_Expiring_On}</span>
+          <div>
+            <span class="weight-500">{!item.quote.dateOfDischarge}</span>
+          </div>
+        </div>
+      </div>
+      <div class="booking-cols fcl-lcl-col">
+        <div class="FCL-LCL-status">
+          <aura:if isTrue="{!item.quote.quoteType}">
+            <span class="type-fcl">{!item.quote.quoteType}</span>
+          </aura:if>
+          <aura:if isTrue="{!item.quote.Is_Hazardous__c}">
+            <span class="hazardous-not-hazardous iconhazardous">Hazardous</span>
+          </aura:if>
+        </div>
+        <aura:if
+          isTrue="{!and(item.quote.commodityName != null, item.quote.commodityName != '')}"
+        >
+          <div class="load-type">{!item.quote.commodityName}</div>
+        </aura:if>
+      </div>
+
+      <div class="booking-cols text-center origin-col">
+        <div class="blue-color bold">{!item.quote.locations.originName}</div>
+        <div class="bold">
+          {!item.quote.locations.originCode}
+          <span class="door-or-port"
+            >• {!item.quote.movementType.originType}</span
+          >
+        </div>
+      </div>
+      <div class="booking-cols routeline-col">
+        <div class="route-line">
+          <i class="origin"></i>
+          {!item.quote.vesselName} / {!item.quote.voyageNumber}
+          <i class="destination"></i>
+        </div>
+        <div class="trans-days">
+          {!item.quote.noOfStops} {!item.quote.transDays}
+        </div>
+      </div>
+      <div class="booking-cols text-center dest-col">
+        <div class="blue-color bold">
+          {!item.quote.locations.destinationName}
+        </div>
+        <div class="bold">
+          {!item.quote.locations.destinationCode}
+          <span class="door-or-port"
+            >• {!item.quote.movementType.destinationType}</span
+          >
+        </div>
+      </div>
+
+      <aura:if
+        isTrue="{!and(item.quote.Account__r.Name != null, item.quote.Account__r.Name != '')}"
+      >
+        <div class="booking-cols acc-name-col">
+          <div
+            id="{!item.quote.Account__r.Id}"
+            onclick="{!c.handleAccountClick}"
+          >
+            <span class="weight-500"><a>{!item.quote.Account__r.Name}</a></span>
+          </div>
+          <div>
+            {!$Label.c.CC_QuoteList_Contract_No}
+            <span class="weight-500"> {!item.quote.ContractName}</span>
+          </div>
+        </div>
+        <aura:set attribute="else">
+          <div class="booking-cols acc-name-col">
+            <span class="quote-no-account"
+              >{!$Label.c.CC_QuoteList_OpenTariff}</span
+            >
+          </div>
+        </aura:set>
+      </aura:if>
+      <div class="booking-cols price-col">
+        <span class="weight-500"> {!item.quote.Price}</span>
+      </div>
+
+      <div class="booking-cols action-col">
+        <span
+          class="overflow-menu"
+          onclick="{!c.selectedItemName}"
+          data-name="{!item.quote.Name}"
+        >
+          <lightning:buttonMenu
+            menuAlignment="center"
+            variant="border-filled"
+            alternativeText="Options"
+            class="{!item.quote.Id}"
+            onselect="{!c.handleMenuSelect }"
+          >
+            <lightning:menuItem label="Email" value="email" />
+            <lightning:menuItem label="New Quote" value="requote" />
+            <!--lightning:menuItem label="Book" value="book" /-->
+            <lightning:menuItem label="Download" value="download" />
+          </lightning:buttonMenu>
+        </span>
+      </div>
+    </div>
+  </aura:iteration>
+  <aura:if isTrue="{!v.showSendEmail}">
+    <c:CC_VelozRouteEmailQuote
+      QuoteId="{!v.recordId}"
+      showEmail="{!v.showSendEmail}"
+      internalComm="True"
+    />
+  </aura:if>
+</aura:component>

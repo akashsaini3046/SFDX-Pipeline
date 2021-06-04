@@ -1,0 +1,120 @@
+.THIS .manageIcon svg {
+  fill: #0066cc;
+  width: 15px;
+}
+
+.THIS .manageCloseIcon svg {
+  fill: #9e2026;
+  width: 20px;
+  height: 20px;
+}
+
+.THIS p {
+  font-size: 11px;
+}
+
+.THIS .dateOptionClass .slds-form-element__control .slds-radio {
+  display: inline-block !important;
+}
+
+.THIS .bold-font {
+  font-weight: bold;
+}
+
+.THIS .blue-button {
+  background-color: #0066cc;
+  border-color: #0066cc;
+}
+
+.THIS .task-heading {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.THIS .blueFontColour {
+  color: #0066cc;
+}
+.THIS .sortByDateCSS {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.THIS .hr-margin-top {
+  margin-top: -12px !important;
+}
+
+.THIS .hr-margin-top-chld {
+  margin-top: 5px !important;
+}
+
+.THIS .hr-margin-bottom-chld {
+  margin-bottom: 5px !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}
+
+.THIS .c-container {
+  border: 1px solid #d8dde6;
+  margin: 10px 0 20px 0;
+}
+
+.THIS .selected {
+  color: orange;
+  font-weight: bold;
+}
+
+.THIS .font-size-sixteen-px {
+  font-size: 16px !important;
+}
+
+.THIS .padding-top-six-percent {
+  padding-top: 6% !important;
+}
+
+.THIS .first-last-button {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.THIS .next-prev-button {
+  padding-left: 5px;
+  padding-right: 9px;
+}
+
+.THIS .hyper-link {
+  color: #0066cc !important;
+  cursor: pointer !important;
+  font-weight: bold !important;
+}
+
+.THIS input[name="relatedToText"] {
+  height: 40px !important;
+  width: 125px !important;
+}
+
+.THIS input[name="taskFilterBy"] {
+  height: 40px !important;
+}
+
+.THIS .inputDateWidth {
+  height: 40px !important;
+}
+
+.THIS ::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-size: 10px !important;
+  opacity: 1; /* Firefox */
+}
+
+.THIS :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-size: 10px !important;
+}
+
+.THIS ::-ms-input-placeholder {
+  /* Microsoft Edge */
+  font-size: 10px !important;
+}

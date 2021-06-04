@@ -1,0 +1,20 @@
+<aura:component
+  controller="InitiativeRelationshipAddCmpController"
+  implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+>
+  <aura:attribute name="strCurrentRecordId" type="String" />
+  <aura:attribute name="boolIsInitiativeActive" type="Boolean" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:if isTrue="{!(v.boolIsInitiativeActive == false)}">
+    <div style="padding-top: 15%; text-align: center">
+      {!$Label.c.AINI_ACTIVATE_INITIATIVE}
+    </div>
+  </aura:if>
+  <aura:if isTrue="{!v.boolIsInitiativeActive}">
+    <c:InitiativeRelationshipAddComponentMultiple
+      strCalledFor="{!$Label.c.AINI_CALLED_FOR_LEAD}"
+      strRecordId="{!v.strCurrentRecordId}"
+    />
+  </aura:if>
+</aura:component>

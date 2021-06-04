@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Mass Transfer Error DL</label>
+    <protected>false</protected>
+    <values>
+        <field>Emails__c</field>
+        <value
+      xsi:type="xsd:string"
+    >om.singh@nagarro.com;;dhruv.raisinghani@nagarro.com;;prateek.goel@nagarro.com;;ayush.mishra@nagarro.com</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,97 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="options" type="List" />
+  <aura:attribute name="optionsValues" type="List" />
+  <aura:attribute name="selectedItem" type="Object" />
+  <aura:attribute name="dropdownLength" type="Integer" default="5" />
+  <aura:attribute name="dropdownOver" type="Boolean" default="false" />
+  <aura:attribute name="isError" type="Boolean" default="false" />
+  <aura:attribute name="isLabelMatch" type="Boolean" default="false" />
+  <aura:attribute name="isRequired" type="Boolean" default="false" />
+  <aura:attribute name="isDisabled" type="Boolean" default="false" />
+  <aura:attribute name="index" type="String" default="" />
+  <aura:attribute name="functionality" type="String" default="" />
+  <aura:attribute name="containerCode" type="string" />
+  <aura:attribute name="infoText" type="String" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+
+  <aura:method
+    name="reInit"
+    action="{!c.doInit}"
+    description="Allows the lookup to be reinitalized"
+  >
+  </aura:method>
+  <aura:method
+    name="showError"
+    action="{!c.showError}"
+    description="Show Error"
+  >
+  </aura:method>
+
+  <div
+    aura:id="main-div"
+    class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click custom-selectbox"
+  >
+    <input
+      aura:id="inputBox"
+      type="text"
+      class="slds-input slds-combobox__input"
+      id="combobox-id-5"
+      aria-activedescendant="option1"
+      aria-controls="listbox-id-6"
+      autocomplete="off"
+      role="textbox"
+      placeholder="{!if(v.isDisabled==false,'Select an Option…',' ')}"
+      readonly="true"
+      value="{!v.infoText}"
+      onclick="{!c.handleClick}"
+      onmouseleave="{!c.handleMouseOutButton}"
+      disabled="{!v.isDisabled}"
+    />
+    <aura:if isTrue="{!v.isDisabled==false}">
+      <i
+        class="icon-angle-down"
+        onmouseleave="{!c.handleMouseOutButton}"
+        onclick="{!c.handleClick}"
+      ></i>
+      <div
+        class="slds-dropdown slds-dropdown--left"
+        onmouseenter="{!c.handleMouseEnter}"
+        onmouseleave="{!c.handleMouseLeave}"
+      >
+        <ul
+          class="{!'slds-dropdown__list slds-dropdown--length-' + v.dropdownLength}"
+          role="menu"
+        >
+          <aura:iteration items="{!v.optionsValues}" var="option">
+            <li
+              class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}"
+              role="presentation"
+              onclick="{!c.handleSelection}"
+              data-value="{!option.value}"
+              data-selected="{!option.selected}"
+            >
+              <span>
+                <aura:if isTrue="{!option.isShowIcon}">
+                  <i class="icon-handshake"></i>
+                </aura:if>
+                {!option.label}
+              </span>
+            </li>
+          </aura:iteration>
+        </ul>
+      </div>
+      <aura:if isTrue="{!v.isError}">
+        <br />
+        <div class="slds-form-element__help">Complete this field !</div>
+      </aura:if>
+    </aura:if>
+  </div>
+  <aura:method name="doValidityCheck" action="{!c.doValidate}" access="public">
+    <aura:attribute name="isValid" type="boolean" default="false" />
+  </aura:method>
+</aura:component>

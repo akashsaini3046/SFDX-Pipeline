@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>lovesh.tomar@nagarro.com</contactEmail>
+    <label>Describe Layout API</label>
+    <oauthConfig>
+        <callbackUrl
+    >https://crowley2.my.salesforce.com/services/authcallback/DescribeLayoutAPI
+https://veloz.force.com/Employees/services/authcallback/DescribeLayoutAPI</callbackUrl>
+        <consumerKey
+    >3MVG90D5vR7Utjboc8b3nxgWl_QR.k3iy56BJqdWXl5SrsGTZxfG2HL_HCbErIYfURveGZ1UxZBAF5F5WUDnu</consumerKey>
+        <isAdminApproved>false</isAdminApproved>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <scopes>Full</scopes>
+        <scopes>RefreshToken</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+</ConnectedApp>

@@ -1,0 +1,343 @@
+<aura:component
+  controller="CC_IdeaDetailController"
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                                                                                                               $Resource.jquery224 , 
+                                                                                                               $Resource.customJs , 
+                                                                                                               $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                                                                                                               }"
+  />
+
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:handler
+    name="fileUploadEvent"
+    event="c:FileUploadEvent"
+    action="{!c.handleFileUploadEvent}"
+  />
+  <aura:attribute name="componentName" type="String" default="CC_IdeasList" />
+  <aura:attribute name="ideaRecord" type="Idea" />
+  <aura:attribute name="ideaId" type="string" />
+  <aura:attribute name="ideaDescribe" type="Object" />
+  <aura:attribute name="ideaFieldDescribe" type="Object" />
+  <aura:attribute name="zonesOptions" type="Object[]" />
+  <aura:attribute name="ideaStatuses" type="Object[]" />
+  <aura:attribute name="categories" type="Object[]" />
+  <aura:attribute name="subcategories" type="Object[]" />
+  <aura:attribute name="benefits" type="Object[]" />
+  <aura:attribute name="categoriesOptions" type="Object[]" />
+  <aura:attribute name="categoriesValues" type="string[]" />
+  <aura:attribute name="selectedZoneRecordTypeId" type="String" />
+  <aura:attribute name="ifRemoveAttachment" type="boolean" default="false" />
+  <aura:attribute name="communityName" type="String" />
+  <aura:attribute name="validity" type="Boolean" default="true" />
+  <aura:attribute name="btnStatus" type="Boolean" />
+  <aura:attribute
+    name="richTexterrorMessage"
+    type="String"
+    default="Complete this field."
+  />
+  <aura:handler
+    name="MaxfileSizeEvent"
+    event="c:CC_MaxFileUploadEvent"
+    action="{!c.handleMaxSizeError}"
+  />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+  <lightning:navigation aura:id="navigationService" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:if isTrue="{!v.communityName != null}">
+    <ltng:require
+      styles="{!join(',', 
+                               $Resource.NewStyle, 
+                               $Resource.Crowley_theme)}"
+    />
+    <aura:set attribute="else">
+      <ltng:require
+        styles="{!join(',', 
+                                   $Resource.NewStyle, 
+                                   $Resource.Salesforce_theme)}"
+      />
+    </aura:set>
+  </aura:if>
+  <div aura:id="salesforce-wrap">
+    <aura:if isTrue="{!v.communityName != null}">
+      <div>
+        <lightning:breadcrumbs>
+          <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+          <lightning:breadcrumb
+            label="All Ideas"
+            onclick="{!c.handleAllIdeasOnclick}"
+          />
+          <lightning:breadcrumb
+            label="Idea Detail"
+            onclick="{!c.handleIdeaDetail}"
+          />
+          <lightning:breadcrumb label="Edit Idea" />
+        </lightning:breadcrumbs>
+      </div>
+    </aura:if>
+    <div class="idea-page-container">
+      <div class="idea-page">
+        <div class="slds-feed-div">
+          <div class="slds-m-vertical_large">
+            <div class="slds-text-heading_small">Idea Edit</div>
+            <div class="slds-text-heading_medium">
+              <h3>{!v.ideaRecord.Title}</h3>
+            </div>
+          </div>
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.communityid.accessible}">
+            <div class="grey-bg-search">
+              <lightning:select
+                aura:id="zones"
+                name="zones"
+                label="Idea Zone"
+                required="true"
+                value="{!v.ideaRecord.CommunityId}"
+                disabled="{! !v.ideaFieldDescribe.communityid.updateable}"
+              >
+                <aura:iteration items="{!v.zonesOptions}" var="zone">
+                  <option
+                    text="{!zone.Name}"
+                    value="{!zone.Id}"
+                    selected="{!zone.Id == v.ideaRecord.CommunityId}"
+                  ></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.subcategory__c.accessible}">
+            <div class="grey-bg-search">
+              <lightning:select
+                name="sabcategory"
+                aura:id="subcategory"
+                label="Sub Category"
+                required="false"
+                value="{!v.ideaRecord.Subcategory__c}"
+                disabled="{! !v.ideaFieldDescribe.subcategory__c.updateable}"
+              >
+                <aura:iteration items="{!v.subcategories}" var="subcategory">
+                  <option
+                    text="{!subcategory.label}"
+                    value="{!subcategory.value}"
+                    selected="{!subcategory.value == v.ideaRecord.Subcategory__c}"
+                  ></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{! v.ideaFieldDescribe.assigned_to__c.accessible}">
+            <div>
+              <c:CC_CustomLookupInput
+                fieldLabel="Assigned To"
+                placeholder="Search"
+                requiredInput="false"
+                clickedItemId="{!v.ideaRecord.Assigned_To__c}"
+                clickedItem="{!v.ideaRecord.Assigned_To_Name__c}"
+                functionality="Idea:AssignedTo"
+                aura:id="assignedTo"
+              />
+            </div>
+          </aura:if>
+          <aura:if isTrue="{! v.ideaFieldDescribe.free_text__c.accessible}">
+            <label
+              lightning-input_input=""
+              for="freeText"
+              class="slds-form-element__label slds-no-flex"
+              >Internal Notes</label
+            >
+            <div>
+              <lightning:inputRichText
+                label="Free Text"
+                aura:id="freeText"
+                value="{!v.ideaRecord.Free_Text__c}"
+                placeholder="Internal notes"
+                disabled="{! !v.ideaFieldDescribe.free_text__c.updateable}"
+                messageWhenBadInput="{!v.richTexterrorMessage}"
+                valid="{!v.validity}"
+              >
+                <lightning:insertImageButton />
+              </lightning:inputRichText>
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.title.accessible}">
+            <div class="grey-bg-search">
+              <lightning:input
+                name="Title"
+                aura:id="title"
+                required="true"
+                label="Title"
+                value="{!v.ideaRecord.Title}"
+                placeholder="Enter Title of the Idea"
+                disabled="{! !v.ideaFieldDescribe.title.updateable}"
+              />
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.body.accessible}">
+            <label
+              lightning-input_input=""
+              for="ideaBody"
+              class="slds-form-element__label slds-no-flex"
+              >Idea Description</label
+            >
+            <div>
+              <lightning:inputRichText
+                label="Idea Body"
+                aura:id="ideaBody"
+                value="{!v.ideaRecord.Body}"
+                placeholder="Idea Description"
+                disabled="{! !v.ideaFieldDescribe.body.updateable}"
+                messageWhenBadInput="{!v.richTexterrorMessage}"
+                valid="{!v.validity}"
+              >
+                <lightning:insertImageButton />
+              </lightning:inputRichText>
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.status.accessible}">
+            <div class="grey-bg-search">
+              <lightning:select
+                name="status"
+                aura:id="status"
+                label="Status"
+                value="{!v.ideaRecord.Status}"
+                disabled="{! !v.ideaFieldDescribe.status.updateable}"
+                required="true"
+              >
+                <aura:iteration items="{!v.ideaStatuses}" var="status">
+                  <option
+                    text="{!status.label}"
+                    value="{!status.value}"
+                    selected="{!status.value == v.ideaRecord.Status}"
+                  ></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+          </aura:if>
+
+          <!--<div class="slds-form-element">
+                    <label class="slds-form-element__label" for="form-element-01">Categories</label>
+                    <div class="slds-form-element__control">
+                        <lightning:dualListbox name="categoriesOptions"  
+                                               sourceLabel="Available" 
+                                               selectedLabel="Selected" 
+                                               options="{!v.categoriesOptions}" 
+                                               value="{!v.categoriesValues}" 
+                                               onchange="{! c.handleCategoriesChange }"/>
+                    </div>
+                </div>-->
+
+          <aura:if isTrue="{! v.ideaFieldDescribe.benefits__c.accessible}">
+            <div class="grey-bg-search">
+              <lightning:select
+                name="benefits"
+                aura:id="benefits"
+                label="Benefits"
+                required="true"
+                value="{!v.ideaRecord.Benefits__c}"
+                disabled="{! !v.ideaFieldDescribe.benefits__c.updateable}"
+              >
+                <aura:iteration items="{!v.benefits}" var="benefit">
+                  <option
+                    text="{!benefit.label}"
+                    value="{!benefit.value}"
+                    selected="{!benefit.value == v.ideaRecord.Benefits__c}"
+                  ></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+          </aura:if>
+
+          <!--<aura:if isTrue="{! v.ideaFieldDescribe.critical_requirement__c.accessible}">
+
+                    <lightning:input class="form-checkbox" type="checkbox" name="criticalRequirement" value="{!v.ideaRecord.Critical_Requirement__c}" checked="{!v.ideaRecord.Critical_Requirement__c}" disabled="{! !v.ideaFieldDescribe.critical_requirement__c.updateable}"/>
+                                        <label lightning-input_input="" for="criticalRequirement" >Critical Requirement</label>
+                </aura:if>-->
+          <div class="clearfix"></div>
+          <aura:if isTrue="{! v.ideaRecord.AttachmentName}">
+            <div class="slds-m-vertical_small">
+              <lightning:icon
+                iconName="doctype:attachment"
+                alternativeText="Attachment"
+                title="Attachment"
+                size="small"
+              />
+
+              <aura:if isTrue="{! !v.ifRemoveAttachment}">
+                <span style="margin-left: 10px"
+                  >{!v.ideaRecord.AttachmentName}</span
+                >
+                <span style="margin-left: 10px"
+                  ><a
+                    href="javascript:void(0);"
+                    onclick="{!c.removeAttachment}"
+                    target="_blank"
+                    >Remove</a
+                  ></span
+                >
+              </aura:if>
+              <aura:if isTrue="{! v.ifRemoveAttachment}">
+                <span style="margin-left: 10px; text-decoration: line-through"
+                  >{!v.ideaRecord.AttachmentName}</span
+                >
+                <span style="margin-left: 10px"
+                  ><a
+                    href="javascript:void(0);"
+                    onclick="{!c.undoRemoveAttachment}"
+                    target="_blank"
+                    >Undo</a
+                  ></span
+                >
+              </aura:if>
+            </div>
+          </aura:if>
+
+          <aura:if
+            isTrue="{! v.ifRemoveAttachment || !v.ideaRecord.AttachmentName}"
+          >
+            <div class="file-upload">
+              <c:FileUpload aura:id="fileUploadCmp"></c:FileUpload>
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{!v.ideaDescribe.idea.updateable}">
+            <div class="save-cancel-btn">
+              <lightning:button
+                variant="destructive"
+                label="Save"
+                title="Save Idea"
+                onclick="{! c.saveIdea }"
+                disabled="{!v.btnStatus}"
+              />
+              <lightning:button
+                label="Cancel"
+                title="Cancel"
+                onclick="{! c.handleCancel }"
+              />
+            </div>
+          </aura:if>
+        </div>
+      </div>
+      <div aura:id="idea-image">
+        <h3>Everything Begins With An Idea<br /></h3>
+        <lightning:button
+          onclick="{!c.handlePostIdea}"
+          class="post-idea-link slds-button"
+          variant="destructive"
+          >Post New Idea</lightning:button
+        >
+      </div>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Lead Assignment Rule</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>Queue_CAR_Caribbean</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>CAR - Caribbean</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_PRT_Puerto_Rico</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>PRT - Puerto Rico</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_CAM_Central_America</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>CAM - Central America</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_USA_United_States</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>USA - United States</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_TRK_Trucking_Team</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>TRK - Trucking Team</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_South_Florida</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>South Florida</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_Northeast</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>Northeast</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_Midwest</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>Midwest</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Queue_South</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Lead.Sales_Rep_Region__c</field>
+                <operation>equals</operation>
+                <value>South</value>
+            </criteriaItems>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

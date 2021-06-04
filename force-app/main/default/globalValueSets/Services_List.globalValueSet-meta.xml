@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Air</fullName>
+        <default>false</default>
+        <label>Air</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance</fullName>
+        <default>false</default>
+        <label>Compliance</label>
+    </customValue>
+    <customValue>
+        <fullName>FCL</fullName>
+        <default>false</default>
+        <label>FCL</label>
+    </customValue>
+    <customValue>
+        <fullName>Freight Forwarding</fullName>
+        <default>false</default>
+        <label>Freight Forwarding</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance</fullName>
+        <default>false</default>
+        <label>Insurance</label>
+    </customValue>
+    <customValue>
+        <fullName>Land Transportation</fullName>
+        <default>false</default>
+        <label>Land Transportation</label>
+    </customValue>
+    <customValue>
+        <fullName>LCL</fullName>
+        <default>false</default>
+        <label>LCL</label>
+    </customValue>
+    <customValue>
+        <fullName>Warehousing</fullName>
+        <default>false</default>
+        <label>Warehousing</label>
+    </customValue>
+    <customValue>
+        <fullName>Ocean - LCL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ocean - LCL</label>
+    </customValue>
+    <customValue>
+        <fullName>Ocean to Air</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ocean to Air</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Op. Rev.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other Op. Rev.</label>
+    </customValue>
+    <customValue>
+        <fullName>Rental Revenue</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rental Revenue</label>
+    </customValue>
+    <customValue>
+        <fullName>Trucking</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Trucking</label>
+    </customValue>
+    <customValue>
+        <fullName>Warehouse Services</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Warehouse Services</label>
+    </customValue>
+    <customValue>
+        <fullName>Managed Transportation</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Managed Transportation</label>
+    </customValue>
+    <customValue>
+        <fullName>Ocean - FCL NVO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ocean - FCL NVO</label>
+    </customValue>
+    <customValue>
+        <fullName>Ocean - FCL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ocean - FCL</label>
+    </customValue>
+    <customValue>
+        <fullName>Custom Clearance</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Customs Clearance</label>
+    </customValue>
+    <customValue>
+        <fullName>Crowley Fresh</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Crowley Fresh</label>
+    </customValue>
+    <customValue>
+        <fullName>Cross-Dock</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cross-Dock</label>
+    </customValue>
+    <customValue>
+        <fullName>Commercial LTL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commercial LTL</label>
+    </customValue>
+    <customValue>
+        <fullName>CB</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CB</label>
+    </customValue>
+    <customValue>
+        <fullName>Asset Management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Asset Management</label>
+    </customValue>
+    <customValue>
+        <fullName>CB – Dry</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CB – Dry</label>
+    </customValue>
+    <masterLabel>Services List</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

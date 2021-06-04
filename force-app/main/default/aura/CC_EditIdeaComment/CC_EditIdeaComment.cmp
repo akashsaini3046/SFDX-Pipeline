@@ -1,0 +1,38 @@
+<aura:component
+  controller="CC_IdeaDetailController"
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:attribute
+    name="ideaCommentRecord"
+    type="IdeaComment"
+    default="{'sobjectType': 'IdeaComment'}"
+  />
+  <aura:attribute name="ideaCommentId" type="string" />
+
+  <aura:attribute name="ideaRecord" type="Idea" />
+  <aura:attribute name="displayIdeasList" type="boolean" />
+  <aura:attribute name="displayIdeaDetail" type="boolean" />
+  <aura:attribute name="displayEditIdea" type="boolean" />
+  <aura:attribute name="displayNewIdea" type="boolean" />
+  <aura:attribute name="displayEditIdeaComment" type="boolean" />
+  <aura:attribute name="ideaComments" type="Object[]" />
+
+  <div style="margin: 1rem">
+    <div class="slds-feed">
+      <lightning:inputRichText value="{! v.ideaCommentRecord.CommentBody}" />
+      <lightning:button
+        class="slds-m-vertical_x-small slds-button_destructive comment-post-btn"
+        label="Save"
+        onclick="{! c.saveCommentHandler}"
+      />
+      <lightning:button
+        class="slds-m-vertical_x-small slds-m-left_x-small comment-post-btn"
+        label="Cancel"
+        onclick="{! c.cancel}"
+      />
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,51 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="containerTypes" Type="List" />
+  <aura:attribute name="freights" Type="List" />
+  <aura:attribute name="requirements" Type="List" />
+  <aura:attribute name="CargoType" Type="String" />
+  <aura:attribute name="cargoDetails" Type="List" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <div class="rate-details-cont">
+    <aura:if isTrue="{!not(empty(v.cargoDetails))}">
+      <table width="100%" cellspacing="0" cellpadding="0" class="rate-det-tbl">
+        <thead>
+          <tr>
+            <td></td>
+            <td>{!$Label.c.CC_VC_RouteDet_Items}</td>
+            <td class="text-center">{!$Label.c.CC_VC_RouteDet_Qty}</td>
+            <td class="text-right">{!$Label.c.CC_VC_RouteDet_Rates}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <aura:iteration items="{!v.cargoDetails}" var="Item" indexVar="index">
+            <tr class="head-row">
+              <td>{!index + 1}.</td>
+              <td>
+                <h6>
+                  <b
+                    >{!Item.containerName}&nbsp;
+                    <span class="grey-text-9">
+                      <aura:unescapedHtml value="{!Item.commodityDesc}" />
+                    </span>
+                  </b>
+                </h6>
+              </td>
+              <td class="text-center">
+                <h6><b>{!Item.quantity}</b></h6>
+              </td>
+              <td class="text-right">
+                <h6>
+                  <b> NA </b>
+                </h6>
+              </td>
+            </tr>
+          </aura:iteration>
+        </tbody>
+      </table>
+    </aura:if>
+  </div>
+</aura:component>

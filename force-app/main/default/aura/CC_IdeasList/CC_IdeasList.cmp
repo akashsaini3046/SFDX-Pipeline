@@ -1,0 +1,391 @@
+<aura:component
+  controller="CC_IdeaDetailController"
+  implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes,flexipage:availableForRecordHome"
+  access="global"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                                                                                                               $Resource.jquery224 , 
+                                                                                                               $Resource.customJs , 
+                                                                                                               $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                                                                                                               }"
+  />
+  <aura:attribute name="showDetail" type="boolean" default="false" />
+  <aura:attribute name="componentName" type="String" default="CC_IdeasList" />
+  <aura:attribute name="communityName" type="String" />
+  <aura:attribute name="ideasList" type="Ideas[]" />
+  <aura:attribute name="ideasPage" type="Ideas[]" />
+  <aura:attribute name="ideaDescribe" type="Object" />
+  <aura:attribute name="pageSize" type="Integer" default="100" />
+  <aura:attribute name="zonesOptions" type="SelectOption[]" />
+  <aura:attribute name="searchText" type="string" />
+  <aura:attribute name="ideaStatuses" type="Map" />
+  <aura:attribute name="categoriesOptions" type="Object[]" />
+  <aura:attribute name="selectedCommunityId" type="string" />
+  <aura:attribute name="selectedStatuses" type="string" />
+  <aura:attribute name="selectedCategories" type="string" />
+  <aura:attribute name="userId" type="string" />
+  <aura:attribute name="currUser" type="User" />
+  <aura:attribute name="selIdeaId" type="string" />
+  <aura:attribute name="url" type="String" />
+  <aura:attribute name="loading" type="boolean" default="true" />
+  <aura:attribute name="ideaRecord" type="Idea" />
+  <aura:attribute name="showRecords" type="Integer" default="10" />
+  <aura:attribute name="totalRange" type="Integer" default="350" />
+  <aura:attribute name="startRange" type="Integer" default="1" />
+  <aura:attribute name="endRange" type="Integer" />
+  <lightning:navigation aura:id="navigationService" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:handler
+    name="paginationEvent"
+    event="c:CC_PaginationEvt"
+    action="{!c.handlePagination}"
+  />
+  <aura:if isTrue="{!v.communityName != null}">
+    <ltng:require
+      styles="{!join(',', 
+                               $Resource.NewStyle, 
+                               $Resource.Crowley_theme)}"
+    />
+    <aura:set attribute="else">
+      <ltng:require
+        styles="{!join(',', 
+                                   $Resource.NewStyle, 
+                                   $Resource.Salesforce_theme)}"
+      />
+    </aura:set>
+  </aura:if>
+  <div aura:id="salesforce-wrap">
+    <aura:if isTrue="{!v.communityName != null}">
+      <div>
+        <h5>All Ideas</h5>
+        <lightning:breadcrumbs>
+          <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+          <lightning:breadcrumb label="Ideas" />
+        </lightning:breadcrumbs>
+      </div>
+    </aura:if>
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.loading}">
+      <div aura:id="spinnerId" class="slds-spinner_container">
+        <div
+          class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+          role="alert"
+        >
+          <span class="slds-assistive-text">Loading...</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </aura:if>
+    <!-- Loading spinner end-->
+
+    <div class="idea-page-container">
+      <div class="idea-page">
+        <div class="clearfix"></div>
+        <div class="idea-search">
+          <div class="row">
+            <div class="col-12 col-sm-5">
+              <lightning:select
+                aura:id="zones"
+                name="zones"
+                label="Idea Zone"
+                value="{!v.selectedCommunityId}"
+              >
+                <!--<option text="Choose Idea Zone" value=""></option>-->
+                <aura:iteration items="{!v.zonesOptions}" var="zone">
+                  <option text="{!zone.Name}" value="{!zone.Id}"></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+            <div class="col-12 col-sm-5">
+              <lightning:select
+                aura:id="status"
+                name="status"
+                label="Status"
+                value="{!v.selectedStatuses}"
+              >
+                <option text="Choose Status" value=""></option>
+                <aura:iteration items="{!v.ideaStatuses}" var="status">
+                  <option
+                    text="{!status.label}"
+                    value="{!status.value}"
+                  ></option>
+                </aura:iteration>
+              </lightning:select>
+            </div>
+            <!--<div class="col-12 col-sm-3">
+                        <lightning:select aura:id="categories" name="categories" label="Categories"
+                            value="{!v.selectedCategories}">
+                            <option text="Choose Category.." value=""></option>
+                            <aura:iteration items="{!v.categoriesOptions}" var="category">
+                                <option text="{!category.label}" value="{!category.value}"></option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>-->
+            <div class="col-12 col-sm-2">
+              <label
+                class="slds-form-element__label"
+                for="50:2;a"
+                data-aura-rendered-by="54:2;a"
+              >
+                <!--render facet: 55:2;a--><span
+                  class=""
+                  data-aura-rendered-by="56:2;a"
+                  >&nbsp;</span
+                ></label
+              >
+              <a
+                onclick="{!c.applyChanges}"
+                class="slds-button slds-button_destructive apply-button"
+                >Apply</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="grey-bg-search">
+          <lightning:input
+            value="{!v.searchText}"
+            placeholder="Search ideas by title"
+            onchange="{!c.searchByText}"
+            type="search"
+          />
+        </div>
+        <div class="ideas-list-view">
+          <aura:if isTrue="{!v.ideasList.length > 0}">
+            <div class="block-view pagination-wrapper">
+              <c:CC_Pagination
+                endRange="{!v.endRange}"
+                showRecords="{!v.showRecords}"
+                totalRange="{!v.totalRange}"
+                startRange="{!v.startRange}"
+              />
+            </div>
+            <div class="clearfix"></div>
+            <ul
+              class="slds-feed__list slds-has-dividers_bottom-space idea-list-items"
+            >
+              <aura:iteration items="{!v.ideasPage}" var="ideaRecord">
+                <li class="slds-feed__item">
+                  <div class="slds-post__content slds-text-longform">
+                    <div class="slds-list_horizontal">
+                      <lightning:layout
+                        multipleRows="true"
+                        class="idea-sub-header"
+                      >
+                        <lightning:layoutItem flexibility="auto">
+                          <span class="idea-category-label" title="Zone"
+                            >{!ideaRecord.Community.Name}</span
+                          >
+                          <div class="slds-text-title_bold">
+                            <a
+                              id="{!ideaRecord.Id}"
+                              onclick="{!c.handleOpenIdea}"
+                              >{!ideaRecord.Title}</a
+                            >
+                          </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto, no-grow">
+                          <aura:if
+                            isTrue="{! ideaRecord.Status == 'Implemented'}"
+                          >
+                            <div class="slds-badge slds-theme_success">
+                              {!ideaRecord.Status}
+                            </div>
+                          </aura:if>
+                          <aura:if isTrue="{! ideaRecord.Status == 'On Hold'}">
+                            <p class="slds-badge on-hold">
+                              {!ideaRecord.Status}
+                            </p>
+                          </aura:if>
+                          <aura:if
+                            isTrue="{!and(ideaRecord.Status != 'Implemented',ideaRecord.Status != 'On Hold')}"
+                          >
+                            <p class="slds-badge slds-theme_warning">
+                              {!ideaRecord.Status}
+                            </p>
+                          </aura:if>
+                        </lightning:layoutItem>
+                      </lightning:layout>
+                    </div>
+                    <aura:if isTrue="{! ideaRecord.Body!=null}">
+                      <lightning:formattedRichText
+                        value="{! ideaRecord.Body}"
+                      />
+                    </aura:if>
+                  </div>
+                  <footer class="slds-post__footer">
+                    <ul>
+                      <li>
+                        Posted By: <b>&nbsp;{!ideaRecord.CreatorName}</b> <br />
+                        <lightning:layoutItem class="date-time-stamp">
+                          <span
+                            style="
+                              font-size: 0.75rem;
+                              line-height: 1.25;
+                              color: #696969;
+                            "
+                          >
+                            <lightning:formattedDateTime
+                              value="{!ideaRecord.CreatedDate}"
+                              year="2-digit"
+                              month="short"
+                              day="2-digit"
+                              hour="2-digit"
+                              minute="2-digit"
+                          /></span>
+                        </lightning:layoutItem>
+                        <aura:if isTrue="{!v.communityName != null}">
+                          <span class="promotion-points"
+                            >{!ideaRecord.VoteTotal} Promotion Points</span
+                          >
+                          <aura:set attribute="else">
+                            <span class="promotion-points-salesforce"
+                              >{!ideaRecord.VoteTotal} Promotion Points</span
+                            >
+                          </aura:set>
+                        </aura:if>
+                        <!--<aura:if isTrue="{! ideaRecord.Categories}">
+                                                    <span class="idea-post-category"> {!ideaRecord.Categories}</span>
+                                                </aura:if>-->
+                      </li>
+                    </ul>
+
+                    <ul
+                      class="slds-post__footer-meta-list slds-list_horizontal slds-has-dividers_right slds-text-title"
+                    >
+                      <aura:if isTrue="{!ideaRecord.NumComments>1}">
+                        <aura:if isTrue="{!v.communityName != null}">
+                          <li class="slds-item comment-icon">
+                            {!ideaRecord.NumComments} Comments
+                          </li>
+                          <aura:set attribute="else">
+                            <li class="slds-item comment-icon-salesforce">
+                              {!ideaRecord.NumComments} Comments
+                            </li>
+                          </aura:set>
+                        </aura:if>
+                      </aura:if>
+                      <aura:if isTrue="{!ideaRecord.NumComments==0}">
+                        <aura:if isTrue="{!v.communityName != null}">
+                          <li class="slds-item comment-icon">No Comments</li>
+                          <aura:set attribute="else">
+                            <li class="slds-item comment-icon-salesforce">
+                              No Comments
+                            </li>
+                          </aura:set>
+                        </aura:if>
+                      </aura:if>
+                      <aura:if isTrue="{!ideaRecord.NumComments==1}">
+                        <aura:if isTrue="{!v.communityName != null}">
+                          <li class="slds-item comment-icon">1 Comment</li>
+                          <aura:set attribute="else">
+                            <li class="slds-item comment-icon-salesforce">
+                              1 Comment
+                            </li>
+                          </aura:set>
+                        </aura:if>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! and(!ideaRecord.Votes, ideaRecord.Status != 'Implemented')}"
+                      >
+                        <li class="slds-col slds-item">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:like"
+                            alternativeText="Like"
+                            title="Like this item"
+                            size="medium"
+                            value="{!ideaRecord.Id}"
+                            onclick="{!c.upvoteIdeaHandler}"
+                          />
+                        </li>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! and(!ideaRecord.Votes, ideaRecord.Status != 'Implemented')}"
+                      >
+                        <li class="slds-col slds-item">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:dislike"
+                            alternativeText="Disike"
+                            title="Dislike this item"
+                            size="medium"
+                            value="{!ideaRecord.Id}"
+                            onclick="{!c.downvoteIdeaHandler}"
+                          />
+                        </li>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! and(ideaRecord.Votes, ideaRecord.Votes[0].Type == 'Down')}"
+                      >
+                        <li class="slds-col slds-item">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:dislike"
+                            alternativeText="Disliked"
+                            title="You disliked this item"
+                            size="medium"
+                            disabled="true"
+                            value="{!ideaRecord.Id}"
+                          />
+                        </li>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! and(ideaRecord.Votes, ideaRecord.Votes[0].Type == 'Up')}"
+                      >
+                        <li class="slds-col slds-item">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:like"
+                            alternativeText="Liked"
+                            title="You liked this item"
+                            size="medium"
+                            disabled="true"
+                            value="{!ideaRecord.Id}"
+                          />
+                        </li>
+                      </aura:if>
+                    </ul>
+                  </footer>
+                </li>
+              </aura:iteration>
+            </ul>
+            <div class="page-start-end">
+              <div class="block-view pagination-wrapper">
+                <c:CC_Pagination
+                  endRange="{!v.endRange}"
+                  showRecords="{!v.showRecords}"
+                  totalRange="{!v.totalRange}"
+                  startRange="{!v.startRange}"
+                />
+              </div>
+            </div>
+            <aura:set attribute="else">
+              <aura:if isTrue="{!!v.loading}">
+                <p class="slds-text-title_bold slds-m-vertical_medium">
+                  Ideas not found.
+                </p>
+              </aura:if>
+            </aura:set>
+          </aura:if>
+        </div>
+      </div>
+      <div aura:id="idea-image">
+        <h3>Everything Begins With An Idea<br /></h3>
+        <div>
+          <aura:if isTrue="{! v.ideaDescribe.idea.createable}">
+            <lightning:button
+              onclick="{!c.handleIdeaPost}"
+              class="post-idea-link slds-button"
+              variant="destructive"
+              >Post New Idea</lightning:button
+            >
+          </aura:if>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

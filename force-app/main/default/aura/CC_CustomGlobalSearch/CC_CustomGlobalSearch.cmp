@@ -1,0 +1,83 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes,force:hasRecordId"
+  access="global"
+  controller="CC_CustomGlobalSearchCtrl"
+>
+  <aura:attribute name="placeholder" type="String" default="Search" />
+  <aura:attribute name="searchKeyWord" type="String" />
+  <aura:attribute name="loading" type="Boolean" default="false" />
+  <aura:attribute name="Message" type="String" default="Search Result..." />
+  <aura:attribute
+    name="listOfSearchRecords"
+    type="CC_CustomGlobalSearchCtrl.SObjectResult"
+  />
+  <aura:attribute name="showmessageDialog" type="boolean" default="false" />
+  <aura:attribute name="sobjectLabels" type="Map" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.handleComponentEvent}"
+  />
+  <aura:registerEvent name="globalSearchEvent" type="c:CC_GlobalSearchEvent" />
+
+  <span class="select-search-type slds-no-print">
+    <lightning:select aura:id="select" name="searchOptions" label="select">
+      <option text="All" value="All" />
+      <aura:iteration items="{!v.sobjectLabels}" var="option" indexVar="key">
+        <option text="{!option.key}" value="{!option.value}"></option>
+      </aura:iteration>
+    </lightning:select>
+  </span>
+  <div
+    aura:id="searchRes"
+    class="slds-lookup slds-no-print"
+    data-select="single"
+    id="searchRes"
+  >
+    <div class="slds-form-element__control">
+      <div aura:id="lookupField">
+        <div onkeyup="{! c.keyPressController}" class="remove-close-icon">
+          <form>
+            <lightning:input
+              aura:id="inputSearch"
+              placeholder="{!v.placeholder}"
+              aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"
+              onblur="{!c.onMouseOutInputSearch}"
+              autocomplete="off"
+              value="{!v.searchKeyWord}"
+              type="search"
+              onchange="{!c.onChangeSearchText}"
+            />
+            <aura:if
+              isTrue="{!if( and(v.searchKeyWord != null, v.searchKeyWord != ''), true, false)}"
+            >
+              <i class="clear-field" onclick="{!c.clearInputValue}"></i>
+            </aura:if>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="slds-lookup__menu slds" id="lookup">
+      <div class="slds-lookup__item--label slds-text-body--small">
+        {!v.resultMessage}
+      </div>
+      <aura:if isTrue="{! v.loading }">
+        <lightning:spinner alternativeText="Loading" size="small" />
+      </aura:if>
+      <ul class="slds-lookup__list" role="listbox">
+        <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+          <c:CC_CustomGlobalSearchResult item="{!singleRec}" />
+        </aura:iteration>
+      </ul>
+      <aura:if isTrue="{!v.showmessageDialog}">
+        <div
+          class="slds-lookup__item--label slds-text-body--small"
+          label="result"
+        >
+          <div class="result-modal">{!v.Message}</div>
+        </div>
+      </aura:if>
+    </div>
+  </div>
+</aura:component>

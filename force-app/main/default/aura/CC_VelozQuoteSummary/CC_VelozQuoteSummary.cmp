@@ -1,0 +1,111 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute name="contactNumber" type="String" />
+  <aura:attribute name="firstName" type="String" />
+  <aura:attribute name="accountName" type="String" />
+  <aura:attribute name="emailAddress" type="String" />
+  <aura:attribute name="quoteObjectList" type="List" />
+  <aura:attribute name="sendQuoteEmailId" type="string" default="" />
+  <aura:attribute
+    name="showQuotesCreatedMessage"
+    type="boolean"
+    default="true"
+  />
+  <aura:attribute name="showCreateProspect" type="boolean" default="false" />
+  <aura:attribute name="quoteTabs" type="Aura.Component[]" />
+
+  <aura:attribute name="accountLookup" type="String" default="null" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <div>
+    <aura:if isTrue="{!and(v.isPostLogin, not(v.accountLookup))}">
+      <div class="create-prospects">
+        <lightning:button
+          class="max-w-200"
+          label=" Create Prospect"
+          iconName="utility:new"
+          iconPosition="left"
+          onclick="{!c.handleCreateProspect}"
+        />
+      </div>
+    </aura:if>
+
+    <lightning:tabset aura:id="tabs" class="lightning-tab-bar tab-style">
+      <aura:iteration items="{!v.quoteTabs}" var="obj"> {!obj} </aura:iteration>
+    </lightning:tabset>
+  </div>
+
+  <aura:if isTrue="{!v.showCreateProspect}">
+    <c:CC_CreateProspect
+      contactNumber="{#v.contactNumber}"
+      firstName="{#v.firstName}"
+      accountName="{#v.accountName}"
+      emailAddress="{#v.emailAddress}"
+      showCreateProspect="{!v.showCreateProspect}"
+    />
+  </aura:if>
+
+  <aura:if isTrue="{!v.showQuotesCreatedMessage}">
+    <div class="slds-m-around_xx-large">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_medium text-center dlg-content"
+            id="modal-content-id-1"
+          >
+            <i onclick="{! c.closeModel }" class="close-dlg"></i>
+            <i class="icon-check-outline"></i>
+            <h5>
+              <span
+                >{!$Label.c.CC_VC_QuoSum_Quote_Number}<aura:if
+                  isTrue="{!greaterthan(v.quoteObjectList.length, 1)}"
+                  >s</aura:if
+                >:
+                <span class="color-blue">"</span>
+              </span>
+              <aura:iteration
+                items="{!v.quoteObjectList}"
+                var="obj"
+                indexVar="index"
+              >
+                <span class="color-blue">{!obj.quoteName}</span>
+                <aura:if
+                  isTrue="{! notequals(v.quoteObjectList.length, (index + 1))}"
+                  ><span class="color-blue">,</span>&nbsp;</aura:if
+                >
+              </aura:iteration>
+              <span class="color-blue">"</span>
+              <aura:if isTrue="{!greaterthan(v.quoteObjectList.length, 1)}"
+                >&nbsp;{!$Label.c.CC_VC_QuoSum_have}&nbsp;{!$Label.c.CC_VC_QuoSum_Successfully}
+                <aura:set attribute="else"
+                  >&nbsp;{!$Label.c.CC_VC_QuoSum_has}&nbsp;{!$Label.c.CC_VC_QuoSum_Successfully}
+                </aura:set>
+              </aura:if>
+              <aura:if isTrue="{!not(equals(v.sendQuoteEmailId, ''))}"
+                >&nbsp;{!$Label.c.CC_VC_QuoSum_Saved_And_Send}&nbsp;<span
+                  class="color-blue"
+                  >{!v.sendQuoteEmailId}</span
+                >
+                <aura:set attribute="else"
+                  >&nbsp;{!$Label.c.CC_VC_QuoSum_Created}</aura:set
+                >
+              </aura:if>
+            </h5>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+</aura:component>

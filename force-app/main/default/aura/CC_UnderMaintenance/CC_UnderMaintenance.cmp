@@ -1,0 +1,19 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:hasPageReference,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="showIdeaButton" type="boolean" default="true" />
+  <lightning:navigation aura:id="navigationService" />
+  <div class="under-maintanance">
+    <div class="under-maintanance-content">
+      <!--h2>Please click on Accounts, Bookings, Quotes or Ideas tab.</h2-->
+      <h2>Please click on Accounts, Quotes or Ideas tab.</h2>
+      <!--h3>Sorry for the inconvenience. </h3-->
+      <!--<aura:if isTrue="{!v.showIdeaButton}">
+                <div class="login-form-buttons">
+                    <button class="slds-button slds-button_neutral slds-button slds-button_destructive" type="button" onclick="{!c.handleonClick}" >Home</button> 
+                </div>
+            </aura:if>-->
+    </div>
+  </div>
+</aura:component>

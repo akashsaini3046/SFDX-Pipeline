@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>Sr. Vice President &amp; GM Lvl 1 - Steven C</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>CHAIRMAN_CEO_Thomas_C</parentRole>
+</Role>

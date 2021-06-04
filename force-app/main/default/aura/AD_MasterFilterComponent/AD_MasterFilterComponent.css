@@ -1,0 +1,96 @@
+.THIS .font-bold {
+  font-weight: bold !important;
+}
+
+.THIS .manageCloseIcon svg {
+  fill: #9e2026;
+  width: 20px;
+  height: 20px;
+}
+
+.THIS .button-submit-position {
+  bottom: 100px !important;
+  position: absolute !important;
+}
+
+.THIS .width-thirty-percent {
+  width: 40% !important;
+}
+
+.THIS .width-fifteen-percent {
+  width: 15% !important;
+}
+
+.THIS .accnameownerpicklist-dummy-class .slds-dropdown-trigger .slds-dropdown {
+  height: 90px;
+  overflow: auto;
+}
+
+.THIS .slds-dropdown-trigger .slds-dropdown {
+  height: 110px;
+  overflow: auto;
+}
+
+.THIS .padding-top-six {
+  padding-top: 6px !important;
+}
+
+.THIS .padding-top-four {
+  padding-top: 4px !important;
+}
+
+.THIS .font-blue {
+  color: #0095ff !important;
+}
+
+.THIS .background-blue {
+  background-color: #0095ff !important;
+}
+
+.THIS .font-bold {
+  font-weight: bold !important;
+}
+
+.THIS.hr-margin-top {
+  margin-top: 1px !important;
+}
+
+.THIS.hr-margin-bottom {
+  margin-bottom: 10px !important;
+}
+
+.THIS .hr-margin-top-chld {
+  margin-top: 10px !important;
+}
+
+.THIS .hr-margin-bottom-chld {
+  margin-bottom: 10px !important;
+}
+
+.THIS .truncate {
+  white-space: nowrap !important;
+  width: 95% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}
+
+.THIS .font_size {
+  font-size: 11px !important;
+}
+
+.THIS .blueFontColour {
+  color: #0066cc;
+}
+
+.THIS .border-color-white {
+  border-color: white !important;
+}
+
+.THIS .font-size-sixteen-px {
+  font-size: 16px !important;
+}

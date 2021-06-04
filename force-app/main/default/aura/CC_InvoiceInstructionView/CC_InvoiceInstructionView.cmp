@@ -1,0 +1,128 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+  <aura:attribute name="data" type="object" />
+  <aura:attribute name="invoicingData" type="List" />
+  <aura:attribute name="totalSum" type="String" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <div class="bol-rel-boxborder-4black" style="border-bottom: 0px none">
+    <div class="row">
+      <div
+        class="col-sm-12 bol-rel-label text-uppercase"
+        style="text-align: center"
+      >
+        Invoicing Instructions
+      </div>
+    </div>
+    <table
+      class="table-pfbs"
+      style="border-bottom: 0px none; border-left: 0px none"
+    >
+      <aura:iteration
+        items="{!v.invoicingData}"
+        var="chargeLine"
+        indexVar="chargeLineKey"
+      >
+        <tr>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Freight Charges
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Rated As <br /> (in USD)
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Per
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Rate Tariffs
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Payment Terms
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Payer Name
+          </th>
+          <th
+            style="text-transform: uppercase; min-width: 180px"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Payment Location
+          </th>
+          <th
+            style="text-transform: uppercase"
+            class="bol-rel-label"
+            valign="top"
+          >
+            Value<br /> (in USD)
+          </th>
+        </tr>
+        <aura:iteration items="{!chargeLine.value}" var="charge">
+          <tr>
+            <td style="font-weight: bold; text-transform: uppercase">
+              {!charge.strFreightCharge}
+            </td>
+            <td style="font-weight: bold">$&nbsp;{!charge.strRatedAs}</td>
+            <td style="font-weight: bold">{!charge.strPer}</td>
+            <td style="font-weight: bold">$&nbsp;{!charge.strRateTarrif}</td>
+            <td style="font-weight: bold">
+              <aura:if isTrue="{!charge.strPaymentTerm == 'CC'}">
+                COLLECT
+              </aura:if>
+              <aura:if isTrue="{!charge.strPaymentTerm == 'PP'}">
+                PREPAID
+              </aura:if>
+            </td>
+            <td style="font-weight: bold">{!charge.strPayerName}</td>
+            <td style="font-weight: bold; text-transform: uppercase">
+              {!charge.strPaymentLocation}
+            </td>
+            <td style="font-weight: bold">$&nbsp;{!charge.strValue}</td>
+          </tr>
+        </aura:iteration>
+        <tr>
+          <td colspan="6" class="hori-rule" style="border-right:0px; none"></td>
+          <td class="hori-rule"></td>
+          <td class="hori-rule"></td>
+        </tr>
+      </aura:iteration>
+      <tr>
+        <td colspan="6" style="border: 0px none">
+          <div style="padding-left: 12px">
+            <span style="font-weight: normal"
+              >{!$Label.c.CC_BillOfLadingReviewInstructions}</span
+            >
+          </div>
+        </td>
+        <td
+          style="border-left; 0px none; border-bottom:0px none; text-align:right"
+        >
+          <span class="bol-rel-label">TOTALS :</span>
+        </td>
+        <td style="font-weight: bold" class="no-wrap">$&nbsp;{!v.totalSum}</td>
+      </tr>
+    </table>
+  </div>
+</aura:component>

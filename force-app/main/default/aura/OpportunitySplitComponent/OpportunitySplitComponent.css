@@ -1,0 +1,79 @@
+.THIS .slds-button_icon-bare {
+  display: none;
+}
+
+.THIS .hr-margin-top-chld {
+  margin-top: 2px !important;
+}
+
+.THIS .hr-margin-bottom-chld {
+  margin-bottom: 2px !important;
+}
+
+.THIS .table-cell-word-wrap {
+  white-space: normal;
+  visibility: visible;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 700px) {
+  .THIS .responsiveHide {
+    display: none !important;
+  }
+}
+
+.THIS .combobox-service-status-style {
+  width: 80px;
+}
+
+.THIS input[name="wonOrLostService"] {
+  padding-right: 0px;
+  padding-left: 5px;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000 !important;
+  position: fixed !important;
+}
+
+.THIS .slds-cell-fixed {
+  background-color: transparent !important;
+}
+
+.THIS .slds-table--header-fixed_container {
+  background-color: transparent !important;
+}
+
+.THIS .background-white {
+  background: white !important;
+  border: none !important;
+  color: black !important;
+}
+
+.THIS .border-color-white {
+  border-color: white !important;
+}
+
+.THIS .background-green {
+  background: green !important;
+}
+
+.THIS .quick-action-width-desktop {
+  min-width: 160% !important;
+  margin-left: -31% !important;
+}
+
+.THIS .width-desktop {
+  min-width: 80% !important;
+}
+
+.THIS .slds-backdrop_open-quickaction {
+  opacity: 0 !important;
+}
+
+.THIS.spinner-quickaction {
+  height: 2800px !important;
+  min-width: 760% !important;
+  margin-left: -100% !important;
+}

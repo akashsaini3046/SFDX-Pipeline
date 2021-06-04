@@ -1,0 +1,20 @@
+.THIS.no-padding-mobile {
+  margin: -15px !important;
+}
+
+.THIS span.slds-form-element__label {
+  color: rgb(7, 7, 8) !important;
+}
+
+.THIS span.slds-checkbox_on {
+  color: rgb(7, 7, 8) !important;
+}
+
+.THIS span.slds-checkbox_off {
+  color: rgb(7, 7, 8) !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000 !important;
+  position: fixed !important;
+}

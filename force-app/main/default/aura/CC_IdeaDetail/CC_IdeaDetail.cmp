@@ -1,0 +1,601 @@
+<aura:component
+  controller="CC_IdeaDetailController"
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                                                                                                               $Resource.jquery224 , 
+                                                                                                               $Resource.customJs , 
+                                                                                                               $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                                                                                                               }"
+  />
+  <aura:attribute name="componentName" type="String" default="CC_IdeasList" />
+  <aura:attribute name="ideaRecord" type="Idea" />
+  <aura:attribute name="ideaId" type="string" />
+  <aura:attribute name="ideaFieldDescribe" type="Object" />
+  <aura:attribute name="ideaDescribe" type="Object" />
+  <aura:attribute name="disableForm" type="boolean" />
+  <aura:attribute name="isUpvoted" type="boolean" />
+  <aura:attribute name="isDownvoted" type="boolean" />
+  <aura:attribute name="ideaComments" type="Object[]" />
+  <aura:attribute name="ideaCommentId" type="String" />
+  <aura:attribute name="newComment" type="IdeaComment" default="{}" />
+  <aura:attribute name="currUser" type="User" />
+  <aura:attribute name="multiple" type="Boolean" default="true" />
+  <aura:attribute name="disabled" type="Boolean" default="false" />
+  <aura:attribute name="attachmentURI" type="String" default="" />
+  <aura:attribute name="communityNetworkName" type="String" />
+  <aura:attribute name="communityName" type="String" />
+  <aura:attribute
+    name="displayEditIdeaComment"
+    type="boolean"
+    default="false"
+  />
+  <lightning:navigation aura:id="navigationService" />
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:if isTrue="{!v.communityName != null}">
+    <ltng:require
+      styles="{!join(',', 
+                               $Resource.NewStyle, 
+                               $Resource.Crowley_theme)}"
+    />
+    <aura:set attribute="else">
+      <ltng:require
+        styles="{!join(',', 
+                                   $Resource.NewStyle, 
+                                   $Resource.Salesforce_theme)}"
+      />
+    </aura:set>
+  </aura:if>
+  <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
+  <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+
+  <!-- 'fileName' attribute for display the selected file name -->
+  <aura:attribute name="fileName" type="String" default="No File Selected.." />
+
+  <aura:if isTrue="showLoadingSpinner">
+    <lightning:spinner size="medium" />
+  </aura:if>
+
+  <div aura:id="salesforce-wrap">
+    <div>
+      <aura:if isTrue="{!v.communityName != null}">
+        <lightning:breadcrumbs>
+          <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+          <lightning:breadcrumb
+            label="All Ideas"
+            onclick="{!c.handleAllIdeasOnclick}"
+          />
+          <lightning:breadcrumb label="Idea Description" />
+        </lightning:breadcrumbs>
+      </aura:if>
+    </div>
+
+    <div class="idea-page-container">
+      <div class="idea-page">
+        <div class="slds-feed-div">
+          <div>
+            <div class="slds-text-heading_small">
+              {! v.ideaRecord.Community.Name}
+            </div>
+            <span class="slds-text-heading_medium" title="Title"
+              ><h3>
+                {! v.ideaRecord.Title}
+                <aura:if isTrue="{! v.ideaRecord.Status == 'Implemented'}">
+                  <span
+                    class="slds-m-horizontal_small slds-badge slds-theme_success"
+                    >{!v.ideaRecord.Status}</span
+                  >
+                </aura:if>
+                <aura:if isTrue="{! v.ideaRecord.Status == 'On Hold'}">
+                  <span class="slds-m-horizontal_small slds-badge on-hold"
+                    >{!v.ideaRecord.Status}</span
+                  >
+                </aura:if>
+                <aura:if
+                  isTrue="{! and(v.ideaRecord.Status != 'Implemented', v.ideaRecord.Status != 'On Hold')}"
+                >
+                  <span
+                    class="slds-m-horizontal_small slds-badge slds-theme_warning"
+                    >{!v.ideaRecord.Status}</span
+                  >
+                </aura:if>
+                <aura:if
+                  isTrue="{! and(v.ideaDescribe.idea.deletable, v.ideaDescribe.idea.updateable)}"
+                >
+                  <div class="idea-edit-dlt-btn pull-right">
+                    <lightning:buttonIcon
+                      variant="bare"
+                      iconName="utility:edit"
+                      onclick="{!c.editHandler}"
+                      title="Edit Idea"
+                    />
+                    <lightning:buttonIcon
+                      variant="bare"
+                      iconName="utility:delete"
+                      onclick="{!c.deleteIdeaHandler}"
+                      title="Delete Idea"
+                    />
+                  </div>
+                </aura:if>
+                <aura:if
+                  isTrue="{! and(v.ideaDescribe.idea.deletable, !v.ideaDescribe.idea.updateable)}"
+                >
+                  <div class="idea-edit-dlt-btn pull-right">
+                    <lightning:buttonIcon
+                      variant="bare"
+                      iconName="utility:delete"
+                      onclick="{!c.deleteIdeaHandler}"
+                      title="Delete Idea"
+                    />
+                  </div>
+                </aura:if>
+
+                <aura:if
+                  isTrue="{! and(!v.ideaDescribe.idea.deletable, v.ideaDescribe.idea.updateable)}"
+                >
+                  <div class="idea-edit-dlt-btn pull-right">
+                    <lightning:buttonIcon
+                      class="width-unset"
+                      variant="bare"
+                      iconName="utility:edit"
+                      onclick="{!c.editHandler}"
+                      title="Edit Idea"
+                    />
+                  </div>
+                </aura:if>
+              </h3>
+            </span>
+          </div>
+          <ul class="slds-feed__list">
+            <li class="slds-feed__item">
+              <lightning:card>
+                <article class="slds-post">
+                  <header class="slds-post__header slds-media">
+                    <div class="slds-media__figure">
+                      <a
+                        href="javascript:void(0);"
+                        class="slds-avatar slds-avatar_circle slds-avatar_medium"
+                      >
+                        <img
+                          alt="{! v.ideaRecord.CreatorName}"
+                          src="{! v.ideaRecord.CreatorFullPhotoUrl}"
+                          title="{! v.ideaRecord.CreatorName}"
+                        />
+                      </a>
+                    </div>
+
+                    <div class="slds-media__body">
+                      <div
+                        class="slds-grid slds-grid_align-spread slds-has-flexi-truncate"
+                      >
+                        <div>
+                          <span>Posted By:</span>
+                          <!--<a href="{! v.ideaRecord.CreatedById}" title="{!v.ideaRecord.CreatorName}">&nbsp;{!v.ideaRecord.CreatorName}</a>-->
+                          <b
+                            ><span title="{!v.ideaRecord.CreatorName}"
+                              >&nbsp;{!v.ideaRecord.CreatorName}</span
+                            ></b
+                          >
+                          <div class="slds-text-body_small grey-text-9">
+                            <aura:if
+                              isTrue="{! v.ideaRecord.CreatedDate!=null }"
+                            >
+                              <a
+                                href="javascript:void(0);"
+                                title="Idea Posted Date"
+                                class="slds-text-link_reset"
+                              >
+                                <lightning:formattedDateTime
+                                  value="{! v.ideaRecord.CreatedDate}"
+                                  year="2-digit"
+                                  month="short"
+                                  day="2-digit"
+                                  hour="2-digit"
+                                  minute="2-digit"
+                                />
+                              </a>
+                            </aura:if>
+                            &nbsp;
+                            <aura:if isTrue="{!v.communityName != null}">
+                              <span class="promotion-points"
+                                >{!v.ideaRecord.VoteTotal} Promotion
+                                Points</span
+                              >
+                              <aura:set attribute="else">
+                                <span class="promotion-points-salesforce"
+                                  >{!v.ideaRecord.VoteTotal} Promotion
+                                  Points</span
+                                >
+                              </aura:set>
+                            </aura:if>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </header>
+
+                  <div class="slds-post__content slds-text-longform">
+                    <div class="slds-section slds-is-open">
+                      <!--<div class="slds-text-title_bold">   
+                                                <span class="slds-text-heading_small" title="Title">{!v.ideaRecord.Title}</span>                                 
+                                            </div>-->
+                      <aura:if isTrue="{! v.ideaRecord.Body!=null}">
+                        <lightning:formattedRichText
+                          value="{! v.ideaRecord.Body}"
+                        />
+                      </aura:if>
+                      <!--<div class="slds-text-title slds-m-vertical_small">Additional Information</div>-->
+                      <div class="block-view">
+                        <div class="add-info-label pull-left">
+                          Benefits: &nbsp;
+                        </div>
+                        <div class="add-info-value pull-left">
+                          <b>{!v.ideaRecord.Benefits__c}</b>
+                        </div>
+                      </div>
+                      <aura:if
+                        isTrue="{! v.ideaFieldDescribe.assigned_to__c.accessible}"
+                      >
+                        <div class="block-view">
+                          <div class="add-info-label pull-left">
+                            Assigned To: &nbsp;
+                          </div>
+                          <div class="add-info-value pull-left">
+                            <b>{!v.ideaRecord.Assigned_To_Name__c}</b>
+                          </div>
+                        </div>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! v.ideaFieldDescribe.subcategory__c.accessible}"
+                      >
+                        <div class="block-view">
+                          <div class="add-info-label pull-left">
+                            Sub Category: &nbsp;
+                          </div>
+                          <div class="add-info-value pull-left">
+                            <b>{!v.ideaRecord.Subcategory__c}</b>
+                          </div>
+                        </div>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! v.ideaFieldDescribe.free_text__c.accessible}"
+                      >
+                        <label>Internal Notes: </label>
+                        <lightning:formattedRichText
+                          value="{! v.ideaRecord.Free_Text__c}"
+                          title="Internal Notes"
+                        />
+                      </aura:if>
+                      <div class="clearfix"></div>
+                      <aura:if isTrue="{!v.ideaRecord.AttachmentName}">
+                        <div class="slds-m-vertical_small">
+                          <lightning:icon
+                            iconName="doctype:attachment"
+                            alternativeText="Attachment"
+                            title="Attachment"
+                            size="small"
+                          />
+                          <span style="margin-left: 10px"
+                            ><a href="{!v.attachmentURI}" target="_blank"
+                              >{!v.ideaRecord.AttachmentName}</a
+                            ></span
+                          >
+                        </div>
+                      </aura:if>
+                    </div>
+                  </div>
+                  <footer class="slds-post__footer">
+                    <ul
+                      class="slds-post__footer-meta-list slds-list_horizontal slds-has-dividers_right slds-text-title"
+                    >
+                      <aura:if isTrue="{!v.communityName != null}">
+                        <li class="slds-item comment-icon">
+                          <aura:if isTrue="{!v.ideaRecord.NumComments>1}">
+                            {!v.ideaRecord.NumComments} Comments
+                          </aura:if>
+                          <aura:if isTrue="{!v.ideaRecord.NumComments==1}">
+                            {!v.ideaRecord.NumComments} Comment
+                          </aura:if>
+                          <aura:if isTrue="{!v.ideaRecord.NumComments==0}">
+                            No Comments
+                          </aura:if>
+                        </li>
+                        <aura:set attribute="else">
+                          <li class="slds-item comment-icon-salesforce">
+                            <aura:if isTrue="{!v.ideaRecord.NumComments>1}">
+                              {!v.ideaRecord.NumComments} Comments
+                            </aura:if>
+                            <aura:if isTrue="{!v.ideaRecord.NumComments==1}">
+                              {!v.ideaRecord.NumComments} Comment
+                            </aura:if>
+                            <aura:if isTrue="{!v.ideaRecord.NumComments==0}">
+                              No Comments
+                            </aura:if>
+                          </li>
+                        </aura:set>
+                      </aura:if>
+                      <!-- <li class="slds-item">{!v.ideaRecord.VoteTotal} Promotion Points &nbsp;&nbsp;</li> -->
+                      <!--<aura:if isTrue="{! and(v.ideaRecord.Categories!=null,v.ideaRecord.Categories!='')}"><li class="slds-item">{!v.ideaRecord.Categories}</li></aura:if>-->
+                    </ul>
+                    <ul
+                      class="slds-post__footer-actions-list slds-list_horizontal"
+                    >
+                      <aura:if
+                        isTrue="{! !v.disableForm &amp;&amp; !v.isUpvoted &amp;&amp; !v.isDownvoted}"
+                      >
+                        <li class="slds-col slds-item slds-m-right_medium">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:like"
+                            alternativeText="Like"
+                            title="Like this item"
+                            size="medium"
+                            onclick="{!c.upvoteIdeaHandler}"
+                          />
+                        </li>
+                      </aura:if>
+                      <aura:if
+                        isTrue="{! !v.disableForm &amp;&amp; !v.isUpvoted &amp;&amp; !v.isDownvoted}"
+                      >
+                        <li class="slds-col slds-item slds-m-right_medium">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:dislike"
+                            alternativeText="Dislike"
+                            title="Dislike this item"
+                            size="medium"
+                            onclick="{!c.downvoteIdeaHandler}"
+                          />
+                        </li>
+                      </aura:if>
+                      <aura:if isTrue="{! v.isUpvoted}">
+                        <li class="slds-col slds-item slds-m-right_medium">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:like"
+                            alternativeText="Liked"
+                            title="You liked this idea"
+                            size="medium"
+                            disabled="true"
+                          />
+                        </li>
+                      </aura:if>
+
+                      <aura:if isTrue="{! v.isDownvoted}">
+                        <li class="slds-col slds-item slds-m-right_medium">
+                          <lightning:buttonIcon
+                            variant="bare"
+                            iconName="utility:dislike"
+                            alternativeText="Disliked"
+                            title="You disliked this idea"
+                            size="medium"
+                            disabled="true"
+                          />
+                        </li>
+                      </aura:if>
+                    </ul>
+                  </footer>
+                </article>
+
+                <div id="commentsPanel">
+                  <div class="slds-feed__item-comments">
+                    <aura:if isTrue="{! !v.displayEditIdeaComment}">
+                      <aura:if
+                        isTrue="{! and(!v.ideaDescribe.idea.Updateable, !v.disableForm)}"
+                      >
+                        <div class="slds-media slds-comment slds-hint-parent">
+                          <div class="slds-media__figure">
+                            <a
+                              class="slds-avatar slds-avatar_circle slds-avatar_medium"
+                              href="javascript:void(0);"
+                            >
+                              <!-- we should change url to current user -->
+                              <img
+                                alt="Person name"
+                                src="{! v.currUser.SmallPhotoUrl}"
+                                title="User avatar"
+                              />
+                            </a>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-form-element__control">
+                              <lightning:inputRichText
+                                value="{! v.newComment.CommentBody}"
+                                placeholder="Please provide your comments."
+                              >
+                                <lightning:insertImageButton />
+                              </lightning:inputRichText>
+                            </div>
+                            <lightning:button
+                              class="slds-m-vertical_x-small slds-button_destructive comment-post-btn"
+                              label="Post"
+                              onclick="{! c.addCommentHandler}"
+                              disabled="{! !v.newComment.CommentBody}"
+                            />
+                          </div>
+                        </div>
+                      </aura:if>
+                      <aura:if isTrue="{! v.ideaComments.length>0}">
+                        <ul>
+                          <aura:iteration
+                            items="{!v.ideaComments}"
+                            var="comment"
+                          >
+                            <li>
+                              <article
+                                class="slds-comment slds-media slds-hint-parent"
+                              >
+                                <div class="slds-media__figure">
+                                  <span
+                                    class="slds-avatar slds-avatar_circle slds-avatar_medium"
+                                  >
+                                    <img
+                                      alt="{!comment.CreatorName}"
+                                      src="{!comment.ideaComment.CreatorSmallPhotoUrl}"
+                                      title="{!comment.ideaComment.CreatorName}"
+                                    />
+                                  </span>
+                                  <!--<a href="{!'/_ui/core/userprofile/UserProfilePage?u='+comment.ideaComment.CreatedById}" class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                                                                        <img alt="{!comment.CreatorName}" src="{!comment.ideaComment.CreatorSmallPhotoUrl}" title="{!comment.ideaComment.CreatorName}" />
+                                                                    </a>-->
+                                </div>
+                                <div class="slds-media__body">
+                                  <header class="slds-media slds-media_center">
+                                    <div
+                                      class="slds-grid slds-grid_align-spread slds-has-flexi-truncate"
+                                    >
+                                      <span
+                                        class="slds-truncate"
+                                        title="{!comment.ideaComment.CreatedBy.Name}"
+                                      >
+                                        <!--<a href="{!'/_ui/core/userprofile/UserProfilePage?u='+comment.ideaComment.CreatedById}">{!comment.ideaComment.CreatorName}</a>-->
+                                        <a
+                                          >{!comment.ideaComment.CreatorName}</a
+                                        >
+                                      </span>
+
+                                      <div
+                                        class="slds-button-group"
+                                        role="group"
+                                      >
+                                        <aura:if
+                                          isTrue="{! or(comment.ideaComment.Votes==null, comment.ideaComment.Votes.length==0)}"
+                                        >
+                                        </aura:if>
+                                        <aura:if
+                                          isTrue="{! and(comment.ideaComment.Votes!=null, comment.ideaComment.Votes.totalSize==1)}"
+                                        >
+                                          <span class="like-number"
+                                            >1 Like</span
+                                          >
+                                        </aura:if>
+                                        <aura:if
+                                          isTrue="{! and(comment.ideaComment.Votes!=null, comment.ideaComment.Votes.totalSize>1)}"
+                                        >
+                                          <span class="like-number"
+                                            >{!comment.ideaComment.Votes.totalSize}
+                                            Likes</span
+                                          >
+                                        </aura:if>
+
+                                        <aura:if
+                                          isTrue="{! and( !v.disableForm, comment.isUpvoted)}"
+                                        >
+                                          <lightning:buttonIcon
+                                            class="slds-p-left_x-small"
+                                            value="{!comment.ideaComment.Id}"
+                                            variant="bare"
+                                            iconName="utility:dislike"
+                                            onclick="{!c.unlikeCommentHandler}"
+                                            title="Dislike the comment"
+                                          />
+                                        </aura:if>
+
+                                        <aura:if
+                                          isTrue="{! and( !v.disableForm, !comment.isUpvoted)}"
+                                        >
+                                          <lightning:buttonIcon
+                                            class="slds-p-left_x-small"
+                                            value="{!comment.ideaComment.Id}"
+                                            variant="bare"
+                                            iconName="utility:like"
+                                            onclick="{!c.likeCommentHandler}"
+                                            title="Like the comment"
+                                          />
+                                        </aura:if>
+                                        <aura:if
+                                          isTrue="{! and( !v.disableForm, v.ideaDescribe.idea.updateable)}"
+                                        >
+                                          <lightning:buttonIcon
+                                            class="slds-p-left_x-small"
+                                            value="{!comment.ideaComment.Id}"
+                                            variant="bare"
+                                            iconName="utility:edit"
+                                            onclick="{!c.editCommentHandler}"
+                                            title="Edit the comment"
+                                          />
+                                        </aura:if>
+                                        <aura:if
+                                          isTrue="{! and( !v.disableForm, v.ideaDescribe.idea.deletable)}"
+                                        >
+                                          <lightning:buttonIcon
+                                            class="slds-p-left_x-small"
+                                            value="{!comment.ideaComment.Id}"
+                                            variant="bare"
+                                            iconName="utility:delete"
+                                            onclick="{!c.deleteCommentHandler}"
+                                            title="Delete the comment"
+                                          />
+                                        </aura:if>
+                                      </div>
+                                    </div>
+                                  </header>
+                                  <div
+                                    class="slds-comment__content slds-text-longform"
+                                  >
+                                    <aura:if
+                                      isTrue="{! comment.ideaComment.CommentBody != null}"
+                                    >
+                                      <p>{! comment.ideaComment.CreatedDate}</p>
+                                      <lightning:formattedRichText
+                                        value="{! comment.ideaComment.CommentBody}"
+                                      />
+                                    </aura:if>
+                                  </div>
+                                  <!--<footer>
+                                                                        <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
+                                                                            <li class="slds-item">
+                                                                                <aura:if isTrue="{! or(comment.ideaComment.Votes==null, comment.ideaComment.Votes.length==0)}">
+                                                                                    
+                                                                                </aura:if>
+                                                                                <aura:if isTrue="{! and(comment.ideaComment.Votes!=null, comment.ideaComment.Votes.totalSize==1)}">
+                                                                                    1 Like 
+                                                                                </aura:if>
+                                                                                <aura:if isTrue="{! and(comment.ideaComment.Votes!=null, comment.ideaComment.Votes.totalSize>1)}">
+                                                                                    {!comment.ideaComment.Votes.totalSize} Likes
+                                                                                </aura:if>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </footer>-->
+                                </div>
+                              </article>
+                            </li>
+                          </aura:iteration>
+                        </ul>
+                      </aura:if>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.displayEditIdeaComment}">
+                      <c:CC_EditIdeaComment
+                        ideaRecord="{!v.ideaRecord}"
+                        ideaComments="{!v.ideaComments}"
+                        displayEditIdeaComment="{!v.displayEditIdeaComment}"
+                        ideaCommentId="{!v.ideaCommentId}"
+                      />
+                    </aura:if>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </lightning:card>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div aura:id="idea-image">
+        <h3>Everything Begins With An Idea<br /></h3>
+        <div>
+          <lightning:button
+            onclick="{!c.handlePostIdea}"
+            class="post-idea-link slds-button"
+            variant="destructive"
+            >Post New Idea</lightning:button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

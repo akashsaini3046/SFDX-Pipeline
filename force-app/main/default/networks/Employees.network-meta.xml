@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Network xmlns="http://soap.sforce.com/2006/04/metadata">
+    <allowInternalUserLogin>true</allowInternalUserLogin>
+    <allowMembersToFlag>false</allowMembersToFlag>
+    <changePasswordTemplate
+  >unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
+    <communityRoles />
+    <disableReputationRecordConversations
+  >true</disableReputationRecordConversations>
+    <emailSenderAddress>lovesh.tomar@nagarro.com</emailSenderAddress>
+    <emailSenderName>Employees</emailSenderName>
+    <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
+    <enableDirectMessages>true</enableDirectMessages>
+    <enableGuestChatter>false</enableGuestChatter>
+    <enableGuestFileAccess>true</enableGuestFileAccess>
+    <enableGuestMemberVisibility>false</enableGuestMemberVisibility>
+    <enableInvitation>false</enableInvitation>
+    <enableKnowledgeable>false</enableKnowledgeable>
+    <enableMemberVisibility>false</enableMemberVisibility>
+    <enableNicknameDisplay>true</enableNicknameDisplay>
+    <enablePrivateMessages>false</enablePrivateMessages>
+    <enableReputation>false</enableReputation>
+    <enableShowAllNetworkSettings>false</enableShowAllNetworkSettings>
+    <enableSiteAsContainer>true</enableSiteAsContainer>
+    <enableTalkingAboutStats>true</enableTalkingAboutStats>
+    <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
+    <enableTopicSuggestions>false</enableTopicSuggestions>
+    <enableUpDownVote>false</enableUpDownVote>
+    <forgotPasswordTemplate
+  >unfiled$public/CC_ForgotPasswordEmail</forgotPasswordTemplate>
+    <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
+    <logoutUrl>https://veloz.force.com/Employees</logoutUrl>
+    <networkMemberGroups>
+        <profile>Admin</profile>
+        <profile>Agent Login</profile>
+        <profile>Service Trainer</profile>
+        <profile>ContractManager</profile>
+        <profile>MarketingProfile</profile>
+        <profile>SolutionManager</profile>
+        <profile>ReadOnly</profile>
+        <profile>Standard</profile>
+        <profile>Account Leader</profile>
+        <profile>Account Manager</profile>
+        <profile>Service Agent</profile>
+        <profile>Service Leader</profile>
+        <profile>Crowley Marketing Team</profile>
+        <profile>Service Admin</profile>
+        <profile>Service Manager</profile>
+        <profile>Service Administrator</profile>
+        <profile>Account Rep</profile>
+        <profile>Sales Leader</profile>
+        <profile>Sales Manager</profile>
+        <profile>Sales Rep</profile>
+        <profile>Pricing Agent</profile>
+        <profile>Sales Agent</profile>
+        <profile>Pricing Agent old</profile>
+        <profile>Pricing Manager</profile>
+        <profile>Quality Assurance</profile>
+        <profile>Service Leader_old</profile>
+        <profile>Service Manager_old</profile>
+        <profile>Super User</profile>
+        <profile>Data Steward</profile>
+        <profile>Visitors - Sales Rep</profile>
+        <profile>Visitors - Sales Manager</profile>
+        <profile>Visitors - Sales Leader</profile>
+        <profile>Community Super User Login</profile>
+        <profile>Customer Operations Login</profile>
+        <profile>Customer Support Login</profile>
+        <profile>Documentation Login</profile>
+        <profile>Agent</profile>
+        <profile>Documentation</profile>
+        <profile>Customer Support</profile>
+        <profile>Customer Operations</profile>
+        <profile>Community Super User</profile>
+        <profile>Non Sales Users</profile>
+    </networkMemberGroups>
+    <networkPageOverrides>
+        <changePasswordPageOverrideSetting
+    >Standard</changePasswordPageOverrideSetting>
+        <forgotPasswordPageOverrideSetting
+    >Standard</forgotPasswordPageOverrideSetting>
+        <homePageOverrideSetting>Standard</homePageOverrideSetting>
+        <loginPageOverrideSetting>Designer</loginPageOverrideSetting>
+        <selfRegProfilePageOverrideSetting
+    >Designer</selfRegProfilePageOverrideSetting>
+    </networkPageOverrides>
+    <picassoSite>Employees1</picassoSite>
+    <selfRegistration>false</selfRegistration>
+    <sendWelcomeEmail>false</sendWelcomeEmail>
+    <site>Employees</site>
+    <status>Live</status>
+    <tabs>
+        <defaultTab>home</defaultTab>
+        <standardTab>Chatter</standardTab>
+    </tabs>
+    <urlPathPrefix>Employees</urlPathPrefix>
+    <welcomeTemplate>unfiled$public/CC_WelcomeEmail</welcomeTemplate>
+</Network>

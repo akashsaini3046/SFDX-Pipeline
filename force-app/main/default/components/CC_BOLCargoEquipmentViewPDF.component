@@ -1,0 +1,572 @@
+<apex:component>
+  <apex:attribute name="header" type="String" description="passing header" />
+  <apex:attribute
+    name="data"
+    type="CC_BOLCargoEquipmentWrapper[]"
+    description="passing data"
+  />
+  <apex:attribute
+    name="emergencyName"
+    type="String"
+    description="emergency contact name"
+  />
+  <apex:attribute
+    name="emergencyNumber"
+    type="String"
+    description="emergency contact number"
+  />
+
+  <h3
+    style="
+      border-bottom: 2px solid #ccc;
+      font-size: 18px;
+      padding: 0px 0px 10px 0px;
+    "
+  >
+    {!header}
+  </h3>
+  <!-- Start layout tester: Keep hidden in production -->
+  <table class="helloworld" style="width: 100%; display: none">
+    <tr>
+      <td width="50%">
+        <table width="100%">
+          <tr>
+            <td width="50%">Left inner 1</td>
+            <td width="50%">Left Inner 2</td>
+          </tr>
+        </table>
+      </td>
+      <td width="50%">
+        <table width="100%">
+          <tr>
+            <td width="50%">Right inner 1</td>
+            <td width="50%">Right Inner 2</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <table width="100%">
+          <tr>
+            <td width="25%">Hello</td>
+            <td width="75%">World</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!-- End layout tester: Keep hidden in production -->
+
+  <table
+    style="width: 100%; font-family: Arial Unicode MS, Helvetica, sans-serif"
+  >
+    <tr>
+      <td colspan="2">
+        <table style="width: 100%" class="routedttd">
+          <apex:repeat value="{!data}" var="cargoEquip">
+            <tr>
+              <td width="50%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Container Size / Type :
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      {!cargoEquip.containerSizeType}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Container No. :
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      {!cargoEquip.containerNO1}{!cargoEquip.containerNO2}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Dock Receipt Number(s) :
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      <apex:repeat
+                        value="{!cargoEquip.dockReceiptNumbers}"
+                        var="drNumber"
+                      >
+                        {!drNumber.strDockNumber}<br />
+                      </apex:repeat>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td width="50%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Seal Number(s) :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      <apex:repeat
+                        value="{!cargoEquip.sealNumbers}"
+                        var="sNumber"
+                      >
+                        {!sNumber.strSealNumber}<br />
+                      </apex:repeat>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      HTS Number(s) :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      <apex:repeat
+                        value="{!cargoEquip.htsNumbers}"
+                        var="htsNumber"
+                      >
+                        {!htsNumber.strHTSNoandDesc}<br />
+                      </apex:repeat>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Quantity :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!cargoEquip.quantity}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Type of Package :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!cargoEquip.packageType}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" width="100%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 25%"
+                    >
+                      Description of Cargo :
+                    </td>
+                    <td valign="top" style="width: 75%">
+                      {!IF(OR(ISBLANK(cargoEquip.cargoDescription),
+                      (cargoEquip.cargoDescription ==
+                      null)),'NA',cargoEquip.cargoDescription)}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" width="100%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 25%"
+                    >
+                      Description of Cargo(Spanish) :
+                    </td>
+                    <td valign="top" style="width: 75%">
+                      {!IF(OR(ISBLANK(cargoEquip.cargoDescriptionS),
+                      (cargoEquip.cargoDescriptionS ==
+                      null)),'NA',cargoEquip.cargoDescriptionS)}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right:10px; color: #999 width:50%;"
+                    >
+                      <span style="color: #999">Weight</span
+                      ><span style="color: #999"
+                        >({!cargoEquip.weightUnit}) :</span
+                      >
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.weight),(cargoEquip.weight ==
+                      null)),'NA',cargoEquip.weight)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      VGM Weight ({!cargoEquip.vgmweightUnit}) :
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.vgmweight),(cargoEquip.vgmweight
+                      == null)),'NA',cargoEquip.vgmweight)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Volume ({!IF((cargoEquip.volumeUnit ==
+                      'FT3'),'CFT','CM')}) :
+                    </td>
+                    <td valign="top" style="padding-right: 10px; width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.volume), (cargoEquip.volume ==
+                      null)),'NA',cargoEquip.volume)}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td width="50%">
+                <table width="100%">
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Vent Settings :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.ventSettings),(cargoEquip.ventSettings
+                      == null)),'NA',cargoEquip.ventSettings)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Temperature ({!cargoEquip.temperatureUnit}) :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.temperature),(cargoEquip.temperature
+                      == null)),'NA',cargoEquip.temperature)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      valign="top"
+                      style="padding-right: 10px; color: #999; width: 50%"
+                    >
+                      Cargo Value (USD) :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!IF(OR(ISBLANK(cargoEquip.cargovalue),
+                      (cargoEquip.cargovalue == null)),'NA','$
+                      '+cargoEquip.cargovalue)}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" colspan="2">
+                <br /><br />
+                <h3
+                  style="
+                    border-bottom: 2px solid #f4f4f4;
+                    font-size: 14px;
+                    padding-bottom: 5px;
+                  "
+                >
+                  HAZARDOUS DETAILS
+                </h3>
+              </td>
+            </tr>
+            <apex:repeat
+              value="{!cargoEquip.hazardousCommodityLst}"
+              var="hazardousCommodity"
+            >
+              <tr>
+                <td width="50%">
+                  <table width="100%">
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        UN Number :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Number__c),'NA',hazardousCommodity.commodityWrap.commodity.Number__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Content Type :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Content_Type__c),'NA',hazardousCommodity.commodityWrap.commodity.Content_Type__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Name :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Name__c),'NA',hazardousCommodity.commodityWrap.commodity.Name__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Class :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Primary_Class__c),'NA',hazardousCommodity.commodityWrap.commodity.Primary_Class__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Variation :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Variation__c),'NA',hazardousCommodity.commodityWrap.commodity.Variation__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Packaging Group :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Package_Group__c),'NA',hazardousCommodity.commodityWrap.commodity.Package_Group__c)}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="50%">
+                  <table width="100%">
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Permit Number :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Permit_Number__c),'NA',hazardousCommodity.commodityWrap.commodity.Permit_Number__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        EX Number :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Ex_Number__c),'NA',hazardousCommodity.commodityWrap.commodity.Ex_Number__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Secondary Class :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Secondary_Class__c),'NA',hazardousCommodity.commodityWrap.commodity.Secondary_Class__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Tertiary Class :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Tertiary_Class__c),'NA',hazardousCommodity.commodityWrap.commodity.Tertiary_Class__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Marine Pollutant :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Marine_Pollutant_Indicator__c),'NO',hazardousCommodity.commodityWrap.commodity.Marine_Pollutant_Indicator__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; color: #999; width: 50%"
+                      >
+                        Limited Quantity :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Limited_Quantity_Indicator__c),'0',hazardousCommodity.commodityWrap.commodity.Limited_Quantity_Indicator__c)}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h3
+                    style="
+                      border-bottom: 2px solid #f4f4f4;
+                      font-size: 14px;
+                      padding-bottom: 5px;
+                    "
+                  ></h3>
+                </td>
+              </tr>
+              <tr>
+                <td width="50%">
+                  <table width="100%">
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; width: 50%; color: #999"
+                      >
+                        Flash Temperature :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Flashpoint__c),'NA',hazardousCommodity.commodityWrap.commodity.Flashpoint__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; width: 50%; color: #999"
+                      >
+                        Report Spill Qty. :
+                      </td>
+                      <td valign="top" style="padding-right: 10px; width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Reportable_Quantity__c),'NA',hazardousCommodity.commodityWrap.commodity.Reportable_Quantity__c)}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="50%">
+                  <table width="100%">
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; width: 50%; color: #999"
+                      >
+                        Weight({!hazardousCommodity.commodityWrap.commodity.Weight_Unit_of_Measure__c})
+                        :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Weight_value__c),'NA',hazardousCommodity.commodityWrap.commodity.Weight_value__c)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="padding-right: 10px; width: 50%; color: #999"
+                      >
+                        Quantity :
+                      </td>
+                      <td valign="top" style="width: 50%">
+                        {!IF(ISBLANK(hazardousCommodity.commodityWrap.commodity.Quantity_value__c),'NA',hazardousCommodity.commodityWrap.commodity.Quantity_value__c)}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h3
+                    style="
+                      border-bottom: 1px solid #000;
+                      font-size: 14px;
+                      padding-bottom: 5px;
+                    "
+                  ></h3>
+                </td>
+              </tr>
+            </apex:repeat>
+          </apex:repeat>
+          <tr>
+            <td
+              colspan="4"
+              width="100%"
+              style="width: 100%; table-layout: fixed"
+            >
+              <table width="100%">
+                <tr>
+                  <td
+                    valign="top"
+                    style="padding-right: 10px; width: 25%; color: #999"
+                  >
+                    Emergency Contact Name :
+                  </td>
+                  <td valign="top" style="width: 75%">{!emergencyName}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" width="100%">
+              <table width="100%">
+                <tr>
+                  <td
+                    valign="top"
+                    style="padding-right: 10px; width: 25%; color: #999"
+                  >
+                    Emergency Contact Number :
+                  </td>
+                  <td valign="top" style="width: 75%">{!emergencyNumber}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</apex:component>

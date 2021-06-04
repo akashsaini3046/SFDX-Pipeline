@@ -1,0 +1,40 @@
+.THIS #blueFontColourSpan span {
+  color: #21a0df;
+  font-weight: bold;
+}
+
+.THIS .fontBold span {
+  font-weight: bold;
+}
+
+.THIS #blueFontColour {
+  color: #21a0df;
+}
+
+.THIS #noteHeading {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.THIS .boldFont {
+  font-weight: bold;
+}
+
+.THIS .cornersPadding span {
+  padding: 5px;
+}
+
+.THIS .titleWidth {
+  width: 55%;
+}
+
+.THIS .descriptionHeight {
+  height: 40px !important;
+}
+
+.THIS .descriptionHeight p {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}

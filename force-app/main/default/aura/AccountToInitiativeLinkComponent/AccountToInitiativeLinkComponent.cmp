@@ -1,0 +1,118 @@
+<aura:component
+  controller="InitiativeRelationshipAddCmpController"
+  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+  access="global"
+>
+  <aura:attribute name="boolShowFilterModal" type="Boolean" default="true" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="boolDisabledSaveButton" type="Boolean" default="true" />
+  <aura:attribute name="objAccount" type="Account" />
+  <aura:attribute name="lstInitiative" type="List" />
+  <aura:attribute name="strSelectedInitiativeId" type="String" />
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <!-- Modal dialog starts -->
+  <aura:if isTrue="{!v.boolShowFilterModal}">
+    <div class="demo-only" style="height: 440px">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="quick-action-width-desktop slds-modal__container">
+          <header class="slds-modal__header">
+            <h2
+              id="modal-heading-01"
+              class="slds-text-heading_medium slds-hyphenate"
+              style="font-weight: initial"
+            >
+              Add Initiative
+            </h2>
+          </header>
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+            style="min-height: 200px !important; padding-top: 13px !important"
+          >
+            <lightning:input
+              name="inputAccountName"
+              disabled="true"
+              value="{!v.objAccount.Name}"
+              label="Account"
+              class="width-fifty-percent"
+            />
+            <br />
+            <lightning:combobox
+              name="selectInitiative"
+              label="Initiative"
+              placeholder="Select Initiative"
+              options="{! v.lstInitiative }"
+              value="{!v.strSelectedInitiativeId}"
+              onchange="{! c.handleChange }"
+              class="width-fifty-percent"
+            />
+          </div>
+          <footer class="slds-modal__footer">
+            <div style="float: left; padding-top: 8px; padding-right: 2px">
+              <lightning:icon iconName="utility:info_alt" size="x-small" />
+            </div>
+            <span
+              style="
+                float: left;
+                padding-top: 10px;
+                font-size: 11px;
+                color: red;
+                text-align: left;
+                max-width: 72%;
+              "
+              >{!$Label.c.AINI_INITIATIVE_SEARCH_INFORMATION}</span
+            >
+            <div class="slds-p-top_x-small">
+              <lightning:button
+                variant="brand"
+                class="slds-float_right slds-m-right_small"
+                title="{!$Label.c.OPS_LABEL_SPLIT}"
+                label="{!$Label.c.OPS_LABEL_SPLIT}"
+                onclick="{!c.handleSaveClick}"
+                disabled="{!v.boolDisabledSaveButton}"
+              />
+              <lightning:button
+                variant="Neutral"
+                class="slds-float_right slds-m-right_small"
+                title="{!$Label.c.OPS_LABEL_CLOSE}"
+                label="{!$Label.c.OPS_LABEL_CLOSE}"
+                onclick="{!c.handleCloselClick}"
+              />
+            </div>
+          </footer>
+        </div>
+      </section>
+      <div
+        class="slds-backdrop slds-backdrop_open slds-backdrop_open-quickaction"
+      ></div>
+    </div>
+  </aura:if>
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <lightning:spinner
+      size="large"
+      variant="brand"
+      style="background-color: transparent"
+    />
+    <div aura:id="spinnerId" class="spinner-quickaction slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

@@ -1,0 +1,54 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="componentName" type="string" default="CC_Quotes" />
+  <aura:attribute name="isPostLogin" type="Boolean" default="true" />
+  <aura:attribute name="isQuoteSummary" type="Boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:if isTrue="{!!v.isQuoteSummary}">
+    <div class="breadcrumbs-search-row block-view">
+      <div class="pull-left">
+        <h5>Create Quote</h5>
+        <lightning:breadcrumbs>
+          <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+          <lightning:breadcrumb
+            label="Quotes"
+            onclick="{!c.navigateToQuotes}"
+          />
+          <lightning:breadcrumb label="Create Quote" href="" />
+        </lightning:breadcrumbs>
+      </div>
+    </div>
+
+    <aura:set attribute="else">
+      <div class="breadcrumbs-search-row block-view">
+        <div class="pull-left">
+          <h5>Quote Summary</h5>
+          <lightning:breadcrumbs>
+            <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+            <lightning:breadcrumb
+              label="Quotes"
+              onclick="{!c.navigateToQuotes}"
+            />
+            <lightning:breadcrumb
+              label="Create Quote"
+              onclick="{!c.navigateToCreateQuote}"
+            />
+            <lightning:breadcrumb label="Quote Summary" href="" />
+          </lightning:breadcrumbs>
+        </div>
+      </div>
+    </aura:set>
+  </aura:if>
+
+  <c:CC_CreateQuoteParent
+    isPostLogin="{!v.isPostLogin}"
+    isQuoteSummary="{!v.isQuoteSummary}"
+  />
+</aura:component>

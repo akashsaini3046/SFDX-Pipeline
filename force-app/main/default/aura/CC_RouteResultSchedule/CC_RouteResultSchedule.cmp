@@ -1,0 +1,514 @@
+<aura:component controller="CC_FindARouteController">
+  <aura:attribute name="schedule" type="CC_SoftshipRatingResponse.Schedules" />
+  <aura:attribute name="checkAll" type="boolean" default="false" />
+  <aura:attribute name="checkSelectedAll" type="boolean" default="false" />
+  <aura:attribute
+    name="showHideDetailsText"
+    type="String"
+    default="Show Details"
+  />
+  <aura:attribute name="isGuestUser" type="Boolean" />
+  <aura:attribute name="originMove" type="String" default="" />
+  <aura:attribute name="destinationMove" type="String" default="" />
+  <aura:attribute name="startPoint" type="String" />
+  <aura:attribute name="endPoint" type="String" />
+  <aura:attribute name="originType" type="String" />
+  <aura:attribute name="destType" type="String" />
+  <aura:attribute name="booking" type="Booking__c" />
+  <aura:attribute name="betweenLocations" type="List" />
+  <aura:attribute name="betweenPortsOnly" type="List" />
+  <aura:attribute name="startLocation" type="Object" />
+  <aura:attribute name="endLocation" type="Object" />
+  <aura:attribute name="showDetails" type="boolean" default="false" />
+  <aura:attribute name="selectedSchedulesList" type="List" />
+  <aura:attribute name="startModes" type="string" />
+  <aura:attribute name="endModes" type="string" />
+  <aura:registerEvent name="printScreenEvent" type="c:CC_PrintScreenEvent" />
+  <aura:attribute name="isPrint" type="Boolean" default="false" />
+  <aura:attribute name="isLastSchedule" type="Boolean" default="false" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <!--div class="far-result-card">-->
+  <div aura:id="outer-div" class="veloz-routes">
+    <aura:if isTrue="{!not(v.isGuestUser)}">
+      <div class="route-selection">
+        <div class="slds-checkbox">
+          <input
+            type="checkbox"
+            aura:id="individualCheckBox"
+            id="{!'selectedSchedule' + v.schedule.sequenceNumber}"
+            value="{!v.schedule.sequenceNumber}"
+            onchange="{!c.handleSelectedSchedule}"
+            checked="{!v.checkAll}"
+          />
+          <label
+            class="slds-checkbox__label"
+            for="{!'selectedSchedule' + v.schedule.sequenceNumber}"
+          >
+            <span class="slds-checkbox_faux slds-no-print"></span>
+            <span class="slds-form-element__label"
+              >{!v.schedule.sequenceNumber}.</span
+            >
+          </label>
+        </div>
+        <!--<ui:inputCheckbox aura:id="individualCheckBox" id="{!'selectedSchedule' + v.schedule.sequenceNumber}" label="{!v.schedule.sequenceNumber+'.'}" 
+                                  change="{!c.handleSelectedSchedule}"/> -->
+      </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isGuestUser}">
+      <div class="route-selection">{!v.schedule.sequenceNumber}.</div>
+    </aura:if>
+    <div class="transit-details without-price-col">
+      <h6 class="text-center routes-head-text">
+        <span class="pull-left"
+          >Departure :&nbsp;<b>{!v.schedule.StartDate.LocalPortTime}</b></span
+        >
+        <span class="transit-time-head"
+          >Transit Time :&nbsp;<b
+            ><aura:if isTrue="{!v.schedule.totalDays > 1}"
+              >{!v.schedule.totalDays}
+              <aura:if isTrue="{!v.schedule.totalDays == 1}">
+                Day
+                <aura:set attribute="else"> Days </aura:set>
+              </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.schedule.totalHours > 1}"
+              >{!v.schedule.totalHours}
+              <aura:if isTrue="{!v.schedule.totalHours == 1}">
+                Hour
+                <aura:set attribute="else"> Hours </aura:set>
+              </aura:if>
+            </aura:if>
+          </b></span
+        >
+        <span class="pull-right"
+          >Arrival :&nbsp;<b>{!v.schedule.EndDate.LocalPortTime}</b></span
+        >
+      </h6>
+      <div class="route-map">
+        <div class="route-map-line">
+          <div class="stop-circles-container"></div>
+          <div class="start-point">
+            <aura:if isTrue="{!v.originMove=='P'}">
+              <div class="porttoport">
+                <i class="icon-map-pin icon-port"> Port</i>
+                <aura:if
+                  isTrue="{!not(empty(v.startLocation.displayNameSubLoc))}"
+                >
+                  <span>
+                    {!v.startLocation.displayNameSubLoc}&nbsp;({!v.startLocation.displayCodeSubLoc}) </span
+                  ><br />
+                </aura:if>
+                <span
+                  >{!v.startLocation.displayName} <br />({!v.startPoint})</span
+                >
+              </div>
+            </aura:if>
+            <aura:if isTrue="{!v.originMove=='R'}">
+              <div class="porttoport">
+                <i class="icon-map-pin icon-port"> Rail</i>
+
+                <aura:if
+                  isTrue="{!not(empty(v.startLocation.displayNameSubLoc))}"
+                >
+                  <span>
+                    {!v.startLocation.displayNameSubLoc}&nbsp;({!v.startLocation.displayCodeSubLoc}) </span
+                  ><br />
+                </aura:if>
+                <span
+                  >{!v.startLocation.displayName} <br />({!v.startPoint})</span
+                >
+              </div>
+            </aura:if>
+            <aura:if isTrue="{!or(v.originMove=='D')}">
+              <div class="porttoport">
+                <i class="icon-map-pin icon-port"> Door</i>
+                <aura:if isTrue="{!v.booking.Customer_Origin_Country__c=='US'}">
+                  <span
+                    >{!v.startLocation.displayName}
+                    <br />({!v.booking.Customer_Origin_Zip__c})</span
+                  >
+                  <aura:set attribute="else">
+                    <span>{!v.startLocation.displayName} </span>
+                  </aura:set>
+                </aura:if>
+              </div>
+            </aura:if>
+          </div>
+
+          <!--            <aura:iteration items="{!v.betweenPortsOnly}" var="betLocation" indexVar="index">
+                        <aura:if isTrue="{!if(and((not(empty(v.betweenPortsOnly))),equals(v.betweenPortsOnly.length, 1)), true, false)}">
+
+                            <aura:if isTrue="{!not(empty(v.startModes))}">
+                                <span class="start-transport-mode single-start-trans-mode">{!v.startModes}</span>
+                            </aura:if>
+
+                            <div class="single-point">
+                                <div class="porttoport">
+                                    <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>                                  
+                                    <span>
+                                        {!betLocation.displayNameSubLoc} &nbsp;({!betLocation.displayCodeSubLoc})
+                                        <br/>
+                                        {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                                    </span>
+                                </div>
+                            </div>
+
+                            <aura:if isTrue="{!not(empty(v.endModes))}">
+                                <span class="end-transport-mode single-end-trans-mode">{!v.endModes}</span>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!not(empty(v.startModes))}">
+                                    <span class="start-transport-mode">{!v.startModes}</span>
+                                </aura:if>
+                                <aura:if isTrue="{!equals(index + 1, 1)}">
+                                    <div class="first-point">
+                                        <div class="porttoport">
+                                            <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>                                         
+                                            <span>
+                                                {!betLocation.displayNameSubLoc} &nbsp;({!betLocation.displayCodeSubLoc})
+                                                <br/>
+                                                {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                                            </span>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!equals(index + 1, 2)}">
+                                    <div class="second-point">
+                                        <div class="porttoport">
+                                            <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>
+                                          
+                                            <span>
+                                                {!betLocation.displayNameSubLoc} &nbsp;({!betLocation.displayCodeSubLoc})
+                                                <br/>
+                                                {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                                            </span>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!not(empty(v.endModes))}">
+                                    <span class="end-transport-mode">{!v.endModes}</span>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </aura:iteration>   -->
+          <aura:if
+            isTrue="{!if(or(empty(v.betweenPortsOnly),equals(v.betweenPortsOnly.length, 0)), true, false)}"
+          >
+            <aura:if isTrue="{!not(empty(v.startModes))}">
+              <span class="start-transport-mode single-center-trans-mode"
+                >{!v.startModes}</span
+              >
+            </aura:if>
+          </aura:if>
+          <aura:if
+            isTrue="{!if(and((not(empty(v.betweenPortsOnly))),equals(v.betweenPortsOnly.length, 1)), true, false)}"
+          >
+            <aura:iteration
+              items="{!v.betweenPortsOnly}"
+              var="betLocation"
+              indexVar="index"
+            >
+              <aura:if isTrue="{!not(empty(v.startModes))}">
+                <span class="start-transport-mode single-start-trans-mode"
+                  >{!v.startModes}</span
+                >
+              </aura:if>
+
+              <div class="single-point">
+                <div class="porttoport">
+                  <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>
+                  <span>
+                    <aura:if
+                      isTrue="{!not(empty(betLocation.displayNameSubLoc))}"
+                    >
+                      {!betLocation.displayNameSubLoc}
+                      &nbsp;({!betLocation.displayCodeSubLoc})
+                      <br />
+                    </aura:if>
+                    {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                  </span>
+                </div>
+              </div>
+
+              <aura:if isTrue="{!not(empty(v.endModes))}">
+                <span class="end-transport-mode single-end-trans-mode"
+                  >{!v.endModes}</span
+                >
+              </aura:if>
+            </aura:iteration>
+          </aura:if>
+          <aura:if
+            isTrue="{!if(and((not(empty(v.betweenPortsOnly))),equals(v.betweenPortsOnly.length, 2)), true, false)}"
+          >
+            <aura:iteration
+              items="{!v.betweenPortsOnly}"
+              var="betLocation"
+              indexVar="index"
+              end="1"
+            >
+              <aura:if isTrue="{!not(empty(v.startModes))}">
+                <span class="start-transport-mode">{!v.startModes}</span>
+              </aura:if>
+              <div class="first-point">
+                <div class="porttoport">
+                  <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>
+                  <span>
+                    <aura:if
+                      isTrue="{!not(empty(betLocation.displayNameSubLoc))}"
+                    >
+                      {!betLocation.displayNameSubLoc}
+                      &nbsp;({!betLocation.displayCodeSubLoc})
+                      <br />
+                    </aura:if>
+                    {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                  </span>
+                </div>
+              </div>
+            </aura:iteration>
+            <aura:iteration
+              items="{!v.betweenPortsOnly}"
+              var="betLocation"
+              indexVar="index"
+              start="1"
+            >
+              <div class="second-point">
+                <div class="porttoport">
+                  <i class="icon-map-pin icon-port"> {!betLocation.orgDest}</i>
+
+                  <span>
+                    <aura:if
+                      isTrue="{!not(empty(betLocation.displayNameSubLoc))}"
+                    >
+                      {!betLocation.displayNameSubLoc}
+                      &nbsp;({!betLocation.displayCodeSubLoc})
+                      <br />
+                    </aura:if>
+                    {!betLocation.displayName}&nbsp;({!betLocation.displayCode})
+                  </span>
+                </div>
+              </div>
+              <aura:if isTrue="{!not(empty(v.endModes))}">
+                <span class="end-transport-mode">{!v.endModes}</span>
+              </aura:if>
+            </aura:iteration>
+          </aura:if>
+
+          <div class="end-point">
+            <aura:if isTrue="{!v.destinationMove=='P'}">
+              <div class="porttoport">
+                <i class="icon-port icon-map-pin"> Port</i>
+                <aura:if
+                  isTrue="{!not(empty(v.endLocation.displayNameSubLoc))}"
+                >
+                  <span>
+                    {!v.endLocation.displayNameSubLoc}&nbsp;({!v.endLocation.displayCodeSubLoc}) </span
+                  ><br />
+                </aura:if>
+                <span>{!v.endLocation.displayName} <br /> ({!v.endPoint})</span>
+              </div>
+            </aura:if>
+
+            <aura:if isTrue="{!v.destinationMove=='R'}">
+              <div class="porttoport">
+                <i class="icon-port icon-map-pin"> Rail</i>
+                <aura:if
+                  isTrue="{!not(empty(v.startLocation.displayNameSubLoc))}"
+                >
+                  <span>
+                    {!v.endLocation.displayNameSubLoc}&nbsp;({!v.endLocation.displayCodeSubLoc}) </span
+                  ><br />
+                </aura:if>
+                <span>{!v.endLocation.displayName} <br /> ({!v.endPoint})</span>
+              </div>
+            </aura:if>
+
+            <aura:if isTrue="{!v.destinationMove=='D'}">
+              <div class="porttoport">
+                <i class="icon-port icon-map-pin"> Door</i>
+                <aura:if
+                  isTrue="{!v.booking.Customer_Destination_Country__c=='US'}"
+                >
+                  <span
+                    >{!v.endLocation.displayName}
+                    <br />({!v.booking.Customer_Destination_Zip__c})</span
+                  >
+                  <aura:set attribute="else">
+                    <span>{!v.endLocation.displayName} </span>
+                  </aura:set>
+                </aura:if>
+              </div>
+            </aura:if>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="text-center clearfix view-route-details slds-no-print">
+      <a onclick="{!c.handleShowDetails}">{!v.showHideDetailsText}</a>
+    </h6>
+
+    <aura:if isTrue="{!v.showDetails}">
+      <div class="vertical-path-arrival-dep">
+        <div class="route-vert-path">
+          <div class="vert-route-row">
+            <span class="vert-route-stops"></span>
+
+            <!--<i class="icon-map-pin vertical-route-icon"> {!v.originType} </i>-->
+            <aura:if isTrue="{!not(v.originMove=='D')}">
+              <span class="location-display-name">
+                <aura:if
+                  isTrue="{!not(empty(v.startLocation.displayNameSubLoc))}"
+                >
+                  {!v.startLocation.displayNameSubLoc}&nbsp;({!v.startLocation.displayCodeSubLoc})
+                  <br />
+                </aura:if>
+                {!v.startLocation.displayName} &nbsp; ({!v.startPoint})
+              </span>
+            </aura:if>
+            <aura:if isTrue="{!or(v.originMove=='D')}">
+              <span class="location-display-name">
+                <aura:if isTrue="{!v.booking.Customer_Origin_Country__c=='US'}">
+                  {!v.startLocation.displayName} &nbsp;
+                  ({!v.booking.Customer_Origin_Zip__c})
+                  <aura:set attribute="else">
+                    {!v.startLocation.displayName}
+                  </aura:set>
+                </aura:if>
+              </span>
+            </aura:if>
+            <aura:if
+              isTrue="{!and(not(v.startLocation.vesselName==null),not(v.startLocation.voyageNumber==''))}"
+            >
+              <div class="vessel-voyage-wrapper">
+                <div class="vessel-voyage">
+                  Vessel Name : <br />
+                  <span class="color-blue"
+                    ><b>{!v.startLocation.vesselName}</b>
+                  </span>
+                </div>
+                <div class="vessel-voyage">
+                  Voyage Number :<br />
+                  <span class="color-blue"
+                    ><b>{!v.startLocation.voyageNumber}</b></span
+                  >
+                </div>
+              </div>
+            </aura:if>
+            <span class="arrival-departure-cols"> - </span>
+            <span class="arrival-departure-cols">
+              Departure On : <b>{!v.startLocation.departure}</b>
+            </span>
+          </div>
+
+          <aura:iteration
+            items="{!v.betweenLocations}"
+            var="location"
+            indexVar="index"
+          >
+            <div class="vert-route-row">
+              <aura:if isTrue="{!equals(location.iconShown, 'R')}">
+                <span class="transport-type rail"></span>
+                <aura:set attribute="else">
+                  <aura:if
+                    isTrue="{!or(location.iconShown=='O',location.iconShown=='F')}"
+                  >
+                    <span class="transport-type ship"></span>
+                    <aura:set attribute="else">
+                      <span class="transport-type truck"></span>
+                    </aura:set>
+                  </aura:if>
+                </aura:set>
+              </aura:if>
+              <span class="vert-route-stops"></span>
+              <!--<i class="icon-map-pin vertical-route-icon">{!location.orgDest}</i>-->
+              <span class="location-display-name">
+                <aura:if isTrue="{!not(empty(location.displayNameSubLoc))}">
+                  {!location.displayNameSubLoc}&nbsp;({!location.displayCodeSubLoc})
+                  <br />
+                </aura:if>
+                {!location.displayName}&nbsp;({!location.displayCode})
+              </span>
+              <aura:if
+                isTrue="{!and(not(location.vesselName==null),not(location.voyageNumber==''))}"
+              >
+                <div class="vessel-voyage-wrapper">
+                  <div class="vessel-voyage">
+                    Vessel Name : <br />
+                    <span class="color-blue">
+                      <b>{!location.vesselName}</b>
+                    </span>
+                  </div>
+                  <div class="vessel-voyage">
+                    Voyage Number :<br />
+                    <span class="color-blue"
+                      ><b>{!location.voyageNumber}</b></span
+                    >
+                  </div>
+                </div>
+              </aura:if>
+              <span class="arrival-departure-cols">
+                Arrival On : <b>{!location.arrival}</b>
+              </span>
+              <span class="arrival-departure-cols">
+                Departure On : <b>{!location.departure}</b>
+              </span>
+            </div>
+          </aura:iteration>
+
+          <div class="vert-route-row">
+            <aura:if isTrue="{!equals(v.endLocation.iconShown, 'R')}">
+              <span class="transport-type rail"></span>
+              <aura:set attribute="else">
+                <aura:if
+                  isTrue="{!or(equals(v.endLocation.iconShown, 'O'),equals(v.endLocation.iconShown, 'F'))}"
+                >
+                  <span class="transport-type ship"></span>
+                  <aura:set attribute="else">
+                    <span class="transport-type truck"></span>
+                  </aura:set>
+                </aura:if>
+              </aura:set>
+            </aura:if>
+            <span class="vert-route-stops"></span>
+            <!--<i class="icon-map-pin vertical-route-icon"> {!v.destType}</i>-->
+            <aura:if isTrue="{!not(v.destinationMove=='D')}">
+              <span class="location-display-name">
+                <aura:if
+                  isTrue="{!not(empty(v.endLocation.displayNameSubLoc))}"
+                >
+                  {!v.endLocation.displayNameSubLoc}&nbsp;({!v.endLocation.displayCodeSubLoc})
+                  <br />
+                </aura:if>
+                {!v.endLocation.displayName} &nbsp; ({!v.endPoint})
+              </span>
+            </aura:if>
+            <aura:if isTrue="{!or(v.destinationMove=='D')}">
+              <span class="location-display-name">
+                <aura:if
+                  isTrue="{!v.booking.Customer_Destination_Country__c=='US'}"
+                >
+                  {!v.endLocation.displayName} &nbsp;
+                  ({!v.booking.Customer_Destination_Zip__c})
+                  <aura:set attribute="else">
+                    {!v.endLocation.displayName}
+                  </aura:set>
+                </aura:if>
+              </span>
+            </aura:if>
+            <span class="arrival-departure-cols">
+              Arrival On : <b>{!v.endLocation.arrival}</b>
+            </span>
+            <span class="arrival-departure-cols"> - </span>
+          </div>
+        </div>
+      </div>
+    </aura:if>
+    <!--</div>-->
+    <!--    <div class="clearfix"></div> -->
+  </div>
+  <aura:method name="expandSections" action="{!c.expandSectionsHandler}">
+    <aura:attribute name="numberOfSchedules" type="Integer" />
+    <aura:attribute name="scheduleCount" type="Integer" />
+  </aura:method>
+</aura:component>

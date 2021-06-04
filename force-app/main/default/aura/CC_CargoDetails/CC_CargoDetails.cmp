@@ -1,0 +1,169 @@
+<aura:component>
+  <aura:attribute name="tariffsCommodities" type="List" />
+  <aura:attribute name="tariffsEquipments" type="List" />
+  <aura:attribute name="vehichleCommodities" type="List" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="commodityTypes" type="List" />
+  <aura:attribute name="listVehicles" type="List" />
+  <aura:attribute name="listManufacture" type="List" />
+  <aura:attribute name="cargoType" type="String" default="container" />
+  <aura:attribute name="screen" type="String" default="Quote" />
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+
+  <aura:handler
+    name="cmpEvent"
+    event="c:CC_QuoteEvt"
+    action="{!c.handleQuoteEvent}"
+  />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <div class="c-container" id="containerId">
+    <form autocomplete="off">
+      <div class="route-form">
+        <!--div class="row">
+            <aura:if isTrue="{!not(empty(v.bookingWrapper.booking.Booking_Number__c))}">
+                <h5><b>&nbsp;&nbsp;<span class="color-blue">{!v.bookingWrapper.booking.Booking_Number__c}&nbsp;&nbsp;</span></b></h5>
+            </aura:if>
+            <aura:if isTrue="{!not(empty(v.bookingWrapper.booking.Status__c))}">
+                <h6><span class="grey-text-9 status-icon">&nbsp;{!v.bookingWrapper.booking.Status__c}</span></h6><br/>
+            </aura:if>
+        </div>
+          <br/-->
+        <div class="row">
+          <div class="col-sm-1">
+            <h6>Cargo Type</h6>
+          </div>
+          <div class="col-sm-11">
+            <fieldset class="slds-form-element">
+              <div class="slds-form-element__control">
+                <span
+                  class="{!(v.cargoType=='container') ? 'slds-radio cargo-type-radio active-cargo-type': 'slds-radio cargo-type-radio'}"
+                >
+                  <input
+                    type="radio"
+                    id="container"
+                    value="container"
+                    name="cargoType"
+                    checked="{!(v.cargoType=='container') ? 'checked': ''}"
+                    onclick="{!c.selectContainer}"
+                  />
+                  <label class="slds-radio__label" for="container">
+                    <span class="slds-radio_faux pull-left"></span>
+                    <div class="pull-left">
+                      <i class="iconContainer cargo-type-icons"></i>
+                      <span class="cargo-type-label">CONTAINER</span>
+                    </div>
+                  </label>
+                </span>
+                <span
+                  class="{!(v.cargoType=='vehicle') ? 'slds-radio cargo-type-radio active-cargo-type': 'slds-radio cargo-type-radio'}"
+                >
+                  <input
+                    type="radio"
+                    id="vehicle"
+                    value="vehicle"
+                    name="cargoType"
+                    onclick="{!c.selectVehicle}"
+                    checked="{!(v.cargoType=='vehicle') ? 'checked': ''}"
+                  />
+                  <label class="slds-radio__label" for="vehicle">
+                    <span class="slds-radio_faux pull-left"></span>
+                    <div class="pull-left">
+                      <i class="iconVehicles cargo-type-icons"></i>
+                      <span class="cargo-type-label">VEHICLES</span>
+                    </div>
+                  </label>
+                </span>
+                <!-- <span
+                  class="{!(v.cargoType=='breakbulk') ? 'slds-radio cargo-type-radio active-cargo-type': 'slds-radio cargo-type-radio'}">
+                  <input type="radio" id="breakbulk" value="breakbulk" name="cargoType"
+                    checked="{!(v.cargoType=='breakbulk') ? 'checked': ''}" onclick="{!c.selectBreakbulk}" />
+                  <label class="slds-radio__label" for="breakbulk">
+                    <span class="slds-radio_faux pull-left"></span>
+                    <div class="pull-left"> <i class="iconBreakbulk cargo-type-icons"></i> <span
+                        class="cargo-type-label">BREAK BULK</span></div>
+                  </label>
+                </span>-->
+              </div>
+            </fieldset>
+          </div>
+          <!--<div class="{!(v.cargoType=='container') ? 'col-3 active-cargo-type': 'col-3'}">
+                        <ui:inputRadio text="container" class="radio-select" name="cargoType" change="{!c.selectCargoType}"
+                            value="{!(v.cargoType=='container')}" />
+                        <div class="pull-left"> <i class="iconContainer cargo-type-icons"></i> 
+                            <span class="cargo-type-label">Container</span></div>
+                    </div>
+                    <div class="{!(v.cargoType=='breakbulk') ? 'col-3 active-cargo-type': 'col-3'}">
+                        <ui:inputRadio class="radio-select" text="breakbulk" name="cargoType"
+                            change="{!c.selectCargoType}" value="{!(v.cargoType=='breakbulk')}"/>
+                        <div class="pull-left"> <i class="iconBreakbulk cargo-type-icons"></i> <span class="cargo-type-label">Break Bulk</span></div>
+                    </div>
+                    <div class="{!(v.cargoType=='vehicle') ? 'col-3 active-cargo-type': 'col-3'}">
+                        <ui:inputRadio class="radio-select" text="vehicle" name="cargoType"
+                            change="{!c.selectCargoType}" value="{!(v.cargoType=='vehicle')}"/>
+                        <div class="pull-left"> <i class="iconVehicles cargo-type-icons"></i> <span class="cargo-type-label">Vehicle</span></div>
+                    </div>-->
+        </div>
+        <hr />
+        <br />
+
+        <div class="row">
+          <div class="col-sm-1">
+            <h6>Details</h6>
+          </div>
+          <div class="col-11">
+            <aura:if isTrue="{!or(v.cargoType=='container')}">
+              <c:CC_Container
+                cargoList="{!v.bookingWrapper.shipmentMap.CONTAINER.listCargo}"
+                screen="{!v.screen}"
+                commodityTypes="{!v.commodityTypes}"
+                aura:id="containerId"
+                tariffsCommodities="{!v.tariffsCommodities}"
+                tariffsEquipments="{!v.tariffsEquipments}"
+                bookingId="{!v.bookingWrapper.booking.Id}"
+              />
+            </aura:if>
+            <!--<aura:if isTrue="{!or(v.cargoType=='breakbulk')}">
+              <c:CC_BreakBulk cargoList="{!v.bookingWrapper.shipmentMap.BREAKBULK.listCargo}" screen="{!v.screen}"
+                aura:id="breakbulkId" />
+            </aura:if>-->
+            <aura:if isTrue="{!or(v.cargoType=='vehicle')}">
+              <c:CC_Vehicle
+                cargoList="{!v.bookingWrapper.shipmentMap.VEHICLE.listCargo}"
+                screen="{!v.screen}"
+                isPostLogin="{!v.isPostLogin}"
+                aura:id="vehicleAutoId"
+                vehicleCommodities="{!v.vehichleCommodities}"
+              />
+            </aura:if>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <aura:method
+    name="validateContainerData"
+    action="{!c.validateContainerData}"
+    access="public"
+  >
+    <aura:attribute name="isValidContainer" type="boolean" default="false" />
+  </aura:method>
+  <aura:method
+    name="validateBreakbulData"
+    action="{!c.validateBreakbulData}"
+    access="public"
+  >
+    <aura:attribute name="isValidBreakbulk" type="boolean" default="false" />
+  </aura:method>
+  <aura:method
+    name="validateVehicleData"
+    action="{!c.validateVehicleData}"
+    access="public"
+  >
+    <aura:attribute name="isValidVehicle" type="boolean" default="false" />
+  </aura:method>
+  <aura:method
+    name="uploadfile"
+    action="{!c.uploadfile}"
+    access="public"
+  ></aura:method>
+</aura:component>

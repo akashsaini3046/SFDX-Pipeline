@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName
+    >Notification_to_Integrated_Solution_Team_of_CAM_region</fullName>
+        <ccEmails>supplychainsolutionsCAM@crowley.com</ccEmails>
+        <description
+    >Notification to Integrated Solution Team of CAM region</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Opportunity_Email_Templates/Notify_Integration_Solution_Team_uscarpr</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_to_Integration_Solution_Team_of_CAM_Opportunity_Update</fullName>
+        <ccEmails>supplychainsolutionsCAM@crowley.com</ccEmails>
+        <description
+    >Notification to Integration Solution Team of CAM- Opportunity Update</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Opportunity_Email_Templates/Stage_change_notification_to_IS</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_to_Integration_Solution_Team_of_US_CAR_PR</fullName>
+        <ccEmails>supplychainsolutionsUSPRCAR@crowley.com</ccEmails>
+        <description
+    >Notification to Integration Solution Team of US,CAR,PR</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Opportunity_Email_Templates/Notify_Integration_Solution_Team_uscarpr</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_to_Integration_Solution_Team_of_US_CAR_PR_on_stage_change</fullName>
+        <ccEmails>supplychainsolutionsUSPRCAR@crowley.com</ccEmails>
+        <description
+    >Notification to Integration Solution Team of US,CAR,PR on stage change</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Opportunity_Email_Templates/Stage_change_notification_to_IS</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_to_the_Opportunity_owner_on_Opportunity_creation</fullName>
+        <description
+    >Notification to the Opportunity owner on Opportunity creation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Opportunity_Email_Templates/Notification_to_the_Opportunity_owner_on_Opportunity_creation</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Change_Account_type_to_Customer</fullName>
+        <field>Type</field>
+        <literalValue>Customer</literalValue>
+        <name>Change Account type to Customer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>AccountId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Record_Type_Edit_Record</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Edit_Record</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Opportunity Record Type - Edit Record</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Record_Type_Update</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Edit_Record</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Record Type Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Type</fullName>
+        <field>Type</field>
+        <literalValue>Customer</literalValue>
+        <name>Update Account Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>AccountId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Actual_Close_Date_on_Closed_Oppor</fullName>
+        <field>Actual_Close_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Actual Close Date on Closed Oppor</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opportunity_Isclosed_to_True</fullName>
+        <field>Opportunity_Isclosed__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Opportunity Isclosed to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>AccountId</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Proposal_Presented_Date</fullName>
+        <field>Proposal_Submission_Due_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Update Proposal Presented Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Change Account Type to Customer</fullName>
+        <actions>
+            <name>Change_Account_type_to_Customer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.IsWon</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>Prospect</value>
+        </criteriaItems>
+        <description
+    >Change Account Type to Customer from Prospect after an opportunity is won.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Notification to Integrated Solution on Opportunity creation in CAM</fullName>
+        <actions>
+            <name>Notification_to_Integrated_Solution_Team_of_CAM_region</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description
+    >Notify Integrated solutions team in CAM region when Opportunity is created</description>
+        <formula
+    >AND( (Integration_Solution_Eligible__c &lt;&gt; False) ,ISPICKVAL( Owner.Region__c , &apos;CAM - Central America&apos;))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Notification to Integrated Solution on Opportunity creation in US%2CPR%2CCAR</fullName>
+        <actions>
+            <name>Notification_to_Integration_Solution_Team_of_US_CAR_PR</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description
+    >Workflow to send the Notification to Integrated Solutions team on opportunity created in region US,PR,CAR</description>
+        <formula
+    >AND(( Integration_Solution_Eligible__c &lt;&gt; False), OR((ISPICKVAL( Owner.Region__c , &apos;CAR - Caribbean&apos;)),(ISPICKVAL( Owner.Region__c , &apos;USA - United States&apos;)),(ISPICKVAL( Owner.Region__c , &apos;PRT - Puerto Rico&apos;))))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Notification to Integrated Solution on Opportunity updation in CAM</fullName>
+        <actions>
+            <name
+      >Notification_to_Integration_Solution_Team_of_CAM_Opportunity_Update</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description
+    >Notify Integrated solutions team in CAM region when Opportunity is updated</description>
+        <formula
+    >AND( NOT( ISNEW() ) , (Integration_Solution_Eligible__c &lt;&gt; False) ,ISPICKVAL( Owner.Region__c , &apos;CAM - Central America&apos;), ISCHANGED( StageName ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Notification to Integrated Solution on Opportunity updation in CAR%2CPR%2CUS</fullName>
+        <actions>
+            <name
+      >Notification_to_Integration_Solution_Team_of_US_CAR_PR_on_stage_change</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description
+    >Workflow to send the Notification to Integrated Solutions team on opportunity updation for region US,PR,CAR</description>
+        <formula
+    >AND(NOT(ISNEW()), ( Integration_Solution_Eligible__c &lt;&gt; False), OR((ISPICKVAL( Owner.Region__c , &apos;CAR - Caribbean&apos;)),(ISPICKVAL( Owner.Region__c , &apos;USA - United States&apos;)),(ISPICKVAL( Owner.Region__c , &apos;PRT - Puerto Rico&apos;))), ISCHANGED( StageName ))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Creation- Email Update</fullName>
+        <actions>
+            <name
+      >Notification_to_the_Opportunity_owner_on_Opportunity_creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND(NOT(ISPICKVAL( StageName , &apos;&apos;) ), CreatedById &lt;&gt; OwnerId )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Record Type - Edit Record</fullName>
+        <actions>
+            <name>Record_Type_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT(ISPICKVAL( StageName , &apos;&apos;))</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account Type</fullName>
+        <actions>
+            <name>Update_Account_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Close Date on opportunity Close</fullName>
+        <actions>
+            <name>Update_Actual_Close_Date_on_Closed_Oppor</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IsClosed</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Opportunity IsClosed With isClosed</fullName>
+        <actions>
+            <name>Update_Opportunity_Isclosed_to_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Proposal Presented Date</fullName>
+        <actions>
+            <name>Update_Proposal_Presented_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Proposal Presented</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Proposal_Submission_Due_Date__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description
+    >Update &apos;Proposal Presented Date&apos; field to true when opportunity stage is updated to Proposal Presented</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

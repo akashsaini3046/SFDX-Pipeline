@@ -1,0 +1,319 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="accountId" type="string" />
+  <aura:attribute name="isParentAccountSearch" type="boolean" default="false" />
+  <aura:attribute
+    name="filterButtonLabel"
+    type="string"
+    default="Use Filter(s)"
+  />
+  <aura:attribute name="showFilters" type="boolean" default="false" />
+  <aura:attribute name="showUseFilters" type="boolean" default="false" />
+  <aura:attribute name="cvifId" type="string" />
+  <aura:attribute name="sortByList" type="List" />
+  <aura:attribute name="salesRepRegions" type="List" />
+  <aura:attribute name="searchRegion" type="string" />
+  <aura:attribute name="accountTypes" type="List" />
+  <aura:attribute name="accountType" type="string" />
+  <aura:attribute name="accountOwner" type="string" />
+  <aura:attribute name="parentAccountInput" type="string" />
+  <aura:attribute name="parentCvifIdInput" type="string" />
+  <aura:attribute name="searchTheList" type="string" />
+  <aura:attribute name="selectedTab" type="string" />
+  <aura:attribute name="showSortBy" type="boolean" default="false" />
+  <aura:attribute name="contractNumber" type="string" />
+  <aura:attribute name="searchContractRegion" type="string" />
+  <aura:attribute name="contractRegions" type="List" />
+  <aura:attribute name="startContractDate" type="string" />
+  <aura:attribute name="endContractDate" type="string" />
+  <aura:attribute name="contractStatus" type="string" />
+  <aura:attribute name="contractStatuses" type="List" />
+  <aura:attribute name="selectedIdFromCustomInput" type="string" />
+  <aura:attribute name="accountName" type="string" />
+  <aura:attribute name="originMovementTypes" type="List" />
+  <aura:attribute name="destMovementTypes" type="List" />
+  <aura:attribute name="originMovementType" type="string" default="" />
+  <aura:attribute name="destMovementType" type="string" default="" />
+  <aura:attribute name="transModesOrigin" type="List" />
+  <aura:attribute name="transModesDestination" type="List" />
+  <aura:attribute name="statuses" type="List" />
+  <aura:attribute name="containerTypes" type="List" />
+  <aura:attribute name="commodities" type="List" />
+  <aura:attribute name="vessals" type="List" />
+  <aura:attribute name="comoditySelected" type="string" default="" />
+  <aura:attribute name="vessalSelected" type="string" />
+  <aura:attribute name="showAccountFilters" type="boolean" default="false" />
+  <aura:attribute name="showStatusfilter" type="boolean" default="true" />
+  <aura:attribute name="departureFromDate" type="string" />
+  <aura:attribute name="departureToDate" type="string" />
+  <aura:attribute name="showChildCheckbox" type="boolean" default="false" />
+  <aura:attribute name="originLocationId" type="string" />
+  <aura:attribute name="originLocationText" type="string" />
+  <aura:attribute name="destinationLocationId" type="string" />
+  <aura:attribute name="destinationLocationText" type="string" />
+  <aura:attribute name="disbaleOrigin" type="boolean" default="true" />
+  <aura:attribute name="disbaleDestination" type="boolean" default="true" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+  <aura:handler
+    name="filterLabelEvent"
+    event="c:CC_FilterLabelEvent"
+    action="{!c.changeFilterLabel}"
+  />
+
+  <aura:registerEvent name="filterEvent" type="c:CC_FilterEvt" />
+  <aura:registerEvent name="sortEvent" type="c:CC_SortByEvt" />
+  <aura:registerEvent name="searchListEvent" type="c:CC_SearchListEvt" />
+
+  <div class="filter-header pull-left">
+    <aura:if isTrue="{!v.showUseFilters}">
+      <lightning:button
+        label="{!v.filterButtonLabel}"
+        iconName="utility:filterList"
+        onclick="{! c.handleUseFilter}"
+        class="use-filter-button"
+      />
+    </aura:if>
+    <aura:if isTrue="{!v.showSortBy}">
+      <select class="sort-filter-select pull-left" onchange="{!c.handleSort}">
+        <option>Sort By</option>
+        <aura:iteration items="{!v.sortByList}" var="item">
+          <option value="{!item.value}">{!item.label}</option>
+        </aura:iteration>
+      </select>
+    </aura:if>
+    <div
+      aura:id="searchDiv"
+      class="without-label booking-lookup mobile-hide"
+      onkeyup="{! c.handleSearchListEnter }"
+    >
+      <lightning:input
+        aura:id="enter-search"
+        name="searchTheList"
+        placeholder="Search the list"
+        type="search"
+        onblur="{! c.handleSearchList }"
+      />
+    </div>
+    <div class="mob-header-search">
+      <a
+        class="search-icon"
+        aura:id="search"
+        onclick="{!c.togglesearchBox}"
+      ></a>
+    </div>
+  </div>
+  <aura:if isTrue="{!v.showFilters}">
+    <aura:if isTrue="{!v.selectedTab == 'ChildAccounts'}">
+      <div class="filter-container block-view">
+        <div class="row">
+          <div class="col-sm-2 without-label">
+            <label>Account Name</label>
+            <c:CC_CustomLookupInput
+              placeholder="Search"
+              requiredInput="false"
+              functionality="AccountDetailFilter:ChildAcc"
+            />
+          </div>
+          <div class="col-sm-2 without-label">
+            <label>CVIF ID</label>
+            <div class="slds-form-element remove-close-icon">
+              <lightning:input
+                placeholder="Search"
+                aura:id="cvifIdInput"
+                name="cvifIdInput"
+                value="{!v.cvifId}"
+                type="search"
+              />
+              <aura:if
+                isTrue="{!if( and(v.cvifId != null, v.cvifId != ''), true, false)}"
+              >
+                <i class="clear-field" onclick="{!c.clearCvifIdInputValue}"></i>
+              </aura:if>
+            </div>
+          </div>
+          <div class="col-sm-2 without-label">
+            <label>Account Owner</label>
+            <div class="slds-form-element remove-close-icon">
+              <lightning:input
+                placeholder="Search"
+                aura:id="accountOwner"
+                name="accountOwner"
+                value="{!v.accountOwner}"
+                type="search"
+              />
+              <aura:if
+                isTrue="{!if( and(v.accountOwner != null, v.accountOwner != ''), true, false)}"
+              >
+                <i
+                  class="clear-field"
+                  onclick="{!c.clearAccountOwnerValue}"
+                ></i>
+              </aura:if>
+            </div>
+          </div>
+          <div class="col-sm-2 without-label">
+            <label>Sales Rep Region</label>
+            <lightning:select name="searchRegion" value="{!v.searchRegion}">
+              <option value="">Select Region</option>
+              <aura:iteration items="{!v.salesRepRegions}" var="item">
+                <option text="{!item.label}" value="{!item.value}" />
+              </aura:iteration>
+            </lightning:select>
+          </div>
+          <div class="col-sm-2 without-label">
+            <label>Type</label>
+            <lightning:select name="accountType" value="{!v.accountType}">
+              <option value="">Select Type</option>
+              <aura:iteration items="{!v.accountTypes}" var="item">
+                <option text="{!item.label}" value="{!item.value}" />
+              </aura:iteration>
+            </lightning:select>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="clear-apply-btn">
+            <lightning:button
+              class="pull-left max-w-100 slds-button_neutral slds-button_destructive"
+              label="Apply"
+              variant="brand"
+              onclick="{! c.handleApply}"
+            />
+          </span>
+        </div>
+      </div>
+    </aura:if>
+    <aura:if isTrue="{!v.selectedTab == 'Quotes'}">
+      <c:CC_QuoteListFilter
+        accountSearchKeyWord="{!v.accountName}"
+        showChildCheckbox="{!v.showChildCheckbox}"
+        selectedAccountId="{!v.accountId}"
+        statusSelected="{!v.statusSelected}"
+        originMovementType="{!v.originMovementType}"
+        destMovementType="{!v.destMovementType}"
+        originLocationId="{!v.originLocationId}"
+        destinationLocationId="{!v.destinationLocationId}"
+        departureFromDate="{!v.departureFromDate}"
+        departureToDate="{!v.departureToDate}"
+        hazQuote="{!v.hazQuote}"
+        showStatusfilter="{!v.showStatusfilter}"
+        comoditySelected="{!v.comoditySelected}"
+        vessalSelected="{!v.vessalSelected}"
+        showSearchAndFilterButton="false"
+        originMovementTypes="{!v.originMovementTypes}"
+        destMovementTypes="{!v.destMovementTypes}"
+        destinationLocationText="{!v.destinationLocationText}"
+        statuses="{!v.statuses}"
+        commodities="{!v.commodities}"
+        showFilters="{!v.showFilters}"
+        originLocationText="{!v.originLocationText}"
+        vessals="{!v.vessals}"
+        showClearAll="true"
+        containerTypes="{!v.containerTypes}"
+        disbaleOrigin="{!v.disbaleOrigin}"
+        disbaleDestination="{!v.disbaleDestination}"
+        selectedContractText="{!v.selectedContractText}"
+      />
+    </aura:if>
+    <aura:if isTrue="{!v.selectedTab == 'Contracts'}">
+      <div class="filter-container block-view">
+        <div class="filter-columns without-label">
+          <label>Contract Number</label>
+          <div class="slds-form-element remove-close-icon">
+            <lightning:input
+              placeholder="Search"
+              aura:id="contractNumber"
+              name="contractNumber"
+              value="{!v.contractNumber}"
+              type="search"
+            />
+            <aura:if
+              isTrue="{!if( and(v.contractNumber != null, v.contractNumber != ''), true, false)}"
+            >
+              <i
+                class="clear-field"
+                onclick="{!c.clearContractNumberValue}"
+              ></i>
+            </aura:if>
+          </div>
+        </div>
+        <div class="filter-columns without-label">
+          <label>Contract Owner</label>
+          <c:CC_CustomLookupInput
+            placeholder="Search"
+            requiredInput="false"
+            functionality="AccountDetailFilter:Contract"
+          />
+        </div>
+        <div class="filter-columns without-label">
+          <label>Region</label>
+          <lightning:select
+            name="searchContractRegion"
+            value="{!v.searchContractRegion}"
+          >
+            <option value="">Select Region</option>
+            <aura:iteration items="{!v.contractRegions}" var="item">
+              <option text="{!item.label}" value="{!item.value}" />
+            </aura:iteration>
+          </lightning:select>
+        </div>
+        <div class="filter-columns without-label">
+          <label>Start Date</label>
+          <lightning:input
+            placeholder="Start Date"
+            aura:id="startContractDate"
+            name="startContractDate"
+            value="{!v.startContractDate}"
+            type="date"
+          />
+        </div>
+
+        <div class="filter-columns without-label">
+          <label>End Date</label>
+          <lightning:input
+            placeholder="End Date"
+            aura:id="endContractDate"
+            name="endContractDate"
+            label="&nbsp;"
+            value="{!v.endContractDate}"
+            type="date"
+          />
+        </div>
+        <div class="filter-columns without-label">
+          <label>Status</label>
+          <lightning:select name="contractStatus" value="{!v.contractStatus}">
+            <option value="">Select Status</option>
+            <aura:iteration items="{!v.contractStatuses}" var="item">
+              <option text="{!item.label}" value="{!item.value}" />
+            </aura:iteration>
+          </lightning:select>
+        </div>
+        <div class="filter-columns without-label">
+          <lightning:button
+            class="pull-left apply-filter-btn max-w-100 slds-button_neutral slds-button_destructive"
+            label="Apply"
+            variant="brand"
+            onclick="{! c.handleApply}"
+          />
+        </div>
+      </div>
+    </aura:if>
+    <!--  <aura:if isTrue="{!v.selectedTab == 'Bookings'}">
+            <c:CC_BookingListFilter showClearAll="false" accountSearchKeyWord="{!v.accountName}"
+                showChildCheckbox="false" showFilters="{!v.showFilters}" showSearchAndFilterButton="false"
+                selectedAccountId="{!v.accountId}" contractInputDisabled="false"
+                originMovementTypes="{!v.originMovementTypes}" destMovementTypes="{!v.destMovementTypes}"
+                transModesOrigin="{!v.transModesOrigin}" transModesDestination="{!v.transModesDestination}" 
+                statuses="{!v.statuses}" containerTypes="{!v.containerTypes}" commodities="{!v.commodities}"
+                vessals="{!v.vessals}" />
+        </aura:if>  -->
+    <aura:if isTrue="{!v.selectedTab == 'Bill Of Lading'}"> </aura:if>
+  </aura:if>
+</aura:component>

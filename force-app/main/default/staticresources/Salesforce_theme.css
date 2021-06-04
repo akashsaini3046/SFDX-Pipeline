@@ -1,0 +1,19 @@
+body {
+    font-family: 'Salesforce Sans', Arial, Helvetica, sans-serif !important;
+    font-size: 13px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Salesforce Sans', Arial, Helvetica, sans-serif !important;
+}
+a {
+    color: rgb(0, 109, 204);
+}
+.comment-icon {
+    padding-right: 10px !important;
+}
+.comment-icon-salesforce {
+    padding-right: 10px !important;
+}
+.pagination-wrapper .cCC_Pagination {
+    line-height: 30px;
+}

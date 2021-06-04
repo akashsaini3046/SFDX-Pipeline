@@ -1,0 +1,110 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+  controller="CC_AccountController"
+>
+  <aura:attribute name="componentName" type="string" default="CC_Account" />
+  <aura:attribute name="listaccounts" type="List" />
+  <aura:attribute name="pageReference" type="Object" />
+  <aura:attribute name="showRecords" type="Integer" default="10" />
+  <aura:attribute name="totalRange" type="Integer" default="350" />
+  <aura:attribute name="startRange" type="Integer" default="1" />
+  <aura:attribute name="endRange" type="Integer" />
+  <aura:attribute name="tableJson" type="String" />
+  <aura:attribute name="cardClassName" type="String" />
+  <aura:attribute name="fieldsToFetch" type="List" />
+  <aura:attribute name="accountTypes" type="List" />
+  <aura:attribute name="salesRepRegions" type="List" />
+  <aura:attribute name="filters" type="Object" />
+  <aura:attribute name="sortByField" type="string" />
+  <aura:attribute name="sortByFieldLabel" type="string" />
+  <aura:attribute name="sortByDirection" type="string" />
+  <aura:attribute name="sortByList" type="List" />
+  <aura:attribute name="showNoResultMessage" type="boolean" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:attribute name="cvifId" type="string" />
+  <aura:attribute name="parentCvifId" type="string" />
+  <aura:attribute name="accountOwner" type="string" />
+  <aura:attribute name="accountType" type="string" />
+  <aura:attribute name="searchRegion" type="string" />
+  <aura:attribute name="searchAccountId" type="String" />
+  <aura:attribute name="searchparentAccountId" type="String" />
+  <aura:attribute name="searchAccountName" type="String" />
+  <aura:attribute name="searchparentAccountName" type="String" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="paginationEvent"
+    event="c:CC_PaginationEvt"
+    action="{!c.handlePagination}"
+  />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler
+    name="filterEvent"
+    event="c:CC_FilterEvt"
+    action="{!c.handleFilters}"
+  />
+  <aura:handler
+    name="sortEvent"
+    event="c:CC_SortByEvt"
+    action="{!c.handleSortBy}"
+  />
+
+  <div class="breadcrumbs-search-row block-view">
+    <div class="pull-left">
+      <h5>Accounts</h5>
+      <lightning:breadcrumbs>
+        <lightning:breadcrumb label="Home" onclick="{! c.navigateToHome}" />
+        <lightning:breadcrumb label="Accounts" href="" />
+      </lightning:breadcrumbs>
+    </div>
+  </div>
+  <div class="accounts-page-wrapper">
+    <div class="pagination-wrapper">
+      <div class="block-view">
+        <c:CC_AccountListFilter
+          accountTypes="{!v.accountTypes}"
+          sortByList="{!v.sortByList}"
+          salesRepRegions="{!v.salesRepRegions}"
+          cvifId="{!v.cvifId}"
+          parentCvifId="{!v.parentCvifId}"
+          accountOwner="{!v.accountOwner}"
+          accountType="{!v.accountType}"
+          searchRegion="{!v.searchRegion}"
+          searchAccountId="{!v.searchAccountId}"
+          searchparentAccountId="{!v.searchparentAccountId}"
+          searchAccountName="{!v.searchAccountName}"
+          searchparentAccountName="{!v.searchparentAccountName}"
+        />
+      </div>
+      <div class="account-pagination">
+        <c:CC_Pagination
+          aura:id="pag1"
+          endRange="{!v.endRange}"
+          showRecords="{!v.showRecords}"
+          totalRange="{!v.totalRange}"
+          startRange="{!v.startRange}"
+        />
+      </div>
+    </div>
+    <aura:if isTrue="{!v.showNoResultMessage}"> No result found </aura:if>
+    <div>
+      <c:CC_CustomTable
+        aura:id="accTable"
+        tableJson="{!v.tableJson}"
+        sortByDirection="{!v.sortByDirection}"
+      />
+    </div>
+    <div class="block-view pagination-wrapper">
+      <c:CC_Pagination
+        aura:id="pag2"
+        endRange="{!v.endRange}"
+        showRecords="{!v.showRecords}"
+        totalRange="{!v.totalRange}"
+        startRange="{!v.startRange}"
+      />
+    </div>
+  </div>
+</aura:component>

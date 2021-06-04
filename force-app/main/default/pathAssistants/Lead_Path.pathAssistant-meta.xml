@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Lead Path</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>LinkedInProfileURL__c</fieldNames>
+        <fieldNames>Industry</fieldNames>
+        <fieldNames>Email</fieldNames>
+        <fieldNames>MobilePhone</fieldNames>
+        <info
+    >&lt;p&gt;&lt;b&gt;In this stage, you would like to do following:&lt;/b&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Analyze the information available.&lt;/li&gt;&lt;li&gt;Research on the web, social media, and use sales tools to gather information.&lt;/li&gt;&lt;li&gt;Update the Lead record with more information.&lt;/li&gt;&lt;li&gt;Plan out your strategy before you start working on this lead.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Assigned</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Unqualified_Reason__c</fieldNames>
+        <fieldNames>Description</fieldNames>
+        <info
+    >&lt;p&gt;&lt;b&gt;Crowley Logistics provides a wide variety of logistics services to our customers. Mark the lead disqualified after you have established that Crowley cannot provide any of our services to them. Below are reasons why leads can be disqualified.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Out of business.&lt;/li&gt;&lt;li&gt;Geographic/Business is out of scope&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Disqualified</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Service__c</fieldNames>
+        <fieldNames>Sales_Rep_Region__c</fieldNames>
+        <fieldNames>Description</fieldNames>
+        <info
+    >&lt;p&gt;In this phase, please try to complete following activities:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Reach out the contact and record activity (calls, events etc.).&lt;/li&gt;&lt;li&gt;If you are sending offline emails, please make sure to link those emails with the lead record.&lt;/li&gt;&lt;li&gt;Key information to gather in this stage includes:&lt;ol&gt;&lt;li&gt;Services Information&lt;/li&gt;&lt;li&gt;Origin Country&lt;/li&gt;&lt;li&gt;Destination Country&lt;/li&gt;&lt;li&gt;Fill the description field to capture notes.&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Once, you feel the customer is ready to share more details regarding scope, budget, and is ready to do business, please convert the opportunity.&lt;/li&gt;&lt;li&gt;Alternatively, you may like to disqualify the lead.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>In Progress</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Company</fieldNames>
+        <fieldNames>Name</fieldNames>
+        <fieldNames>OwnerId</fieldNames>
+        <info
+    >&lt;p&gt;&lt;b&gt;Change owner assignment.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;A lead under &amp;quot;New&amp;quot; status is not assigned to any specific owner yet. It is accessible to a all users in a given region. If you are interested in taking up this lead, please do following: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Change the &amp;quot;Owner Name&amp;quot; to yourself.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Change the status of the lead to &amp;quot;Assigned&amp;quot;.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info
+    >&lt;p&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Congratulations! &lt;/b&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Now it’s time to convert the lead record to an opportunity. Then, continue the qualification process with your new contact.&lt;/span&gt;&lt;/p&gt;</info>
+        <picklistValueName>Qualified</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Edit_Record</recordTypeName>
+</PathAssistant>

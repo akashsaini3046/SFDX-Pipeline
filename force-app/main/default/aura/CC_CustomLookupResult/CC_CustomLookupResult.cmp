@@ -1,0 +1,136 @@
+<aura:component implements="lightning:isUrlAddressable">
+  <aura:attribute name="item" type="String" />
+  <aura:attribute name="listOfSearchRecords" type="List" />
+  <aura:attribute name="index" type="String" />
+  <aura:attribute name="pageReference" type="Object" />
+  <aura:attribute name="fieldName" type="String" default="Name" />
+  <aura:attribute name="clickedItem" type="String" />
+  <aura:attribute name="clickedItemId" type="String" />
+  <aura:attribute name="functionality" type="String" />
+  <aura:attribute name="displayType" type="String" />
+  <aura:attribute name="accountType" type="String" />
+  <aura:attribute name="isDisplayCombine" type="boolean" default="false" />
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <li
+    role="presentation"
+    onmouseout="{!c.mouseOut}"
+    onmouseover="{!c.mouseOver}"
+  >
+    <span
+      class="slds-lookup__item-action slds-media slds-media--center"
+      role="option"
+    >
+      <div class="slds-input-has-icon slds-input-has-icon--right block-view">
+        <div class="slds-lookup__result-text">
+          <aura:if isTrue="{!v.displayType == 'Combine'}">
+            <div class="block-view" onmousedown="{!c.fireEvent}">
+              <aura:if
+                isTrue="{!and(v.item.Country_Name__c != 'United States',v.item.Location_Type__c=='DOOR')}"
+              >
+                <span class="d-r-p-type">{!v.item.Location_Type__c}</span>
+                <span class="location-name">{!v.item.Location_Name__c}</span>
+                <aura:set attribute="else">
+                  <span class="d-r-p-type">{!v.item.Location_Type__c}</span>
+                  <span class="location-name">{!v.item.Location_Name__c}</span>
+                  <span class="location-code">{!v.item.Name}</span>
+                </aura:set>
+              </aura:if>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'half-comb'}">
+            <div class="block-view" onmousedown="{!c.fireEvent}">
+              <aura:if
+                isTrue="{!and(v.item.Country_Name__c != 'United States',v.item.Location_Type__c=='DOOR')}"
+              >
+                <span class="location-name">{!v.item.Location_Name__c}</span>
+                <aura:set attribute="else">
+                  <span class="location-name">{!v.item.Location_Name__c}</span>
+                  <span class="location-code">{!v.item.Name}</span>
+                </aura:set>
+              </aura:if>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'Name'}">
+            <span onmousedown="{!c.fireEvent}" class="color-blue"
+              >{!v.item.Name}
+            </span>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'fullName'}">
+            <span onmousedown="{!c.fireEvent}" class="color-blue"
+              >{!v.item.Full_Name__c}
+            </span>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'Description'}">
+            <div onmousedown="{!c.fireEvent}" class="block-view color-blue">
+              {!v.item.Description__c}
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'Contract'}">
+            <div onmousedown="{!c.fireEvent}" class="color-blue">
+              {!v.item.Softship_Contract_Number__c}
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'UN Number'}">
+            <div onmousedown="{!c.fireEvent}" class="block-view color-blue">
+              {!v.item.Prefix__c}{!v.item.Name}
+              &nbsp;-&nbsp;{!v.item.Substance_Name__c}
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'BOL BookingNumber'}">
+            <div onmousedown="{!c.fireEvent}" class="block-view color-blue">
+              {!v.item.Booking_Number__c}
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'BOL hts'}">
+            <div onmousedown="{!c.fireEvent}" class="block-view color-blue">
+              <span class="d-r-p-type">{!v.item.Type__c}</span>
+              <span class="location-name">{!v.item.Name}</span>
+              <span class="location-code">{!v.item.Description__c}</span>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!v.displayType == 'NameAndButton'}">
+            <aura:if
+              isTrue="{!or(or(equals(v.item.Id, 'CreateProspectButton'), equals(v.item.Id, 'CreateAddressButton')), equals(v.item.Id, 'CreateContactButton'))}"
+            >
+              <aura:if isTrue="{!equals(v.item.Id, 'CreateProspectButton')}">
+                <div class="create-prospects text-center">
+                  <lightning:button
+                    label="{!v.item.Name}"
+                    iconName="utility:new"
+                    iconPosition="left"
+                  />
+                </div>
+              </aura:if>
+              <aura:if isTrue="{!equals(v.item.Id, 'CreateAddressButton')}">
+                <div class="create-prospects text-center">
+                  <lightning:button
+                    label="{!v.item.Name}"
+                    iconName="utility:new"
+                    iconPosition="left"
+                  />
+                </div>
+              </aura:if>
+              <aura:if isTrue="{!equals(v.item.Id, 'CreateContactButton')}">
+                <div class="create-prospects text-center">
+                  <lightning:button
+                    label="{!v.item.Name}"
+                    iconName="utility:new"
+                    iconPosition="left"
+                  />
+                </div>
+              </aura:if>
+              <aura:set attribute="else">
+                <span onmousedown="{!c.fireEvent}" class="color-blue"
+                  >{!v.item.Name}
+                </span>
+              </aura:set>
+            </aura:if>
+          </aura:if>
+        </div>
+      </div>
+    </span>
+  </li>
+</aura:component>

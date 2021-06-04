@@ -1,0 +1,9 @@
+.THIS .center-align {
+  text-align: center;
+  font-size: large;
+  background-color: lightgrey;
+}
+.THIS .slds-is-active {
+  font-size: large;
+  background: lightgrey;
+}

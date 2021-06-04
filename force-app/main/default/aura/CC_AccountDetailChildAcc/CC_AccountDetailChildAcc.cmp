@@ -1,0 +1,90 @@
+<aura:component
+  controller="CC_AccountDetailController"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="accountId" type="String" />
+  <aura:attribute name="numberOfChildAccounts" type="Integer" />
+  <aura:attribute name="showRecords" type="Integer" default="10" />
+  <aura:attribute name="totalRange" type="Integer" default="20" />
+  <aura:attribute name="startRange" type="Integer" default="1" />
+  <aura:attribute name="endRange" type="Integer" />
+  <aura:attribute name="tableJson" type="String" />
+  <aura:attribute name="cardClassName" type="String" />
+  <aura:attribute name="fieldsToFetch" type="List" />
+  <aura:attribute name="selectedTab" type="string" />
+  <aura:attribute name="sortByList" type="List" />
+  <aura:attribute name="sortByField" type="string" />
+  <aura:attribute name="sortByFieldLabel" type="string" />
+  <aura:attribute name="sortByDirection" type="string" />
+  <aura:attribute name="filters" type="Object" />
+  <aura:attribute name="searchKeyWord" type="String" />
+  <aura:attribute name="searchFieldSetChildAcc" type="List" />
+  <aura:attribute name="accountTypes" type="List" />
+  <aura:attribute name="salesRepRegions" type="List" />
+  <aura:attribute name="tableData" type="List" default="['']" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="sortEvent"
+    event="c:CC_SortByEvt"
+    action="{!c.handleSortBy}"
+  />
+  <aura:handler
+    name="paginationEvent"
+    event="c:CC_PaginationEvt"
+    action="{!c.handlePagination}"
+  />
+  <aura:handler
+    name="filterEvent"
+    event="c:CC_FilterEvt"
+    action="{!c.handleFilters}"
+  />
+  <aura:handler
+    name="searchListEvent"
+    event="c:CC_SearchListEvt"
+    action="{!c.handleSearchList}"
+  />
+
+  <c:CC_AccountFilter
+    selectedTab="{!v.selectedTab}"
+    sortByList="{!v.sortByList}"
+    accountTypes="{!v.accountTypes}"
+    salesRepRegions="{!v.salesRepRegions}"
+  />
+  <aura:if isTrue="{!not(empty(v.tableData))}">
+    <div class="pagination-wrapper">
+      <div class="account-pagination">
+        <c:CC_Pagination
+          aura:id="pagination1"
+          endRange="{!v.endRange}"
+          showRecords="{!v.showRecords}"
+          totalRange="{!v.totalRange}"
+          startRange="{!v.startRange}"
+        />
+      </div>
+    </div>
+    <aura:set attribute="else">
+      <c:CC_NoRecordsFound
+        message="{!$Label.c.CC_AD_Child_Acc_Not_Found_Search}"
+      />
+    </aura:set>
+  </aura:if>
+  <c:CC_CustomTable
+    aura:id="accTable"
+    tableJson="{!v.tableJson}"
+    sortByDirection="{!v.sortByDirection}"
+    data="{!v.tableData}"
+  />
+  <aura:if isTrue="{!not(empty(v.tableData))}">
+    <div class="block-view pagination-wrapper">
+      <c:CC_Pagination
+        aura:id="pagination2"
+        endRange="{!v.endRange}"
+        showRecords="{!v.showRecords}"
+        totalRange="{!v.totalRange}"
+        startRange="{!v.startRange}"
+      />
+    </div>
+  </aura:if>
+</aura:component>

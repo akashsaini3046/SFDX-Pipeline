@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Switch Home Screen View">
+	<aura:attribute name="HomeScreenComponent" type="String"/>
+</aura:event>

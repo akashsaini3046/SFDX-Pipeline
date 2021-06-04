@@ -1,0 +1,277 @@
+<aura:component
+  controller="CC_FindARouteController"
+  implements="lightning:isUrlAddressable"
+>
+  <aura:attribute name="routeList" type="CC_SoftshipRatingResponse" />
+  <aura:attribute
+    name="schedules"
+    type="CC_SoftshipRatingResponse.Schedules[]"
+  />
+  <aura:attribute name="selectedOriginLocation" type="String" />
+  <aura:attribute name="selectedDestinationLocation" type="String" />
+  <aura:attribute name="startPoint" type="String" />
+  <aura:attribute name="endPoint" type="String" />
+  <aura:attribute name="startZipPoint" type="String" />
+  <aura:attribute name="endZipPoint" type="String" />
+  <aura:attribute name="originMove" type="String" default="" />
+  <aura:attribute name="destinationMove" type="String" default="" />
+  <aura:attribute name="numberOfSchedules" type="Integer" />
+  <aura:attribute name="showEmailModal" type="Boolean" default="false" />
+  <aura:attribute name="includeTime" type="boolean" default="false" />
+  <aura:attribute name="sortingTransitClass" type="String" default="" />
+  <aura:attribute
+    name="sortingDepartureClass"
+    type="String"
+    default="active asc"
+  />
+  <aura:attribute name="emailAddresses" type="List" default="[]" />
+  <aura:attribute name="selectedSchedule" type="Integer" default="0" />
+  <aura:attribute name="selectedSchedulesList" type="List" />
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="isEmailSend" type="boolean" default="false" />
+  <aura:attribute name="isPrint" type="boolean" default="false" />
+  <aura:attribute name="checkAll" type="boolean" default="false" />
+  <aura:attribute name="checkSelectedAll" type="boolean" default="false" />
+  <aura:attribute
+    name="showHideDetailText"
+    type="String"
+    default="Show Details"
+  />
+  <aura:attribute name="isGuestUser" type="Boolean" />
+  <aura:attribute name="firePrint" type="Boolean" default="false" />
+  <aura:attribute name="booking" type="Booking__c" />
+  <aura:attribute name="searchKeywordPOL" type="String" default="" />
+  <aura:attribute name="searchKeywordPOD" type="String" default="" />
+  <aura:attribute name="clickedItemOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemIdOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemDestination" type="String" default="" />
+  <aura:attribute name="clickedItemIdDestination" type="String" default="" />
+  <aura:attribute name="clickedItemPol" type="String" default="" />
+  <aura:attribute name="clickedItemIdPol" type="String" default="" />
+  <aura:attribute name="clickedItemPod" type="String" default="" />
+  <aura:attribute name="clickedItemIdPod" type="String" default="" />
+
+  <lightning:navigation aura:id="navigationService" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="printScreenEvent"
+    event="c:CC_PrintScreenEvent"
+    action="{!c.handleComponentEvent}"
+  />
+
+  <div class="print-footer">
+    <img alt="logo" src="{!$Resource.CrowleyMainLogo}" width="180" />
+  </div>
+  <div class="separator-line"></div>
+  <div class="clearfix"></div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h6>
+        <div class="line-height-40">
+          <aura:if isTrue="{!v.numberOfSchedules == 1}">
+            1 Schedule
+            <aura:set attribute="else">
+              {!v.numberOfSchedules} Schedules
+            </aura:set>
+          </aura:if>
+        </div>
+        <aura:if isTrue="{!not(v.isGuestUser)}">
+          <div class="slds-checkbox slds-no-print">
+            <input
+              type="checkbox"
+              id="selectAllSchedules"
+              onchange="{!c.handleSelectAllSchedules}"
+              checked="{!v.checkSelectedAll}"
+            />
+            <label class="slds-checkbox__label" for="selectAllSchedules">
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-form-element__label">Select All</span>
+            </label>
+          </div>
+        </aura:if>
+      </h6>
+    </div>
+    <div class="col-sm-6 text-right slds-no-print">
+      <div class="text-right">
+        <aura:if isTrue="{!not(v.isGuestUser)}">
+          <span class="p-q-e-btn-group">
+            <lightning:button
+              label="Quote"
+              onclick="{! c.handleQuoteClick }"
+              class="slds-button_neutral max-w-100"
+            />
+            <lightning:button
+              label="Print"
+              onclick="{! c.printScreen }"
+              class="slds-button_neutral max-w-100"
+            />
+            <lightning:button
+              label="Email"
+              onclick="{! c.handleEmailClick }"
+              class="slds-button_neutral max-w-100"
+            />
+          </span>
+        </aura:if>
+      </div>
+      <span>Sort By</span>
+      <span class="sorting-options">
+        <a
+          onclick="{!c.sortingDepartureDate}"
+          class="{!v.sortingDepartureClass}"
+          >Date
+        </a>
+      </span>
+      <span class="sorting-options">
+        <a onclick="{!c.sortingTransitTime}" class="{!v.sortingTransitClass}"
+          >Transit Time
+        </a>
+      </span>
+
+      <aura:if isTrue="{!v.isGuestUser}">
+        <div class="pull-right">
+          <lightning:button
+            label="Print"
+            onclick="{!c.printScreen}"
+            class="slds-button_neutral"
+          />
+        </div>
+      </aura:if>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div id="routeId">
+    <aura:iteration
+      items="{!v.schedules}"
+      var="schedule"
+      indexVar="indexSchedule"
+    >
+      <c:CC_RouteResultSchedule
+        aura:id="schedulesDisplay"
+        schedule="{!schedule}"
+        booking="{!v.booking}"
+        startPoint="{!v.startPoint}"
+        endPoint="{!v.endPoint}"
+        originMove="{!v.originMove}"
+        destinationMove="{!v.destinationMove}"
+        selectedSchedulesList="{!v.selectedSchedulesList}"
+        isGuestUser="{!v.isGuestUser}"
+        checkAll="{!v.checkAll}"
+        checkSelectedAll="{!v.checkSelectedAll}"
+        isLastSchedule="{!equals(indexSchedule+1,v.numberOfSchedules)}"
+      />
+    </aura:iteration>
+  </div>
+  <aura:if isTrue="{!v.showEmailModal}">
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+      class="slds-modal slds-fade-in-open"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <div
+            id="modal-heading-01"
+            class="slds-text-heading_medium slds-hyphenate text-left"
+          >
+            <i class="send-icon"></i> Send Schedule To
+          </div>
+        </header>
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          id="modal-content-id-1"
+        >
+          <!--div class="include-time">
+                        <lightning:input type="toggle" name="toggleButton" aura:id="tglbtn" label="Include Time"
+                            onchange="{!c.getToggleIncludeTime}" />
+                    </div-->
+          <aura:iteration
+            items="{!v.emailAddresses}"
+            var="emailval"
+            indexVar="indexEmail"
+          >
+            <div class="row">
+              <div class="col-8">
+                <div class="grey-bg-search">
+                  <lightning:input
+                    autocomplete="off"
+                    label="Email Address"
+                    type="input"
+                    value="{!emailval.emailValue}"
+                    required="true"
+                  />
+                </div>
+              </div>
+              <aura:if isTrue="{!indexEmail!=0}">
+                <div class="col-4">
+                  <label class="block-view">&nbsp;</label>
+                  <div onclick="{!c.removeEmail}" data-value="{!indexEmail}">
+                    <a class="remove-email-id"> Delete</a>
+                  </div>
+                </div>
+              </aura:if>
+            </div>
+          </aura:iteration>
+          <!--<div class="row">
+                        <div class="col">
+                            <a onclick="{!c.addEmail}"> <b>+ Add More Email addresses</b></a>
+                        </div>
+                    </div>-->
+        </div>
+        <footer class="slds-modal__footer">
+          <aura:if isTrue="{!v.isEmailSend}">
+            <lightning:button
+              variant="brand-outline"
+              label="Close"
+              title="Close"
+              onclick="{!c.closeModal}"
+            />
+            <aura:set attribute="else">
+              <lightning:button
+                variant="brand-outline"
+                label="Cancel"
+                title="Cancel"
+                onclick="{!c.closeModal}"
+              />
+              <lightning:button
+                variant="brand"
+                label="Send"
+                title="Send"
+                onclick="{!c.send}"
+              />
+            </aura:set>
+          </aura:if>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </aura:if>
+  <div class="print-footer">
+    <div class="pull-left">
+      <span class="pull-left">
+        <a
+          class="contact-us-link anchorLinks"
+          href="https://www.crowley.com/contact-us/list-of-offices/"
+          target="_blank"
+          >{!$Label.c.CC_VC_FooterLeft1}</a
+        >
+      </span>
+      <a href="https://www.crowley.com/" target="_blank" class="website-link"
+        >{!$Label.c.CC_VC_FooterLeft2}</a
+      >
+    </div>
+    <div class="pull-right">
+      <span class="pull-left">
+        <a
+          class="chat-link"
+          href="https://messenger.providesupport.com/messenger/18fs965gg46521bqvex5h9l5ys.html"
+          target="_blank"
+          >{!$Label.c.CC_VC_FooterRight1}</a
+        >
+      </span>
+      &nbsp; {!$Label.c.CC_VC_FooterRight2}
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Cuba Queue (ES)</label>
+    <protected>false</protected>
+    <values>
+        <field>nfvoice__QueueId__c</field>
+        <value
+      xsi:type="xsd:string"
+    >9f525434-754d-41e6-aeca-023e57bfe2aa</value>
+    </values>
+    <values>
+        <field>nfvoice__Service_Entity__c</field>
+        <value xsi:type="xsd:string">nfvoice__Default</value>
+    </values>
+</CustomMetadata>

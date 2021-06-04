@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Bookings Agent Queue (ES)</label>
+    <protected>false</protected>
+    <values>
+        <field>nfvoice__QueueId__c</field>
+        <value
+      xsi:type="xsd:string"
+    >eba30f41-a754-4218-acd9-db3f9b4f6eb0</value>
+    </values>
+    <values>
+        <field>nfvoice__Service_Entity__c</field>
+        <value xsi:type="xsd:string">nfvoice__Default</value>
+    </values>
+</CustomMetadata>

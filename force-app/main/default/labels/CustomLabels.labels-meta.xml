@@ -1,0 +1,3598 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ACCOUNT_APPROVAL_REQUEST_SUBMITTED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCOUNT_APPROVAL_REQUEST_SUBMITTED</shortDescription>
+        <value
+    >Your approval request has been submitted. Once approved your changes will be reflected.</value>
+    </labels>
+    <labels>
+        <fullName>ACCOUNT_HAS_ASSOCIATED_BUSINESS_LOCATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >ACCOUNT_HAS_ASSOCIATED_BUSINESS_LOCATION</shortDescription>
+        <value
+    >could not be completed because it has associated business locations.</value>
+    </labels>
+    <labels>
+        <fullName
+    >ACCOUNT_HAS_ASSOCIATED_BUSINESS_LOCATION_AND_CONTACT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >ACCOUNT_HAS_ASSOCIATED_BUSINESS_LOCATION_AND_CONTACT</shortDescription>
+        <value
+    >could not be completed because it has associated business locations and contact records.</value>
+    </labels>
+    <labels>
+        <fullName>ACCOUNT_HAS_ASSOCIATED_CONTACTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCOUNT_HAS_ASSOCIATED_CONTACTS</shortDescription>
+        <value
+    >could not be completed because it has associated contact records.</value>
+    </labels>
+    <labels>
+        <fullName>ACCOUNT_HAS_ASSOCIATED_OPPORTUNITIES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >ACCOUNT_HAS_ASSOCIATED_OPPORTUNITIES</shortDescription>
+        <value
+    >could not be completed because it has associated opportunities.</value>
+    </labels>
+    <labels>
+        <fullName>ACCOUNT_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCOUNT NAME</shortDescription>
+        <value>&lt;br&gt;&lt;/br&gt;- Account name</value>
+    </labels>
+    <labels>
+        <fullName>AD_ACCOUNT_OWNER_S</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_ACCOUNT_OWNER_S</shortDescription>
+        <value>Account Owner(s):</value>
+    </labels>
+    <labels>
+        <fullName>AD_ACCOUNT_S</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_ACCOUNT_S</shortDescription>
+        <value>Account(s):</value>
+    </labels>
+    <labels>
+        <fullName>AD_AMOUNT_CONVERTER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_AMOUNT_CONVERTER</shortDescription>
+        <value>100000</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_ALL_ACCOUNTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_ALL_ACCOUNTS</shortDescription>
+        <value>All Accounts</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_ASSIGNED_TO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_ASSIGNED_TO</shortDescription>
+        <value>Assigned To</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_BUTTON_APPLY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_BUTTON_APPLY</shortDescription>
+        <value>Apply</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_BUTTON_FILTER_BY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_BUTTON_FILTER_BY</shortDescription>
+        <value>Filter By</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_BUTTON_RESET</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_BUTTON_RESET</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_CLOSE</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_CLOSED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_CLOSED</shortDescription>
+        <value>Closed</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_CREATED_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_CREATED_DATE</shortDescription>
+        <value>Created Date</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_CREATED_DATE_TIME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_CREATED_DATE_TIME</shortDescription>
+        <value>Created Date &amp; Time</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_CURRENT_YEAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_CURRENT_YEAR</shortDescription>
+        <value>Current Year</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_DUE_DATE_TIME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_DUE_DATE_TIME</shortDescription>
+        <value>Due Date</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_ERROR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_ERROR</shortDescription>
+        <value>error</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_LOADING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_LOADING</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_MULTISELECT_LOOKUP_ASSIGNED_TO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AD_LABEL_MULTISELECT_LOOKUP_ASSIGNED_TO</shortDescription>
+        <value>Assigned To</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_MULTISELECT_LOOKUP_OWNER_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AD_LABEL_MULTISELECT_LOOKUP_OWNER_NAME</shortDescription>
+        <value>Owner Name</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OPEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_OPEN</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OPEN_REPORT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_OPEN_REPORT</shortDescription>
+        <value>Open Report</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OPPORTUNITY_PIPELINE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_OPPORTUNITY_PIPELINE</shortDescription>
+        <value>Opportunity Pipeline</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OPPORTUNITY_SIZE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_OPPORTUNITY_SIZE</shortDescription>
+        <value>Opportunity Size</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OPPORTUNITY_SIZE_IS_NOT_A_NUMBER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AD_LABEL_OPPORTUNITY_SIZE_IS_NOT_A_NUMBER</shortDescription>
+        <value>Opportunity size is not a number.</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_OVERDUE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_OVERDUE</shortDescription>
+        <value>Overdue</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_PAGINATION_FIRST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_PAGINATION_FIRST</shortDescription>
+        <value>First</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_PAGINATION_LAST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_PAGINATION_LAST</shortDescription>
+        <value>Last</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_RELATED_TO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_RELATED_TO</shortDescription>
+        <value>Related To</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_SORT_BY_CREATED_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_SORT_BY_CREATED_DATE</shortDescription>
+        <value>Sort by Created Date</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_SORT_BY_DUE_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_SORT_BY_DUE_DATE</shortDescription>
+        <value>Sort by Due Date</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_STATUS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_STATUS</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_TYPE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_TYPE</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_VALUES_ARE_IN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_VALUES_ARE_IN</shortDescription>
+        <value>(Values are in 100ks)</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_VIEW_ALL_NOTES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_VIEW_ALL_NOTES</shortDescription>
+        <value>View All Notes</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_VIEW_ALL_TASKS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_VIEW_ALL_TASKS</shortDescription>
+        <value>View All Tasks</value>
+    </labels>
+    <labels>
+        <fullName>AD_LABEL_YEAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_LABEL_YEAR</shortDescription>
+        <value>Year</value>
+    </labels>
+    <labels>
+        <fullName>AD_MAX_RECORDS_IN_VF_TABLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MAX_RECORDS_IN_VF_TABLE</shortDescription>
+        <value>10000</value>
+    </labels>
+    <labels>
+        <fullName>AD_MESSAGE_ENTER_REALATED_TO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MESSAGE_ENTER_REALATED_TO</shortDescription>
+        <value>Account/Opp. name</value>
+    </labels>
+    <labels>
+        <fullName>AD_MESSAGE_NO_ACTIVE_USER_EXIST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MESSAGE_NO_ACTIVE_USER_EXIST</shortDescription>
+        <value>No active user exist.</value>
+    </labels>
+    <labels>
+        <fullName>AD_MESSAGE_NO_CHILD_ACCOUNT_EXIST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MESSAGE_NO_CHILD_ACCOUNT_EXIST</shortDescription>
+        <value>No child account exist.</value>
+    </labels>
+    <labels>
+        <fullName>AD_MESSAGE_NO_RECORDS_FOUND</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MESSAGE_NO_RECORDS_FOUND</shortDescription>
+        <value>No records found.</value>
+    </labels>
+    <labels>
+        <fullName>AD_MESSAGE_UNAPPLIED_FILTER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_MESSAGE_UNAPPLIED_FILTER</shortDescription>
+        <value
+    >You have changed the filter which is unapplied. Closing without applying filter will loss the unapplied changes. Click ok to continue or cancel to stay on current filter.</value>
+    </labels>
+    <labels>
+        <fullName>AD_NEXT_HOW_MANY_YEAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_NEXT_HOW_MANY_YEAR</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>AD_OPP_REPORT_ID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_OPP_REPORT_ID</shortDescription>
+        <value>00Of40000081P0W</value>
+    </labels>
+    <labels>
+        <fullName>AD_PARENT_ACCOUT_APPEND_WITH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_PARENT_ACCOUT_APPEND_WITH</shortDescription>
+        <value>(P)</value>
+    </labels>
+    <labels>
+        <fullName>AD_PICKLIST_VAL_ALL_ACCOUNTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_PICKLIST_VAL_ALL_ACCOUNTS</shortDescription>
+        <value>All Accounts</value>
+    </labels>
+    <labels>
+        <fullName>AD_PICKLIST_VAL_ALL_YEAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_PICKLIST_VAL_ALL_YEAR</shortDescription>
+        <value>All Years</value>
+    </labels>
+    <labels>
+        <fullName>AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_NAME</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_OWNER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AD_PICKLIST_VAL_FILTER_BY_ACCOUNT_OWNER</shortDescription>
+        <value>Account Owner</value>
+    </labels>
+    <labels>
+        <fullName>AD_PICKLIST_VAL_NONE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_PICKLIST_VAL_NONE</shortDescription>
+        <value>None</value>
+    </labels>
+    <labels>
+        <fullName>AD_ROW_LIMIT_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_ROW_LIMIT_MESSAGE</shortDescription>
+        <value
+    >First 10000 records will download. Please apply filter to get more relevant records.</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_STATUS_ALL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_STATUS_ALL</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_STATUS_CLOSED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_STATUS_CLOSED</shortDescription>
+        <value>Closed</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_STATUS_COMPLETED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_STATUS_COMPLETED</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_STATUS_OPEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_STATUS_OPEN</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_STATUS_OVERDUE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_STATUS_OVERDUE</shortDescription>
+        <value>Overdue</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_WITHOUT_YEAR_QUERYSTRING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_WITHOUT_YEAR_QUERYSTRING</shortDescription>
+        <value
+    >Select Id, Status, Description, Owner.Name, Subject, What.Type, What.Name, ActivityDate, CreatedDate, TaskSubtype, WhoId, WhatId, IsClosed from Task where (WhatId in: opportunityList OR WhatId in: lstFilteredAccounts) AND (ActivityDate &gt; :dateFilterTaskAfter AND Trained__c = true AND Type != &apos;Email&apos; AND TaskSubtype != &apos;Email&apos; AND (NOT Subject Like &apos;%(Auto)%&apos;) AND (NOT Subject Like &apos;%Email:%&apos;) AND (NOT Subject Like &apos;%Cancelled:%&apos;))  ORDER BY ActivityDate DESC NULLS LAST LIMIT 50000</value>
+    </labels>
+    <labels>
+        <fullName>AD_TASK_WITH_YEAR_QUERYSTRING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_TASK_WITH_YEAR_QUERYSTRING</shortDescription>
+        <value
+    >Select Id, Status, Description, Owner.Name, Subject, What.Type, What.Name, ActivityDate, CreatedDate, TaskSubtype, WhoId, WhatId, IsClosed from Task where (WhatId in: opportunityList OR WhatId in: lstFilteredAccounts ) AND (ActivityDateYear__c = :strSelectedYear OR ActivityDate = null) AND (ActivityDate &gt; :dateFilterTaskAfter AND Trained__c = true AND Type != &apos;Email&apos; AND TaskSubtype != &apos;Email&apos; AND (NOT Subject Like &apos;%(Auto)%&apos;) AND (NOT Subject Like &apos;%Email:%&apos;) AND (NOT Subject Like &apos;%Cancelled:%&apos;)) ORDER BY ActivityDate DESC NULLS LAST LIMIT 50000</value>
+    </labels>
+    <labels>
+        <fullName>AD_UNIT_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_UNIT_NAME</shortDescription>
+        <value>100ks</value>
+    </labels>
+    <labels>
+        <fullName>AD_VALUE_SCALE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_VALUE_SCALE</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>AD_YEAR_START</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AD_YEAR_START</shortDescription>
+        <value>2017</value>
+    </labels>
+    <labels>
+        <fullName>AINI_ACCOUNT_SEARCH_INFORMATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_ACCOUNT_SEARCH_INFORMATION</shortDescription>
+        <value
+    >The accounts which are already linked with this initiative will not be available for selection.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_ACTIVATE_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_ACTIVATE_INITIATIVE</shortDescription>
+        <value>Please activate the Initiative.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_ACTIVITY_ON_CLOSED_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_ACTIVITY_ON_CLOSED_INITIATIVE</shortDescription>
+        <value>Can not log activity with closed Initiative.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_ACTIVITY_ON_INACTIVE_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AINI_ACTIVITY_ON_INACTIVE_INITIATIVE</shortDescription>
+        <value>Can not log activity with an inactive Initiative.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_CALLED_FOR_ACCOUNT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_CALLED_FOR_ACCOUNT</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
+        <fullName>AINI_CALLED_FOR_LEAD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_CALLED_FOR_LEAD</shortDescription>
+        <value>Lead</value>
+    </labels>
+    <labels>
+        <fullName>AINI_GI_DELETION_NOT_ALLOWED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_GI_DELETION_NOT_ALLOWED</shortDescription>
+        <value
+    >Deletion of Initiative Relationship is not permitted please deactivate it.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_GOAL_INITIATIVE_UNIQUE_KEY_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AINI_GOAL_INITIATIVE_UNIQUE_KEY_MESSAGE</shortDescription>
+        <value>Account is already linked with this initiative.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_INITIATIVE_ACCOUNT_RELATIONSHIP_IS_INACTIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AINI_INITIATIVE_ACCOUNT_RELATIONSHIP_IS_INACTIVE</shortDescription>
+        <value
+    >Can not log activity - The Initiative Account relationship for this Account and Initiative is inactive. Please reach out to initiative management team for more details.</value>
+    </labels>
+    <labels>
+        <fullName
+    >AINI_INITIATIVE_ACCOUNT_RELATIONSHIP_IS_INACTIVE_OPP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AINI_INITIATIVE_ACCOUNT_RELATIONSHIP_IS_INACTIVE_OPP</shortDescription>
+        <value
+    >Can not log activity - The Initiative Account relationship for Opportunity&apos;s Account and Initiative is inactive. Please reach out to initiative management team for more details.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_INITIATIVE_DELETION_NOT_ALLOWED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >AINI_INITIATIVE_DELETION_NOT_ALLOWED</shortDescription>
+        <value
+    >Deletion of Initiative is not permitted please deactivate it.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_INITIATIVE_RELATED_TO_MISMATCH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_INITIATIVE_RELATED_TO_MISMATCH</shortDescription>
+        <value
+    >The selected record in the &quot;Related To&quot; field is not part of the selected &quot;Initiative&quot;. Please either change the initiative or contact the administrator.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_INITIATIVE_SEARCH_INFORMATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_INITIATIVE_SEARCH_INFORMATION</shortDescription>
+        <value
+    >The initiatives which are already linked with this account will not be available for selection.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_INITIATIVE_WHATID_SUPPORT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_INITIATIVE_WHATID_SUPPORT</shortDescription>
+        <value
+    >Initiative can only be related to Account, Opportunity and Initiative</value>
+    </labels>
+    <labels>
+        <fullName>AINI_IS_ACC_LINKED_WITH_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_IS_ACC_LINKED_WITH_INITIATIVE</shortDescription>
+        <value
+    >The Initiative is not linked with this Account. Please reach out to initiative management team for more details.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_IS_LEAD_LINKED_WITH_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_IS_LEAD_LINKED_WITH_INITIATIVE</shortDescription>
+        <value
+    >The Initiative is not linked with this Lead. Please reach out to initiative management team for more details.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_IS_OPP_LINKED_WITH_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_IS_OPP_LINKED_WITH_INITIATIVE</shortDescription>
+        <value
+    >The Initiative is not linked with this Opportunity. Please reach out to initiative management team for more details.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LABEL_CONTAINS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LABEL_CONTAINS</shortDescription>
+        <value>Contains</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LABEL_PARENT_WITH_CHILD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LABEL_PARENT_WITH_CHILD</shortDescription>
+        <value>Parent with Child Accounts</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LEAD_ADD_ERROR_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LEAD_ADD_ERROR_MESSAGE</shortDescription>
+        <value
+    >Lead could not be linked to initiative. Please open the selected leads and correct the below data validations:</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LEAD_SEARCH_INFORMATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LEAD_SEARCH_INFORMATION</shortDescription>
+        <value
+    >The leads which are already linked with initiative will not be available for selection.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LIMIT_CROSS_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LIMIT_CROSS_MESSAGE</shortDescription>
+        <value
+    >Search returns more than 250 records, hence first 250 records are shown below. Search by more specific name.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_LIMIT_RECORDS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_LIMIT_RECORDS</shortDescription>
+        <value>250</value>
+    </labels>
+    <labels>
+        <fullName>AINI_NEW_AUTO_TASK_DUE_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_NEW_AUTO_TASK_DUE_DATE</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>AINI_NEW_AUTO_TASK_PRIORITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_NEW_AUTO_TASK_PRIORITY</shortDescription>
+        <value>Normal</value>
+    </labels>
+    <labels>
+        <fullName>AINI_NEW_AUTO_TASK_STATUS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_NEW_AUTO_TASK_STATUS</shortDescription>
+        <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>AINI_NEW_AUTO_TASK_SUBJECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_NEW_AUTO_TASK_SUBJECT</shortDescription>
+        <value>New initiative assigned -</value>
+    </labels>
+    <labels>
+        <fullName>AINI_NEW_AUTO_TASK_TYPE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_NEW_AUTO_TASK_TYPE</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>AINI_OPTION_SELECT_INITIATIVE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_OPTION_SELECT_INITIATIVE</shortDescription>
+        <value>Select Initiative</value>
+    </labels>
+    <labels>
+        <fullName>AINI_PARENT_WITH_CHILD_TOOL_TIP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_PARENT_WITH_CHILD_TOOL_TIP</shortDescription>
+        <value
+    >Checking this checkbox will search parent account and show it along with its children.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_RECORD_SAVE_SUCCESS_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_RECORD_SAVE_SUCCESS_MESSAGE</shortDescription>
+        <value>Records saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>AINI_TASK_DESCRIPTION_POST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_TASK_DESCRIPTION_POST</shortDescription>
+        <value
+    >Please start referring the initiative while logging related opportunities and activities for this account. Please reach out to initiative management team for details (if required).</value>
+    </labels>
+    <labels>
+        <fullName>AINI_TASK_DESCRIPTION_PREE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_TASK_DESCRIPTION_PREE</shortDescription>
+        <value>&quot; has been made part of the initiative &quot;</value>
+    </labels>
+    <labels>
+        <fullName>AINI_TASK_DESCRIPTION_PREE_THE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AINI_TASK_DESCRIPTION_PREE_THE</shortDescription>
+        <value>The &quot;</value>
+    </labels>
+    <labels>
+        <fullName>APPROVAL_PROCESS_DONE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>APPROVAL_PROCESS_DONE</shortDescription>
+        <value>DONE</value>
+    </labels>
+    <labels>
+        <fullName>APPROVAL_PROCESS_HYPHEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>APPROVAL_PROCESS_HYPHEN</shortDescription>
+        <value>-</value>
+    </labels>
+    <labels>
+        <fullName>APPROVAL_PROCESS_PENDING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>APPROVAL_PROCESS_PENDING</shortDescription>
+        <value>PENDING</value>
+    </labels>
+    <labels>
+        <fullName>APPROVAL_VF_PAGE_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>APPROVAL_VF_PAGE_URL</shortDescription>
+        <value
+    >https://crowley2--c.na59.visual.force.com/apex/AccountOwnerChangePage</value>
+    </labels>
+    <labels>
+        <fullName>ATN_EMAIL_FOOTER_HTML</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_EMAIL_FOOTER_HTML</shortDescription>
+        <value
+    >&lt;/table&gt; &lt;br/&gt;&lt;br/&gt;Thanks,&lt;br/&gt;Salesforce Notification System</value>
+    </labels>
+    <labels>
+        <fullName>ATN_EMAIL_HEADING_HTML</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_EMAIL_HEADING_HTML</shortDescription>
+        <value
+    >Dear Marketing Team, &lt;br/&gt;&lt;br/&gt; Below are the list of Account Team Members who were added yesterday:&lt;br/&gt;&lt;br/&gt;&lt;table border=&quot;1&quot;&gt;&lt;tr style=&quot;background: #00ff43;font-weight: bold;&quot;&gt;&lt;td&gt;Index&lt;/td&gt;&lt;td&gt;Account Name&lt;/td&gt;&lt;td&gt;Account CVIF&lt;/td&gt;&lt;td&gt;Account Owner&lt;/td&gt;&lt;td&gt;Parent Account Name&lt;/td&gt;&lt;td&gt;Parent Account CVIF&lt;/td&gt;&lt;td&gt;Related Account CVIF(s)&lt;/td&gt;&lt;td&gt;Member Name&lt;/td&gt;&lt;td&gt;Member Role&lt;/td&gt;&lt;td&gt;Created By&lt;/td&gt;&lt;/tr&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_MARKETING_GROUP_DEV_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_MARKETING_GROUP_DEV_NAME</shortDescription>
+        <value>Marketing_Group</value>
+    </labels>
+    <labels>
+        <fullName>ATN_NEW_AT_SUBJECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_NEW_AT_SUBJECT</shortDescription>
+        <value>New Account Team Created</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TD_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TD_CLOSE</shortDescription>
+        <value>&lt;/td&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TD_OPEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TD_OPEN</shortDescription>
+        <value>&lt;td&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TD_OPEN_WIDTH_STYLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TD_OPEN_WIDTH_STYLE</shortDescription>
+        <value>&lt;td width=&quot;200&quot;&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TH_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TH_CLOSE</shortDescription>
+        <value>&lt;/th&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TH_OPEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TH_OPEN</shortDescription>
+        <value>&lt;th&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TR_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TR_CLOSE</shortDescription>
+        <value>&lt;/tr&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ATN_TR_OPEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ATN_TR_OPEN</shortDescription>
+        <value>&lt;tr&gt;</value>
+    </labels>
+    <labels>
+        <fullName>AccountAndBusinessLocationBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountAndBusinessLocationBody</shortDescription>
+        <value>Dear Team
+
+Please find the file of all the Accounts and Business Locations where Business Location was updated in past 7 days.
+
+Regards
+Salesforce Notification System</value>
+    </labels>
+    <labels>
+        <fullName>AccountAndBusinessLocationCSV</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountAndBusinessLocationCSV</shortDescription>
+        <value>Account_and_Business_Location.csv</value>
+    </labels>
+    <labels>
+        <fullName>AccountAndBusinessLocationSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountAndBusinessLocationSubject</shortDescription>
+        <value>Account and Business Location List</value>
+    </labels>
+    <labels>
+        <fullName>AccountOwnerAndMKTSegmentBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountOwnerAndMKTSegmentBody</shortDescription>
+        <value>Dear Team
+
+Please find the file of all the accounts where Account Owner or Market segments were updated today.
+
+Regards
+Salesforce Notification System</value>
+    </labels>
+    <labels>
+        <fullName>AccountOwnerAndMKTSegmentCSV</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountOwnerAndMKTSegmentCSV</shortDescription>
+        <value>Market_Segment_and_Owner_Change_Account_List.csv</value>
+    </labels>
+    <labels>
+        <fullName>AccountOwnerAndMKTSegmentSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountOwnerAndMKTSegmentSubject</shortDescription>
+        <value>Market Segment and Account Owner Change Account List</value>
+    </labels>
+    <labels>
+        <fullName>Account_Name_Length</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Name Length</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>Account_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Activities_Not_Closed_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Activities Not Closed Error</shortDescription>
+        <value>Close the open tasks.</value>
+    </labels>
+    <labels>
+        <fullName>Address_Line1_Length</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address Line1 Length</shortDescription>
+        <value>40</value>
+    </labels>
+    <labels>
+        <fullName>All_Crowley_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All Crowley Notifications</shortDescription>
+        <value>Crowley Notifications</value>
+    </labels>
+    <labels>
+        <fullName>All_External_Reports_Label_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>All External Reports Label Name</shortDescription>
+        <value>Tableau Dashboards</value>
+    </labels>
+    <labels>
+        <fullName>Arrival_Notice_Email_address</fullName>
+        <categories>From Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Arrival Notice Email address</shortDescription>
+        <value>ArrivalNotices@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Attachment_Clearing_Days_Limit</fullName>
+        <categories>Attachment, ContentDocument</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attachment Clearing Days Limit</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Auto_Response_Org_Wide_Email_address_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Auto Response CI Org Wide Email address Id</shortDescription>
+        <value>0D2f40000000H8KCAU</value>
+    </labels>
+    <labels>
+        <fullName>Automated_Follow_Up_Task_Prefix</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Automated Follow Up Task Prefix</shortDescription>
+        <value>(Auto)</value>
+    </labels>
+    <labels>
+        <fullName>BL_DEACTIVATION_ERROR_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL_DEACTIVATION_ERROR_MESSAGE</shortDescription>
+        <value
+    >Please link associated contact(s) with different business location before deactivating this location or deactivate the contact(s).</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_Entitlements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision Entitlements</shortDescription>
+        <value>550f4000004pMGM</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_Final_Resolution_template_id</fullName>
+        <categories>Email Template id</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >BL Revision Final Resolution template id</shortDescription>
+        <value>00Xf4000001Yo1cEAC</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_From_Address</fullName>
+        <categories>From Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision From Address</shortDescription>
+        <value>pf_blrevisionsb@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_Read_Only_18</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision Read Only 18</shortDescription>
+        <value>012f4000000OdUuAAK</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_Read_only_Record_type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision Read only Record type</shortDescription>
+        <value>012f4000000OdUu</value>
+    </labels>
+    <labels>
+        <fullName>BL_Revision_Record_Type</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision Record Type</shortDescription>
+        <value>012f4000001E0X1AAK</value>
+    </labels>
+    <labels>
+        <fullName>BL_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>BL_revision_queue_Id_new</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL revision queue</shortDescription>
+        <value>00Gf40000044z7Z</value>
+    </labels>
+    <labels>
+        <fullName>BOL_For_Release_Email_Template</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BOL For Release Email Template</shortDescription>
+        <value>CC_BOL_For_Release</value>
+    </labels>
+    <labels>
+        <fullName>BUSINESS_ADDRESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BUSINESS ADDRESS</shortDescription>
+        <value>&lt;br&gt;&lt;/br&gt;- Business address</value>
+    </labels>
+    <labels>
+        <fullName>B_L_Revision_record_type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BL Revision record type 15</shortDescription>
+        <value>012f4000001E0X1</value>
+    </labels>
+    <labels>
+        <fullName>BookingConfirmationTermsAndConditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >BookingConfirmationTermsAndConditions</shortDescription>
+        <value
+    >•	Rates are based on the Receipt Date of the cargo and cargo description provided by customer. Estimates of freight charges are furnished as a convenience to the shipping public and represent an approximation of freight charges which are not binding on either the carrier or the shipper.\n
+•	Rates will be subject to any changes or new additional charges as filed in the tariffs.\n
+•	Cargo Insurance: Applicable to all open tariff shipments as per published Tariff rules, unless a signed Opt-Out form is provided by customer.\n
+•	Insurance opt-out form available upon request; must be filed prior to cargo movement.\n
+•	Carrier reserves the right to substitute the name and/or vessel and/or voyage with any other vessel name, vessel and/or voyage at any time.\n
+•	Departure, Arrival and Transit Times are subject to change without prior notice.\n</value>
+    </labels>
+    <labels>
+        <fullName>BookingConfirmationTermsAndConditions1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >BookingConfirmationTermsAndConditions1</shortDescription>
+        <value
+    >•	All persons entering the restricted access areas of the port must wear closed-toe shoes and bright yellow/orange vest and a valid TWIC card. Failure to present TWIC card will require an escort at the terminal and additional charge. This may delay the delivery of cargo at the port.\n
+•	Hazardous information must be provided at time of booking. If cargo arrives to the terminal without prior approval or commodities not listed on the Hazardous Confirmation, the trucker will not be able to enter the terminal until hazardous information is reviewed and updated in the system.\n
+•	Customs regulations require EEI filing of Shipper’s Export Information at least 24 hours prior to loading of the cargo on the vessel. If proof of filing (ITN Number or valid exemption code) is not provided by this time will result in the cargo not being loaded on the vessel.\n
+•	Cargo must be delivery prior to cut-off date and time detailed above. This information is also available in the Route Finder on \n</value>
+    </labels>
+    <labels>
+        <fullName>BookingConfirmationTermsAndConditions2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >BookingConfirmationTermsAndConditions2</shortDescription>
+        <value
+    >•	For cargo that needs to be transferred to Crowley equipment at the terminal prior to sailing, proper arrangements should be made prior to arrival. For Transferring Appointments consult our shipping Instructions or call us at 1-800-CROWLEY Option 2.\n
+•	Pre-payment is required prior to sailing if prior credit arrangements have not been made with the Carrier. Personal checks or Cash is not accepted. To make a payment, \n</value>
+    </labels>
+    <labels>
+        <fullName>Booking_From_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking From Address</shortDescription>
+        <value>bookingrequests@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Inbox_Queue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Inbox Queue</shortDescription>
+        <value>00G5G000004YE25</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Case_Record_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Case Record Type</shortDescription>
+        <value>0125G000001YZZF</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Case_Record_Type_15</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Case Record Type 15</shortDescription>
+        <value>0125G000001YZZF</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Entitlement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Entitlement</shortDescription>
+        <value>5505G000005Lisa</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Queue_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Queue Id</shortDescription>
+        <value>00G5G000004YE2A</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Record_Type</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Record Type 15</shortDescription>
+        <value>0125G000001YZZE</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Request_Recrd_Type</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Request Recrd Type 18</shortDescription>
+        <value>0125G000001YZZE</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Services_From_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Services From Address</shortDescription>
+        <value>bookingservices@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Speciality_Queue_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Speciality Queue 2</shortDescription>
+        <value>00G5G000004YE21</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Specialty_Queue_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Specialty Queue 1</shortDescription>
+        <value>00G5G000004YE20</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Specialty_Queue_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Specialty Queue 3</shortDescription>
+        <value>00G5G000004YE22</value>
+    </labels>
+    <labels>
+        <fullName>Booking_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Booking Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Account_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Account_Details</shortDescription>
+        <value>ACCOUNT DETAILS</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Account_Owner_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Account_Owner_Details</shortDescription>
+        <value>Account Owner</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Bol_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Bol_Tab</shortDescription>
+        <value>BILLS OF LADING</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Booking_Not_Found_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Booking_Not_Found_Search</shortDescription>
+        <value>No Booking Records Found! Please change the Filters!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Booking_Not_found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Booking_Not_found</shortDescription>
+        <value>No Booking Records Found!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Bookings_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Bookings_Tab</shortDescription>
+        <value>BOOKINGS</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_CVIF_ID_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_CVIF_ID_Details</shortDescription>
+        <value>CVIF ID</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Child_Acc_Not_Found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Child_Acc_Not_Found</shortDescription>
+        <value>No Child Accounts Found !</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Child_Acc_Not_Found_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Child_Acc_Not_Found_Search</shortDescription>
+        <value>No Child Account Found! Please change the Filters!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Child_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Child_Account</shortDescription>
+        <value>Child Account</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Child_Account_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Child_Account_Tab</shortDescription>
+        <value>CHILD ACCOUNTS</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contact_Not_Found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contact_Not_Found</shortDescription>
+        <value>No Contact Records Found!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contact_Not_Found_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contact_Not_Found_Search</shortDescription>
+        <value>No Contact Records Found! Please change the Filters!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contact_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contact_Tab</shortDescription>
+        <value>CONTACTS</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contract_Not_Found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contract_Not_Found</shortDescription>
+        <value>No Contracts Found !</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contracts_Not_Found_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contracts_Not_Found_Search</shortDescription>
+        <value>No Contracts found! Please change the filters.</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Contracts_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Contracts_Tab</shortDescription>
+        <value>CONTRACTS</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Market_Segment_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Market_Segment_Details</shortDescription>
+        <value>Market Segment</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_No_Quotes_Found</fullName>
+        <categories>message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_No_Quotes_Found</shortDescription>
+        <value>No Quotes Found!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Parent_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Parent_Account</shortDescription>
+        <value>Parent Account</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Parent_Account_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Parent_Account_Details</shortDescription>
+        <value>Parent Account</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Quote_No_Record_Found</fullName>
+        <categories>message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Quote_No_Record_Found</shortDescription>
+        <value>No Quote Records Found! Please change the Filters!</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Quotes_Tab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Quotes_Tab</shortDescription>
+        <value>QUOTES</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Sales_Rep_Region_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Sales_Rep_Region_Details</shortDescription>
+        <value>Sales Rep Region</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Team_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Team_Details</shortDescription>
+        <value>Team</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Team_Members_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Team_Members_Details</shortDescription>
+        <value>Team Member</value>
+    </labels>
+    <labels>
+        <fullName>CC_AD_Type_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AD_Type_Details</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>CC_Accounts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_Accounts</shortDescription>
+        <value>Accounts</value>
+    </labels>
+    <labels>
+        <fullName>CC_AdditionInfo_PoL_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AdditionInfo_PoL_Msg</shortDescription>
+        <value
+    >Rates are not immediately available for your selected combination. We have captured your cargo details, and upon your submission below, will be forwarded to a Crowley representative for follow-up. Any additional details you would like to provide to assist with your shipment quoting can be entered prior to clicking Submit.</value>
+    </labels>
+    <labels>
+        <fullName>CC_AdditionalChainStraps</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_AdditionalChainStraps</shortDescription>
+        <value>Total Chains and Straps included in the rate by equipment type:
+20&apos; Flatbeds and Flatracks include 5 chains/straps;
+40&apos;/45&apos;/48&apos; Flatbeds and Flatracks include 8 chains/straps.
+Rate applies for total additional Chains/Straps indicated per type of equipment.</value>
+    </labels>
+    <labels>
+        <fullName>CC_BL_AllBookingsTab</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BL_AllBookingsTab</shortDescription>
+        <value>All Bookings</value>
+    </labels>
+    <labels>
+        <fullName>CC_BOLPDFDisclaimer</fullName>
+        <categories>constants</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BOLPDFDisclaimer</shortDescription>
+        <value
+    >Received by the Carrier as described on the reverse hereof from the above named shipper. The goods, or packages said to contain goods, herein described above, in apparent good order and condition unless otherwise noted hereon, to be held and transported subject to all written, typed, printed or stamped provisions of this Bill of Lading. On this and on the reverse side hereof, to the port or place of discharge named above or so near there unto as the ship can always safely get and leave always afloat at all stages and conditions of water and weather and there to be delivered or transhipped on payment of the charges hereon.</value>
+    </labels>
+    <labels>
+        <fullName>CC_BOLPDFText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BOLPDFText</shortDescription>
+        <value
+    >THIS BILL OF LADING CONSISTS OF CONDITIONS AND INFORMATION APPEARING ON THE FRONT AND BACK OF THE DOCUMENT. IT IS SUBJECT TO SECTION 7 OF CONDITIONS, IF THE SHIPMENT IS TO BE DELIVERED TO THE CONSIGNEE WITHOUT RECOURSE ON THE SHIPPER. THE SHIPPER SHALL SIGN THE FOLLOWING STATEMENT THE CARRIER SHALL NOT MAKE THE DELIVERY OF THE SHIPMENT WITHOUT PAYMENT OF FREIGHT AND ALL OTHER LAWFUL CHARGES.</value>
+    </labels>
+    <labels>
+        <fullName>CC_BOL_Booking_Not_Found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC BOL Booking Not Found</shortDescription>
+        <value>No Active / Confirmed Booking Records Found!</value>
+    </labels>
+    <labels>
+        <fullName>CC_BillOfLadingReviewInstructions</fullName>
+        <categories>constants</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BillOfLadingReviewInstructions</shortDescription>
+        <value
+    >THIS  BILL OF LADING CONSISTS OF CONDITIONS AND INFORMATION APPEARING ON THE FRONT AND BACK OF THE DOCUMENT. IT IS SUBJECTED TO SECTION 7 OF CONDITIONS. IF THE SHIPMENT IS TO BE DELIVERED TO THE CONSIGNEE WITHOUT RECOURSE ON THE SHIPPER. THE SHIPPER SHALL SIGN THE FOLLOWING STATEMENT. THE CARRIER SHALL NOT MAKE THE DELIVERY OF THE SHIPMENT WITHOUT PAYMENT OF FREIGHT AND ALL OTHER LAWFUL CHARGES.</value>
+    </labels>
+    <labels>
+        <fullName>CC_BillofLading</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BillofLading</shortDescription>
+        <value>Bills of Lading</value>
+    </labels>
+    <labels>
+        <fullName>CC_BookingList</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_BookingList</shortDescription>
+        <value>Bookings</value>
+    </labels>
+    <labels>
+        <fullName>CC_Booking_Confirmation_Email_Template</fullName>
+        <categories>email template</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >CC_Booking_Confirmation_Email_Template</shortDescription>
+        <value>CC_BookingConfirmation_Email_Template</value>
+    </labels>
+    <labels>
+        <fullName>CC_CargoNOS_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_CargoNOS Code</shortDescription>
+        <value>OTCargoNOS</value>
+    </labels>
+    <labels>
+        <fullName>CC_ContactSupport_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_ContactSupport_Email</shortDescription>
+        <value>Salesforce_IT@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>CC_ContactSupport_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_ContactSupport_Text</shortDescription>
+        <value
+    >If you are unable to login with your credentials, please contact</value>
+    </labels>
+    <labels>
+        <fullName>CC_ContinuationTimeout</fullName>
+        <categories>Dont_Convert</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_ContinuationTimeout</shortDescription>
+        <value>45</value>
+    </labels>
+    <labels>
+        <fullName>CC_DashboardHeading</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_DashboardHeading</shortDescription>
+        <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>CC_EC_QuoSum_Book</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_EC_QuoSum_Book</shortDescription>
+        <value>BOOK</value>
+    </labels>
+    <labels>
+        <fullName>CC_EC_QuoSum_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_EC_QuoSum_Download</shortDescription>
+        <value>DOWNLOAD</value>
+    </labels>
+    <labels>
+        <fullName>CC_EEI_Charge</fullName>
+        <categories>Dont Convert</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_EEI_Charge</shortDescription>
+        <value>0</value>
+    </labels>
+    <labels>
+        <fullName>CC_EEI_SED_Preparation</fullName>
+        <categories>Convert</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_EEI_SED_Preparation</shortDescription>
+        <value>EEI Preparation</value>
+    </labels>
+    <labels>
+        <fullName>CC_ForgetPassword</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_ForgetPassword</shortDescription>
+        <value>Forgot Password ?</value>
+    </labels>
+    <labels>
+        <fullName>CC_HazardousClauses</fullName>
+        <categories>constants</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_HazardousClauses</shortDescription>
+        <value
+    >IMPORTANT: CARRIER HAS MADE IT CLEAR IN THE EXEMPTION CLAUSE( CLAUSE 18 ON THE BACK OF THIS BILL), THAT IT HAS NO LIABILITY FOR HIJACKING AND ARMED ROBBERIES DESIGNATED AND ARE IN PROPER CONDITION FOR TRANSPORTATION ACCORDING TO ALL APPLICABLE REGULATIONS AS SPECIFIED IN CLAUSE 26. PROVIDED SHIPPERS EMERGENCY CONTACT NAME AND TELEPHONE NUMBER INCLUDING AREA CODE IN THE SPACE PROVIDED.</value>
+    </labels>
+    <labels>
+        <fullName>CC_HazardousDeclaration</fullName>
+        <categories>constants</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_HazardousDeclaration</shortDescription>
+        <value
+    >THIS IS TO CERTIFY THAT THE ABOVE NAMED MATERIALS ARE PROPERLY PACKED, LOADED, CLASSIFIED, DESCRIBED, MARKED, LABELLED/PALCED, DESIGNATED AND ARE IN PROPER CONDITION FOR TRANSPORTATION ACCORDING TO ALL APPLICABLE REGULATIONS AS SPECIFIED IN CLAUSE 26. PROVIDED SHIPPERS EMERGENCY CONTACT NAME AND TELEPHONE NUMBER INCLUDING AREA CODE IN THE SPACE PROVIDED.</value>
+    </labels>
+    <labels>
+        <fullName>CC_INS_Charge</fullName>
+        <categories>Dont Convert</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_INS_Charge</shortDescription>
+        <value>0</value>
+    </labels>
+    <labels>
+        <fullName>CC_Ideas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_Ideas</shortDescription>
+        <value>Ideas</value>
+    </labels>
+    <labels>
+        <fullName>CC_IdeasLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_IdeasLink</shortDescription>
+        <value>/Employees/s/ideas</value>
+    </labels>
+    <labels>
+        <fullName>CC_JIT_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC JIT Account</shortDescription>
+        <value>CROWLEY EMPLOYEES</value>
+    </labels>
+    <labels>
+        <fullName>CC_JIT_User_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC JIT User Profile</shortDescription>
+        <value>Customer Community Plus Login User Custom</value>
+    </labels>
+    <labels>
+        <fullName>CC_LoginSSOLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_LoginSSOLink</shortDescription>
+        <value
+    >https://veloz.force.com/Employees/login?so=00D180000002lKd</value>
+    </labels>
+    <labels>
+        <fullName>CC_Logout</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_Logout</shortDescription>
+        <value>/Employees/secur/logout.jsp</value>
+    </labels>
+    <labels>
+        <fullName>CC_Marine_Cargo_Insurance</fullName>
+        <categories>Convert</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_Marine_Cargo_Insurance</shortDescription>
+        <value>Marine Cargo Insurance</value>
+    </labels>
+    <labels>
+        <fullName>CC_NitBBCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_NitBBCode</shortDescription>
+        <value>OTBBulkVeh</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_AccountName</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_AccountName</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_Container</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_Container</shortDescription>
+        <value>Container Size/Type</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_ContractNumber</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_ContractNumber</shortDescription>
+        <value>Contract Number</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_Destination</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_Destination</shortDescription>
+        <value>Destination</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_HazardousItems</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_HazardousItems</shortDescription>
+        <value>Hazardous Items</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_MovementType</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_MovementType</shortDescription>
+        <value>Destination Movement Type</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_Origin</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_Origin</shortDescription>
+        <value>Origin</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_OriginMovementType</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >CC_QuoteListFilter_OriginMovementType</shortDescription>
+        <value>Origin Movement Type</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_ValidFrom</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_ValidFrom</shortDescription>
+        <value>Valid From</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_ValidTo</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_ValidTo</shortDescription>
+        <value>Valid To</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_Vessel</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_Vessel</shortDescription>
+        <value>Vessel</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteListFilter_childAccount</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteListFilter_childAccount</shortDescription>
+        <value>Child Account Quote</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteList_Contract_No</fullName>
+        <categories>CC_QuoteListData</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteList_Contract_No</shortDescription>
+        <value>Contract No :</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteList_Expiring_On</fullName>
+        <categories>CC_QuoteListData</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteList_Expiring_On</shortDescription>
+        <value>Expiring On :</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuoteList_OpenTariff</fullName>
+        <categories>CC_QuoteListData</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuoteList_OpenTariff</shortDescription>
+        <value>Open Tariff</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuotelistFilter_Commodity</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuotelistFilter_Commodity</shortDescription>
+        <value>Commodity</value>
+    </labels>
+    <labels>
+        <fullName>CC_QuotelistFilter_Status</fullName>
+        <categories>CC_QuoteListFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_QuotelistFilter_Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>CC_Quotes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_Quotes</shortDescription>
+        <value>Quotes</value>
+    </labels>
+    <labels>
+        <fullName>CC_SS_INTEGER_NO_OFSCHEDULE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_SS_INTEGER_NO_OFSCHEDULE</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>CC_SS_MAX_ROUTE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_SS_MAX_ROUTE</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>CC_SS_MAX_TRANSSHIPMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_SS_MAX_TRANSSHIPMENT</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_FooterLeft1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_FooterLeft1</shortDescription>
+        <value>Contact Us</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_FooterLeft2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_FooterLeft2</shortDescription>
+        <value>Crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_FooterRight</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_FooterRight</shortDescription>
+        <value>© 2020 Crowley Maritime Corporation</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_FooterRight1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_FooterRight1</shortDescription>
+        <value>LIVE CHAT SUPPORT</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_FooterRight2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_FooterRight2</shortDescription>
+        <value>© 2020 Crowley Maritime Corporation</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_AccountName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_AccountName</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_CallNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_CallNumber</shortDescription>
+        <value>1-800-CROWLEY. (1-800-276-9539)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_CaseNo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC VC QuoSum CaseNo</shortDescription>
+        <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Confirmed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Confirmed</shortDescription>
+        <value>is confirmed.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_ContractNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_ContractNumber</shortDescription>
+        <value>Contract Number</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Created</shortDescription>
+        <value>created.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_CustomerName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_CustomerName</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Day</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Day</shortDescription>
+        <value>Day</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_DeliveryType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_DeliveryType</shortDescription>
+        <value>On-carriage Mode</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_EmailId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_EmailId</shortDescription>
+        <value>Email Id</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_FeelFree</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_FeelFree</shortDescription>
+        <value>Feel free to call us @</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Hour</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Hour</shortDescription>
+        <value>Hour</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_NA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_NA</shortDescription>
+        <value>NA</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_NewQuote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_NewQuote</shortDescription>
+        <value>New Quote</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Outside_US</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Outside_US</shortDescription>
+        <value>Outside US and Canada:</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Outside_US_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Outside_US_address</shortDescription>
+        <value>Click here</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_PhoneNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_PhoneNumber</shortDescription>
+        <value>Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_PlaceofReceipt</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_PlaceofReceipt</shortDescription>
+        <value>Place of Receipt</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_QuotationNum</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_QuotationNum</shortDescription>
+        <value>Quotation No.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_QuoteDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_QuoteDate</shortDescription>
+        <value>Quotation Date</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_QuoteNum</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_QuoteNum</shortDescription>
+        <value>Quote No.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Quote_Number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Quote_Number</shortDescription>
+        <value>Quote Number</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_ReadyDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_ReadyDate</shortDescription>
+        <value>Cargo Available For Transport</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_ReceiptType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_ReceiptType</shortDescription>
+        <value>Pre-carriage Mode</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Requote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Requote</shortDescription>
+        <value>NEW QUOTE</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Saved_And_Send</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Saved_And_Send</shortDescription>
+        <value>saved and sent to</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_StatusPricing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC VC QuoSum StatusPricing</shortDescription>
+        <value>Sent to Pricing</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Successfully</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Successfully</shortDescription>
+        <value>been successfully</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_T_C</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_T_C</shortDescription>
+        <value>Terms &amp; Conditions</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Thank_you</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Thank_you</shortDescription>
+        <value
+    >Thank you for your inquiry - we are pleased to quote as follows :</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Total</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Total</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_TransitTime</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_TransitTime</shortDescription>
+        <value>Transit Time</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_ValidFromTo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_ValidFromTo</shortDescription>
+        <value>Valid From - To</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_WantToBook</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_WantToBook</shortDescription>
+        <value>Want to Book or talk to an agent?</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_Within_US</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_Within_US</shortDescription>
+        <value>within the US and Canada.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_has</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_has</shortDescription>
+        <value>has</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_QuoSum_have</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_QuoSum_have</shortDescription>
+        <value>have</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Items</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Items</shortDescription>
+        <value>Items</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Note</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Note</shortDescription>
+        <value>Note: These are all open tariff rates</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Qty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Qty</shortDescription>
+        <value>Qty</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Rate_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Rate_Details</shortDescription>
+        <value>Rate Details</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Rates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Rates</shortDescription>
+        <value>Rates (USD)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Route_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Route_Details</shortDescription>
+        <value>Route Details</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Arrival</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Arrival</shortDescription>
+        <value>Arrival</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Day</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Day</shortDescription>
+        <value>Day</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Departure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Departure</shortDescription>
+        <value>Departure</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Hrs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Hrs</shortDescription>
+        <value>hour</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Schedule</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Schedule</shortDescription>
+        <value>Schedule</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Sch_Transit_Time</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Sch_Transit_Time</shortDescription>
+        <value>Transit Time</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Schedules</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Schedules</shortDescription>
+        <value>Schedules</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_T_and_C</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_T_and_C</shortDescription>
+        <value>Terms &amp; Conditions</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_RouteDet_Total</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_RouteDet_Total</shortDescription>
+        <value>Total (USD)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_1</shortDescription>
+        <value>Rates are valid for 30 days from the quotation date.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_10</shortDescription>
+        <value
+    >Rates do not include tarps or hazardous charges, if applicable.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_11</shortDescription>
+        <value
+    >All rates subject to Governing Rules Tariffs: 025816-001 (FMC), 023286-002 (STB)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_12</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_12</shortDescription>
+        <value>There may be additional charges at the time of booking.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_2</shortDescription>
+        <value
+    >Please advise acceptance of rates and quote number for filing purposes prior to shipment.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_3</shortDescription>
+        <value
+    >Rates are based on the commodity description provided at the time of the quote.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_4</shortDescription>
+        <value>Rates are based on the receipt date of the cargo.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_5</shortDescription>
+        <value
+    >Transit time represents the estimated number of days from origin to destination.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_6</shortDescription>
+        <value
+    >Estimates of freight charges are furnished as a convenience to the shipping public and represent an approximation of freight charges which is not binding on
+either the carrier or the shipper.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_7</shortDescription>
+        <value>Subject to $75 EEI filing fee and $50 VGM, if applicable.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_8</shortDescription>
+        <value
+    >CARGO INSURANCE: Applicable to all open tariff shipments as per published Tariff rules, unless a signed Opt-Out form is provided by customer.
+Insurance opt-out form available upon request; must be filed prior to cargo movement.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Route_TC_9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Route_TC_9</shortDescription>
+        <value
+    >Intermodal rates are based on legal weight, live load and in gauge cargo unless otherwise specified.</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Back</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Create_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Create_Quote</shortDescription>
+        <value>VIEW QUOTES</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Day</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Day</shortDescription>
+        <value>day</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Duration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Duration</shortDescription>
+        <value>Transit Time</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Hour</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Hour</shortDescription>
+        <value>hour</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Max_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Max_Message</shortDescription>
+        <value>(You can select up to 3 routes)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Price</shortDescription>
+        <value>Price</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Route</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Route</shortDescription>
+        <value>Route</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Send_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Send_Quote</shortDescription>
+        <value>Send Quotes</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Routes_Transit_Time</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Transit_Time</shortDescription>
+        <value>Transit Time</value>
+    </labels>
+    <labels>
+        <fullName>CC_VC_Schedules_Max_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Schedules_Max_Message</shortDescription>
+        <value>(You can select only 1 schedule)</value>
+    </labels>
+    <labels>
+        <fullName>CC_VehicleDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VehicleDescription</shortDescription>
+        <value
+    >Enter description and/or any aftermarket customization about the vehicle</value>
+    </labels>
+    <labels>
+        <fullName>CC_Veloz_Email_Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC Veloz Email Quote</shortDescription>
+        <value>Email Quote</value>
+    </labels>
+    <labels>
+        <fullName>CC_Veloz_Quote_Agree_Terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC Veloz Quote Agree Terms</shortDescription>
+        <value
+    >I agree to be contacted by the Crowley team for more information on the quote generated.</value>
+    </labels>
+    <labels>
+        <fullName>CONFIRMATION_EMAIL_ON_FULL_TRANSFER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >CONFIRMATION_EMAIL_ON _FULL_TRANSFER</shortDescription>
+        <value
+    >Dear User, &lt;br/&gt;&lt;br/&gt; The owner transfer of related records(Opportunity, Business Location, Contact, Child Account, Activities) and Account Team Syncing on child accounts has been completed.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;Thanks,&lt;br/&gt;Salesforce Notification System</value>
+    </labels>
+    <labels>
+        <fullName>CURRENT_OWNER_HAS_NO_MANAGER_ERR_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >CURRENT_OWNER_HAS_NO_MANAGER_ERR_MSG</shortDescription>
+        <value
+    >Current Account Owner does not have any assigned manager. Please assign manager to move ahead with owner change action.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Attachment_Size_Limit</fullName>
+        <categories>Email, Attachment</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Case Attachment Size Limit (in bytes)</shortDescription>
+        <value>1024</value>
+    </labels>
+    <labels>
+        <fullName>Case_Child_Cases_Open_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Child Cases Open Error Msg</shortDescription>
+        <value
+    >This case cannot be closed as there are open child cases to it.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Duplicate_Record_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Duplicate Record Error Msg</shortDescription>
+        <value>Cannot create a duplicate case.</value>
+    </labels>
+    <labels>
+        <fullName>Case_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>City_Length</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>City Length</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>Clear_Attachment_Type</fullName>
+        <categories>Attachment, ContentDocument, Case</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Attachment types needs to be cleared</shortDescription>
+        <value>PNG</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Content_Doc_Link_Trigger_Flag</fullName>
+        <categories>Trigger</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Content Doc Link Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Create_BL_Revision_Record_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create BL Revision Record Type</shortDescription>
+        <value>012f4000001E0X2</value>
+    </labels>
+    <labels>
+        <fullName>Create_Booking_Request_Record_type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Booking Request Record type</shortDescription>
+        <value>0125G000001YZZG</value>
+    </labels>
+    <labels>
+        <fullName>Create_Customer_Inquiry_Record_Type</fullName>
+        <categories>Record type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Customer Inquiry Record Type</shortDescription>
+        <value>012f4000000zsa6</value>
+    </labels>
+    <labels>
+        <fullName>Create_Pricing_Rate_Issue</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create Pricing Rate Issue</shortDescription>
+        <value>012f4000001E0X6</value>
+    </labels>
+    <labels>
+        <fullName>Created_Date_N_Minutes</fullName>
+        <categories>EmailMessage, Case</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Created Date N Minutes</shortDescription>
+        <value>55</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_Arrival_Notice_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley Arrival Notice Email</shortDescription>
+        <value>arrivalnotices@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_Arrival_Notice_Queue_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley Arrival Notice Queue Id</shortDescription>
+        <value>00Gf4000003mpJM</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_BL_Revision_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley BL Revision Email</shortDescription>
+        <value>pf_blrevisionsb@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_Booking_Request_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley Booking Request Email</shortDescription>
+        <value>bookingrequests@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_Customer_Inquiry_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley Customer Inquiry Email</shortDescription>
+        <value>crowleycustomercare@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Crowley_Logo_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Crowley Logo URL</shortDescription>
+        <value
+    >https://crowley2--c.na59.content.force.com/servlet/servlet.ImageServer?id=015f4000002BmMp</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_AutoResponse_Template_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Customer Inquiry AutoResponse Template Id</shortDescription>
+        <value>00Xf4000001H8tr</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Case_Record_Type_15</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Customer_Inquiry_Case_Record_Type_15</shortDescription>
+        <value>012f4000000zsa8</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Case_Record_Type_Id</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Customer Inquiry Case Record Type 18 Id</shortDescription>
+        <value>012f4000000zsa8AAA</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Entitlement_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Customer Inquiry Entitlement Process</shortDescription>
+        <value>550f4000004uXgDAAU</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_From_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Inquiry From Address</shortDescription>
+        <value>crowleycustomercare@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Queue_Id</fullName>
+        <categories>Queue</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Inquiry Queue Id</shortDescription>
+        <value>00Gf4000003mpHVEAY</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Record_Type</fullName>
+        <categories>Record type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Inquiry Record Type</shortDescription>
+        <value>012f4000000zsa7</value>
+    </labels>
+    <labels>
+        <fullName>Customer_Inquiry_Record_type_18</fullName>
+        <categories>Recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Inquiry Record type 18</shortDescription>
+        <value>012f4000000zsa7AAA</value>
+    </labels>
+    <labels>
+        <fullName>DELETION_NOT_ALLOWED_PLEASE_CONTACT_MANAGER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >DELETION_NOT_ALLOWED_PLEASE_CONTACT_MANAGER</shortDescription>
+        <value
+    >Deletion of account is not allowed, please contact your manager.</value>
+    </labels>
+    <labels>
+        <fullName>DESTINATION_PORT_IS_MANDATORY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DESTINATION_PORT_IS_MANDATORY</shortDescription>
+        <value
+    >&quot;Destination Port&quot; is mandatory for Opportunity with customs service.</value>
+    </labels>
+    <labels>
+        <fullName>EMAIL_OR_PHONE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EMAIL OR PHONE</shortDescription>
+        <value>&lt;br&gt;&lt;/br&gt;- Email or Phone</value>
+    </labels>
+    <labels>
+        <fullName>EMAIL_TEMPLATE_NOTIFICATION_ACC_DELETED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >EMAIL_TEMPLATE_NOTIFICATION_ACC_DELETED</shortDescription>
+        <value>Notification - Account Deleted</value>
+    </labels>
+    <labels>
+        <fullName>Edit_CDM_CVIF_Fields_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Edit CDM CVIF Fields Profile</shortDescription>
+        <value>System Administrator; Integration User; Data Stewards</value>
+    </labels>
+    <labels>
+        <fullName>EmailMessage_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailMessage Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName
+    >Email_Id_to_be_notified_for_Account_Team_Member_Info_Batch_deletion</fullName>
+        <categories>Account Team Member Info</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Email Id to be notified for Account Team Member Info Batch deletion</shortDescription>
+        <value>yogesh.pal@nagarro.com</value>
+    </labels>
+    <labels>
+        <fullName>Email_Notification_Rating_Server_Down</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Email_Notification_Rating_Server_Down</shortDescription>
+        <value
+    >lovesh.tomar@nagarro.com;rahul.kakkannoor@crowley.com;ayush.mishra@nagarro.com;Rodrigo.Fuentes@crowley.com;Fernando.Contreras@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Email_to_Case_User</fullName>
+        <categories>Service Cloud, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email to Case User</shortDescription>
+        <value>005f4000003t7sFAAQ</value>
+    </labels>
+    <labels>
+        <fullName>Error_Opportunity_Team_Member_Sales_Agent_Role</fullName>
+        <categories>OpportunityTeamMember</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Error Opportunity Team Member Sales Agent Role</shortDescription>
+        <value>Only sales Agent can be added with Sales Agent role.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Separator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Separator</shortDescription>
+        <value>;</value>
+    </labels>
+    <labels>
+        <fullName>Event_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Event_Trigger_Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>FIRST_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FIRST NAME</shortDescription>
+        <value>&lt;br&gt;&lt;/br&gt;- First name</value>
+    </labels>
+    <labels>
+        <fullName>From_Email_Address_for_Quote_Summary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >From Email Address for Quote Summary</shortDescription>
+        <value>Crowley</value>
+    </labels>
+    <labels>
+        <fullName>From_Email_Address_for_Shipping_Instruction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >From Email Address for Shipping Instruction</shortDescription>
+        <value>Crowley</value>
+    </labels>
+    <labels>
+        <fullName>GTR_ACCOUT_TYPE_PROSPECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_ACCOUT_TYPE_PROSPECT</shortDescription>
+        <value>Prospect</value>
+    </labels>
+    <labels>
+        <fullName>GTR_DATA_TYPE_LOOKUP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_DATA_TYPE_LOOKUP</shortDescription>
+        <value>Lookup</value>
+    </labels>
+    <labels>
+        <fullName>GTR_DATA_TYPE_LOOK_UP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_DATA_TYPE_LOOK_UP</shortDescription>
+        <value>Look up</value>
+    </labels>
+    <labels>
+        <fullName>GTR_OBJECT_NAME_ACCOUNT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_OBJECT_NAME_ACCOUNT</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
+        <fullName>GTR_OBJECT_NAME_BUSINESS_LOCATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_OBJECT_NAME_BUSINESS_LOCATION</shortDescription>
+        <value>Business Location</value>
+    </labels>
+    <labels>
+        <fullName>GTR_OPERATION_MODIFIED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_OPERATION_MODIFIED</shortDescription>
+        <value>Modified</value>
+    </labels>
+    <labels>
+        <fullName>GTR_OPERATION_TYPE_CREATED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_OPERATION_TYPE_CREATED</shortDescription>
+        <value>Created</value>
+    </labels>
+    <labels>
+        <fullName>GTR_OPERATION_TYPE_DELETED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_OPERATION_TYPE_DELETED</shortDescription>
+        <value>Deleted</value>
+    </labels>
+    <labels>
+        <fullName>GTR_PROFILE_DATA_STEWARD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_PROFILE_DATA_STEWARD</shortDescription>
+        <value>Data Steward</value>
+    </labels>
+    <labels>
+        <fullName>GTR_PROFILE_INTEGRATION_USER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GTR_PROFILE_INTEGRATION_USER</shortDescription>
+        <value>Integration User</value>
+    </labels>
+    <labels>
+        <fullName>INSUFFICIENT_ACCESS_TO_DELETE_LEAD_RECORD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >INSUFFICIENT ACCESS TO DELETE LEAD RECORD</shortDescription>
+        <value
+    >You don&apos;t have access to delete this record. Kindly check with the record creator for deletion.</value>
+    </labels>
+    <labels>
+        <fullName>INTEGRATION_USER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>INTEGRATION USER</shortDescription>
+        <value>Integration User</value>
+    </labels>
+    <labels>
+        <fullName>Idea_Trigger_Flag</fullName>
+        <categories>Idea, Trigger</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Idea Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>LOG_ATLEAST_ONE_FOLLOW_UP_ACTIVITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LOG ATLEAST ONE FOLLOW-UP ACTIVITY</shortDescription>
+        <value
+    >&lt;br&gt;&lt;/br&gt;- Please log atleast one customer follow-up activity</value>
+    </labels>
+    <labels>
+        <fullName
+    >Last_n_days_for_Account_Team_Member_Info_Delete_Batch</fullName>
+        <categories>Account Team Member Info</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Last n days for Account Team Member Info Delete Batch</shortDescription>
+        <value>90</value>
+    </labels>
+    <labels>
+        <fullName>Lead_Conversion_Ready_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead Conversion Ready Error</shortDescription>
+        <value
+    >Check the &apos;Conversion Ready&apos; checkbox field on the Lead edit page.</value>
+    </labels>
+    <labels>
+        <fullName>Lead_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>MARKETING_TEAM_EMAIL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MARKETING TEAM EMAIL</shortDescription>
+        <value>xyz@abc.com</value>
+    </labels>
+    <labels>
+        <fullName>Name_Change_Error_Message_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name Change Error Message 1</shortDescription>
+        <value
+    >Changing the &apos;Street Address(KWD)&apos; is prohibited. This field is being used to help the users search the record. Please change it back to &apos;</value>
+    </labels>
+    <labels>
+        <fullName>Name_Change_Error_Message_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name Change Error Message 2</shortDescription>
+        <value>&apos; and then save it.</value>
+    </labels>
+    <labels>
+        <fullName>Notification_Server_Down_Email_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Notification Server Down Email Subject</shortDescription>
+        <value>Softship rating API service down/slow please check</value>
+    </labels>
+    <labels>
+        <fullName>Number_of_Days_Neglected_Account_Report</fullName>
+        <categories>Neglected Account Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Number of Days Neglected Account Report</shortDescription>
+        <value>90</value>
+    </labels>
+    <labels>
+        <fullName>Number_of_Reports</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number of Reports</shortDescription>
+        <value>items, sorted by External URL</value>
+    </labels>
+    <labels>
+        <fullName>Number_of_records_to_retrieve</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number of records to retrieve</shortDescription>
+        <value>5</value>
+    </labels>
+    <labels>
+        <fullName>OLI_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OLI Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>OPS_ALLOWED_PROFILES_AFTER_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_ALLOWED_PROFILES_AFTER_CLOSE</shortDescription>
+        <value
+    >Sales Leader;;;Sales Manager;;;System Administrator;;;Visitors - Sales Rep;;;Visitors - Sales Manager;;;Visitors - Sales Leader;;;Super User;;;Service Manager;;;Service Leader;;;Service Agent;;;Sales Rep;;;Data Steward;;;Call Center;;;Admin w/o Deployment;;;Account Manager;;;Account Leader</value>
+    </labels>
+    <labels>
+        <fullName>OPS_CONSTANT_MOBILE_UI_THEME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_CONSTANT_MOBILE_UI_THEME</shortDescription>
+        <value>Theme4t</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_ALL_LOST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_ALL_LOST</shortDescription>
+        <value>Lost All</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_CLOSE</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_CLOSED_WON_OPP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_CLOSED_WON_OPP</shortDescription>
+        <value>Closed Won</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_DESTINATION_COUNTRY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_DESTINATION_COUNTRY</shortDescription>
+        <value>Destination Country</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_IS_WON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_IS_WON</shortDescription>
+        <value>Won</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_LOST_OPP_SIZE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_LOST_OPP_SIZE</shortDescription>
+        <value>Lost Opportunity Size:</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_LOST_OPP_SIZE_SHORT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_LOST_OPP_SIZE_SHORT</shortDescription>
+        <value>Lost Opp Size</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_MARK_ALL_LOST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_MARK_ALL_LOST</shortDescription>
+        <value>Mark all service as Lost</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_MARK_ALL_WON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_MARK_ALL_WON</shortDescription>
+        <value>Mark all service as Won</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_NAME</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_ORIGIN_COUNTRY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_ORIGIN_COUNTRY</shortDescription>
+        <value>Origin Country</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_ORIGIN_DESTINATION_COUNTRY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >OPS_LABEL_ORIGIN_DESTINATION_COUNTRY</shortDescription>
+        <value>Origin/Destination Country</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_QUANTITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_QUANTITY</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_QUOTED_PRICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_QUOTED_PRICE</shortDescription>
+        <value>Quoted Price</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_SALES_PRICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_SALES_PRICE</shortDescription>
+        <value>Sales Price</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_SERVICE_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_SERVICE_NAME</shortDescription>
+        <value>Service Name</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_SERVICE_STATUS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_SERVICE_STATUS</shortDescription>
+        <value>Service Status</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_SPLIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_SPLIT</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_SPLIT_OPPORTUNITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_SPLIT_OPPORTUNITY</shortDescription>
+        <value>Change Service Status</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_TRADE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_TRADE</shortDescription>
+        <value>Trade</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_WON_ALL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_WON_ALL</shortDescription>
+        <value>Won All</value>
+    </labels>
+    <labels>
+        <fullName>OPS_LABEL_WON_OPP_SIZE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_LABEL_WON_OPP_SIZE</shortDescription>
+        <value>Won Opportunity Size:</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_ALL_LOST_SERVICCES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_ALL_LOST_SERVICCES</shortDescription>
+        <value
+    >All services are marked as lost. Opportunity with closed won should not have all lost services. In case of all lost services please mark opportunity as closed lost. Click ok to return to opportunity Or cancel to stay on same page.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_ALREADY_SPLIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_ALREADY_SPLIT</shortDescription>
+        <value>Split has already been taken care for this opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_DONT_HAVE_ACCESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_DONT_HAVE_ACCESS</shortDescription>
+        <value
+    >You do not have permission to update service status. Please contact Sales Manager or Sales Leader for help.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_NOT_CLOSED_WON_OPP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_NOT_CLOSED_WON_OPP</shortDescription>
+        <value
+    >This action is available only when an opportunity is &quot;Closed-Won&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_NO_LINE_ITEM_ASSOCIATED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_NO_LINE_ITEM_ASSOCIATED</shortDescription>
+        <value
+    >No service associated with opportunity. Click cancel to go back to opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_ONLY_MOBILE_SUPPORT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_ONLY_MOBILE_SUPPORT</shortDescription>
+        <value>This link is supported in mobile only.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_RECORD_SAVED_SUCESSFULLY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >OPS_MESSAGE_RECORD_SAVED_SUCESSFULLY</shortDescription>
+        <value>Record saved successfully</value>
+    </labels>
+    <labels>
+        <fullName>OPS_MESSAGE_SELECT_SERVICE_HELP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_MESSAGE_SELECT_SERVICE_HELP</shortDescription>
+        <value
+    >Following services have been marked as won. You have an opportunity to change the status, if required.</value>
+    </labels>
+    <labels>
+        <fullName>OPS_OPP_STAGE_CLOSED_LOST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_OPP_STAGE_CLOSED_LOST</shortDescription>
+        <value>Closed Lost</value>
+    </labels>
+    <labels>
+        <fullName>OPS_SERVICE_STATUS_LOST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_SERVICE_STATUS_LOST</shortDescription>
+        <value>Lost</value>
+    </labels>
+    <labels>
+        <fullName>OPS_SERVICE_STATUS_WON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_SERVICE_STATUS_WON</shortDescription>
+        <value>Won</value>
+    </labels>
+    <labels>
+        <fullName>OPS_SPLIT_TOKEN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OPS_SPLIT_TOKEN</shortDescription>
+        <value>;;;</value>
+    </labels>
+    <labels>
+        <fullName>OWNER_CHANGE_BATCH_JOB_ERROR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OWNER_CHANGE_BATCH_JOB_ERROR</shortDescription>
+        <value
+    >Async job for Account owner change is in progress for another request. Please try this after some time.</value>
+    </labels>
+    <labels>
+        <fullName>OWNER_CHANGE_FOOTER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OWNER_CHANGE_FOOTER</shortDescription>
+        <value
+    >&lt;/table&gt; &lt;br/&gt;&lt;br/&gt;For any questions, please contact either your reporting manager or the Marketing team.&lt;br/&gt;&lt;br/&gt;Thanks,&lt;br/&gt;Salesforce Notification System</value>
+    </labels>
+    <labels>
+        <fullName>OWNER_CHANGE_HEADER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OWNER_CHANGE_HEADER_OLD_OWNER</shortDescription>
+        <value
+    >Dear User, &lt;br/&gt;&lt;br/&gt; Below are the list of your accounts that were reassigned to new user.&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OWNER_CHANGE_HEADER_NEW_OWNER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OWNER_CHANGE_HEADER_NEW_OWNER</shortDescription>
+        <value
+    >Dear User, &lt;br/&gt;&lt;br/&gt; Some of the accounts have been re-assigned in SF. The table below reflects the primary account changes affecting your portfolio:&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OpenCommunityName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpenCommunityName</shortDescription>
+        <value>Crowley</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityPopupMessageBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityPopupMessageBody</shortDescription>
+        <value>Total Quoted Price for this opportunity is: $</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityPopupMessageHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityPopupMessageHeader</shortDescription>
+        <value>Price Check Reminder</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityStagePopupMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityStagePopupMessage</shortDescription>
+        <value
+    >Proposal/Price Quote; Quote Ready; Proposal Presented; Negotiation/Review; Contracting</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityTeamMember_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityTeamMember Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>Orgwide_Customer_Inquiry_Email_Address_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Orgwide Customer Inquiry Email Address Id</shortDescription>
+        <value>0D2f40000000H8K</value>
+    </labels>
+    <labels>
+        <fullName>Orgwide_Email_Address_Id</fullName>
+        <categories>email address id</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Orgwide Email Address Id</shortDescription>
+        <value>0D2f4000000TcAN</value>
+    </labels>
+    <labels>
+        <fullName>Owner_Lead_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Owner Lead Error</shortDescription>
+        <value
+    >You are not allowed to convert the Lead since you are not the owner of this Lead.</value>
+    </labels>
+    <labels>
+        <fullName>PROFILE_DATA_STEWARD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROFILE_DATA_STEWARD</shortDescription>
+        <value>Data Steward</value>
+    </labels>
+    <labels>
+        <fullName
+    >PROPOSED_OWNER_AND_CURRENT_OWNER_CANNOT_BE_SAME_ERR_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >PROPOSED_OWNER_AND_CURRENT_OWNER_CANNOT_BE_SAME_ERR_MSG</shortDescription>
+        <value
+    >Please select different Proposed Account Owner. You cannot select Current Account Owner as the Proposed Account Owner.</value>
+    </labels>
+    <labels>
+        <fullName
+    >PROPOSED_OWNER_AND_CURRENT_OWNER_HAVE_NO_MANAGER_ERR_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >PROPOSED_OWNER_AND_CURRENT_OWNER_HAVE_NO_MANAGER_ERR_MSG</shortDescription>
+        <value
+    >Existing Owner and Proposed Account Owner does not have any assigned manager. Please assign their managers to move ahead with owner change action.</value>
+    </labels>
+    <labels>
+        <fullName>PROPOSED_OWNER_HAS_NO_MANAGER_ERR_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >PROPOSED_OWNER_HAS_NO_MANAGER_ERR_MSG</shortDescription>
+        <value
+    >Proposed Account Owner does not have any assigned manager. Please assign manager to move ahead with owner change action.</value>
+    </labels>
+    <labels>
+        <fullName>Phone_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Phone Validation</shortDescription>
+        <value
+    >&apos;Please enter 7 to 15 digits and also check no alphabets or special characters were entered and no space is added in Phone.&apos;</value>
+    </labels>
+    <labels>
+        <fullName>PricingTeamEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing team picklist value</shortDescription>
+        <value>airquotes@crowley.com;
+CaribbeanBreakbulk@Crowley.com;
+cliltl@crowley.com;
+crowleycustomercare@crowley.com;
+domesticpricing@crowley.com;
+Latin_Pricing@crowley.com;
+latinbreakbulk@crowley.com;
+mohit@nagarro.com;
+Pricing_Caribbean@crowley.com;
+Pricing_PuertoRico@crowley.com;
+pricing_westerncaribean@crowley.com;
+PuertoRicoBreakbulk@Crowley.com;
+warehousesolutionsteam@crowley365.onmicrosoft.com;
+vivek.pagare@crowley.com;</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Rate_Issue_From_Address</fullName>
+        <categories>From Address</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing Rate Issue From Address</shortDescription>
+        <value>sc_pricing@crowley.com</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Rate_Issue_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing/Rate Issue Process</shortDescription>
+        <value>550f4000004pMGl</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Rating_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing/Rating Issue</shortDescription>
+        <value>012f4000001E0X7</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_Rating_Issue_Record_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing/Rating Issue Record Type</shortDescription>
+        <value>012f4000001E0X7AAK</value>
+    </labels>
+    <labels>
+        <fullName>Profiles_with_Account_Team_Permission</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription
+    >Profiles with Account Team Permission</shortDescription>
+        <value>System Administrator,Crowley Marketing Team,Data Steward</value>
+    </labels>
+    <labels>
+        <fullName>Quote_Summary_Email_Template_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quote Summary Email Template Name</shortDescription>
+        <value>CC_Veloz_Email_Quote Template</value>
+    </labels>
+    <labels>
+        <fullName>RECORD_ALREADY_SYNCHED_WITH_CDM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RECORD_ALREADY_SYNCHED_WITH_CDM</shortDescription>
+        <value
+    >Record is already synchronized with CDM. Please contact governance team for any edits to this record.</value>
+    </labels>
+    <labels>
+        <fullName>Rate_Proposal_Entitlement_Process</fullName>
+        <categories>Entitlement Process</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rate Proposal Entitlement Process</shortDescription>
+        <value>550M0000000686R</value>
+    </labels>
+    <labels>
+        <fullName>Rate_Proposal_Record_Type</fullName>
+        <categories>recordtype</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rate Proposal Record Type</shortDescription>
+        <value>012M000000016dy</value>
+    </labels>
+    <labels>
+        <fullName>Rating_Issue_record_type</fullName>
+        <categories>Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Rate Issue record type</shortDescription>
+        <value>012f4000001E0X7</value>
+    </labels>
+    <labels>
+        <fullName>SYSTEM_ADMINISTRATOR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SYSTEM ADMINISTRATOR</shortDescription>
+        <value>System Administrator, Crowley Marketing Team</value>
+    </labels>
+    <labels>
+        <fullName>Sales_Profiles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Profiles</shortDescription>
+        <value
+    >Sales Rep,Sales Leader,Sales Manager,Visitors - Sales Rep,Visitors - Sales Leader,Visitors - Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>Sales_Roles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales Roles</shortDescription>
+        <value
+    >PRT - Sales Rep,TRK - Sales Rep,CAR - Sales Rep,CAM - Sales Rep,USA - Sales Rep,Admin</value>
+    </labels>
+    <labels>
+        <fullName>SentEmailMessageFailure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SentEmailMessageFailure</shortDescription>
+        <value
+    >Email is not sent to the Pricing Team due to some technical reason. Please contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>SentEmailMessageSuccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SentEmailMessageSuccess</shortDescription>
+        <value>Email is successfully sent to the pricing team.</value>
+    </labels>
+    <labels>
+        <fullName>ServerErrorMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ServerErrorMsg</shortDescription>
+        <value
+    >Oops, there was an issue with your request. We will look into it and get back to you soon at</value>
+    </labels>
+    <labels>
+        <fullName>ServerNotReachable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ServerNotReachable</shortDescription>
+        <value
+    >Oops, there was an issue with your request. We will look into it and get back to you soon at</value>
+    </labels>
+    <labels>
+        <fullName>Service_Cloud_Business_hours_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Cloud Business hours Id</shortDescription>
+        <value>01mf4000000oT6DAAU</value>
+    </labels>
+    <labels>
+        <fullName>Service_Contact_Record_Type</fullName>
+        <categories>Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service Contact Record Type</shortDescription>
+        <value>012f4000000Od4UAAS</value>
+    </labels>
+    <labels>
+        <fullName>Shipping_Instruction_Email_Template</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping Instruction Email Template</shortDescription>
+        <value>CC_Shipping_Instruction</value>
+    </labels>
+    <labels>
+        <fullName>String_Separator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>String Separator</shortDescription>
+        <value>/</value>
+    </labels>
+    <labels>
+        <fullName>System_Admin_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>System Admin User</shortDescription>
+        <value
+    >USA SYSTEM ADMIN,PRT SYSTEM ADMIN,CAR SYSTEM ADMIN,CAM SYSTEM ADMIN</value>
+    </labels>
+    <labels>
+        <fullName>TEAM_ROLES_WITHOUT_NOTIFICATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TEAM ROLES WITHOUT NOTIFICATION</shortDescription>
+        <value>Contracts Rep</value>
+    </labels>
+    <labels>
+        <fullName>THERE_SHOULD_BE_ATLEAST_ONE_SERVICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>THERE_SHOULD_BE_ATLEAST_ONE_SERVICE</shortDescription>
+        <value
+    >There should be atleast one service related to an Opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>Task_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>TrackHistoryRecordsToBeDeleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TrackHistoryRecordsToBeDeleted</shortDescription>
+        <value>15</value>
+    </labels>
+    <labels>
+        <fullName>Trouble_Lane_Queue_Id</fullName>
+        <categories>Queue</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trouble Lane Queue Id</shortDescription>
+        <value>00Gf4000003mpHaEAI</value>
+    </labels>
+    <labels>
+        <fullName>USA_System_Admin_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>USA_System_Admin_Id</shortDescription>
+        <value>005f4000003jPP0</value>
+    </labels>
+    <labels>
+        <fullName>USER_MUST_ENTER_CONTACT_DETAILS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>USER MUST ENTER CONTACT DETAILS</shortDescription>
+        <value
+    >&lt;br&gt;&lt;/br&gt;User must enter the below contact details:</value>
+    </labels>
+    <labels>
+        <fullName>User_Trigger_Flag</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User Trigger Flag</shortDescription>
+        <value>True</value>
+    </labels>
+    <labels>
+        <fullName>YOUR_ATTEMPT_TO_DELETE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>YOUR_ATTEMPT_TO_DELETE</shortDescription>
+        <value>Your attempt to delete</value>
+    </labels>
+    <labels>
+        <fullName>You_can_select_maximum_3_routes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC_VC_Routes_Max_Message</shortDescription>
+        <value>(You can select maximum 3 routes)</value>
+    </labels>
+</CustomLabels>

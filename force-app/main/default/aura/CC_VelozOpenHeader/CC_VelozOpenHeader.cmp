@@ -1,0 +1,61 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                           $Resource.jquery224 , 
+                           $Resource.customJs , 
+                           $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                           }"
+  />
+
+  <ltng:require styles="{! $Resource.NewStyle}" />
+  <ltng:require styles="{!$Resource.Crowley_theme}" />
+
+  <aura:attribute name="selectedTabId" type="string" default="find-a-route" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <lightning:navigation aura:id="navigationService" />
+  <div class="slds-no-print">
+    <div class="header-div">
+      <div class="hamburger-menu">
+        <a onclick="{!c.expandCollapseSection}">
+          <img
+            class="button-left"
+            alt="Menu"
+            src="{!$Resource.IconMenu}"
+            title="Crowley Menu"
+          />
+        </a>
+      </div>
+      <!--<div class="logo">
+             <img alt="logo" src="{!$Resource.CrowleyMainLogo}" width="180"/>
+        </div>-->
+      <div class="logo open-header-veloz-logo">
+        <img alt="logo" src="{!$Resource.CrowleyMainLogo}" width="180" />
+      </div>
+    </div>
+  </div>
+  <div class="slds-no-print">
+    <lightning:tabset
+      class="scoped-tab-menu"
+      variant="scoped"
+      onselect="{!c.handleselect}"
+      selectedTabId="{!v.selectedTabId}"
+    >
+      <lightning:tab
+        class="header-menu"
+        label="FIND A ROUTE"
+        id="find-a-route"
+      ></lightning:tab>
+      <lightning:tab
+        class="header-menu"
+        label="GET A QUOTE"
+        id="get-a-quote"
+      ></lightning:tab>
+    </lightning:tabset>
+  </div>
+</aura:component>

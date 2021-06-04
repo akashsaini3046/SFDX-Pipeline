@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_New_Lead_Owner_Queue_On_Owner_Change</fullName>
+        <description>Notify New Lead Owner(Queue) On Owner Change</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Lead_Email_Templates/Notify_New_Lead_Owner_Queue_On_Owner_Change</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_New_Lead_Owner_User_On_Owner_Change</fullName>
+        <description>Notify New Lead Owner(User) On Owner Change</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Lead_Email_Templates/Notify_New_Lead_Owner_User_On_Owner_Change</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Old_Lead_Owner_User_On_Owner_Change</fullName>
+        <description>Notify Old Lead Owner(User) On Owner Change</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Previous_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Lead_Email_Templates/Notify_Old_Lead_Owner_User_On_Owner_Change</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Lead_Record_Type_Edit_Record</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Edit_Record</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Lead Record Type - Edit Record</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Lead_Status_to_Assigned</fullName>
+        <field>Status</field>
+        <literalValue>Assigned</literalValue>
+        <name>Update Lead Status to Assigned</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Lead_Status_to_New</fullName>
+        <field>Status</field>
+        <literalValue>New</literalValue>
+        <name>Update Lead Status to New</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_lead_assigned_by</fullName>
+        <description
+    >Update assigned by as the current logged in user</description>
+        <field>AssignedBy__c</field>
+        <formula>$User.FirstName + &apos; &apos; + $User.LastName</formula>
+        <name>Update lead assigned by</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_lead_assignment_date</fullName>
+        <field>AssignmentDate__c</field>
+        <formula>now()</formula>
+        <name>Update lead assignment date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Lead Record Type - Edit Record</fullName>
+        <actions>
+            <name>Lead_Record_Type_Edit_Record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.LastName</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description
+    >This WF Rule will run on Lead creation, and as soon as a Lead is created, this rule will change the record type from &apos;Lead Creation&apos; to &apos;After Lead Creation&apos;</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify New Lead Owner%28Queue%29 On Owner Change</fullName>
+        <actions>
+            <name>Notify_New_Lead_Owner_Queue_On_Owner_Change</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula
+    >AND(BEGINS(OwnerId,&apos;00G&apos;), NOT(ISNEW()), ISCHANGED(OwnerId))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify New Lead Owner%28User%29 On Owner Change</fullName>
+        <actions>
+            <name>Notify_New_Lead_Owner_User_On_Owner_Change</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND(     NOT(BEGINS(OwnerId,&apos;00G&apos;)),      OR(         AND(             ISNEW(),              CreatedById &lt;&gt; OwnerId         ),          AND(             NOT(ISNEW()),              ISCHANGED(OwnerId)         )     ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Old Lead Owner%28User%29 On Owner Change</fullName>
+        <actions>
+            <name>Notify_Old_Lead_Owner_User_On_Owner_Change</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Notify Old Lead Owner On Owner Change To User</description>
+        <formula
+    >AND(     NOT(ISNEW()),     ISCHANGED(OwnerId),     BEGINS(Previous_Owner__c,&apos;005&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Lead Status on Change of Owner</fullName>
+        <actions>
+            <name>Update_Lead_Status_to_Assigned</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( BEGINS(OwnerId  , &apos;005&apos;),  ISPICKVAL( Status , &apos;New&apos;) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Lead Status on Change of Owner to Group</fullName>
+        <actions>
+            <name>Update_Lead_Status_to_New</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( BEGINS(OwnerId  , &apos;00G&apos;),  ISPICKVAL( Status , &apos;Assigned&apos;) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update lead assignment details</fullName>
+        <actions>
+            <name>Update_lead_assigned_by</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_lead_assignment_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description
+    >Update lead assignment date and assigned by as soon as the lead record is assigned to a sales rep.</description>
+        <formula
+    >NOT(BEGINS(OwnerId, &apos;00G&apos;)) &amp;&amp;  ISBLANK(AssignmentDate__c)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

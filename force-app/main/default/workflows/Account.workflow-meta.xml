@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Account_Updated_Email_Alerts</fullName>
+        <ccEmails>Data_Governance@Crowley.com</ccEmails>
+        <description>Account Updated Email Alerts</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_Account_Updated</template>
+    </alerts>
+    <alerts>
+        <fullName>New_Account_Created</fullName>
+        <ccEmails>Data_Governance@Crowley.com</ccEmails>
+        <description>New Account Created</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_Account_Created</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_Current_Owner_s_Mgr</fullName>
+        <description
+    >Notification of Acc Owner Change REJECTION by Mkt Team to Current Owner&apos;s Mgr</description>
+        <protected>false</protected>
+        <recipients>
+            <field>PreviousOwnersManagerCopy__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_Current_Owner_s_Mgr</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_Proposed_Owner_s_Mgr</fullName>
+        <description
+    >Notification of Acc Owner Change REJECTION by Mkt Team to Proposed Owner&apos;s Mgr</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Proposed_Owners_Manager_Copy__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_Proposed_Owner_s_Mgr</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_user_who_proposed_it</fullName>
+        <description
+    >Notification of Acc Owner Change REJECTION by Mkt Team to user who proposed it</description>
+        <protected>false</protected>
+        <recipients>
+            <field>userWhoProposedNewOwnerCopy__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_by_Mkt_Team_to_user_who_proposed_it</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Acc_Owner_Change_REJECTION_to_Current_Owner_s_Mgr_at_Step_2</fullName>
+        <description
+    >Notification of Acc Owner Change REJECTION to Current Owner&apos;s Mgr at Step 2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>PreviousOwnersManagerCopy__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_to_Current_Owner_s_Mgr_at_Step_2</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Acc_Owner_Change_REJECTION_to_user_who_proposed_it_at_Step_2</fullName>
+        <description
+    >Notification of Acc Owner Change REJECTION to user who proposed it at Step 2</description>
+        <protected>false</protected>
+        <recipients>
+            <field>userWhoProposedNewOwner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_to_user_who_proposed_it_at_Step_2</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Account_Owner_Change_APPROVAL_to_Marketing_Team</fullName>
+        <description
+    >Notification of Account Owner Change APPROVAL to Marketing Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>mohit.kaushal@crowley.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_APPROVAL_to_Marketing_Team</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Notification_of_Account_Owner_Change_REJECTION_to_user_who_proposed_it</fullName>
+        <description
+    >Notification of Account Owner Change REJECTION to user who proposed it</description>
+        <protected>false</protected>
+        <recipients>
+            <field>userWhoProposedNewOwnerCopy__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Notification_of_Acc_Owner_Change_REJECTION_to_user_who_proposed_it</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Reminder_notification_to_Current_Owner_Manager_if_he_does_not_approve_reject</fullName>
+        <description
+    >Reminder notification to Current Owner Manager if he does not approve/reject</description>
+        <protected>false</protected>
+        <recipients>
+            <field>PreviousOwnersManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Reminder_notification_to_Current_Owner_Manager_if_he_does_not_approve_reject</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Reminder_notification_to_Proposed_Owner_Manager_if_he_does_not_approve_reject</fullName>
+        <description
+    >Reminder notification to Proposed Owner Manager if he does not approve/reject</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Proposed_Owners_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Reminder_notification_to_Proposed_Owner_Manager_if_he_does_not_approve_reject</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Reminder_to_Proposed_owner_if_he_does_not_approve_Reject</fullName>
+        <description
+    >Reminder to Proposed owner if he does not approve/Reject</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Proposed_Owners_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Account_Contact_Email_Templates/Reminder_notification_to_Proposed_Owner_Manager_if_he_does_not_approve_reject</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Account_Record_Type_CDM_Updated</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>CDM_Updated</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Record Type - CDM Updated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Record_Type_Customer_Account</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Customer_Account</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Record Type - Customer Account</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Account_Record_Type_Prospect_Account</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Prospect_Account</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Account Record Type - Prospect Account</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Account_Status_to_Unlock</fullName>
+        <field>Status__c</field>
+        <literalValue>Unlocked</literalValue>
+        <name>Change Account Status to Unlock</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_Status_to_Approval_in_Progress</fullName>
+        <field>Status__c</field>
+        <literalValue>In Progress</literalValue>
+        <name>Change Status to Approval in Progress</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Convert_Account_Name_To_Capital_Letters</fullName>
+        <field>Name</field>
+        <formula>UPPER(Name)</formula>
+        <name>Convert Account Name To Capital Letters</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_time_of_approval_process_start</fullName>
+        <field>ApprovalProcessInitiatedOn__c</field>
+        <formula>Now()</formula>
+        <name>Set time of approval process start</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_time_when_step_1_is_approved</fullName>
+        <field>TimeofStep1Approval__c</field>
+        <formula>NOW()</formula>
+        <name>Set time when step 1 is approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_time_when_step_2_is_approved</fullName>
+        <field>TimeofStep2Approval__c</field>
+        <formula>NOW()</formula>
+        <name>Set time when step 2 is approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_time_when_step_3_is_approved</fullName>
+        <field>TimeofStep3Approval__c</field>
+        <formula>NOW()</formula>
+        <name>Set time when step 3 is approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_All_If_True</fullName>
+        <field>Beachhead_Reporting_Identifier__c</field>
+        <formula>&quot;All&quot;</formula>
+        <name>Update All If True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Process_Action_APPROVED</fullName>
+        <field>Approval_Process_Action__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Approval Process Action-APPROVED</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Process_Action_REJECTED</fullName>
+        <field>Approval_Process_Action__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Approval Process Action-REJECTED</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Null_If_False</fullName>
+        <field>Beachhead_Reporting_Identifier__c</field>
+        <name>Update Null If False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Account Record Type - CDM Updated</fullName>
+        <actions>
+            <name>Account_Record_Type_CDM_Updated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.CVIF__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.CDM_Org_Id__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>Customer</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Account Record Type - Customer Account</fullName>
+        <actions>
+            <name>Account_Record_Type_Customer_Account</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>Customer</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.CVIF__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.CDM_Org_Id__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Account Record Type - Prospect Account</fullName>
+        <actions>
+            <name>Account_Record_Type_Prospect_Account</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>equals</operation>
+            <value>Prospect</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>BH Reporting Identifier - All</fullName>
+        <actions>
+            <name>Update_All_If_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Reporting_Beachhead_Account__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>BH Reporting Identifier - Null</fullName>
+        <actions>
+            <name>Update_Null_If_False</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Reporting_Beachhead_Account__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change Account Name To Capitals</fullName>
+        <actions>
+            <name>Convert_Account_Name_To_Capital_Letters</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND(OR( ISNEW() ,  ISCHANGED( Name ) ), NOT(ISBLANK( Name ) ))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Governance Team - Account Created</fullName>
+        <actions>
+            <name>New_Account_Created</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND(NOT( Created_from_Lead_Conversion__c ) , AND( NOT( ISBLANK($Profile.Name) ), NOT( CONTAINS( $Profile.Name , &apos;Data Steward&apos;)), NOT(CONTAINS( $Profile.Name , &apos;Integration User&apos;))), NOT(ISPICKVAL(Type, &quot;Prospect&quot;)))</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notify Governance Team - Account Updated</fullName>
+        <actions>
+            <name>Account_Updated_Email_Alerts</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( NOT(ISNEW()),AND(NOT( ISBLANK($Profile.Name) ),NOT( CONTAINS( $Profile.Name , &apos;Data Steward&apos;) ), NOT(CONTAINS( $Profile.Name , &apos;Integration User&apos;)) ), NOT(ISPICKVAL(Type,&quot;Prospect&quot;)), OR( ISCHANGED(CDM_Org_Id__c), ISCHANGED(Phone), ISCHANGED(Email__c), ISCHANGED(CVIF__c), ISCHANGED(Name),  ISCHANGED(Line_of_Business__c), ISCHANGED(Organization_Size__c), ISCHANGED(CEO_Name__c), ISCHANGED(Account_Number__c), ISCHANGED(D_U_N_S_Number__c), ISCHANGED(Privately_Owned__c), ISCHANGED(D_B_Credit_Rating__c), ISCHANGED(NumberOfEmployees), ISCHANGED(Customer_Status__c), ISCHANGED(Type), ISCHANGED(Website), ISCHANGED(Facebook__c), ISCHANGED(Twitter__c), ISCHANGED(LinkedIn__c), ISCHANGED(BillingStreet), ISCHANGED(BillingCity), ISCHANGED(BillingState), ISCHANGED(BillingCountry), ISCHANGED(BillingPostalCode) ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Reminder notification to Current Owner Manager if he does not approve%2Freject</fullName>
+        <active>true</active>
+        <description
+    >Notification to Current Owner Manager if he does not approve/reject within X days</description>
+        <formula
+    >AND(NOT(ISBLANK(PreviousOwnersManager__c)),  userWhoProposedNewOwner__c !=  PreviousOwnersManager__c, NOT(ISBLANK(ApprovalProcessInitiatedOn__c)),  ISBLANK( TimeofStep1Approval__c ))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name
+        >Reminder_notification_to_Current_Owner_Manager_if_he_does_not_approve_reject</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField
+      >Account.ApprovalProcessInitiatedOn__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName
+    >Reminder notification to Proposed Owner Manager if he does not approve%2Freject</fullName>
+        <active>true</active>
+        <description
+    >Notification to Proposed Owner Manager if he does not approve/reject within X days</description>
+        <formula
+    >AND(NOT(ISBLANK( Proposed_Owners_Manager__c )),  userWhoProposedNewOwner__c != Proposed_Owners_Manager__c ,  PreviousOwnersManager__c !=  Proposed_Owners_Manager__c, NOT(ISBLANK( TimeofStep1Approval__c )),  ISBLANK( TimeofStep2Approval__c ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name
+        >Reminder_notification_to_Proposed_Owner_Manager_if_he_does_not_approve_reject</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Account.TimeofStep1Approval__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName
+    >Reminder notification to Proposed Owner Manager if he does not approve%2Freject when Current Owner Manager is not present</fullName>
+        <active>true</active>
+        <description
+    >Notification to Proposed Owner Manager if he does not approve/reject within X days and there is no Current owner manager</description>
+        <formula
+    >AND(NOT(ISBLANK( Proposed_Owners_Manager__c )), ISBLANK( PreviousOwnersManager__c ), userWhoProposedNewOwner__c != Proposed_Owners_Manager__c , ISBLANK( TimeofStep1Approval__c ), ISBLANK( TimeofStep2Approval__c ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name
+        >Reminder_to_Proposed_owner_if_he_does_not_approve_Reject</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField
+      >Account.ApprovalProcessInitiatedOn__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+</Workflow>

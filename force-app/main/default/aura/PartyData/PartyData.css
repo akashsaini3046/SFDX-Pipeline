@@ -1,0 +1,17 @@
+.THIS .type-name {
+  text-align: center;
+  font-size: large;
+  background-color: lightgrey;
+  text-transform: uppercase;
+}
+
+.THIS .split-left {
+  left: 0;
+  height: 100%;
+  width: 70%;
+}
+.THIS .split-right {
+  right: 0;
+  height: 100%;
+  width: 30%;
+}

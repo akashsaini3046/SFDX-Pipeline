@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Used in custom warned input">
+    <aura:attribute name="Id" type="String" />
+    <aura:attribute name="isWarned" type="Boolean" />
+</aura:event>

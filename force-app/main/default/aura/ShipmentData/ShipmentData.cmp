@@ -1,0 +1,24 @@
+<aura:component>
+  <aura:attribute name="start" type="Integer" default="1" />
+  <aura:attribute name="shipments" type="List" />
+
+  <aura:handler name="init" value="{! this}" action="{! c.doInit }" />
+
+  <lightning:layout multipleRows="true">
+    <aura:iteration items="{!v.shipments}" var="shipmentList" indexVar="index">
+      <aura:iteration items="{!shipmentList}" var="item">
+        <aura:if isTrue="{!item.label=='Name'}">
+          <lightning:layoutItem size="12" class="type-name">
+            <b>{!item.value}</b>
+          </lightning:layoutItem>
+        </aura:if>
+      </aura:iteration>
+      <aura:iteration items="{!shipmentList}" var="item">
+        <lightning:layoutItem size="2">
+          <b>{!item.label}:</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+      </aura:iteration>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

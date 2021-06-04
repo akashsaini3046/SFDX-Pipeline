@@ -1,0 +1,19 @@
+<apex:page controller="NoteController" readOnly="true">
+  <apex:form>
+    <apex:pageBlock title="My Content">
+      <apex:pageBlockTable value="{!wrapList}" var="item">
+        <apex:column value="{!item.noteRecord.Title}" />
+        <apex:column value="{!item.noteRecord.CreatedDate}" />
+        <apex:column value="{!item.noteRecord.CreatedBy.Name}" />
+        <apex:column value="{!item.noteRecord.OwnerId}" />
+        <apex:column value="{!item.CDLRecord.LinkedEntityid}" />
+        <apex:column value="{!item.CDLRecord.LinkedEntity.Name}" />
+        <apex:column value="{!item.CDLRecord.LinkedEntity.Id}" />
+        <apex:column headerValue="Row Content" value="{!item.contentData}" />
+        <apex:column headerValue="Html Content"
+          ><apex:outputText escape="false" value="{!item.contentData}"
+        /></apex:column>
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

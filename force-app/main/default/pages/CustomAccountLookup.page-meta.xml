@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description
+  >This page is created give a different look and feel to the account lookup page(By default the lookup window was opening in classic theme).
+            It is used in AccountOwnerChangePage.vfp</description>
+    <label>CustomAccountLookup</label>
+</ApexPage>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Case</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>BL Revision Case Path</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_hold__c</fieldNames>
+        <info
+    >&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Reason for hold is required to this milestone.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</info>
+        <picklistValueName>Awaiting more information</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>B_L_Revision</recordTypeName>
+</PathAssistant>

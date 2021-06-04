@@ -1,0 +1,19 @@
+<aura:component>
+  <lightning:carousel>
+    <lightning:carouselImage
+      class="carouselImage1"
+      src="{!$Resource.carousel1}"
+    >
+    </lightning:carouselImage>
+    <lightning:carouselImage
+      class="carouselImage2"
+      src="{!$Resource.carousel2}"
+    >
+    </lightning:carouselImage>
+    <lightning:carouselImage
+      class="carouselImage3"
+      src="{!$Resource.carousel3}"
+    >
+    </lightning:carouselImage>
+  </lightning:carousel>
+</aura:component>

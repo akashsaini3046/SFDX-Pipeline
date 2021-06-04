@@ -1,0 +1,339 @@
+<aura:component>
+  <aura:attribute
+    name="data"
+    type="object"
+    default='{"hazardous":true, "hazardousCommodityLst":[{"commodityWrap":{"substanceDesc":"1234"}}],"sealNumbers":[{"strSealNumber":"123"},{"strSealNumber":"456"}], "htsNumbers":[{"strHTSType":"I", "strHTSNoandDesc":"I 123 - test"},{"strHTSType":"E", "strHTSNoandDesc":"E 1234 - Test123456"}], "commodity":"Cargo, NOS", "dockReceiptNumbers":[{"strDockNumber":""}]}'
+  />
+  <aura:attribute name="header" type="string" />
+  <div class="cr_shadow">
+    <h6 class="bold">{!v.header}</h6>
+    <hr />
+    <aura:iteration items="{!v.data.cargoEquipment}" var="cargoEquip">
+      <div class="row">
+        <div class="col-sm-6">
+          <div>
+            <span class="bol-view-labels">Container Size / Type :</span>
+            <b class="bol-view-values">{!cargoEquip.containerSizeType}</b>
+          </div>
+          <div>
+            <span class="bol-view-labels">Container No. :</span>
+            <b class="bol-view-values"
+              >{!cargoEquip.containerNO1}{!cargoEquip.containerNO2}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">Dock Receipt Number(s) :</span>
+            <b class="bol-view-values">
+              <aura:iteration
+                items="{!cargoEquip.dockReceiptNumbers}"
+                var="drNumber"
+              >
+                {!drNumber.strDockNumber}<br />
+              </aura:iteration>
+            </b>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div>
+            <span class="bol-view-labels">Seal Number(s) :</span>
+            <b class="bol-view-values">
+              <aura:iteration items="{!cargoEquip.sealNumbers}" var="sNumber">
+                {!sNumber.strSealNumber}<br />
+              </aura:iteration>
+            </b>
+          </div>
+
+          <div>
+            <span class="bol-view-labels">HTS Number(s) :</span>
+            <b class="bol-view-values">
+              <aura:iteration items="{!cargoEquip.htsNumbers}" var="htsNumber">
+                {!htsNumber.strHTSNoandDesc}<br />
+              </aura:iteration>
+            </b>
+          </div>
+          <div>
+            <span class="bol-view-labels">Quantity :</span>
+            <b class="bol-view-values">{!cargoEquip.quantity}</b>
+          </div>
+          <div>
+            <span class="bol-view-labels">Type of Package :</span>
+            <b class="bol-view-values">{!cargoEquip.packageType}</b>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-12">
+          <div>
+            <span class="bol-view-labels">Description of Cargo :</span>
+            <b class="bol-view-values">{!cargoEquip.cargoDescription}</b>
+          </div>
+          <div>
+            <span class="bol-view-labels">Description of Cargo(Spanish) :</span>
+            <b class="bol-view-values">{!cargoEquip.cargoDescriptionS}</b>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-6">
+          <div>
+            <span class="bol-view-labels"
+              >Weight ({!cargoEquip.weightUnit}) :</span
+            >
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.weight) || (cargoEquip.weight == null)) ?
+              'NA' : cargoEquip.weight)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels"
+              >VGM Weight ({!cargoEquip.vgmweightUnit}) :</span
+            >
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.vgmweight) || (cargoEquip.vgmweight ==
+              null)) ? 'NA' : cargoEquip.vgmweight)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels"
+              >Volume ({!((cargoEquip.volumeUnit == 'FT3') ? 'CFT' : 'CM')})
+              :</span
+            >
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.volume) || (cargoEquip.volume == null)) ?
+              'NA' : cargoEquip.volume)}</b
+            >
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div>
+            <span class="bol-view-labels">Vent Settings :</span>
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.ventSettings) || (cargoEquip.ventSettings ==
+              null)) ? 'NA' : cargoEquip.ventSettings)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels"
+              >Temperature ({!cargoEquip.temperatureUnit}) :</span
+            >
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.temperature) || (cargoEquip.temperature ==
+              null)) ? 'NA' : cargoEquip.temperature)}</b
+            >
+          </div>
+          <div>
+            <span class="bol-view-labels">Cargo Value (USD) :</span>
+            <b class="bol-view-values"
+              >{!((empty(cargoEquip.cargovalue) || (cargoEquip.cargovalue ==
+              null)) ? 'NA' : '$ '+cargoEquip.cargovalue)}</b
+            >
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-12">
+          <h6>HAZARDOUS DETAILS</h6>
+          <div class="separator-line"></div>
+        </div>
+      </div>
+      <aura:iteration
+        items="{!cargoEquip.hazardousCommodityLst}"
+        var="hazardousCommodity"
+      >
+        <div class="row">
+          <div class="col-sm-6">
+            <div>
+              <span class="bol-view-labels">UN Number :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Number__c)
+                || (hazardousCommodity.commodityWrap.commodity.Number__c ==
+                null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Number__c)}</b
+              >
+            </div>
+            <div>
+              <span class="bol-view-labels">Content Type :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Content_Type__c)
+                || (hazardousCommodity.commodityWrap.commodity.Content_Type__c
+                == null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Content_Type__c)}</b
+              >
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div>
+              <span class="bol-view-labels">Permit Number :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Permit_Number__c)
+                || (hazardousCommodity.commodityWrap.commodity.Permit_Number__c
+                == null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Permit_Number__c)}</b
+              >
+            </div>
+            <div>
+              <span class="bol-view-labels">EX Number :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Ex_Number__c)
+                || (hazardousCommodity.commodityWrap.commodity.Ex_Number__c ==
+                null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Ex_Number__c)}</b
+              >
+            </div>
+          </div>
+        </div>
+        <br />
+        <aura:if
+          isTrue="{!and(hazardousCommodity.commodityWrap.commodity.Name__c !='', hazardousCommodity.commodityWrap.commodity.Name__c !=undefined)}"
+        >
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="slds-table slds-table_fixed-layout">
+                <thead>
+                  <tr>
+                    <th scope="col" class="slds-cell-wrap">Name</th>
+                    <th scope="col" class="slds-cell-wrap">Class</th>
+                    <th scope="col" class="slds-cell-wrap">Variation</th>
+                    <th scope="col" class="slds-cell-wrap">Packaging Group</th>
+                    <th scope="col" class="slds-cell-wrap">Secondary Class</th>
+                    <th scope="col" class="slds-cell-wrap">Tertiary Class</th>
+                    <th scope="col" class="slds-cell-wrap">Marine Pollutant</th>
+                    <th scope="col" class="slds-cell-wrap">Limited Quantity</th>
+                  </tr>
+                  <br />
+                </thead>
+                <tbody>
+                  <tr class="get-quote-container">
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Name__c)
+                      || (hazardousCommodity.commodityWrap.commodity.Name__c ==
+                      null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Name__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Primary_Class__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Primary_Class__c
+                      == null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Primary_Class__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Variation__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Variation__c
+                      == null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Variation__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Package_Group__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Package_Group__c
+                      == null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Package_Group__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Secondary_Class__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Secondary_Class__c
+                      == null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Secondary_Class__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Tertiary_Class__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Tertiary_Class__c
+                      == null)) ? 'NA' :
+                      hazardousCommodity.commodityWrap.commodity.Tertiary_Class__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Marine_Pollutant_Indicator__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Marine_Pollutant_Indicator__c
+                      == null)) ? 'NO' :
+                      hazardousCommodity.commodityWrap.commodity.Marine_Pollutant_Indicator__c)}
+                    </td>
+                    <td class="slds-cell-wrap">
+                      {!((empty(hazardousCommodity.commodityWrap.commodity.Limited_Quantity_Indicator__c)
+                      ||
+                      (hazardousCommodity.commodityWrap.commodity.Limited_Quantity_Indicator__c
+                      == null)) ? '0' :
+                      hazardousCommodity.commodityWrap.commodity.Limited_Quantity_Indicator__c)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br />
+        </aura:if>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div>
+              <span class="bol-view-labels">Flash Temperature :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Flashpoint__c)
+                || (hazardousCommodity.commodityWrap.commodity.Flashpoint__c ==
+                null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Flashpoint__c)}</b
+              >
+            </div>
+            <div>
+              <span class="bol-view-labels">Report Spill Qty. :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Reportable_Quantity__c)
+                ||
+                (hazardousCommodity.commodityWrap.commodity.Reportable_Quantity__c
+                == null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Reportable_Quantity__c)}</b
+              >
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div>
+              <span class="bol-view-labels"
+                >Weight({!hazardousCommodity.commodityWrap.commodity.Weight_Unit_of_Measure__c})
+                :</span
+              >
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Weight_value__c)
+                || (hazardousCommodity.commodityWrap.commodity.Weight_value__c
+                == null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Weight_value__c)}</b
+              >
+            </div>
+            <div>
+              <span class="bol-view-labels">Quantity :</span>
+              <b class="bol-view-values"
+                >{!((empty(hazardousCommodity.commodityWrap.commodity.Quantity_value__c)
+                || (hazardousCommodity.commodityWrap.commodity.Quantity_value__c
+                == null)) ? 'NA' :
+                hazardousCommodity.commodityWrap.commodity.Quantity_value__c)}</b
+              >
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="separator-line"></div>
+        </div>
+      </aura:iteration>
+    </aura:iteration>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div>
+          <span class="bol-view-labels">Emergency Contact Name :</span>
+          <b class="bol-view-values">{!v.data.emergencyContactName}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Emergency Contact Number :</span>
+          <b class="bol-view-values">{!v.data.emergencyContactPhone}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

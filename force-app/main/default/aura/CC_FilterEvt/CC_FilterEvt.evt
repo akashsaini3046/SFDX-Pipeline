@@ -1,0 +1,49 @@
+<aura:event type="COMPONENT" description="Event template">
+    <!-- Booking Filters -->
+    <aura:attribute name="selectedAccountId" type="string" />
+    <aura:attribute name="selectedContractId" type="string" />
+    <aura:attribute name="showChildAcc" type="string" />
+    <aura:attribute name="statusSelected" type="string" />
+    <aura:attribute name="originMovementType" type="string" />
+    <aura:attribute name="destMovementType" type="string" />
+    <aura:attribute name="originLocationId" type="string" />
+    <aura:attribute name="destinationLocationId" type="string" />
+    <aura:attribute name="departureFromDate" type="string" />
+    <aura:attribute name="departureToDate" type="string" />
+    <aura:attribute name="shippingType" type="string" />
+    <aura:attribute name="hazBook" type="string" />
+    <aura:attribute name="transModeOriginSelected" type="string" />
+    <aura:attribute name="transModeDestSelected" type="string" />
+    <aura:attribute name="comoditySelected" type="string" />
+    <aura:attribute name="vessalSelected" type="string" />
+    <aura:attribute name="destMovementType" type="string" />
+    <aura:attribute name="containerTypeSelected" type="List" />
+    <aura:attribute name="contractInput" type="String" />
+	<aura:attribute name="hazQuote" type="string" />
+    
+    <!-- Account Filters -->
+    <aura:attribute name="cvifId" type="string" />
+    <aura:attribute name="parentCvifId" type="string" />
+    <aura:attribute name="searchRegion" type="string" />
+    <aura:attribute name="accountType" type="string" />
+    <aura:attribute name="accountOwner" type="string" />
+    <aura:attribute name="searchTheList" type="string" />
+    <aura:attribute name="selectedTab" type="string" />
+    <aura:attribute name="contractNumber" type="string" />
+    <aura:attribute name="searchContractRegion" type="string" />
+    <aura:attribute name="startContractDate" type="string" />
+    <aura:attribute name="endContractDate" type="string" />
+    <aura:attribute name="contractStatus" type="string" />
+    <aura:attribute name="searchAccountId" type="String" />
+    <aura:attribute name="searchparentAccountId" type="String" />
+    <aura:attribute name="searchAccountName" type="String" />
+    <aura:attribute name="searchparentAccountName" type="String" />
+    <aura:attribute name="selectedIdFromCustomInput" type="string" />
+    
+    <!-- Bol Filters-->
+    <aura:attribute name="selectedBookingId" type="String" />
+    <aura:attribute name="selectedLocationId" type="String" />
+    <aura:attribute name="selectedSailDateFrom" type="String" />
+    <aura:attribute name="selectedSailDateTo" type="String" />
+
+</aura:event>

@@ -1,0 +1,65 @@
+<!--
+* Name: ActualVsNormalisedRevenue 
+* Purpose: Lightning Component which shows actual vs normalised revenue
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component
+  implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+  access="global"
+  controller="ADActualVsNormalisedRevenueController"
+>
+  <aura:attribute name="recordId" type="Id" />
+  <aura:attribute
+    name="actualAndNormalisedRevObj"
+    type="ADActualVsNormalisedRevenueController"
+  />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:handler
+    name="init"
+    value="{!this}"
+    action="{!c.getActualAndNormalisedRevenueFunc}"
+  />
+  <aura:handler
+    event="c:AD_EVTMasterFilter"
+    action="{!c.handleMasterFilterEvent}"
+  />
+
+  <div class="slds-grid slds-wrap" style="width: 100%">
+    <div
+      class="slds-size--4-of-12 slds-medium-size--4-of-12 slds-large-size--4-of-12 slds-p-right_small"
+    >
+      <div>
+        <p class="slds">Expected<br />Opportunity<br />Pipeline</p>
+      </div>
+      <div class="slds-p-top_small revenueValueCSS">
+        <p>${!v.actualAndNormalisedRevObj.strNormalisedRevenue}</p>
+      </div>
+    </div>
+    <div
+      class="slds-size--4-of-12 slds-medium-size--4-of-12 slds-large-size--4-of-12 slds-p-right_small slds-p-left_small"
+    >
+      <div>
+        <img src="{!$Resource.VersusImage}" />
+      </div>
+    </div>
+    <div
+      class="slds-size--4-of-12 slds-medium-size--4-of-12 slds-large-size--4-of-12 slds-p-right_small slds-p-left_small"
+    >
+      <div>
+        <p class="slds">Total<br />Opportunity<br />Pipeline</p>
+      </div>
+      <div class="slds-p-top_small revenueValueCSS">
+        <p>${!v.actualAndNormalisedRevObj.strActualRevenue}</p>
+      </div>
+    </div>
+    <div
+      class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-p-right_small slds-p-left_small slds-m-top_x-small small-font"
+      style="text-align: center"
+    >
+      {!$Label.c.AD_LABEL_VALUES_ARE_IN}
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,60 @@
+<aura:component
+  controller="AllExternalReportClass"
+  implements="force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute name="externalReport" type="list" />
+  <aura:attribute name="externalReportCountLabel" type="String" />
+  <aura:attribute name="topFive" type="list" />
+  <aura:attribute name="headerTitle" type="Aura.Component[]">
+    <h1 class="slds-text-heading_medium">
+      <div>
+        <div style="float: right">
+          <p align="right" class="slds-text-heading_small">
+            <a
+              href="javascript:void(0);"
+              onclick="{!c.gotoList}"
+              style="font-weight: normal; font-size: 13px"
+            >
+              More
+            </a>
+          </p>
+        </div>
+        <div style="float: left">
+          <b
+            ><span style="font-size: 16px"
+              >{!$Label.c.All_External_Reports_Label_Name}</span
+            ></b
+          >
+          <p class="slds-text-heading_small" style="font-size: 14px">
+            {!v.externalReportCountLabel}
+          </p>
+        </div>
+      </div>
+    </h1>
+  </aura:attribute>
+
+  <div style="background-color: white">
+    <lightning:card title="{!v.headerTitle}">
+      <ul
+        class="slds-has-block-links_space slds-list_dotted"
+        style="list-style-type: disc; margin-left: 10%"
+      >
+        <aura:iteration items="{!v.topFive}" var="ext">
+          <li
+            class="slds-text-heading_small"
+            style="font-size: 13px; width: fit-content"
+          >
+            <a
+              href="{!ext.External_URL__c}"
+              target="_blank"
+              data-recId="{!ext.Id}"
+              >{!ext.Name}</a
+            >
+          </li>
+        </aura:iteration>
+      </ul>
+    </lightning:card>
+  </div>
+</aura:component>

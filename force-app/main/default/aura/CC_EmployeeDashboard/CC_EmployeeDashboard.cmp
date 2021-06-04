@@ -1,0 +1,39 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute
+    name="DisplayComponent"
+    type="String"
+    default="c:CC_UnderMaintenance"
+  />
+  <aura:attribute
+    name="componentName"
+    type="String"
+    default="CC_UnderMaintenance"
+  />
+  <aura:attribute name="showresultFilter" type="Boolean" default="true" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler event="c:CC_HomeScreenEvent" action="{!c.changeHomeScreen}" />
+  <lightning:navigation aura:id="navigationService" />
+
+  <div class="dashboard-main-buttons">
+    <lightning:button
+      aura:id="get-a-quote"
+      class="slds-button_destructive"
+      label="Get a Quote"
+      onclick="{!c.navigateToPage}"
+    />
+    <!--lightning:button aura:id="create-booking" class="slds-button_destructive" label="Book Shipment" onclick="{!c.navigateToPage}"/-->
+    <!--lightning:button class="slds-button_destructive" label="Track Shipment"/-->
+    <lightning:button
+      aura:id="routes"
+      class="slds-button_destructive"
+      label="Find a Route"
+      onclick="{!c.navigateToPage}"
+    />
+  </div>
+
+  <div aura:id="displayScreen">{!v.body}</div>
+</aura:component>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SamlSsoConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <identityLocation>SubjectNameId</identityLocation>
+    <identityMapping>FederationId</identityMapping>
+    <issuer>http://login.crowley.com/adfs/services/trust</issuer>
+    <loginUrl>https://login.crowley.com/adfs/ls/</loginUrl>
+    <logoutUrl>https://login.crowley.com/adfs/ls/?wa=wsignout1.0</logoutUrl>
+    <name>Crowley</name>
+    <oauthTokenEndpoint
+  >https://crowley2--cicd.my.salesforce.com/services/oauth2/token?so=00D180000002lKd</oauthTokenEndpoint>
+    <redirectBinding>true</redirectBinding>
+    <requestSignatureMethod>1</requestSignatureMethod>
+    <requestSigningCertId>0P1f4000005U7XK</requestSigningCertId>
+    <salesforceLoginUrl
+  >https://crowley2--cicd.my.salesforce.com?so=00D180000002lKd</salesforceLoginUrl>
+    <samlEntityId>https://crowley2.lightning.force.com</samlEntityId>
+    <samlVersion>SAML2_0</samlVersion>
+    <useConfigRequestMethod>true</useConfigRequestMethod>
+    <userProvisioning>true</userProvisioning>
+    <validationCert
+  >MIIC3jCCAcagAwIBAgIQShsA0GquqIBBfgICYwa3TTANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDEyBBREZTIFNpZ25pbmcgLSBsb2dpbi5jcm93bGV5LmNvbTAeFw0xOTAxMDMyMjQ5NDRaFw0yMjAxMDIyMjQ5NDRaMCsxKTAnBgNVBAMTIEFERlMgU2lnbmluZyAtIGxvZ2luLmNyb3dsZXkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAurVBLPIVDsQOKxdXz9b6j/7e5jbtI4wCKCJwrdRjJCThVEFPfYjQGgJJ4s+agkYTO0J1B0jigre5RocRszDBxxGjlXw2VezhamF7GZykENhCnu+7wVC8H+UxKauROCCCPQXwvjvsqdwpQs+/sp8JdsmP/iTEtGRtC6HqEQaYx9QDillOQ5JOXhTmY0oXl6ugWpRU2HpICHxdhWJ6rEle88ab2tyv5w/rneXRIP6/ACnHUoaKqBWKUoU6LqlNPnYXqTtQuijvEZ7yDcGd3gcIn7yqi354C2gbqEzQJ+ynDwx6TlvTBRnzxOyRdt6RpofQ+KIo9tNgvGjmbVin2nTxqwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAWskMPMJx91CLfT+e1LN/AcTuMJOaV8iVUvuj1TrRkMAXbcKPBZfkEngLAsfFp5ZII1GCBcUCnr20USv9HsxnUAF34qMoN03aKj0gZvcIy80XmepHfQ+ScBhZFAJD9rTz0Fj9J0eWFpQGZkJfZ3dhNjc4WHhqtk5VIgmUcKqcXurd5JXMb4I4U4nrGh4KdRmpT/5SOY0Z6LtGqpag5uFObUdzNABnoMmpPnOFycfJ5rJFYm3CkHZvSDrsupoICWPPWoiEVxhW63hswrDtd+plWenc9jgezNLPGjUhQCDZUxTbjIUs870rz++rY+Hv4dx4zHeTZ4GJOw6P0PdWPuEpf</validationCert>
+</SamlSsoConfig>

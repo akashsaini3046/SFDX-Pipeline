@@ -1,0 +1,31 @@
+<apex:component>
+  <apex:attribute name="header" type="String" description="passing header" />
+  <apex:attribute
+    name="data"
+    type="CC_BolPartyWrapper"
+    description="passing data"
+  />
+  <apex:attribute name="heading" type="String" description="passing header" />
+
+  <div style="border: solid 1px #ccc">
+    <div>{!heading}</div>
+    <apex:outputPanel rendered="{!header != 'ForwardingAgent'}">
+      <div>
+        REFERENCE NO.<br />
+        <apex:repeat value="{!data.referenceNumbers}" var="refNumber">
+          {!refNumber.strRefNumber}<br />
+        </apex:repeat>
+      </div>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!header == 'ForwardingAgent'}">
+      <div>FMC NO.<br /> {!data.FMCNumber}<br /></div>
+      <div>CHB NO.<br /> {!data.CHBNumber}<br /></div>
+    </apex:outputPanel>
+
+    <div>
+      {!data.addressLine1}<br /> {!data.addressLine2}<br />
+      {!data.addressLine3}<br />
+      {!data.addressLine4}
+    </div>
+  </div>
+</apex:component>

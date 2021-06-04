@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Queue_Based_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Queue Based Sharing Rule</label>
+        <sharedTo>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>startsWith</operation>
+            <value>00G</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Sharing_Lead_Owned_By_Sales_Agent</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description
+    >Leads owned by sales agent shared with internal Crowley users.</description>
+        <label>Sharing Lead Owned By Sales Agent</label>
+        <sharedTo>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Sales_Agent_Group</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sharing_Leads_with_All_Crowley_Internal_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Sharing Lead among crowley internal users.</description>
+        <label>Sharing Leads with All Crowley Internal Users</label>
+        <sharedTo>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

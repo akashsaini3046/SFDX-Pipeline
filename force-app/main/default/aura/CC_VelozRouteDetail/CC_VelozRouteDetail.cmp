@@ -1,0 +1,55 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="routeRecord" type="Object" />
+  <aura:attribute name="rateMapping" type="List" />
+  <aura:attribute name="termsAndConditions" type="List" />
+  <aura:attribute name="originObject" type="Object" />
+  <aura:attribute name="destinationObject" type="Object" />
+  <aura:attribute name="screen" type="string" default="Quote" />
+
+  <lightning:tabset variant="scoped" class="scoped-tab-menu">
+    <lightning:tab
+      label="{!$Label.c.CC_VC_RouteDet_Rate_Details}"
+      id="rate-details"
+    >
+      <div class="det-padd-cont">
+        <c:CC_VelozRouteDetRate
+          rateMapping="{!v.rateMapping}"
+          routeRecord="{!v.routeRecord}"
+        />
+      </div>
+    </lightning:tab>
+    <lightning:tab
+      label="{!$Label.c.CC_VC_RouteDet_Route_Details}"
+      id="route-details"
+    >
+      <div class="det-padd-cont">
+        <c:CC_VelozRouteDetRoutePath
+          routeRecord="{!v.routeRecord}"
+          originObject="{!v.originObject}"
+          destinationObject="{!v.destinationObject}"
+        />
+      </div>
+    </lightning:tab>
+    <aura:if isTrue="{!v.screen != 'CreateBooking'}">
+      <lightning:tab
+        label="{!$Label.c.CC_VC_RouteDet_Schedules}"
+        id="schedules"
+      >
+        <div class="det-padd-cont">
+          <c:CC_VelozRouteDetSchedule routeRecord="{!v.routeRecord}" />
+        </div>
+      </lightning:tab>
+    </aura:if>
+    <lightning:tab label="{!$Label.c.CC_VC_RouteDet_T_and_C}" id="clauses">
+      <div class="det-padd-cont">
+        <c:CC_VelozRouteDetClause
+          termsAndConditions="{!v.termsAndConditions}"
+          screen="{!v.screen}"
+        />
+      </div>
+    </lightning:tab>
+  </lightning:tabset>
+</aura:component>

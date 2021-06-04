@@ -1,0 +1,55 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+  controller="CC_VerticalMenuController"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                           $Resource.jquery224 , 
+                           $Resource.customJs , 
+                           $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                           }"
+  />
+
+  <aura:attribute name="listitems" type="Horizontal_Menu__mdt" />
+  <aura:attribute name="highlightedItem" type="Integer" default="0" />
+  <aura:attribute name="selectedSequence" type="String" default="0" />
+  <aura:attribute name="communityName" type="String" />
+  <aura:attribute name="defaultRoute" type="String" default="home" />
+  <lightning:navigation aura:id="navigationService" />
+  <aura:attribute name="selectedTabId" type="String" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    event="c:CC_HighlightedMenu"
+    action="{!c.changeHighlightSection}"
+  />
+  <div class="slds-no-print">
+    <lightning:tabset
+      class="scoped-tab-menu"
+      variant="scoped"
+      onselect="{!c.handleselect}"
+      selectedTabId="{!v.selectedTabId}"
+    >
+      <aura:iteration var="listItem" items="{!v.listitems}" indexVar="index">
+        <a
+          href="{!listItem.URL__c}"
+          aria-describedby="entity-header"
+          aria-current="page"
+          target="{!listItem.Target__c}"
+        >
+          <span>
+            <lightning:tab
+              class="header-menu"
+              label="{!listItem.MasterLabel}"
+              aura:id="{!listItem.Sequence__c}"
+              id="{!listItem.Sequence__c}"
+              tabindex="{!listItem.Sequence__c}"
+            />
+            <i class="{!listItem.Style_Classes__c}" />
+          </span>
+        </a>
+      </aura:iteration>
+    </lightning:tabset>
+  </div>
+</aura:component>

@@ -1,0 +1,83 @@
+<!--
+* Name: AD_OpportunityPipelineChart 
+* Purpose: Lightning Component which shows opportunity pipeline chart
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component controller="ADOpportunityPipelineChartController">
+  <aura:attribute name="idAccountId" type="Id" />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="lstSelectedAccountIdsForReport" type="List" />
+  <aura:attribute name="lstSelectedReportYear" type="List" />
+
+  <ltng:require
+    scripts="{!$Resource.ChartJs + '/chart.js'}"
+    afterScriptsLoaded="{!c.generateOpportunityPipelineChart}"
+  />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    event="c:AD_EVTMasterFilter"
+    action="{!c.handleMasterFilterEvent}"
+  />
+
+  <div class="slds-grid slds-wrap">
+    <div
+      class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1"
+    >
+      <div class="slds-grid slds-wrap">
+        <div
+          class="slds-size--2-of-5 slds-medium-size--2-of-5 slds-large-size--2-of-5"
+        >
+          <div class="slds-float_left font-bold">
+            {!$Label.c.AD_LABEL_OPPORTUNITY_PIPELINE}
+          </div>
+        </div>
+        <div
+          class="slds-size--2-of-5 slds-medium-size--2-of-5 slds-large-size--2-of-5"
+        >
+          <div class="slds-float_left">{!$Label.c.AD_LABEL_VALUES_ARE_IN}</div>
+        </div>
+        <div
+          class="slds-size--1-of-5 slds-medium-size--1-of-5 slds-large-size--1-of-5"
+        >
+          <div class="slds-float_right font-bold">
+            <a
+              href="javascript:void()"
+              id="link_salesCallDetails"
+              onclick="{!c.openReport}"
+              >{!$Label.c.AD_LABEL_OPEN_REPORT}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1"
+    >
+      <canvas
+        aura:id="opportunityChartDiv"
+        style="
+          height: 265px !important;
+          max-height: 265px !important;
+          min-height: 265px !important;
+        "
+      ></canvas>
+    </div>
+    <aura:if isTrue="{!v.boolSpinner}">
+      <div aura:id="spinnerId" class="slds-spinner_container">
+        <div
+          class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+          role="alert"
+        >
+          <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

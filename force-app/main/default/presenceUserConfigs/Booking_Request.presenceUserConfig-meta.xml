@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PresenceUserConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <profiles>
+            <profile>Service Agent</profile>
+            <profile>Service Leader</profile>
+            <profile>Service Manager</profile>
+        </profiles>
+        <users>
+            <user>christy.hernandez@crowley.com</user>
+            <user>jose.garcia@crowley.com</user>
+            <user>lesli.pacheco@crowley.com</user>
+            <user>luis.martinez@crowley.com</user>
+            <user>luis.servellon@crowley.com</user>
+        </users>
+    </assignments>
+    <capacity>1</capacity>
+    <enableAutoAccept>false</enableAutoAccept>
+    <enableDecline>false</enableDecline>
+    <enableDeclineReason>false</enableDeclineReason>
+    <enableDisconnectSound>false</enableDisconnectSound>
+    <enableRequestSound>false</enableRequestSound>
+    <label>Booking Request</label>
+</PresenceUserConfig>

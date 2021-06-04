@@ -1,0 +1,49 @@
+.THIS .slds-form-element {
+  height: 30px;
+}
+.THIS .slds-cell-fixed {
+  position: absolute;
+  top: 0;
+  min-height: 2rem;
+  margin-top: 5px;
+  background-color: transparent;
+  font-size: 14px;
+}
+.THIS .slds-truncate .slds-cell-fixed {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+.THIS .slds-button {
+  margin-right: 10px;
+}
+.THIS .slds-text-heading_small {
+  padding-bottom: 5px;
+  margin-top: -20px;
+}
+.THIS .slds-card__header {
+  padding-right: var(
+    --sds-c-card-header-spacing-inline-end,
+    var(
+      --sds-c-card-header-spacing-inline,
+      var(--lwc-varSpacingHorizontalMedium, 1rem)
+    )
+  );
+  padding-bottom: var(
+    --sds-c-card-header-spacing-block-end,
+    var(--sds-c-card-header-spacing-block, 0)
+  );
+  padding-left: var(
+    --sds-c-card-header-spacing-inline-start,
+    var(
+      --sds-c-card-header-spacing-inline,
+      var(--lwc-varSpacingHorizontalMedium, 1rem)
+    )
+  );
+  margin: 0 0
+    var(
+      --sds-c-card-header-spacing-block-end,
+      var(--lwc-varSpacingVerticalSmall, 0.75rem)
+    );
+}

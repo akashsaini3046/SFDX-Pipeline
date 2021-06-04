@@ -1,0 +1,195 @@
+<apex:component>
+  <apex:attribute name="header" type="String" description="passing header" />
+  <apex:attribute
+    name="data"
+    type="CC_BolAdditionalInformationWrapper"
+    description="passing data"
+  />
+
+  <h3
+    style="
+      border-bottom: 2px solid #ccc;
+      font-size: 18px;
+      padding: 0px 0px 10px 0px;
+    "
+  >
+    {!header}
+  </h3>
+  <table
+    style="
+      width: 100%;
+      margin-top: 2px;
+      font-family: sans-serif;
+      table-layout: fixed;
+    "
+    class="add-info"
+  >
+    <tr>
+      <th valign="top">
+        <span style="color: #999">Document<br /> Type</span>
+      </th>
+      <th valign="top"><span style="color: #999">Freighted</span></th>
+      <th valign="top">
+        <span style="color: #999">Print <br />Cargo</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Prnt <br />Excl Charg</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Prnt <br />INB NBR</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Letter<br /> Of Credit</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Prnt <br />ISS Date</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Print <br />Relays</span>
+      </th>
+      <th valign="top">
+        <span style="color: #999">Print <br />Move Type</span>
+      </th>
+    </tr>
+    <tr>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          ORIGINAL BILL OF LADING
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!IF(data.boolWayBill, true, false)}">
+          WAYBILL
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel rendered="{!IF(data.boolFreighted, true, false)}">
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!IF(data.boolFreighted, true, false)}">
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel rendered="{!IF(data.boolPrintCargo, true, false)}">
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!IF(data.boolPrintCargo, true, false)}">
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolPrintExclCharge, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolPrintExclCharge, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolPrintInbNumber, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolPrintInbNumber, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolLetterOfCredit, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolLetterOfCredit, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+      <td valign="top">
+        <apex:outputPanel
+          rendered="{!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          Yes
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!!IF(data.boolOriginalBillOfLading, true, false)}"
+        >
+          No
+        </apex:outputPanel>
+      </td>
+    </tr>
+  </table>
+  <br /><br />
+  <table style="width: 100%; margin-top: 2px; font-family: sans-serif">
+    <tr>
+      <td>
+        <table style="width: 100%">
+          <tr>
+            <td valign="top" style="color: #999; width: 20%">Comments :</td>
+            <td
+              valign="top"
+              style="
+                text-align: left;
+                width: 80%;
+                padding-left: 0px;
+                margin-left: 0px;
+              "
+            >
+              <span
+                style="text-align: left; padding-left: 0px; margin-left: 0px"
+                >{!data.comments}</span
+              >
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table style="width: 100%">
+          <tr>
+            <td valign="top" style="color: #999; width: 20%">
+              Release Instructions :
+            </td>
+            <td valign="top" width="80%" style="text-align: left">
+              <span>{!data.releaseInstructions}</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</apex:component>

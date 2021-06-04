@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>lovesh.tomar@nagarro.com</contactEmail>
+    <label>Jenkins</label>
+    <oauthConfig>
+        <callbackUrl>https://www.salesforce.com</callbackUrl>
+        <consumerKey
+    >3MVG90D5vR7Utjboc8b3nxgWl_QR.k3iy56BJ37ZNDHasUCZ6GCibB0mRYMhRozHDPgtb0tRG4aGWfJ37WYTE</consumerKey>
+        <isAdminApproved>false</isAdminApproved>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <scopes>Full</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+</ConnectedApp>

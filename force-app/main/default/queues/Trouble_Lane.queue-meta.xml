@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@nagarro.com.invalid</email>
+    <name>Trouble Lane</name>
+    <queueMembers>
+        <users>
+            <user>alma.vanegas@crowley.com</user>
+            <user>emily.hernandez@crowley.com</user>
+            <user>georgina.moreno@crowley.com</user>
+            <user>ricardo.martinez@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Trouble_Lane</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

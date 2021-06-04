@@ -1,0 +1,61 @@
+<aura:component implements="lightning:isUrlAddressable">
+  <aura:attribute name="item" type="String" />
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+  <aura:iteration items="{!v.item.recordList}" var="singleRecord">
+    <li
+      role="presentation"
+      onmousedown="{!c.navigatetoDetail}"
+      data-target="{!singleRecord.Id}"
+    >
+      <span
+        class="slds-lookup__item-action slds-media slds-media--center"
+        role="option"
+      >
+        <div class="slds-input-has-icon slds-input-has-icon--right">
+          <div class="slds-lookup__result-text">
+            <aura:if isTrue="{!v.item.objLabel == 'Accounts'}">
+              <lightning:icon
+                iconName="standard:account"
+                alternativeText="Account"
+                title="Account"
+              />
+              <div class="result-name-type">
+                <div class="result-name">{!singleRecord.Name}</div>
+                <div class="result-type">{!v.item.objLabel}</div>
+              </div>
+            </aura:if>
+            <aura:if isTrue="{!v.item.objLabel == 'Bookings'}">
+              <lightning:icon
+                iconName="standard:event"
+                alternativeText="Event"
+                title="Event"
+              />
+              <div class="result-name-type">
+                <div class="result-name">{!singleRecord.Booking_Number__c}</div>
+                <div class="result-type">
+                  {!v.item.objLabel}&nbsp;
+                  <span class="single-rec-name"
+                    >:&nbsp;{!singleRecord.Name}</span
+                  >
+                </div>
+              </div>
+            </aura:if>
+            <aura:if isTrue="{!v.item.objLabel == 'Quotes'}">
+              <lightning:icon
+                iconName="standard:quotes"
+                alternativeText="Account"
+                title="Account"
+              />
+              <div class="result-name-type">
+                <div class="result-name">{!singleRecord.Name}</div>
+                <div class="result-type">{!v.item.objLabel}</div>
+              </div>
+            </aura:if>
+          </div>
+        </div>
+      </span>
+    </li>
+  </aura:iteration>
+</aura:component>

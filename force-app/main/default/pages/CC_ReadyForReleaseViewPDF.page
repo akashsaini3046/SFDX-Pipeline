@@ -1,0 +1,1588 @@
+<apex:page
+  controller="CC_BillOfLadingVFController"
+  showHeader="false"
+  sidebar="false"
+  renderAs="pdf"
+  applyBodyTag="false"
+>
+  <head>
+    <style type="text/css" media="print">
+      * {
+          font-family: sans-serif;
+          "
+
+      }
+
+      @page {
+          @top-center {
+              content: element(header);
+          }
+
+          @bottom-left {
+              content: element(footer);
+          }
+      }
+
+      div.header {
+          text-align: center;
+          position: running(header);
+          width: 100%;
+      }
+
+      div.footer {
+          display: block;
+          padding: 5px;
+          position: running(footer);
+      }
+
+      .pagenumber:before {
+          content: counter(page);
+      }
+
+      .pagecount:before {
+          content: counter(pages);
+      }
+
+      .centered {
+          text-align: center;
+      }
+
+      table {
+          border-collapse: collapse;
+          /* Remove cell spacing */
+          width: 100%;
+      }
+
+      table,
+      th,
+      td {
+          vertical-align: top;
+
+      }
+
+      table th,
+      table td {
+          padding: 0px;
+          /* Apply cell padding */
+      }
+
+      .main-table {
+          margin: 0px auto;
+      }
+
+      .key-border-around {
+          border: solid 1px #ccc;
+      }
+
+      .key-border-around-no-bb {
+          border-right: solid 1px #ccc;
+          border-left: solid 1px #ccc;
+      }
+
+      .padding-5-around {
+          padding: 5px;
+      }
+
+      .p-padding-5-around {
+          padding: 5px;
+      }
+
+      .bol-rel-label {
+          color: #6a6e6f;
+          font-weight: bold;
+      }
+
+      .row-left,
+      .row-right {
+          width: 50%;
+      }
+
+      .row-full {
+          width: 100%;
+      }
+
+      .no-wrap {
+          white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header"></div>
+    <div class="footer">
+      <div
+        style="
+          width: 100%;
+          float: left;
+          border-top: 1px solid #ccc;
+          padding-top: 10px;
+        "
+      >
+        <div
+          style="
+            float: left;
+            width: 30%;
+            height: 60px;
+            font-family: Arial Unicode MS, Helvetica, sans-serif;
+            font-size: 12px;
+          "
+        >
+          <a
+            class="contact-us-link"
+            href="https://www.crowley.com/contact-us/list-of-offices/"
+            target="_blank"
+            style="color: #000; text-decoration: none"
+          >
+            Contact Us</a
+          >
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a
+            href="https://www.crowley.com/"
+            target="_blank"
+            class="website-link"
+            style="color: #d3232a; text-decoration: none"
+            >Crowley.com</a
+          >
+        </div>
+        <div
+          style="
+            float: left;
+            width: 40%;
+            height: 60px;
+            text-align: center;
+            font-family: Arial Unicode MS, Helvetica, sans-serif;
+            font-size: 12px;
+          "
+        >
+          Page
+          <span class="pagenumber" /> /
+          <span class="pagecount" />
+        </div>
+
+        <div
+          style="
+            float: right;
+            width: 30%;
+            height: 60px;
+            text-align: right;
+            font-family: Arial Unicode MS, Helvetica, sans-serif;
+            font-size: 12px;
+          "
+        >
+          © 2020 Crowley Maritime Corporation
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div
+        style="
+          margin: 0px auto;
+          padding: 0px;
+          font-family: sans-serif;
+          line-height: 13px;
+          font-size: 10px;
+        "
+      >
+        <table width="100%" style="text-align:left float:left; margin:0px;">
+          <tr>
+            <td width="100">
+              <div
+                style="
+                  width: 100%;
+                  float: left;
+                  position: absolute;
+                  top: 0px;
+                  left: 0px;
+                  z-index: 100;
+                "
+              >
+                <apex:image
+                  value="{!$Resource.velozLogoGreyPng}"
+                  alt="Crowley Logo"
+                  width="750px"
+                />
+              </div>
+              <div
+                style="
+                  font-size: 16px;
+                  width: 100%;
+                  text-align: center;
+                  position: absolute;
+                  top: 15px;
+                  left: 0px;
+                  z-index: 200;
+                "
+              >
+                <span>
+                  <b>MASTER BILL OF LADING</b>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <br />
+        <table class="main-table" width="100%" style="margin-top: 42px">
+          <tr class="row1">
+            <td class="row1">
+              <table class="row1">
+                <tr>
+                  <td class="row-left key-border-around" valign="top">
+                    <apex:repeat value="{!objBolView.shipperLst}" var="shipper">
+                      <table>
+                        <tr>
+                          <td rowspan="2" valign="top">
+                            <p
+                              class="p-padding-5-around"
+                              style="padding-top: 0px"
+                            >
+                              <span class="bol-rel-label">
+                                <b
+                                  >(2) SHIPPER (Complete Name, Address,
+                                  Zipcode)</b
+                                >
+                              </span>
+                              <span>
+                                <br />&nbsp;
+                                <br />
+                              </span>
+                              <span>
+                                <b
+                                  >{!shipper.name}
+                                  <br /> {!shipper.addressLine1}
+                                  <br /> {!shipper.addressLine2}
+                                  <br /> {!shipper.addressLine3}
+                                  <br /> {!shipper.addressLine4}
+                                </b>
+                              </span>
+                            </p>
+                          </td>
+                          <td>
+                            <table>
+                              <tr>
+                                <td
+                                  class="padding-5-around"
+                                  style="
+                                    border-left: solid 1px #ccc;
+                                    border-bottom: solid 1px #ccc;
+                                  "
+                                >
+                                  <span class="bol-rel-label no-wrap">
+                                    <b>REFERENCE NO.</b>
+                                  </span>
+                                  <span>
+                                    <br />&nbsp;
+                                    <br />
+                                  </span>
+                                  <span>
+                                    <apex:repeat
+                                      value="{!shipper.referenceNumbers}"
+                                      var="refNumber"
+                                    >
+                                      <div>
+                                        <b>{!refNumber.strRefNumber}</b>
+                                      </div>
+                                    </apex:repeat>
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </apex:repeat>
+                  </td>
+                  <td class="row-right key-border-around">
+                    <table>
+                      <tr>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <span class="bol-rel-label">
+                            <b>(3) BOOKING NUMBER</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <b>{!objBolView.customerReference.bookingNumber}</b>
+                          </span>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <span class="bol-rel-label">
+                            <b>(3C) SCAC CODE</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <b>{!objBolView.customerReference.scacCode}</b>
+                          </span>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="border-bottom: solid 1px #ccc"
+                        >
+                          <span class="bol-rel-label">
+                            <b>(3A) BILL OF LADING NO.</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <b
+                              >{!objBolView.customerReference.billOfLadingNumber}</b
+                            >
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: 1px solid #ccc;
+                          "
+                        >
+                          <span class="bol-rel-label">
+                            <b>(3B) DATE</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <b>
+                              <apex:outputText value="{0,date,MMM dd, yyyy}">
+                                <apex:param
+                                  value="{!objBolView.customerReference.sentDate}"
+                                />
+                              </apex:outputText>
+                            </b>
+                          </span>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: 1px solid #ccc;
+                          "
+                        >
+                          <span class="bol-rel-label">
+                            <b>(4) EXPORT REFERENCE</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <apex:repeat
+                              value="{!objBolView.partyList}"
+                              var="party"
+                            >
+                              <apex:outputPanel
+                                rendered="{!party.partyType == 'SHP'}"
+                              >
+                                <apex:repeat
+                                  value="{!party.referenceNumbers}"
+                                  var="refNumber"
+                                >
+                                  <b>{!refNumber.strRefNumber}</b>
+                                </apex:repeat>
+                              </apex:outputPanel>
+                            </apex:repeat>
+                          </span>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="border-bottom: 1px solid #ccc"
+                        >
+                          <span class="bol-rel-label">
+                            <b>(4) FORWARD REFERENCE</b>
+                          </span>
+                          <span>
+                            <br />&nbsp;
+                            <br />
+                          </span>
+                          <span>
+                            <apex:repeat
+                              value="{!objBolView.partyList}"
+                              var="party"
+                            >
+                              <apex:outputPanel
+                                rendered="{!party.partyType == 'FOR'}"
+                              >
+                                <apex:repeat
+                                  value="{!party.referenceNumbers}"
+                                  var="refNumber"
+                                >
+                                  <b>{!refNumber.strRefNumber}</b>
+                                </apex:repeat>
+                              </apex:outputPanel>
+                            </apex:repeat>
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row2">
+            <td class="row2">
+              <table class="row2">
+                <tr>
+                  <td class="row-left key-border-around" valign="top">
+                    <apex:repeat
+                      value="{!objBolView.consigneeLst}"
+                      var="consignee"
+                    >
+                      <table>
+                        <tr>
+                          <td rowspan="2" valign="top">
+                            <p
+                              class="p-padding-5-around"
+                              style="padding-top: 0px"
+                            >
+                              <span class="bol-rel-label">
+                                <b
+                                  >(5) CONSIGNEE (Complete Name, Address &amp;
+                                  Zipcode)</b
+                                >
+                              </span>
+                              <span>
+                                <br />&nbsp;
+                                <br />
+                              </span>
+                              <span>
+                                <b
+                                  >{!consignee.name}
+                                  <br /> {!consignee.addressLine1}
+                                  <br /> {!consignee.addressLine2}
+                                  <br /> {!consignee.addressLine3}
+                                  <br /> {!consignee.addressLine4}
+                                </b>
+                              </span>
+                            </p>
+                          </td>
+                          <td>
+                            <table>
+                              <tr>
+                                <td
+                                  class="padding-5-around"
+                                  style="
+                                    border-left: solid 1px #ccc;
+                                    border-bottom: solid 1px #ccc;
+                                  "
+                                >
+                                  <span class="bol-rel-label no-wrap">
+                                    <b>REFERENCE NO.</b>
+                                  </span>
+                                  <span>
+                                    <br />&nbsp;
+                                    <br />
+                                  </span>
+                                  <span>
+                                    <apex:repeat
+                                      value="{!consignee.referenceNumbers}"
+                                      var="refNumber"
+                                    >
+                                      <div>
+                                        <b>{!refNumber.strRefNumber}</b>
+                                      </div>
+                                    </apex:repeat>
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </apex:repeat>
+                  </td>
+                  <td class="row-right key-border-around">
+                    <apex:repeat
+                      value="{!objBolView.forwarderLst}"
+                      var="forwarder"
+                    >
+                      <table>
+                        <tr>
+                          <td rowspan="2" valign="top">
+                            <p
+                              class="p-padding-5-around"
+                              style="padding-top: 0px"
+                            >
+                              <span class="bol-rel-label">
+                                <b
+                                  >(6) FORWARDING AGENT (Complete Name, Address
+                                  &amp; Zipcode)</b
+                                >
+                              </span>
+                              <span>
+                                <br />&nbsp;
+                                <br />
+                              </span>
+                              <span>
+                                <b
+                                  >{!forwarder.name}
+                                  <br /> {!forwarder.addressLine1}
+                                  <br /> {!forwarder.addressLine2}
+                                  <br /> {!forwarder.addressLine3}
+                                  <br /> {!forwarder.addressLine4}
+                                </b>
+                              </span>
+                            </p>
+                          </td>
+                          <td>
+                            <table>
+                              <tr>
+                                <td
+                                  class="padding-5-around"
+                                  style="
+                                    border-left: solid 1px #ccc;
+                                    border-bottom: solid 1px #ccc;
+                                  "
+                                >
+                                  <span class="bol-rel-label no-wrap">
+                                    <b>FMC NO.</b>
+                                  </span>
+                                  <span>
+                                    <br />&nbsp;
+                                    <br />
+                                  </span>
+                                  <span>
+                                    <b>{!forwarder.FMCNumber} </b>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="padding-5-around"
+                                  style="
+                                    border-left: solid 1px #ccc;
+                                    border-bottom: solid 1px #ccc;
+                                  "
+                                >
+                                  <span class="bol-rel-label no-wrap">
+                                    <b>CHB NO.</b>
+                                  </span>
+                                  <span>
+                                    <br />&nbsp;
+                                    <br />
+                                  </span>
+                                  <span>
+                                    <b>{!forwarder.CHBNumber} </b>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </apex:repeat>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row3">
+            <td class="row3">
+              <table class="row3">
+                <tr>
+                  <td class="row-left key-border-around" valign="top">
+                    <apex:repeat
+                      value="{!objBolView.notifyPartyLst}"
+                      var="notifyParty"
+                    >
+                      <table>
+                        <tr>
+                          <td rowspan="2" valign="top">
+                            <p
+                              class="p-padding-5-around"
+                              style="padding-top: 0px"
+                            >
+                              <span class="bol-rel-label">
+                                <b
+                                  >(7) NOTIFY PARTY (Complete Name, Address
+                                  &amp; Zipcode)</b
+                                >
+                              </span>
+                              <span>
+                                <br />&nbsp;
+                                <br />
+                              </span>
+                              <span>
+                                <b
+                                  >{!notifyParty.name}
+                                  <br /> {!notifyParty.addressLine1}
+                                  <br /> {!notifyParty.addressLine2}
+                                  <br /> {!notifyParty.addressLine3}
+                                  <br /> {!notifyParty.addressLine4}
+                                </b>
+                              </span>
+                            </p>
+                          </td>
+                          <td>
+                            <table>
+                              <tr>
+                                <td
+                                  class="padding-5-around"
+                                  style="
+                                    border-left: solid 1px #ccc;
+                                    border-bottom: solid 1px #ccc;
+                                  "
+                                >
+                                  <span class="bol-rel-label no-wrap">
+                                    <b>REFERENCE NO.</b>
+                                  </span>
+                                  <span>
+                                    <br />&nbsp;
+                                    <br />
+                                  </span>
+                                  <span>
+                                    <apex:repeat
+                                      value="{!notifyParty.referenceNumbers}"
+                                      var="refNumber"
+                                    >
+                                      <div>
+                                        <b>{!refNumber.strRefNumber}</b>
+                                      </div>
+                                    </apex:repeat>
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </apex:repeat>
+                  </td>
+                  <td class="row-right key-border-around">
+                    <apex:outputPanel
+                      rendered="{!IF((ISBLANK(objBolView.routingInstructions) == false), true, false)}"
+                    >
+                      <table>
+                        <tr>
+                          <td rowspan="2" valign="top">
+                            <p
+                              class="p-padding-5-around"
+                              style="padding-top: 0px"
+                            >
+                              <span class="bol-rel-label">
+                                <b
+                                  >(8) ALSO NOTIFY - ROUTING &amp;
+                                  INSTRUCTIONS</b
+                                >
+                              </span>
+                              <span>
+                                <br />&nbsp;
+                                <br />
+                              </span>
+                              <span>
+                                <b
+                                  >{!objBolView.routingInstructions}
+                                  <br />
+                                </b>
+                              </span>
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </apex:outputPanel>
+                    <apex:outputPanel
+                      rendered="{!IF((ISBLANK(objBolView.routingInstructions) == false),false,true)}"
+                    >
+                      <apex:repeat
+                        value="{!objBolView.alsoNotifyPartyLst}"
+                        var="alsoNotifyParty"
+                      >
+                        <table>
+                          <tr>
+                            <td rowspan="2" valign="top">
+                              <p
+                                class="p-padding-5-around"
+                                style="padding-top: 0px"
+                              >
+                                <span class="bol-rel-label">
+                                  <b
+                                    >(8) ALSO NOTIFY - ROUTING &amp;
+                                    INSTRUCTIONS</b
+                                  >
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+
+                                <span>
+                                  <b
+                                    >{!alsoNotifyParty.name}
+                                    <br /> {!alsoNotifyParty.addressLine1}
+                                    <br /> {!alsoNotifyParty.addressLine2}
+                                    <br /> {!alsoNotifyParty.addressLine3}
+                                    <br /> {!alsoNotifyParty.addressLine4}
+                                  </b>
+                                </span>
+                              </p>
+                            </td>
+                            <td>
+                              <table>
+                                <tr>
+                                  <td
+                                    class="padding-5-around"
+                                    style="
+                                      border-left: solid 1px #ccc;
+                                      border-bottom: solid 1px #ccc;
+                                    "
+                                  >
+                                    <span class="bol-rel-label no-wrap">
+                                      <b>REFERENCE NO.</b>
+                                    </span>
+                                    <span>
+                                      <br />&nbsp;
+                                      <br />
+                                    </span>
+                                    <span>
+                                      <apex:repeat
+                                        value="{!alsoNotifyParty.referenceNumbers}"
+                                        var="refNumber"
+                                      >
+                                        <div>
+                                          <b>{!refNumber.strRefNumber}</b>
+                                        </div>
+                                      </apex:repeat>
+                                    </span>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </apex:repeat>
+                    </apex:outputPanel>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row4">
+            <td class="row4">
+              <table class="row4">
+                <tr>
+                  <td class="row-left key-border-around">
+                    <table>
+                      <tr>
+                        <td
+                          width="65%"
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <table>
+                            <tr>
+                              <td valign="top">
+                                <span class="bol-rel-label">
+                                  <b>(9) VESSEL </b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.vesselName}</span
+                                  >
+                                </b>
+                              </td>
+                              <td valign="top">
+                                <span class="bol-rel-label">
+                                  <b>VOYAGE</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.voyageNumber}</span
+                                  >
+                                </b>
+                              </td>
+                              <td valign="top">
+                                <span class="bol-rel-label">
+                                  <b>FLAG</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span style="white-space: normal"
+                                    >{!objBolView.routingDetails.flag}</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td
+                          width="35%"
+                          class="padding-5-around"
+                          style="border-bottom: solid 1px #ccc"
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(10) PLACE OF RECEIPT</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.placeOfReciept}</span
+                                  >
+                                </b>
+                                <br />&nbsp;
+                                <br />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(13) PORT OF LOADING</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.portOfLoading}</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="border-bottom: solid 1px #ccc"
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(14) LOADING PIER / TERMINAL</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.loadingPier}</span
+                                  >
+                                </b>
+                                <br />&nbsp;
+                                <br />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="row-right key-border-around">
+                    <table>
+                      <tr>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(11) RELAY POINT </b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.relayPoint}</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="border-bottom: solid 1px #ccc"
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b
+                                    >(12) POINT &amp; COUNTRTY OF ORIGIN OF
+                                    GOODS</b
+                                  >
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.pointAndCountry}</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          class="padding-5-around"
+                          style="
+                            border-right: solid 1px #ccc;
+                            border-bottom: solid 1px #ccc;
+                          "
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(16) PORT OF DISCHARGE </b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.portOfDischarge}&nbsp;</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td
+                          class="padding-5-around"
+                          style="border-bottom: solid 1px #ccc"
+                        >
+                          <table>
+                            <tr>
+                              <td>
+                                <span class="bol-rel-label">
+                                  <b>(17) PLACE OF DELIVERY</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <b>
+                                  <span
+                                    >{!objBolView.routingDetails.placeOfDelivery}&nbsp;</span
+                                  >
+                                </b>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row5">
+            <td class="row5">
+              <table class="row5">
+                <tr>
+                  <td class="row-full key-border-around" valign="top">
+                    <table>
+                      <tr>
+                        <td valign="top">
+                          <p
+                            class="p-padding-5-around"
+                            style="padding-top: 0px"
+                          >
+                            <span class="bol-rel-label">
+                              <b>(18) ORIGINALS TO BE RELEASED AT</b>
+                            </span>
+                            <span>
+                              <br />&nbsp;
+                              <br />
+                            </span>
+                            <span style="font-size: 10px; font-weight: bold">
+                              <b
+                                >{!objBolView.routingDetails.originalsToBeReleasedAt}</b
+                              >
+                            </span>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row6">
+            <td class="row6">
+              <table class="row6">
+                <tr>
+                  <td
+                    class="centered key-border-around padding-5-around"
+                    style="border-bottom: solid 1px #ccc"
+                  >
+                    <span class="bol-rel-label">
+                      <b>PARTICULARS FURNISHED BY SHIPPER</b>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table style="text-align: left">
+                      <tr>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(19) MARKS &amp; NOS. /CONTAINER NO.</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>SEAL NO.</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(20) HTS NO.</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(21) NO. OF TRL / CONTS. / PKGS.</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(22) DESCRIPTON OF CARGO</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(23) WEIGHT (LBS)</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(24) VGM WEIGHT (LBS)</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>(25) TEMP. (F)</b>
+                          </span>
+                        </th>
+                        <th class="key-border-around padding-5-around">
+                          <span class="bol-rel-label">
+                            <b>CARGO VALUE (USD)</b>
+                          </span>
+                        </th>
+                      </tr>
+                      <apex:repeat
+                        value="{!objBolView.cargoEquipment}"
+                        var="cargoEquipment"
+                      >
+                        <tr>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <b
+                              >{!IF(OR(ISBLANK(cargoEquipment.containerNO1),(cargoEquipment.containerNO1
+                              == null)),'',cargoEquipment.containerNO1+'-
+                              ')}{!cargoEquipment.containerNO2}</b
+                            >
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <apex:repeat
+                              value="{!cargoEquipment.sealNumbers}"
+                              var="sealNumber"
+                            >
+                              <div><b>{!sealNumber.strSealNumber}</b></div>
+                            </apex:repeat>
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <apex:repeat
+                              value="{!cargoEquipment.htsNumbers}"
+                              var="htsNumber"
+                            >
+                              <div><b>{!htsNumber.strHTSNoandDesc}</b></div>
+                            </apex:repeat>
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <b>{!cargoEquipment.quantity}</b>
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <b>{!cargoEquipment.cargoDescription}</b>
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <b>{!cargoEquipment.weightLBS}</b>
+                          </td>
+                          <td class="key-border-around-no-bb padding-5-around">
+                            <b>{!cargoEquipment.vgmweightLBS}</b>
+                          </td>
+                          <td
+                            class="key-border-around-no-bb padding-5-around no-wrap"
+                          >
+                            <b
+                              >{!IF(OR(ISBLANK(cargoEquipment.temperatureF),(cargoEquipment.temperatureF
+                              == null)),'',cargoEquipment.temperatureF+' F')}</b
+                            >
+                          </td>
+                          <td
+                            class="key-border-around-no-bb padding-5-around no-wrap"
+                          >
+                            <b
+                              >{!IF(OR(ISBLANK(cargoEquipment.cargovalue),(cargoEquipment.cargovalue
+                              == null)),'','$ '+cargoEquipment.cargovalue)}</b
+                            >
+                          </td>
+                        </tr>
+                      </apex:repeat>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row7">
+            <td class="row7">
+              <table class="row7">
+                <tr>
+                  <td class="row-full key-border-around" valign="top">
+                    <table>
+                      <tr>
+                        <td valign="top">
+                          <p
+                            class="p-padding-5-around"
+                            style="padding-top: 0px"
+                          >
+                            <span class="bol-rel-label">
+                              <b>(25) HAZARDOUS DECLARATION</b>
+                            </span>
+                            <span>
+                              <br />&nbsp;
+                              <br />
+                            </span>
+                            <span style="font-size: 10px; font-weight: bold">
+                              THIS IS TO CERTIFY THAT THE ABOVE NAMED MATERIALS
+                              ARE PROPERLY PACKED, LOADED, CLASSIFIED,
+                              DESCRIBED, MARKED, LABELLED/ PLACED, DESIGNATED
+                              AND ARE IN PROPER CONDITION FOR TRANSPORTATION
+                              ACCORDING TO ALL APPLICABLE REGULATINS AS
+                              SPECIFIED IN CLAUSE 26. PROVIDE SHIPPERS EMERGENCY
+                              CONTACT NAME AND TELEPHONE NUMBER INCLUDING AREA
+                              CODE IN THE SPACE PROVIDED.
+                            </span>
+                          </p>
+                        </td>
+                        <td>
+                          <table>
+                            <tr>
+                              <td
+                                class="padding-5-around"
+                                style="
+                                  border-left: solid 1px #ccc;
+                                  border-bottom: solid 1px #ccc;
+                                "
+                              >
+                                <span class="bol-rel-label">
+                                  <b>CONTACT NAME</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <span>
+                                  <b>{!objBolView.emergencyContactName}</b>
+                                </span>
+                              </td>
+                              <td
+                                class="padding-5-around"
+                                style="
+                                  border-left: solid 1px #ccc;
+                                  border-bottom: solid 1px #ccc;
+                                "
+                              >
+                                <span class="bol-rel-label">
+                                  <b>TELEPHONE NO.</b>
+                                </span>
+                                <span>
+                                  <br />&nbsp;
+                                  <br />
+                                </span>
+                                <span>
+                                  <b>{!objBolView.emergencyContactPhone}</b>
+                                </span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                class="padding-5-around"
+                                style="
+                                  border-left: solid 1px #ccc;
+                                  border-bottom: solid 1px #ccc;
+                                "
+                                colspan="2"
+                              >
+                                <span class="bol-rel-label">
+                                  <b>SIGNATURE:</b>
+                                </span>
+                                &nbsp;
+                                <span>
+                                  <b></b>
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <p
+                            class="p-padding-5-around"
+                            style="padding-top: 0px"
+                          >
+                            <span class="bol-rel-label">
+                              <b>CLAUSES</b>
+                            </span>
+                            <span>
+                              <br />&nbsp;
+                              <br />
+                            </span>
+                            <span style="font-size: 10px; font-weight: bold">
+                              IMPORTANT: CARRIER HAS MADE IT CLEAR IN THE
+                              EXEMPTION CLAUSE ( CLAUSE 18 ON THE BACK OF THIS
+                              BILL ), THAT IT HAS NO LIABILITY FOR HIJACKING AND
+                              ARMED ROBBERIES DESIGNATED AND ARE IN PROPER
+                              CONDITION FOR TRANSPORTATION ACCORDING TO ALL
+                              APPLICABLE REGULATIONS AS SPECIFIED IN CLAUSE 26.
+                              PROVIDE SHIPPERS EMERGENCY CONTACT NAME AND
+                              TELEPHONE NUMBER INCLUDING AREA CODE IN THE SPACE
+                              PROVIDED.
+                            </span>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr class="row8">
+            <td class="row8">
+              <table class="row8">
+                <tr>
+                  <td
+                    class="centered key-border-around padding-5-around"
+                    style="border-bottom: solid 1px #ccc; padding: 5px"
+                  >
+                    <span class="bol-rel-label">
+                      <b>INVOICING INSTRUCTIONS</b>
+                    </span>
+                  </td>
+                </tr>
+                <apex:repeat value="{!lstInvoices}" var="chargeLine">
+                  <tr>
+                    <td>
+                      <table style="text-align: left">
+                        <tr>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>FREIGHT CHARGES</b>
+                              <br />
+                              <!--<apex:outputText value="{!chargeLine.label}" escape="false"/>-->
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>RATED AS <br />(IN USD)</b>
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>PER</b>
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>RATE TARIFFS</b>
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>PAYMENT TERMS</b>
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>PAYER NAME</b>
+                            </span>
+                          </th>
+                          <th class="key-border-around padding-5-around">
+                            <span class="bol-rel-label">
+                              <b>PAYMENT LOCATION</b>
+                            </span>
+                          </th>
+                          <th
+                            class="key-border-around padding-5-around"
+                            style="width: 100px"
+                          >
+                            <span class="bol-rel-label no-wrap">
+                              <b>VALUE <br />(IN USD)</b>
+                            </span>
+                          </th>
+                        </tr>
+
+                        <apex:repeat value="{!chargeLine.value}" var="charge">
+                          <tr>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>
+                                <span style="text-transform: uppercase"
+                                  >{!charge.strFreightCharge}</span
+                                >
+                              </b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>$&nbsp;{!charge.strRatedAs}</b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>{!charge.strPer}</b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>$&nbsp;{!charge.strRateTarrif}</b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>
+                                <apex:outputLabel
+                                  rendered="{!IF((charge.strPaymentTerm == 'CC'),true,false)}"
+                                >
+                                  COLLECT
+                                </apex:outputLabel>
+                              </b>
+                              <b>
+                                <apex:outputLabel
+                                  rendered="{!IF((charge.strPaymentTerm == 'PP'),true,false)}"
+                                >
+                                  PREPAID
+                                </apex:outputLabel>
+                              </b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>{!charge.strPayerName}</b>
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b style="text-transform: uppercase !important"
+                                >{!charge.strPaymentLocation}</b
+                              >
+                            </td>
+                            <td
+                              class="key-border-around-no-bb padding-5-around text-uppercase"
+                            >
+                              <b>$&nbsp;{!charge.strValue}</b>
+                            </td>
+                          </tr>
+                        </apex:repeat>
+
+                        <!--<table>
+                                                    <tr>
+                                                        <td class="padding-5-around">
+                                                            <span class="bol-rel-label">
+                                                                <b>TOTALS : </b>
+                                                            </span>
+                                                        </td>
+                                                        <td class="padding-5-around" style="border-left:solid 1px #ccc; border-bottom:solid 1px #ccc;">
+                                                            <span class="bol-rel-label">
+                                                                <b>$ {!chargeLine.amount}</b>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table> -->
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      colspan="8"
+                      style="
+                        border-left: 1px solid #ccc;
+                        border-right: 1px solid #ccc;
+                        border-top: 1px solid #ccc;
+                      "
+                    >
+                      &nbsp;
+                    </td>
+                  </tr>
+                </apex:repeat>
+                <!--<table>
+                                    <tr>
+                                        <td class="padding-5-around">
+                                            <span class="bol-rel-label">
+                                                <b>TOTALS : </b>
+                                            </span>
+                                        </td>
+                                        <td class="padding-5-around" style="border-left:solid 1px #ccc; border-bottom:solid 1px #ccc;">
+                                            <span class="bol-rel-label">
+                                                <b>$ {!totalSum}</b>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                </table> -->
+              </table>
+            </td>
+          </tr>
+          <tr class="row9">
+            <td class="row9">
+              <table class="row9">
+                <tr>
+                  <td class="row-full key-border-around" valign="top">
+                    <table style="table-layout: fixed">
+                      <tr>
+                        <td width="75%" valign="top">
+                          <p
+                            class="p-padding-5-around"
+                            style="padding-top: 0px"
+                          >
+                            <span style="font-size: 10px">
+                              {!$Label.CC_BOLPDFText}
+                            </span>
+                          </p>
+                        </td>
+                        <td width="25%">
+                          <table style="table-layout: fixed">
+                            <tr>
+                              <td class="padding-5-around">
+                                <span class="bol-rel-label">
+                                  <b>TOTALS : </b>
+                                </span>
+                              </td>
+                              <td
+                                class="padding-5-around no-wrap"
+                                style="
+                                  border-left: solid 1px #ccc;
+                                  border-bottom: solid 1px #ccc;
+                                  width: 100px;
+                                "
+                              >
+                                <span>
+                                  <b>$ {!totalSum}</b>
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <p
+                            class="p-padding-5-around"
+                            style="padding-top: 0px"
+                          >
+                            <span class="bol-rel-label">
+                              <b>DECLARATION :</b>
+                            </span>
+                            <span>
+                              <br />&nbsp;
+                              <br />
+                            </span>
+                            <span
+                              style="font-size: 10px; text-transform: uppercase;t"
+                            >
+                              {!$Label.CC_BOLPDFDisclaimer}
+                            </span>
+                          </p>
+                          <p class="p-padding-5-around">
+                            <!--<span>DATED : </span><span style="font-weight: bold"><apex:outputText value="{0,date}"><apex:param value="{!Today}" /></apex:outputText></span><br/><br/>-->
+                            <span>DATED : </span>
+                            <span style="font-weight: bold"></span>
+                            <br />
+                            <br />
+                            <span>SIGNED ON BEHALF OF CARRIER : </span>
+                            <span style="font-weight: bold"></span>
+                            <br />
+                            <br />
+                            <span>BY : </span>
+                            <span style="font-weight: bold"></span>
+                            <br />
+                            <br />
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</apex:page>

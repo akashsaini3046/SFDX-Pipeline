@@ -1,0 +1,18 @@
+.THIS .revenueValueCSS {
+  color: #ffb75d;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.THIS .font_size {
+  font-size: 12px;
+}
+
+.THIS .font_weight_bold {
+  font-weight: bold;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}

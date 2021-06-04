@@ -1,0 +1,113 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <aura:attribute name="data" type="object"></aura:attribute>
+  <div class="row" id="VesselRow">
+    <div aura:id="routeDetails" class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div class="row">
+            <div class="col-sm-4">
+              <span class="bol-rel-label">(9) VESSEL</span><br />
+              <b>{!v.data.routingDetails.vesselName}&nbsp;</b>
+              <br />&nbsp;
+            </div>
+            <div class="col-sm-4">
+              <span class="bol-rel-label">VOYAGE</span><br />
+              <b>{!v.data.routingDetails.voyageNumber}&nbsp;</b>
+            </div>
+            <div class="col-sm-4">
+              <span class="bol-rel-label">FLAG</span><br />
+              <b>{!v.data.routingDetails.flag}&nbsp;</b>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div aura:id="placeReceipt">
+            <div>
+              <span class="bol-rel-label">(10) PLACE OF RECEIPT</span><br />
+              <b>{!v.data.routingDetails.placeOfReciept}&nbsp;</b>
+              <br />&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div
+          aura:id="portOfLoading"
+          class="col-sm-6 bol-rel-boxborder-4black bol-padding4"
+        >
+          <div>
+            <span class="bol-rel-label">(13) PORT OF LOADING</span><br />
+            <b>{!v.data.routingDetails.portOfLoading}&nbsp;</b>
+          </div>
+        </div>
+        <div
+          aura:id="loadingPier"
+          class="col-sm-6 bol-rel-boxborder-4black bol-padding4"
+        >
+          <div>
+            <span class="bol-rel-label">(14) LOADING PIER/TERMINAL</span><br />
+            <b>{!v.data.routingDetails.loadingPier}&nbsp;</b>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div aura:id="relayPoint">
+            <div>
+              <span class="bol-rel-label">(11) RELAY POINT</span><br />
+              <b>{!v.data.routingDetails.relayPoint}&nbsp;</b>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div aura:id="originGoods">
+            <div>
+              <span class="bol-rel-label"
+                >(12) POINT &amp; COUNTRY OF ORIGIN OF GOODS</span
+              ><br />
+              <b>{!v.data.routingDetails.pointAndCountry}&nbsp;</b>
+              <br />&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div aura:id="portOfDischarge">
+            <div>
+              <span class="bol-rel-label">(16) PORT OF DISCHARGE</span><br />
+              <b>{!v.data.routingDetails.portOfDischarge}&nbsp;</b>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 bol-rel-boxborder-4black bol-padding4">
+          <div aura:id="deliveryPlace">
+            <div>
+              <span class="bol-rel-label">(17) PLACE OF DELIVERY</span><br />
+              <b>{!v.data.routingDetails.placeOfDelivery}&nbsp;</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      id="additionalDetails"
+      class="col-sm-12 bol-rel-boxborder-4black bol-padding4"
+    >
+      <div>
+        <span class="bol-rel-label">(18) ORIGINALS TO BE RELEASED AT</span
+        ><br />
+        <b>{!v.data.routingDetails.originalsToBeReleasedAt}&nbsp;</b>
+      </div>
+    </div>
+  </div>
+</aura:component>

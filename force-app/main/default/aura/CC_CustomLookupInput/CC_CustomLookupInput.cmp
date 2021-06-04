@@ -1,0 +1,169 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes,force:hasRecordId"
+  access="global"
+  controller="CC_CustomLookupCtrl"
+>
+  <aura:attribute name="placeholder" type="String" default="" />
+  <aura:attribute name="SearchKeyWord" type="String" />
+  <aura:attribute name="fieldLabel" type="String" default="" />
+  <aura:attribute name="loading" type="Boolean" default="false" />
+  <aura:attribute name="functionality" type="String" default="" />
+  <aura:attribute name="Message" type="String" default="Search Result..." />
+  <aura:attribute name="buttonText" type="String" default="" />
+  <aura:attribute name="listOfSearchRecords" type="List" />
+  <aura:attribute name="requiredInput" type="Boolean" default="false" />
+  <aura:attribute name="showmessageDialog" type="boolean" default="false" />
+  <aura:attribute name="clickedItem" type="String" />
+  <aura:attribute name="clickedItemId" type="String" />
+  <aura:attribute name="isDisabled" type="boolean" default="false" />
+  <aura:attribute name="dependentId" type="String" />
+  <aura:attribute name="index" type="String" default="" />
+  <aura:attribute name="accountType" type="String" default="" />
+  <aura:attribute name="displayType" type="String" default="Name" />
+  <aura:attribute name="showCreateProspect" type="boolean" default="false" />
+  <aura:attribute name="showCreateAddress" type="boolean" default="false" />
+  <aura:attribute name="showCreateContact" type="boolean" default="false" />
+  <aura:attribute
+    name="hasCreateProspectButton"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute
+    name="hasCreateAddressButton"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute
+    name="hasCreateContactButton"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute name="createAccountButtonLabel" type="String" default="" />
+  <aura:attribute name="createAddressButtonLabel" type="String" default="" />
+  <aura:attribute name="createContactButtonLabel" type="String" default="" />
+  <!--===============values for warning input==============================-->
+  <aura:attribute
+    name="oldValue"
+    type="String"
+    description="This stores the previous value"
+  />
+  <aura:attribute
+    name="isWarned"
+    type="boolean"
+    description="is Warned"
+    default="false"
+  />
+  <aura:attribute
+    name="showWarning"
+    type="boolean"
+    description="Change the things"
+    default="false"
+    access="private"
+  />
+  <aura:attribute name="warningMessage" type="string" access="private" />
+
+  <aura:registerEvent name="WarningInputChanged" type="c:WarningInputChanged" />
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:method name="reInit" action="{!c.doInit}" />
+
+  <div
+    aura:id="searchRes"
+    class="slds-form-element slds-lookup slds-is-close"
+    data-select="single"
+  >
+    <div class="slds-form-element__control">
+      <div aura:id="lookupField">
+        <div class="remove-close-icon" onkeyup="{! c.keyPressController}">
+          <aura:if isTrue="{!!v.isWarned}">
+            <lightning:input
+              label="{!v.fieldLabel}"
+              aura:id="inputSearch"
+              placeholder="{!v.placeholder}"
+              aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"
+              value="{!v.SearchKeyWord}"
+              type="search"
+              onchange="{!c.onChangeSearchText}"
+              onblur="{!c.onBlurInputSearch}"
+              required="{!v.requiredInput}"
+              disabled="{!v.isDisabled}"
+              autocomplete="off"
+            />
+            <aura:if
+              isTrue="{!if( and(!v.isDisabled, and(v.SearchKeyWord != null, v.SearchKeyWord != '')), true, false)}"
+            >
+              <i class="clear-field" onclick="{!c.clearInputValue}"></i>
+            </aura:if>
+          </aura:if>
+          <aura:if isTrue="{!v.isWarned}">
+            <!-- ==========This is for Warning Lookup========================-->
+            <label>
+              <aura:if isTrue="{!v.requiredInput}">
+                <span class="slds-required">*</span>
+              </aura:if>
+              {!v.fieldLabel}</label
+            >
+            <br />
+            <lightning:input
+              label="{!v.fieldLabel}"
+              aura:id="inputSearch"
+              placeholder="{!v.placeholder}"
+              aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"
+              variant="label-hidden"
+              value="{!v.SearchKeyWord}"
+              type="search"
+              onchange="{!c.onChangeSearchText}"
+              class="{#(v.SearchKeyWord != v.oldValue)?'warninginput' :''}"
+              onblur="{!c.onBlurInputSearch}"
+              required="{!v.requiredInput}"
+              disabled="{!v.isDisabled}"
+              autocomplete="off"
+            />
+            <aura:if isTrue="{!v.showWarning}">
+              <i
+                onmouseover="{!c.toggleWarned}"
+                onclick="{!c.resetWarnedValue}"
+                onmouseout="{!c.toggleWarned}"
+                class="bol-booking-refresh"
+              ></i>
+              <div class="tooltipdiv slds-popover toggle" aura:id="tooltip">
+                <span
+                  ><lightning:formattedRichText value="{!v.warningMessage}"
+                /></span>
+              </div>
+            </aura:if>
+          </aura:if>
+        </div>
+      </div>
+    </div>
+    <div class="slds-lookup__menu slds" id="lookup">
+      <div class="slds-lookup__item--label slds-text-body--small">
+        {!v.resultMessage}
+      </div>
+      <aura:if isTrue="{! v.loading }">
+        <lightning:spinner alternativeText="Loading" size="small" />
+      </aura:if>
+      <aura:if isTrue="{!v.showmessageDialog}">
+        <div class="slds-lookup__item--label slds-text-body--small">
+          <div class="result-modal">{!v.Message}</div>
+        </div>
+      </aura:if>
+      <ul class="slds-lookup__list" role="listbox">
+        <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+          <c:CC_CustomLookupResult
+            item="{!singleRec}"
+            functionality="{!v.functionality}"
+            index="{!v.index}"
+            clickedItem="{!v.clickedItem}"
+            clickedItemId="{!v.clickedItemId}"
+            accountType="{!v.accountType}"
+            displayType="{!v.displayType}"
+          />
+        </aura:iteration>
+      </ul>
+    </div>
+  </div>
+  <aura:method name="doValidityCheck" action="{!c.doValidate}" access="public">
+    <aura:attribute name="isValid" type="boolean" default="false" />
+  </aura:method>
+</aura:component>

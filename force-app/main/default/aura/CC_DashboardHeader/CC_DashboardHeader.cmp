@@ -1,0 +1,70 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+  controller="CC_HeaderPanelController"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                                                                                                               $Resource.jquery224 , 
+                                                                                                               $Resource.customJs , 
+                                                                                                               $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                                                                                                               }"
+  />
+  <ltng:require styles="{! $Resource.NewStyle}" />
+  <ltng:require styles="{!$Resource.Crowley_theme}" />
+  <aura:attribute name="LastName" type="String" />
+  <aura:attribute name="FirstName" type="String" />
+  <aura:attribute name="UserId" type="String" />
+  <aura:attribute name="MenuItemOne" type="String" default="Logout" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.toggleGlobalSearch}"
+  />
+  <div class="header-div slds-no-print">
+    <div class="hamburger-menu">
+      <a onclick="{!c.expandCollapseSection}">
+        <img
+          class="button-left"
+          alt="Menu"
+          src="{!$Resource.IconMenu}"
+          title="Crowley Menu"
+        />
+      </a>
+    </div>
+    <div class="logo"></div>
+    <div class="header-search without-label" aura:id="searchDiv">
+      <c:CC_CustomGlobalSearch />
+    </div>
+    <div class="header-icons slds-no-print">
+      <div class="user-group">
+        <i class="user-avatar"></i>
+        <div class="pull-left">
+          <div class="user-name">{!v.FirstName}&nbsp;{!v.LastName}</div>
+        </div>
+        <div class="pull-left">
+          <lightning:buttonMenu
+            aura:id="menu"
+            onselect="{! c.handleSelect }"
+            alternativeText="Show menu"
+            iconSize="xx-small"
+          >
+            <lightning:menuItem value="Logout" label="{!v.MenuItemOne}" />
+          </lightning:buttonMenu>
+        </div>
+      </div>
+    </div>
+    <div class="header-icons">
+      <a href="javascript:void(0)" class="bell"></a>
+    </div>
+    <div class="header-icons mob-header-search">
+      <a
+        class="search-icon"
+        aura:id="search"
+        onclick="{!c.togglesearchBox}"
+      ></a>
+    </div>
+  </div>
+</aura:component>

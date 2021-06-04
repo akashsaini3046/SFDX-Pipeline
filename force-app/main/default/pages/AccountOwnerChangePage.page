@@ -1,0 +1,1492 @@
+<!--
+* Name: AccountOwnerChangePage
+* Purpose: This page is used to change the account owner. If the owner change has already been requested, then history along with the timestamp of each approval step is displayed.
+* Author: Nagarro
+-->
+<apex:page
+  standardController="Account"
+  lightningStylesheets="true"
+  extensions="AccountOwnerChangeController"
+  action="{!onLoad}"
+>
+  <script>
+    (function () {
+      document.body.style.backgroundColor = "#C9C9C9";
+    })();
+
+    //This method overrides the standard lookup
+    function openLookup(baseURL, width, modified, searchParam) {
+      var originalbaseURL = baseURL;
+      var originalwidth = width;
+      var originalmodified = modified;
+      var originalsearchParam = searchParam;
+      var lookupType = baseURL.substr(baseURL.length - 18, 18);
+      if (modified == "1") baseURL = baseURL + searchParam;
+      var isCustomLookup = false;
+
+      // Following "001" is the lookup type for Account object so change this as per your standard or custom object
+      if (lookupType == "StandardUserLookup") {
+        var urlArr = baseURL.split("&");
+        var txtId = "";
+        if (urlArr.length > 2) {
+          urlArr = urlArr[1].split("=");
+          txtId = urlArr[1];
+        }
+        // Following is the url of Custom Lookup page. You need to change that accordingly
+        baseURL = "/apex/CustomAccountLookup?txt=" + txtId;
+
+        // Following is the id of apex:form control "myForm". You need to change that accordingly
+        baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+        if (modified == "1") {
+          baseURL = baseURL + "&lksearch=" + searchParam;
+        }
+
+        // Following is the ID of inputField that is the lookup to be customized as custom lookup
+        if (txtId.indexOf("Account") > -1) {
+          isCustomLookup = true;
+        }
+      }
+
+      if (isCustomLookup == true) {
+        openPopup(
+          baseURL,
+          "lookup",
+          350,
+          480,
+          "width=" +
+            width +
+            ",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no",
+          true
+        );
+      } else {
+        if (modified == "1")
+          originalbaseURL = originalbaseURL + originalsearchParam;
+        openPopup(
+          originalbaseURL,
+          "lookup",
+          350,
+          480,
+          "width=" +
+            originalwidth +
+            ",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no",
+          true
+        );
+      }
+    }
+  </script>
+  <style>
+    select[id*="Account_mlktp"] {
+      display: none !important;
+    }
+
+    label {
+      margin: 5px 0px;
+    }
+
+    j_id0:myform:j_id3:account_mlktp {
+      display: none;
+    }
+
+    .outputLabelFont {
+      font-family: "Arial";
+      font-size: 9pt;
+    }
+
+    .textInsideTable {
+      font-family: "Arial";
+      font-size: 9pt;
+      padding-left: 5px;
+      padding-top: 8px;
+      padding-bottom: -5px;
+    }
+
+    .td2 {
+      border: 1px solid #dddbda;
+      padding-left: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .tableLeftRightMargins {
+      margin-left: 15px;
+      margin-right: 5px;
+    }
+
+    .outputPanelLeftRightMargins {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .borderStyle {
+      border-width: 1px;
+      border-color: #c9c9c9;
+    }
+
+    .topBorderStyle {
+      border-top-style: solid;
+      border-top-width: 11px;
+      border-color: #c9c9c9;
+    }
+
+    .approvalSubmittedFont {
+      font-family: "Arial";
+      font-size: 9pt;
+    }
+
+    .checkboxTopMargin {
+      margin-top: -10px;
+    }
+
+    .account-owner-container .bPageBlock {
+      background: none;
+      border: 0;
+      padding: 0 !important;
+      box-shadow: none;
+    }
+
+    .white-wrapper {
+      margin-bottom: 1rem;
+      border: 1px solid rgb(221, 219, 218);
+      border-radius: 0.25rem;
+      background: rgb(255, 255, 255);
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+      background-clip: padding-box;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .m-r-5 {
+      margin-right: 5px;
+    }
+
+    .m-l-5 {
+      margin-left: 5px;
+    }
+
+    .steps {
+      margin: 0;
+      padding: 0;
+    }
+
+    .steps li {
+      display: inline-block;
+      list-style: none;
+      min-width: 190px;
+      background: #ecebea;
+      margin-right: 2px;
+      padding: 10px;
+      border-radius: 3px;
+    }
+
+    .steps li .span-bold {
+      font-weight: bold;
+    }
+
+    /* .steps li .right-tringle {
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-left: 100px solid red;
+        border-bottom: 50px solid transparent;
+        } */
+
+    .steps li.active {
+      background: #3f1e1d;
+      color: #fff;
+    }
+
+    .steps li.approved {
+      background: #d01e2d;
+      color: #fff;
+    }
+
+    .owner-details-table {
+      padding: 10px 0 10px 60px;
+    }
+
+    .owner-details-table table {
+      border: 0;
+    }
+
+    .owner-details-table table td {
+      padding: 5px;
+      min-width: 240px;
+    }
+
+    .owner-details-table table .label-row td {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .owner-details-table table .data-row td {
+      font-size: 14px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .two-colum-layout {
+      float: left;
+      width: 100%;
+    }
+
+    .two-colum-layout .m-r-5 {
+      width: calc(46% - 5px);
+      float: left;
+      min-height: 240px;
+      box-sizing: border-box;
+    }
+
+    .two-colum-layout .m-l-5 {
+      width: calc(30% - 5px);
+      float: left;
+      min-height: 240px;
+      box-sizing: border-box;
+    }
+    .notes-colum {
+      width: calc(24% - 5px);
+      float: right;
+      min-height: 240px;
+      box-sizing: border-box;
+    }
+    .notes-label {
+      font-size: 13px;
+      background: #f3f2f2;
+      padding: 10px;
+      font-weight: bold;
+      color: rgb(22, 50, 92);
+      margin-bottom: 7px;
+    }
+    .notes-text-area textarea {
+      width: 100%;
+    }
+    .clearfix {
+      clear: both;
+      float: none;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+    .page-title {
+      display: block;
+      margin-bottom: 0.75rem;
+      padding: 1rem;
+      border-bottom: 1px solid rgb(221, 219, 218);
+      border-radius: 0.25rem;
+      background: rgb(243, 242, 242);
+      background-clip: padding-box;
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+      border: 1px solid rgb(221, 219, 218);
+    }
+    .custom-breadcrumb {
+      list-style: none;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    .custom-breadcrumb li {
+      text-decoration: none;
+      padding: 10px 0 10px 50px;
+      position: relative;
+      display: block;
+      float: left;
+    }
+    .custom-breadcrumb li:after {
+      content: " ";
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+      position: absolute;
+      top: 50%;
+      margin-top: -50px;
+      left: 100%;
+      z-index: 2;
+    }
+    .custom-breadcrumb li:nth-child(1) {
+      border-radius: 3px 0 0 3px;
+      padding-left: 20px;
+    }
+    .custom-breadcrumb li .span-bold {
+      font-weight: bold;
+    }
+    .custom-breadcrumb li:before {
+      content: " ";
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 50px solid transparent;
+      border-bottom: 50px solid transparent;
+      border-left: 30px solid white;
+      position: absolute;
+      top: 50%;
+      margin-top: -50px;
+      margin-left: 1px;
+      left: 100%;
+      z-index: 1;
+    }
+    .active-crumb {
+      background-color: #3f1e1d;
+      color: white;
+    }
+
+    .active-crumb:after {
+      border-left: 30px solid #3f1e1d;
+    }
+
+    .gray-crumb {
+      background-color: #ecebea;
+    }
+
+    .gray-crumb:after {
+      border-left: 30px solid #ecebea;
+    }
+
+    .approved-crumb:after {
+      border-left: 30px solid #d01e2d;
+    }
+
+    .approved-crumb {
+      background: #d01e2d;
+      color: white;
+    }
+
+    .custPopup {
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      left: 50%;
+      padding: 0;
+      position: absolute;
+      width: 500px;
+      margin-left: -250px;
+      top: 100px;
+      border-radius: 3px;
+    }
+
+    .popupBackground {
+      background-color: black;
+      opacity: 0.6;
+      filter: alpha(opacity=20);
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 9998;
+    }
+
+    .dlg-header {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: start;
+      -ms-flex-align: start;
+      align-items: flex-start;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #e9ecef;
+      border-top-left-radius: 0.3rem;
+      border-top-right-radius: 0.3rem;
+    }
+
+    .modal-title {
+      line-height: 1.5;
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .modal-footer {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: end;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+      padding: 0.5rem 1rem;
+      border-top: 1px solid #e9ecef;
+      background: #f7f7f7;
+    }
+    .modal-body {
+      position: relative;
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+      padding: 1rem;
+    }
+    .modal-body p {
+      margin: 0;
+    }
+  </style>
+  <apex:form id="myForm">
+    <div class="account-owner-container">
+      <apex:pageBlock rendered="{!showApprovalProcess}">
+        <div style="overflow-x: hidden; overflow-y: hidden">
+          <div class="white-wrapper">
+            <div class="page-title">
+              <table cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td>
+                    <apex:image
+                      url="{!$Resource.AccountImage}"
+                      width="36"
+                      height="36"
+                    />
+                  </td>
+                  <td width="10px"></td>
+                  <td>
+                    <table cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td>{!Account.Name}</td>
+                      </tr>
+                      <tr>
+                        <td
+                          style="
+                            font-size: 1.5rem;
+                            font-weight: 700;
+                            line-height: 1.25;
+                          "
+                        >
+                          Approval Process for Changing Account Owner
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="owner-details-table">
+              <apex:outputPanel id="showProposedOwnerAndManager">
+                <table cellspacing="0" cellpadding="0" border="0">
+                  <tr class="label-row">
+                    <td>Existing Owner</td>
+                    <td>Proposed Owner</td>
+                    <td>Existing Owner's Manager</td>
+                    <td>Proposed Owner's Manager</td>
+                  </tr>
+                  <tr class="data-row">
+                    <td>{!Account.Owner.Name }</td>
+                    <td>{!proposedAccountOwner}</td>
+                    <td>{!Account.Owner.Manager.Name }</td>
+                    <td>{!proposedAccountOwnerManager}</td>
+                  </tr>
+                </table>
+              </apex:outputPanel>
+            </div>
+          </div>
+          <apex:pageMessages></apex:pageMessages>
+
+          <div class="white-wrapper">
+            <ul class="custom-breadcrumb">
+              <li class="active-crumb">
+                <span class="span-bold">Step 1 -</span> Change Owner
+                <span class="right-tringle"></span>
+              </li>
+              <li class="gray-crumb">
+                <span class="span-bold">Step 2 -</span> Approval by Existing
+                Owner's Manager <span class="right-tringle"></span>
+              </li>
+              <li class="gray-crumb">
+                <span class="span-bold">Step 3 -</span> Approval by Proposed
+                Owner's Manager <span class="right-tringle"></span>
+              </li>
+              <li class="gray-crumb">
+                <span class="span-bold">Step 4 -</span> Confirmation by
+                Marketing Team <span class="right-tringle"></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="white-wrapper">
+            <table class="tableLeftRightMargins">
+              <tr>
+                <td>
+                  <apex:outputLabel styleClass="outputLabelFont"
+                    ><b>Proposed Account Owner</b>
+                  </apex:outputLabel>
+                </td>
+                <td>
+                  <apex:inputfield
+                    id="Account"
+                    value="{!account.Proposed_Account_Owner__c}"
+                    required="true"
+                  >
+                    <apex:actionSupport
+                      event="onchange"
+                      action="{!accountSelected}"
+                      rerender="showProposedOwnerAndManager"
+                    />
+                  </apex:inputfield>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <apex:outputPanel rendered="{!checkboxesVisible}">
+            <div class="two-colum-layout">
+              <div class="white-wrapper m-r-5">
+                <table style="width: 100%">
+                  <tr>
+                    <td
+                      colspan="5"
+                      style="
+                        background: #f3f2f2;
+                        padding: 10px;
+                        font-weight: bold;
+                      "
+                    >
+                      Do you want to change any of the transfer settings?
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="5">&nbsp;</td>
+                  </tr>
+                  <!--        <tr>
+<td>
+<apex:inputCheckbox value="{!account.Transfer_Not_Owned_Opportunities__c}"  selected="true" />
+<apex:outputLabel styleClass="outputLabelFont marginCheckboxAndLabel">Transfer
+open opportunities owned by others</apex:outputLabel>
+</td>
+<td>
+<apex:inputCheckbox value="{!account.Transfer_Closed_Opportunities__c}"  selected="true" />
+<apex:outputLabel styleClass="outputLabelFont marginCheckboxAndLabel">Transfer
+account owner's closed opportunities</apex:outputLabel>
+</td>
+</tr>
+<tr>
+<td>
+<apex:inputCheckbox value="{!account.Transfer_Open_Cases__c}"  selected="true" />
+<apex:outputLabel styleClass="outputLabelFont marginCheckboxAndLabel">Transfer
+open cases</apex:outputLabel>
+</td>
+<td>
+<apex:inputCheckbox value="{!account.Transfer_Closed_Cases__c}"  selected="true" />
+<apex:outputLabel styleClass="outputLabelFont marginCheckboxAndLabel">Transfer
+all cases(Open and Closed)</apex:outputLabel>
+</td>
+</tr>  --->
+                  <tr>
+                    <td>
+                      <apex:inputCheckbox
+                        value="{!account.Keep_Account_Team__c}"
+                        selected="true"
+                      />
+                      <apex:outputLabel
+                        styleClass="outputLabelFont marginCheckboxAndLabel"
+                        >Replace existing owner in Account
+                        Team</apex:outputLabel
+                      >
+                    </td>
+                    <td>
+                      <apex:inputCheckbox
+                        value="{!account.Keep_Opportunity_Team__c}"
+                        selected="true"
+                      />
+                      <apex:outputLabel
+                        styleClass="outputLabelFont marginCheckboxAndLabel"
+                        >Replace existing owner in Opportunity
+                        Team</apex:outputLabel
+                      >
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="white-wrapper m-l-5">
+                <table class="tableLeftRightMargins padding-bottom:20px;">
+                  <tr>
+                    <td>
+                      <apex:outputLabel styleClass="outputLabelFont"
+                        ><b>The new owner</b> will also become the owner of
+                        these records related to <b>{!account.Name}</b> that are
+                        owned by <b>{!account.Owner.Name}</b></apex:outputLabel
+                      >
+                      <ul>
+                        <li>
+                          <p class="outputLabelFont">Open opportunities</p>
+                        </li>
+                        <!--       <li>
+<p class="outputLabelFont">Contracts in Draft status</p>
+</li> -->
+                        <li>
+                          <p class="outputLabelFont">Contacts</p>
+                        </li>
+                        <!--      <li>
+<p class="outputLabelFont">Notes</p>
+</li>  -->
+                        <li>
+                          <p class="outputLabelFont">Open activities</p>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="notes-colum white-wrapper">
+                <div class="notes-label">Notes</div>
+
+                <div class="notes-text-area">
+                  <apex:inputfield
+                    id="Account1"
+                    value="{!account.Requester_Notes__c}"
+                    required="false"
+                  >
+                    <!--        <apex:actionSupport event="onchange" action="{!accountSelected}"
+                                                            rerender="showProposedOwnerAndManager" />   -->
+                  </apex:inputfield>
+                </div>
+              </div>
+            </div>
+          </apex:outputPanel>
+
+          <apex:outputPanel rendered="{!NOT(checkboxesVisible)}">
+            <div
+              class="white-wrapper"
+              style="width: 70%; margin-right: 20px; float: left"
+            >
+              <table class="tableLeftRightMargins padding-bottom:20px;">
+                <tr>
+                  <td>
+                    <apex:outputLabel styleClass="outputLabelFont"
+                      ><b>The new owner</b> will also become the owner of these
+                      records related to <b>{!account.Name}</b> that are owned
+                      by <b>{!account.Owner.Name}</b></apex:outputLabel
+                    >
+                    <ul>
+                      <li>
+                        <p class="outputLabelFont">
+                          Child accounts related to {!account.Name}
+                        </p>
+                      </li>
+                      <li>
+                        <p class="outputLabelFont">
+                          Open opportunities related to {!account.Name} and its
+                          child accounts
+                        </p>
+                      </li>
+                      <!--       <li>
+<p class="outputLabelFont">Contracts in Draft status</p>
+</li>  -->
+                      <li>
+                        <p class="outputLabelFont">
+                          Contacts related to {!account.Name} and its child
+                          accounts that are owned by {!account.Owner.Name}
+                        </p>
+                      </li>
+                      <!--        <li>
+<p class="outputLabelFont">Notes owned by {!account.Owner.Name}</p>
+</li>  -->
+                      <li>
+                        <p class="outputLabelFont">
+                          Open activities related to {!account.Name} and its
+                          child accounts that are owned by {!account.Owner.Name}
+                        </p>
+                      </li>
+
+                      <!--       <li>
+<p class="outputLabelFont">Open opportunities owned by others</p>
+</li>  --->
+                      <!--       <li>
+<p class="outputLabelFont">Open cases owned by {!account.Owner.Name}</p>
+</li> -->
+                      <li>
+                        <p class="outputLabelFont">
+                          {!account.Owner.Name} will be replaced by the proposed
+                          account owner in the Account Team
+                        </p>
+                      </li>
+                      <li>
+                        <p class="outputLabelFont">
+                          {!account.Owner.Name} will be replaced by the proposed
+                          account owner in the Opportunity Team
+                        </p>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div
+              class="white-wrapper"
+              style="width: calc(30% - 20px); float: right; min-height: 246px"
+            >
+              <div class="notes-label">Notes</div>
+              <div class="notes-text-area">
+                <apex:inputfield
+                  id="Account2"
+                  value="{!account.Requester_Notes__c}"
+                  required="false"
+                >
+                  <!--        <apex:actionSupport event="onchange" action="{!accountSelected}"
+                                                            rerender="showProposedOwnerAndManager" />   -->
+                </apex:inputfield>
+              </div>
+            </div>
+          </apex:outputPanel>
+
+          <div class="clearfix"></div>
+
+          <div class="text-right">
+            <apex:commandButton
+              action="{!cancel}"
+              value="Cancel"
+              status="counterStatus"
+              style="
+                margin-right: 10px;
+                height: 40px;
+                width: 100px;
+                font-size: 13px;
+                font-family: Arial, sans-serif;
+              "
+            />
+            <apex:commandButton
+              action="{!validatePage}"
+              value="Submit For Approval"
+              status="counterStatus"
+              style="
+                background-color: #bd3833;
+                color: white;
+                height: 40px;
+                font-size: 13px;
+                font-family: Arial, sans-serif;
+              "
+            />
+          </div>
+        </div>
+      </apex:pageBlock>
+    </div>
+
+    <apex:outputPanel id="confirmPopup">
+      <apex:outputPanel
+        styleClass="popupBackground"
+        layout="block"
+        rendered="{!displayPopup}"
+      />
+      <apex:outputPanel
+        styleClass="custPopup"
+        layout="block"
+        rendered="{!displayPopup}"
+      >
+        <div class="dlg-header">
+          <h5 class="modal-title">Submit for Approval</h5>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure, you are ready to submit this request?</p>
+        </div>
+
+        <div class="modal-footer">
+          <apex:commandButton
+            value="Yes"
+            action="{!initiateProcess}"
+            rerender="confirmPopup"
+            style="
+              margin-right: 10px;
+              height: 30px;
+              width: 70px;
+              font-size: 13px;
+              font-family: Arial, sans-serif;
+            "
+          />
+          <apex:commandButton
+            value="Cancel"
+            action="{!closePopup}"
+            rerender="confirmPopup"
+            style="
+              background-color: #bd3833;
+              color: white;
+              height: 30px;
+              width: 70px;
+              font-size: 13px;
+              font-family: Arial, sans-serif;
+            "
+          />
+        </div>
+      </apex:outputPanel>
+    </apex:outputPanel>
+
+    <div style="width: 100%">
+      <div class="account-owner-container">
+        <apex:pageBlock rendered="{!isRecordInApprovalProcess}">
+          <div class="white-wrapper">
+            <div class="page-title">
+              <table cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <div style="float: left">
+                    <td>
+                      <apex:image
+                        url="{!$Resource.AccountImage}"
+                        width="36"
+                        height="36"
+                      />
+                    </td>
+                    <td width="10px"></td>
+                    <td>
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td
+                            style="
+                              color: #666;
+                              font-weight: bold;
+                              line-height: normal;
+                            "
+                          >
+                            {!Account.Name}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="
+                              font-size: 1.5rem;
+                              font-weight: 700;
+                              line-height: 16px;
+                            "
+                          >
+                            Account Owner-Change Request
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </div>
+                  <div style="float: right">
+                    <apex:outputPanel
+                      rendered="{!OR(isUserAuthorizedToApprove, isUserSystemAdmin)}"
+                    >
+                      <apex:commandButton
+                        value="Approve"
+                        action="{!displayPopup}"
+                        rerender="approvepopup"
+                        style="
+                          height: 40px;
+                          width: 100px;
+                          font-size: 13px;
+                          font-family: Arial, sans-serif;
+                        "
+                      />
+                      <apex:commandButton
+                        value="Reject"
+                        action="{!displayPopup}"
+                        rerender="rejectpopup"
+                        style="
+                          height: 40px;
+                          width: 100px;
+                          font-size: 13px;
+                          font-family: Arial, sans-serif;
+                          margin-left: 10px;
+                        "
+                      />
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isUserSystemAdmin}">
+                      <apex:commandButton
+                        value="Abort"
+                        action="{!displayPopup}"
+                        rerender="abortpopup"
+                        style="
+                          margin-right: 10px;
+                          height: 40px;
+                          width: 100px;
+                          font-size: 13px;
+                          font-family: Arial, sans-serif;
+                          margin-left: 10px;
+                        "
+                      />
+                    </apex:outputPanel>
+                  </div>
+                </tr>
+              </table>
+            </div>
+
+            <!-- APPROVAL SUCCESS POPUP BOX STARTS HERE -->
+            <apex:outputPanel id="toastPopUp">
+              <apex:outputPanel
+                styleClass="popupBackground"
+                layout="block"
+                rendered="{!newPopup}"
+              />
+              <apex:outputPanel
+                styleClass="custPopup"
+                layout="block"
+                rendered="{!newPopup}"
+              >
+                <div class="dlg-header">
+                  <h5 class="modal-title">Owner Change Successful</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Account Owner has been changed succesfully!</p>
+                </div>
+
+                <div class="modal-footer">
+                  <apex:commandButton
+                    value="OK"
+                    action="{!moveToAccountDetail}"
+                    rerender="approvepopup"
+                    style="
+                      background-color: #bd3833;
+                      margin-left: auto;
+                      margin-right: auto;
+                      color: white;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                </div>
+              </apex:outputPanel>
+            </apex:outputPanel>
+            <!-- APPROVAL SUCCESS BOX ENDS HERE -->
+
+            <!-- APPROVE POPUP BOX STARTS HERE -->
+            <apex:outputPanel id="approvepopup">
+              <apex:outputPanel
+                styleClass="popupBackground"
+                layout="block"
+                rendered="{!displayPopup}"
+              />
+              <apex:outputPanel
+                styleClass="custPopup"
+                layout="block"
+                rendered="{!displayPopup}"
+              >
+                <div class="dlg-header">
+                  <h5 class="modal-title">Approve Request</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure, you want to approve this request?</p>
+                </div>
+
+                <div class="modal-footer">
+                  <apex:commandButton
+                    value="Yes"
+                    action="{!approveProcess}"
+                    rerender="approvepopup, toastPopUp"
+                    status="counterStatus"
+                    style="
+                      margin-right: 10px;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                  <apex:commandButton
+                    value="Cancel"
+                    action="{!closePopup}"
+                    rerender="approvepopup"
+                    style="
+                      background-color: #bd3833;
+                      color: white;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                  <apex:actionstatus id="counterStatus">
+                    <apex:facet name="start">
+                      <div
+                        class="waitingSearchDiv"
+                        id="el_loading"
+                        style="
+                          background-color: #fbfbfb;
+                          height: 100%;
+                          opacity: 0.65;
+                          width: 100%;
+                        "
+                      >
+                        <div
+                          class="waitingHolder"
+                          style="top: 100px; width: 91px"
+                        >
+                          <img
+                            class="waitingImage"
+                            src="/img/loading.gif"
+                            title="Please Wait..."
+                          />
+                          <span class="waitingDescription">Loading...</span>
+                        </div>
+                      </div>
+                    </apex:facet>
+                  </apex:actionstatus>
+                </div>
+              </apex:outputPanel>
+            </apex:outputPanel>
+            <!-- APPROVE POPUP BOX ENDS HERE -->
+
+            <!-- REJECT POPUP BOX STARTS HERE -->
+            <apex:outputPanel id="rejectpopup">
+              <apex:outputPanel
+                styleClass="popupBackground"
+                layout="block"
+                rendered="{!displayPopup}"
+              />
+              <apex:outputPanel
+                styleClass="custPopup"
+                layout="block"
+                rendered="{!displayPopup}"
+              >
+                <div class="dlg-header">
+                  <h5 class="modal-title">Reject Request</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure, you want to reject this request?</p>
+                </div>
+
+                <div class="modal-footer">
+                  <apex:commandButton
+                    value="Yes"
+                    action="{!rejectProcess}"
+                    rerender="rejectpopup"
+                    style="
+                      margin-right: 10px;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                  <apex:commandButton
+                    value="Cancel"
+                    action="{!closePopup}"
+                    rerender="rejectpopup"
+                    style="
+                      background-color: #bd3833;
+                      color: white;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                </div>
+              </apex:outputPanel>
+            </apex:outputPanel>
+            <!-- REJECT POPUP BOX ENDS HERE -->
+
+            <!-- ABORT POPUP BOX STARTS HERE -->
+            <apex:outputPanel id="abortpopup">
+              <apex:outputPanel
+                styleClass="popupBackground"
+                layout="block"
+                rendered="{!displayPopup}"
+              />
+              <apex:outputPanel
+                styleClass="custPopup"
+                layout="block"
+                rendered="{!displayPopup}"
+              >
+                <div class="dlg-header">
+                  <h5 class="modal-title">Abort Approval Request</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure, you want to abort this request?</p>
+                </div>
+
+                <div class="modal-footer">
+                  <apex:commandButton
+                    value="Yes"
+                    action="{!abortProcess}"
+                    rerender="abortpopup"
+                    style="
+                      margin-right: 10px;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                  <apex:commandButton
+                    value="Cancel"
+                    action="{!closePopup}"
+                    rerender="abortpopup"
+                    style="
+                      background-color: #bd3833;
+                      color: white;
+                      height: 30px;
+                      width: 70px;
+                      font-size: 13px;
+                      font-family: Arial, sans-serif;
+                    "
+                  />
+                </div>
+              </apex:outputPanel>
+            </apex:outputPanel>
+            <!-- ABORT POPUP BOX ENDS HERE -->
+
+            <div class="owner-details-table">
+              <table cellspacing="0" cellpadding="0" border="0">
+                <tr class="label-row">
+                  <td>Existing Owner</td>
+                  <td>Proposed Owner</td>
+                  <td>Proposed By</td>
+                  <td>Manager's Involved</td>
+                  <td>Proposed On</td>
+                </tr>
+                <tr class="data-row">
+                  <td>{!Account.Owner.Name }</td>
+                  <td>{!Account.Proposed_Account_Owner__r.Name}</td>
+                  <td>{!Account.userWhoProposedNewOwner__r.Name}</td>
+                  <td>
+                    {!Account.Owner.Manager.Name } /
+                    {!Account.Proposed_Owners_Manager__r.Name}
+                  </td>
+                  <td>
+                    <apex:outputText value="{0,date,MMMMM' 'dd' 'yyyy}">
+                      <apex:param
+                        value="{!Account.ApprovalProcessInitiatedOn__c}"
+                      />
+                    </apex:outputText>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <apex:outputPanel
+            rendered="{!IF(AND(statusOfStep1Approval == $Label.APPROVAL_PROCESS_DONE ,statusOfStep2Approval == $Label.APPROVAL_PROCESS_PENDING), TRUE, FALSE)}"
+          >
+            <div class="white-wrapper">
+              <ul class="custom-breadcrumb">
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 1 -</span> Change Owner
+                  <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 2 -</span> Approval by Existing
+                  Owner's Manager <span class="right-tringle"></span>
+                </li>
+                <li class="active-crumb">
+                  <span class="span-bold">Step 3 -</span> Approval by Proposed
+                  Owner's Manager<span class="right-tringle"></span>
+                </li>
+                <li class="gray-crumb">
+                  <span class="span-bold">Step 4 -</span>Confirmation by
+                  Marketing Team<span class="right-tringle"></span>
+                </li>
+              </ul>
+            </div>
+          </apex:outputPanel>
+          <apex:outputPanel
+            rendered="{!IF(OR(AND(statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep1Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep2Approval == $Label.APPROVAL_PROCESS_DONE)), TRUE, FALSE)}"
+          >
+            <div class="white-wrapper">
+              <ul class="custom-breadcrumb">
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 1 -</span> Change Owner
+                  <span class="right-tringle"></span>
+                </li>
+                <li class="active-crumb">
+                  <span class="span-bold">Step 2 -</span> Approval by Existing
+                  Owner's Manager <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 3 -</span> Approval by Proposed
+                  Owner's Manager<span class="right-tringle"></span>
+                </li>
+                <li class="gray-crumb">
+                  <span class="span-bold">Step 4 -</span>Confirmation by
+                  Marketing Team<span class="right-tringle"></span>
+                </li>
+              </ul>
+            </div>
+          </apex:outputPanel>
+
+          <apex:outputPanel
+            rendered="{!IF(OR(AND(statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep1Approval == $Label.APPROVAL_PROCESS_DONE, statusOfStep2Approval == $Label.APPROVAL_PROCESS_DONE), AND(Account.PreviousOwnersManager__c == NULL, statusOfStep2Approval == $Label.APPROVAL_PROCESS_DONE, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING)), TRUE, FALSE)}"
+          >
+            <div class="white-wrapper">
+              <ul class="custom-breadcrumb">
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 1 -</span> Change Owner
+                  <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 2 -</span> Approval by Existing
+                  Owner's Manager <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 3 -</span> Approval by Proposed
+                  Owner's Manager<span class="right-tringle"></span>
+                </li>
+                <li class="active-crumb">
+                  <span class="span-bold">Step 4 -</span>Confirmation by
+                  Marketing Team<span class="right-tringle"></span>
+                </li>
+              </ul>
+            </div>
+          </apex:outputPanel>
+          <apex:outputPanel
+            rendered="{!IF(OR(AND(statusOfStep1Approval == $Label.APPROVAL_PROCESS_HYPHEN, statusOfStep2Approval == $Label.APPROVAL_PROCESS_HYPHEN), AND(Account.PreviousOwnersManager__c == NULL, Account.Proposed_Owners_Manager__c == NULL, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING), AND(statusOfStep1Approval == $Label.APPROVAL_PROCESS_DONE, statusOfStep2Approval == $Label.APPROVAL_PROCESS_HYPHEN, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING)), TRUE, FALSE)}"
+          >
+            <div class="white-wrapper">
+              <ul class="custom-breadcrumb">
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 1 -</span> Change Owner
+                  <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 2 -</span> Approval by Existing
+                  Owner's Manager <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 3 -</span> Approval by Proposed
+                  Owner's Manager<span class="right-tringle"></span>
+                </li>
+                <li class="active-crumb">
+                  <span class="span-bold">Step 4 -</span>Confirmation by
+                  Marketing Team<span class="right-tringle"></span>
+                </li>
+              </ul>
+            </div>
+          </apex:outputPanel>
+          <apex:outputPanel
+            rendered="{!IF(OR(AND(statusOfStep1Approval == $Label.APPROVAL_PROCESS_HYPHEN, statusOfStep2Approval == $Label.APPROVAL_PROCESS_PENDING), AND(Account.PreviousOwnersManager__c == NULL, statusOfStep2Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING)), TRUE, FALSE)}"
+          >
+            <div class="white-wrapper">
+              <ul class="custom-breadcrumb">
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 1 -</span> Change Owner
+                  <span class="right-tringle"></span>
+                </li>
+                <li class="approved-crumb">
+                  <span class="span-bold">Step 2 -</span> Approval by Existing
+                  Owner's Manager <span class="right-tringle"></span>
+                </li>
+                <li class="active-crumb">
+                  <span class="span-bold">Step 3 -</span> Approval by Proposed
+                  Owner's Manager<span class="right-tringle"></span>
+                </li>
+                <li class="gray-crumb">
+                  <span class="span-bold">Step 4 -</span>Confirmation by
+                  Marketing Team<span class="right-tringle"></span>
+                </li>
+              </ul>
+            </div>
+          </apex:outputPanel>
+
+          <div class="white-wrapper">
+            <apex:outputPanel
+              rendered="{!IF(OR(AND(isRecordInApprovalProcess==TRUE, statusOfStep1Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep2Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING), AND(statusOfStep1Approval == $Label.APPROVAL_PROCESS_PENDING, statusOfStep2Approval == $Label.APPROVAL_PROCESS_HYPHEN, statusOfStep3Approval == $Label.APPROVAL_PROCESS_PENDING)), TRUE, FALSE)}"
+            >
+              <div class="white-wrapper">
+                <ul class="custom-breadcrumb">
+                  <li class="approved-crumb">
+                    <span class="span-bold">Step 1 -</span> Change Owner
+                    <span class="right-tringle"></span>
+                  </li>
+                  <li class="active-crumb">
+                    <span class="span-bold">Step 2 -</span> Approval by Existing
+                    Owner's Manager <span class="right-tringle"></span>
+                  </li>
+                  <li class="gray-crumb">
+                    <span class="span-bold">Step 3 -</span> Approval by Proposed
+                    Owner's Manager<span class="right-tringle"></span>
+                  </li>
+                  <li class="gray-crumb">
+                    <span class="span-bold">Step 4 -</span>Confirmation by
+                    Marketing Team<span class="right-tringle"></span>
+                  </li>
+                </ul>
+              </div>
+              <!--  <apex:outputPanel rendered="{!(isRecordSubmittedForApproval)}">
+<p>
+{!$Label.ACCOUNT_APPROVAL_REQUEST_SUBMITTED}
+</p>
+</apex:outputPanel>-->
+              <apex:outputPanel rendered="{!(isRecordSubmittedForApproval)}">
+                <p>
+                  <!--There is already an account owner change request submitted by <b>{!Account.userWhoProposedNewOwner__r.Name}</b>-->
+                  The owner change request for this account is submitted by
+                  <b>{!Account.userWhoProposedNewOwner__r.Name}</b>
+                </p>
+              </apex:outputPanel>
+            </apex:outputPanel>
+
+            <p>The table below reflects the current status:<br /></p>
+
+            <div style="background: #f3f2f2; padding: 10px; font-weight: bold">
+              Approval History
+            </div>
+            <br />
+            <div style="float: left; margin-right: 20px; width: 70%">
+              <table
+                border-collapse="collapse"
+                class="borderStyle"
+                width="100%"
+              >
+                <tr bgcolor="#666" style="color: #fff">
+                  <td class="td2" style="padding: 10px; width: 50px">
+                    <b>S.No.</b>
+                  </td>
+                  <td class="td2">
+                    <b>Step Description</b>
+                  </td>
+                  <td class="td2">
+                    <b>Assigned To</b>
+                  </td>
+                  <td class="td2">
+                    <b>Status</b>
+                  </td>
+                  <td class="td2">
+                    <b>Date/Time</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >1</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >Change Proposed By</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >{!Account.userWhoProposedNewOwner__r.Name}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!$Label.APPROVAL_PROCESS_DONE}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!approvalProcessInitiatedOn2}</apex:outputLabel
+                    >
+                    <!--  <apex:outputLabel styleClass="textInsideTable"> { !Account.ApprovalProcessInitiatedOn__c}</apex:outputLabel>-->
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >2</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >Approval by Existing Owner's Manager</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >{!Account.Owner.Manager.Name }</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!statusOfStep1Approval}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!dateTimeOfStep1Approval}</apex:outputLabel
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >3</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >Approval by Proposed Owner's Manager</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >{!Account.Proposed_Owners_Manager__r.Name}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!statusOfStep2Approval}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!dateTimeOfStep2Approval}</apex:outputLabel
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >4</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >Confirmation by Marketing Team</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleclass="textInsideTable"
+                      >Mkt. Team</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!statusOfStep3Approval}</apex:outputLabel
+                    >
+                  </td>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!dateTimeOfStep3Approval}</apex:outputLabel
+                    >
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div style="float: left; width: calc(30% - 20px)">
+              <table
+                border-collapse="collapse"
+                class="borderStyle"
+                width="100%"
+              >
+                <tr bgcolor="#666" style="color: #fff">
+                  <td class="td2" style="padding: 10px">
+                    <b>Notes By Requester</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="td2">
+                    <apex:outputLabel styleClass="textInsideTable"
+                      >{!Account.Requester_Notes__c}</apex:outputLabel
+                    >
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div style="clear: both; float: none"></div>
+          </div>
+          <div class="white-wrapper text-right" style="background: #f3f2f2">
+            <apex:commandButton
+              action="{!cancel}"
+              value="Close"
+              style="
+                background-color: #bd3833;
+                color: white;
+                height: 40px;
+                font-size: 13px;
+                font-family: Arial, sans-serif;
+              "
+            />
+          </div>
+        </apex:pageBlock>
+      </div>
+    </div>
+  </apex:form>
+</apex:page>

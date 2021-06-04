@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Case</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Customer Inquiry Path</masterLabel>
+    <pathAssistantSteps>
+        <info
+    >&lt;ul&gt;&lt;li&gt;Validate/Add proper Contact Name and Email Address.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Assigned</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Reason_for_hold__c</fieldNames>
+        <info
+    >&lt;ul&gt;&lt;li&gt;Select the proper Reason for Hold&lt;/li&gt;&lt;li&gt;Read carefully the Customer&amp;#39;s requests and call at least twice if needed&lt;/li&gt;&lt;li&gt;If unable to reach the customer over the phone, send an email.&lt;/li&gt;&lt;li&gt;While addressing customer&amp;#39;s request to Internal Dept:&lt;ul&gt;&lt;li&gt;Remove customer from copy and send an internal request.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Awaiting more information</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Services__c</fieldNames>
+        <info
+    >&lt;ul&gt;&lt;li&gt;Select the proper Service Trade&lt;/li&gt;&lt;li&gt;Identify customer&amp;#39;s needs and additional business opportunities&lt;/li&gt;&lt;li&gt;Review previous requests if needed and look for any reference number&lt;/li&gt;&lt;li&gt;Attach to the email any required document&lt;/li&gt;&lt;li&gt;Reply to the latest customer&amp;#39;s email&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>In progress</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info
+    >&lt;ul&gt;&lt;li&gt;Make sure all information received is complete&lt;/li&gt;&lt;li&gt;Don’t hesitate to contact the sender if something is not clear&lt;/li&gt;&lt;li&gt;Make sure you replied and satisfied customer&amp;#39;s need before closing the case&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</info>
+        <picklistValueName>Ready for Review</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Customer_Inquiry</recordTypeName>
+</PathAssistant>

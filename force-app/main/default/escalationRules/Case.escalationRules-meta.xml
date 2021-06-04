@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EscalationRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <escalationRule>
+        <fullName>case escalation rule</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+            <businessHoursSource>None</businessHoursSource>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Customer Inquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.OwnerId</field>
+                <operation>contains</operation>
+                <value>Trouble Lane</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Create Customer Inquiry</value>
+            </criteriaItems>
+            <escalationAction>
+                <assignedTo>Customer_Inquiry</assignedTo>
+                <assignedToType>Queue</assignedToType>
+                <minutesToEscalation>30</minutesToEscalation>
+                <notifyCaseOwner>false</notifyCaseOwner>
+            </escalationAction>
+            <escalationStartTime>CaseCreation</escalationStartTime>
+        </ruleEntry>
+    </escalationRule>
+</EscalationRules>

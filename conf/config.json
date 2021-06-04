@@ -1,0 +1,442 @@
+{
+  "version": "51.0",
+  "dirs": {
+    "actionLinkGroupTemplates": {
+      "xmlTag": "ActionLinkGroupTemplate",
+      "acceptsAsterisk": true
+    },
+    "apexEmailNotifications": {
+      "xmlTag": "ApexEmailNotifications",
+      "acceptsAsterisk": true
+    },
+    "applications": {
+      "xmlTag": "CustomApplication",
+      "acceptsAsterisk": true
+    },
+    "appMenus": {
+      "xmlTag": "AppMenu",
+      "acceptsAsterisk": true
+    },
+    "approvalProcesses": {
+      "xmlTag": "ApprovalProcess",
+      "acceptsAsterisk": true
+    },
+    "assignmentRules": {
+      "xmlTag": "AssignmentRules",
+      "acceptsAsterisk": true
+    },
+    "aura": {
+      "xmlTag": "AuraDefinitionBundle",
+      "acceptsAsterisk": true
+    },
+    "authproviders": {
+      "xmlTag": "AuthProvider",
+      "acceptsAsterisk": true
+    },
+    "autoResponseRules": {
+      "xmlTag": "AutoResponseRules",
+      "acceptsAsterisk": true
+    },
+    "bots": {
+      "xmlTag": "Bot",
+      "acceptsAsterisk": true
+    },
+    "brandingSets": {
+      "xmlTag": "BrandingSet",
+      "acceptsAsterisk": true
+    },
+    "cachePartitions": {
+      "xmlTag": "PlatformCachePartitions",
+      "acceptsAsterisk": true
+    },
+    "campaignInfluenceModels": {
+      "xmlTag": "CampaignInfluenceModel",
+      "acceptsAsterisk": true
+    },
+    "certs": {
+      "xmlTag": "Certificate",
+      "acceptsAsterisk": true
+    },
+    "classes": {
+      "xmlTag": "ApexClass",
+      "acceptsAsterisk": true
+    },
+    "cleanDataServices": {
+      "xmlTag": "CleanDataService",
+      "acceptsAsterisk": true
+    },
+    "communities": {
+      "xmlTag": "Community",
+      "acceptsAsterisk": true
+    },
+    "communityTemplateDefinitions": {
+      "xmlTag": "CommunityTemplateDefinition",
+      "acceptsAsterisk": true
+    },
+    "communityThemeDefinitions": {
+      "xmlTag": "CommunityThemeDefinition",
+      "acceptsAsterisk": true
+    },
+    "components": {
+      "xmlTag": "ApexComponent",
+      "acceptsAsterisk": true
+    },
+    "connectedApps": {
+      "xmlTag": "ConnectedApp",
+      "acceptsAsterisk": true
+    },
+    "contentassets": {
+      "xmlTag": "ContentAsset",
+      "acceptsAsterisk": true
+    },
+    "corsWhitelistOrigins": {
+      "xmlTag": "CorsWhitelistOrigin",
+      "acceptsAsterisk": true
+    },
+    "cspTrustedSites": {
+      "xmlTag": "CspTrustedSite",
+      "acceptsAsterisk": true
+    },
+    "customApplicationComponents": {
+      "xmlTag": "CustomApplicationComponent",
+      "acceptsAsterisk": true
+    },
+    "customPermissions": {
+      "xmlTag": "CustomPermission",
+      "acceptsAsterisk": true
+    },
+    "customMetadata": {
+      "xmlTag": "CustomMetadata",
+      "acceptsAsterisk": true
+    },
+    "dashboards": {
+      "xmlTag": "Dashboard",
+      "acceptsAsterisk": false,
+      "extension": ".dashboard"
+    },
+    "datacategorygroups": {
+      "xmlTag": "DataCategoryGroup",
+      "acceptsAsterisk": true
+    },
+    "delegateGroups": {
+      "xmlTag": "DelegateGroup",
+      "acceptsAsterisk": true
+    },
+    "documents": {
+      "xmlTag": "Document",
+      "acceptsAsterisk": false,
+      "excludeExtension": "-meta.xml"
+    },
+    "duplicateRules": {
+      "xmlTag": "DuplicateRule",
+      "acceptsAsterisk": true
+    },
+    "email": {
+      "xmlTag": "EmailTemplate",
+      "acceptsAsterisk": false,
+      "extension": ".email"
+    },
+    "emailservices": {
+      "xmlTag": "EmailServicesFunction",
+      "acceptsAsterisk": true
+    },
+    "EmbeddedServiceBranding": {
+      "xmlTag": "EmbeddedServiceBranding",
+      "acceptsAsterisk": true
+    },
+    "EmbeddedServiceConfig": {
+      "xmlTag": "EmbeddedServiceConfig",
+      "acceptsAsterisk": true
+    },
+    "EmbeddedServiceLiveAgent": {
+      "xmlTag": "EmbeddedServiceLiveAgent",
+      "acceptsAsterisk": true
+    },
+    "entitlementProcesses": {
+      "xmlTag": "EntitlementProcess",
+      "acceptsAsterisk": true
+    },
+    "escalationRules": {
+      "xmlTag": "EscalationRules",
+      "acceptsAsterisk": true
+    },
+    "externalServiceRegistrations": {
+      "xmlTag": "ExternalServiceRegistration",
+      "acceptsAsterisk": true
+    },
+    "flows": {
+      "xmlTag": "Flow",
+      "acceptsAsterisk": true
+    },
+    "flexipages": {
+      "xmlTag": "FlexiPage",
+      "acceptsAsterisk": true
+    },
+    "flowDefinitions": {
+      "xmlTag": "Flow",
+      "acceptsAsterisk": true
+    },
+    "globalValueSets": {
+      "xmlTag": "GlobalValueSet",
+      "acceptsAsterisk": true
+    },
+    "globalValueSetTranslations": {
+      "xmlTag": "GlobalValueSetTranslation",
+      "acceptsAsterisk": true
+    },
+    "groups": {
+      "xmlTag": "Group",
+      "acceptsAsterisk": true
+    },
+    "homePageComponents": {
+      "xmlTag": "HomePageComponent",
+      "acceptsAsterisk": true
+    },
+    "homePageLayouts": {
+      "xmlTag": "HomePageLayout",
+      "acceptsAsterisk": true
+    },
+    "installedPackages": {
+      "xmlTag": "InstalledPackage",
+      "acceptsAsterisk": true
+    },
+    "iframeWhiteListUrlSettings": {
+      "xmlTag": "IframeWhiteListUrlSettings",
+      "acceptsAsterisk": true
+    },
+    "labels": {
+      "xmlTag": "CustomLabels",
+      "acceptsAsterisk": true
+    },
+    "layouts": {
+      "xmlTag": "Layout",
+      "acceptsAsterisk": false,
+      "extension": ".layout"
+    },
+    "LeadConvertSettings": {
+      "xmlTag": "LeadConvertSettings",
+      "acceptsAsterisk": true
+    },
+    "letterhead": {
+      "xmlTag": "Letterhead",
+      "acceptsAsterisk": false,
+      "extension": ".letter"
+    },
+    "lightningExperienceThemes": {
+      "xmlTag": "LightningExperienceTheme",
+      "acceptsAsterisk": true
+    },
+    "liveChatAgentConfigs": {
+      "xmlTag": "LiveChatAgentConfig",
+      "acceptsAsterisk": true
+    },
+    "liveChatButtons": {
+      "xmlTag": "LiveChatButton",
+      "acceptsAsterisk": true
+    },
+    "liveChatDeployments": {
+      "xmlTag": "LiveChatDeployment",
+      "acceptsAsterisk": true
+    },
+    "lwc": {
+      "xmlTag": "LightningComponentBundle",
+      "acceptsAsterisk": true
+    },
+    "managedContentTypes": {
+      "xmlTag": "ManagedContentType",
+      "acceptsAsterisk": true
+    },
+    "managedTopics": {
+      "xmlTag": "ManagedTopics",
+      "acceptsAsterisk": true
+    },
+    "matchingRules": {
+      "xmlTag": "MatchingRule",
+      "acceptsAsterisk": true
+    },
+    "milestoneTypes": {
+      "xmlTag": "MilestoneType",
+      "acceptsAsterisk": true
+    },
+    "mlDomains": {
+      "xmlTag": "MlDomain",
+      "acceptsAsterisk": true
+    },
+    "moderation": {
+      "xmlTag": "KeywordList",
+      "acceptsAsterisk": true
+    },
+    "namedCredentials": {
+      "xmlTag": "NamedCredential",
+      "acceptsAsterisk": true
+    },
+    "navigationMenus": {
+      "xmlTag": "NavigationMenu",
+      "acceptsAsterisk": true
+    },
+    "networkBranding": {
+      "xmlTag": "NetworkBranding",
+      "acceptsAsterisk": true
+    },
+    "networks": {
+      "xmlTag": "Network",
+      "acceptsAsterisk": true
+    },
+    "notificationTypeConfig": {
+      "xmlTag": "NotificationTypeConfig",
+      "acceptsAsterisk": true
+    },
+    "objects": {
+      "xmlTag": "CustomObject",
+      "acceptsAsterisk": false,
+      "extension": ".object"
+    },
+    "objectTranslations": {
+      "xmlTag": "CustomObjectTranslation",
+      "acceptsAsterisk": true
+    },
+    "pages": {
+      "xmlTag": "ApexPage",
+      "acceptsAsterisk": true
+    },
+    "pathAssistants": {
+      "xmlTag": "PathAssistant",
+      "acceptsAsterisk": true
+    },
+    "permissionsets": {
+      "xmlTag": "PermissionSet",
+      "acceptsAsterisk": true
+    },
+    "presenceUserConfigs": {
+      "xmlTag": "PresenceUserConfig",
+      "acceptsAsterisk": true
+    },
+    "profilePasswordPolicies": {
+      "xmlTag": "ProfilePasswordPolicy",
+      "acceptsAsterisk": true
+    },
+    "portals": {
+      "xmlTag": "Portal",
+      "acceptsAsterisk": true
+    },
+    "postTemplates": {
+      "xmlTag": "PostTemplate",
+      "acceptsAsterisk": true
+    },
+    "profiles": {
+      "xmlTag": "Profile",
+      "acceptsAsterisk": false,
+      "extension": ".profile"
+    },
+    "profileSessionSettings": {
+      "xmlTag": "ProfileSessionSetting",
+      "acceptsAsterisk": true
+    },
+    "queueRoutingConfigs": {
+      "xmlTag": "QueueRoutingConfig",
+      "acceptsAsterisk": true
+    },
+    "queues": {
+      "xmlTag": "Queue",
+      "acceptsAsterisk": true
+    },
+    "quickActions": {
+      "xmlTag": "QuickAction",
+      "acceptsAsterisk": true
+    },
+    "remoteSiteSettings": {
+      "xmlTag": "RemoteSiteSetting",
+      "acceptsAsterisk": true
+    },
+    "reports": {
+      "xmlTag": "Report",
+      "acceptsAsterisk": false,
+      "extension": ".report"
+    },
+    "reportTypes": {
+      "xmlTag": "ReportType",
+      "acceptsAsterisk": true
+    },
+    "roles": {
+      "xmlTag": "Role",
+      "acceptsAsterisk": true
+    },
+    "samlssoconfigs": {
+      "xmlTag": "SamlSsoConfig",
+      "acceptsAsterisk": true
+    },
+    "serviceChannels": {
+      "xmlTag": "ServiceChannel",
+      "acceptsAsterisk": true
+    },
+    "servicePresenceStatuses": {
+      "xmlTag": "ServicePresenceStatus",
+      "acceptsAsterisk": true
+    },
+    "settings": {
+      "xmlTag": "Settings",
+      "acceptsAsterisk": true
+    },
+    "sharingRules": {
+      "xmlTag": "SharingRules",
+      "acceptsAsterisk": true
+    },
+    "sharingSets": {
+      "xmlTag": "SharingSet",
+      "acceptsAsterisk": true
+    },
+    "siteDotComSites": {
+      "xmlTag": "SiteDotCom",
+      "acceptsAsterisk": true
+    },
+    "sites": {
+      "xmlTag": "CustomSite",
+      "acceptsAsterisk": true
+    },
+    "skills": {
+      "xmlTag": "Skill",
+      "acceptsAsterisk": true
+    },
+    "surveySettings": {
+      "xmlTag": "Settings",
+      "acceptsAsterisk": true
+    },
+    "staticresources": {
+      "xmlTag": "StaticResource",
+      "acceptsAsterisk": true
+    },
+    "synonymDictionaries": {
+      "xmlTag": "StaticDictionary",
+      "acceptsAsterisk": true
+    },
+    "tabs": {
+      "xmlTag": "CustomTab",
+      "acceptsAsterisk": true
+    },
+    "topicsForObjects": {
+      "xmlTag": "TopicsForObjects",
+      "acceptsAsterisk": true
+    },
+    "translations": {
+      "xmlTag": "Translations",
+      "acceptsAsterisk": true
+    },
+    "triggers": {
+      "xmlTag": "ApexTrigger",
+      "acceptsAsterisk": true
+    },
+    "userCriteria": {
+      "xmlTag": "UserCriteria",
+      "acceptsAsterisk": true
+    },
+    "weblinks": {
+      "xmlTag": "CustomPageWebLink",
+      "acceptsAsterisk": true
+    },
+    "workflows": {
+      "xmlTag": "Workflow",
+      "acceptsAsterisk": false,
+      "extension": ".workflow"
+    }
+  }
+}

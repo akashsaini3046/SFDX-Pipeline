@@ -1,0 +1,214 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+  controller="CC_BOLListController"
+>
+  <aura:attribute name="searchKeyWord" type="String" default="" />
+  <aura:attribute
+    name="showFilterAndSearchButton"
+    type="boolean"
+    default="true"
+  />
+  <aura:attribute
+    name="showCreateShippingInstructionButton"
+    type="boolean"
+    default="true"
+  />
+  <aura:attribute name="selectedAccountId" type="String" />
+  <aura:attribute name="selectBookingNumber" type="String" />
+  <aura:attribute name="selectedLocationId" type="String" />
+  <aura:attribute name="selectedPortofLoad" type="String" />
+  <aura:attribute name="selectedSailBetweenFrom" type="String" />
+  <aura:attribute name="selectedSailBetweenTo" type="String" />
+  <aura:attribute name="startRange" type="Integer" default="1" />
+  <aura:attribute name="endRange" type="Integer" />
+  <aura:attribute name="showRecords" type="Integer" default="10" />
+  <aura:attribute name="totalRange" type="Integer" default="350" />
+  <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+  <aura:attribute name="showNoResult" type="boolean" default="false" />
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="status" type="String" default="All" />
+  <aura:attribute
+    name="componentName"
+    type="string"
+    default="CC_BillofLading"
+  />
+
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="searchListEvent"
+    event="c:CC_SearchListEvt"
+    action="{!c.handleBOLSearchList}"
+  />
+  <aura:handler
+    name="filterEvent"
+    event="c:CC_FilterEvt"
+    action="{!c.handleBOLFilterList}"
+  />
+  <aura:handler
+    name="paginationEvent"
+    event="c:CC_PaginationEvt"
+    action="{!c.handlePaginationEvent}"
+  />
+
+  <aura:attribute name="accountDetailPage" type="Boolean" default="false" />
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:if isTrue="{!!v.accountDetailPage}">
+    <div class="breadcrumbs-search-row block-view">
+      <h5>Bill of Ladings</h5>
+      <lightning:breadcrumbs>
+        <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+        <lightning:breadcrumb label="Bills of Lading" />
+      </lightning:breadcrumbs>
+    </div>
+  </aura:if>
+  <div class="block-view">
+    <div class="pagination-wrapper">
+      <div>
+        <aura:if isTrue="{!v.accountDetailPage}">
+          <c:CC_BOLListFilter
+            bolSelectedAccId="{!v.selectedAccountId}"
+            showFilterAndSearchButton="{!v.showFilterAndSearchButton}"
+            showCreateShippingInstructionButton="false"
+            accountDetailPage="{!v.accountDetailPage}"
+          />
+          <aura:set attribute="else">
+            <c:CC_BOLListFilter
+              showFilterAndSearchButton="{!v.showFilterAndSearchButton}"
+              showCreateShippingInstructionButton="{!v.showCreateShippingInstructionButton}"
+            />
+          </aura:set>
+        </aura:if>
+      </div>
+
+      <!--<div class="pagination-wrapper">-->
+      <div class="account-pagination">
+        <aura:if isTrue="{!!v.showNoResult}">
+          <c:CC_Pagination
+            aura:id="pagination1"
+            endRange="{!v.endRange}"
+            showRecords="{!v.showRecords}"
+            totalRange="{!v.totalRange}"
+            startRange="{!v.startRange}"
+          />
+        </aura:if>
+      </div>
+    </div>
+    <div class="booking-tab-data block-view">
+      <lightning:tabset selectedTabId="all-bols" variant="scoped">
+        <aura:if isTrue="{!v.showLoadingSpinner}">
+          <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <lightning:tab
+          label="ALL"
+          id="all-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="DOC RECEIVED"
+          id="docrecieved-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="IN PROCESS"
+          id="processing-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="PENDING"
+          id="pending-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="SUBMITTED"
+          id="submitted-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="BOL FOR REVIEW"
+          id="for-review-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="BOL FOR RELEASE"
+          id="for-release-bols"
+          onactive="{! c.handleActiveTab }"
+        >
+          <aura:if isTrue="{!!v.showNoResult}">
+            <c:CC_BolListViewComp data="{!v.data}" />
+            <aura:set attribute="else">
+              <c:CC_NoRecordsFound message="BOL not found" />
+            </aura:set>
+          </aura:if>
+        </lightning:tab>
+        <!--lightning:tab label="PENDING" id="pending-bols" onactive="">
+                    <c:CC_BolListViewComp data="{!v.data}"/>
+                </lightning:tab>
+                <lightning:tab label="SUBMITTED" id="submitted-bols" onactive="">
+                    <c:CC_BolListViewComp data="{!v.data}"/>
+                </lightning:tab>
+                <lightning:tab label="BOL FOR REVIEW" id="bolforreview-bols" onactive="">
+                    <c:CC_BolListViewComp data="{!v.data}"/>
+                </lightning:tab>
+                <lightning:tab label="BOL FOR RELEASE" id="bolforrelease-bols" onactive="">
+                    <c:CC_BolListViewComp data="{!v.data}"/>
+                </lightning:tab-->
+      </lightning:tabset>
+    </div>
+    <aura:if isTrue="{!!v.showNoResult}">
+      <div class="pagination-wrapper">
+        <c:CC_Pagination
+          aura:id="pagination2"
+          endRange="{!v.endRange}"
+          showRecords="{!v.showRecords}"
+          totalRange="{!v.totalRange}"
+          startRange="{!v.startRange}"
+        />
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

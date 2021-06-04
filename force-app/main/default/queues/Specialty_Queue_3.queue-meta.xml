@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>speciality3@abctest.com</email>
+    <name>Specialty Queue 3</name>
+    <queueMembers>
+        <users>
+            <user>astor.garcia@crowley.com</user>
+            <user>beatriz.marquez@crowley.com</user>
+            <user>carmen.provedor@crowley.com</user>
+            <user>cesar.granados@crowley.com</user>
+            <user>christian.ramirez@crowley.com</user>
+            <user>christy.hernandez@crowley.com</user>
+            <user>daniella.antognelli@crowley.com</user>
+            <user>david.padilla@crowley.com</user>
+            <user>gabriela.valle@crowley.com</user>
+            <user>glenda.martinez@crowley.com</user>
+            <user>ivan.urrutia@crowley.com</user>
+            <user>jose.garcia@crowley.com</user>
+            <user>juan.valencia2@crowley.com</user>
+            <user>karla.lopez@crowley.com</user>
+            <user>keren.acevedo@crowley.com</user>
+            <user>lesli.pacheco@crowley.com</user>
+            <user>luis.martinez@crowley.com</user>
+            <user>luis.servellon@crowley.com</user>
+            <user>luis.zelaya@crowley.com</user>
+            <user>maria.lievano@crowley.com</user>
+            <user>marina.yudice@crowley.com</user>
+            <user>roberto.suriano@crowley.com</user>
+            <user>rodrigo.rivas@crowley.com</user>
+            <user>ronald.rodriguez@crowley.com</user>
+            <user>tiffany.pleitez@crowley.com</user>
+            <user>vanessa.vega@crowley.com</user>
+            <user>yeny.segovia@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

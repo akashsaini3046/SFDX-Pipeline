@@ -1,0 +1,47 @@
+<aura:component>
+  <aura:attribute name="data" type="object" />
+  <aura:attribute name="header" type="string" />
+  <aura:attribute
+    name="isViewOnly"
+    type="boolean"
+    default="false"
+    description="Used for view only"
+  />
+  <!-- Collapse attributes-->
+  <aura:attribute name="collapseExpand" type="String" default="COLLAPSE" />
+  <aura:attribute name="isExpand" type="Boolean" default="true" />
+  <div class="cr_shadow">
+    <div class="row">
+      <span class="col-sm-6 pull-left">
+        <h6 class="bold">{!v.header}</h6>
+      </span>
+      <aura:if isTrue="{!!v.isViewOnly}">
+        <div
+          class="col-sm-6 pull-right text-right color-blue cursor-pointer"
+          onclick="{!c.handleCollapse}"
+        >
+          {!v.collapseExpand}
+        </div>
+      </aura:if>
+    </div>
+    <hr />
+    <aura:if isTrue="{!v.isExpand}">
+      <div class="row">
+        <div class="col-12">
+          <aura:if isTrue="{!v.isViewOnly}">
+            <div class="c-container">
+              <b>{!v.data}</b>
+            </div>
+            <aura:set attribute="else">
+              <lightning:textarea
+                name="routinginstruction"
+                label=""
+                value="{!v.data}"
+              />
+            </aura:set>
+          </aura:if>
+        </div>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

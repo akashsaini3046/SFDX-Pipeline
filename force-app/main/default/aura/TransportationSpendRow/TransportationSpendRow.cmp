@@ -1,0 +1,32 @@
+<aura:component>
+  <aura:attribute name="transSpend" type="Object" />
+
+  <aura:registerEvent name="transSpendEvt" type="c:TransportationSpendEvt" />
+
+  <tr>
+    <td>{!v.transSpend.spendCount}</td>
+    <td>{!v.transSpend.service}</td>
+    <td>{!v.transSpend.subService}</td>
+    <td>
+      <lightning:input
+        class="without-label"
+        name="amount"
+        type="number"
+        maxlength="10"
+        formatter="currency"
+        value="{!v.transSpend.amount}"
+        aura:id="amountId"
+        onblur="{!c.handleBlur}"
+      />
+    </td>
+    <td>
+      <lightning:input
+        class="without-label"
+        name="remarks"
+        type="text"
+        value="{!v.transSpend.remarks}"
+        maxlength="100"
+      />
+    </td>
+  </tr>
+</aura:component>

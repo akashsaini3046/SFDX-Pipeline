@@ -1,0 +1,24 @@
+<aura:component>
+  <aura:attribute name="stops" type="List" />
+
+  <aura:handler name="init" value="{! this}" action="{! c.doInit }" />
+
+  <lightning:layout multipleRows="true">
+    <aura:iteration items="{!v.stops}" var="stopList">
+      <aura:iteration items="{!stopList}" var="item">
+        <aura:if isTrue="{!item.label=='Stop Name'}">
+          <lightning:layoutItem size="12" class="type-name">
+            <b>{!item.value} </b>
+          </lightning:layoutItem>
+        </aura:if>
+      </aura:iteration>
+      <aura:iteration items="{!stopList}" var="item">
+        <lightning:layoutItem size="2">
+          <b>{!item.label}:</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+      </aura:iteration>
+      <lightning:layout> </lightning:layout>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

@@ -1,0 +1,85 @@
+.THIS .manageIcon svg {
+  fill: #0066cc;
+  width: 15px;
+}
+
+.THIS .manageCloseIcon svg {
+  fill: #9e2026;
+  width: 20px;
+  height: 20px;
+}
+
+.THIS p {
+  font-size: 11px;
+}
+
+.THIS .pagination-button {
+  height: 30px;
+  width: 85px;
+}
+
+.THIS .dateOptionClass .slds-form-element__control .slds-radio {
+  display: inline-block !important;
+}
+
+.THIS .blue-button {
+  background-color: #0066cc;
+  border-color: #0066cc;
+}
+
+.THIS .notes-heading {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.THIS .blueFontColour {
+  color: #0066cc;
+}
+
+.THIS .bold-font {
+  font-weight: bold;
+}
+
+.THIS .hr-margin-top {
+  margin-top: -12px !important;
+}
+
+.THIS .hr-margin-top-chld {
+  margin-top: 5px !important;
+}
+
+.THIS .hr-margin-bottom-chld {
+  margin-bottom: 5px !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}
+
+.THIS .note-width {
+  width: 800px;
+}
+
+.THIS .selected {
+  color: orange;
+  font-weight: bold;
+}
+
+.THIS .font-size-sixteen-px {
+  font-size: 16px !important;
+}
+
+.THIS .padding-top-six-percent {
+  padding-top: 6% !important;
+}
+
+.THIS .first-last-button {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.THIS .next-prev-button {
+  padding-left: 5px;
+  padding-right: 9px;
+}

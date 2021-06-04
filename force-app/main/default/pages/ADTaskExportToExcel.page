@@ -1,0 +1,111 @@
+<!--
+* Name: ADTaskExportToExcel
+* Purpose: This page is used to export tasks list on the acccount dashboard into Excel file.
+* Author: Nagarro
+* Created Date: 28-Nov-2019
+* Modification History
+* Modification #   Story/Defect#      Modified By     Date   Description
+-->
+
+<apex:page
+  id="pg"
+  standardStylesheets="false"
+  readOnly="true"
+  controller="ADTaskExportToExcelController"
+  contenttype="application/vnd.ms-excel#TaskExport_{!TODAY()}.xls"
+  action="{!deleteAttachment}"
+>
+  {!xmlheader}
+  <Workbook
+    xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:x="urn:schemas-microsoft-com:office:excel"
+    xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+    xmlns:html="http://www.w3.org/TR/REC-html40"
+  >
+    <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+      <Created></Created>
+      <LastSaved></LastSaved>
+      <Version></Version>
+    </DocumentProperties>
+    <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+      <AllowPNG />
+      <RemovePersonalInformation />
+    </OfficeDocumentSettings>
+    <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+      <WindowHeight>12650</WindowHeight>
+      <WindowWidth>22260</WindowWidth>
+      <WindowTopX>32767</WindowTopX>
+      <WindowTopY>32767</WindowTopY>
+      <ProtectStructure>False</ProtectStructure>
+      <ProtectWindows>False</ProtectWindows>
+    </ExcelWorkbook>
+    <Styles>
+      <style ss:ID="Default" ss:Name="Normal">
+        <Alignment ss:Vertical="Bottom"/>
+        <Borders/>
+        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+        <Interior/>
+        <NumberFormat/>
+        <Protection/>
+      </style>
+    </Styles>
+    <Worksheet ss:Name="Sheet1">
+      <table
+        ss:ExpandedColumnCount="50"
+        ss:ExpandedRowCount="10000"
+        x:FullColumns="1"
+        x:FullRows="1"
+        ss:DefaultRowHeight="14.5"
+      >
+        <Row>
+          <Cell><data ss:Type="String">Account/Opportunity</data></Cell>
+          <Cell><data ss:Type="String">Status</data></Cell>
+          <Cell><data ss:Type="String">Subject</data></Cell>
+          <Cell><data ss:Type="String">Comment</data></Cell>
+          <Cell><data ss:Type="String">DueDate</data></Cell>
+          <Cell><data ss:Type="String">CreatedDate</data></Cell>
+          <Cell><data ss:Type="String">Type</data></Cell>
+          <Cell><data ss:Type="String">AssignedTo</data></Cell>
+          <Cell><data ss:Type="String">RelatedTo</data></Cell>
+        </Row>
+
+        <apex:repeat value="{!listOfTasks}" var="task">
+          <Row>
+            <Cell><data ss:Type="String">{!task.accountName}</data></Cell>
+            <Cell><data ss:Type="String">{!task.status}</data></Cell>
+            <Cell><data ss:Type="String">{!task.subject}</data></Cell>
+            <Cell><data ss:Type="String">{!task.description}</data></Cell>
+            <Cell><data ss:Type="String">{!task.activityDate}</data></Cell>
+            <Cell><data ss:Type="String">{!task.createdDate}</data></Cell>
+            <Cell><data ss:Type="String">{!task.taskSubtype}</data></Cell>
+            <Cell><data ss:Type="String">{!task.ownerName}</data></Cell>
+            <Cell><data ss:Type="String">{!task.relatedTo}</data></Cell>
+          </Row>
+        </apex:repeat>
+      </table>
+      <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+        <PageSetup>
+          <header x:Margin="0.3" />
+          <footer x:Margin="0.3" />
+          <PageMargins
+            x:Bottom="0.75"
+            x:Left="0.7"
+            x:Right="0.7"
+            x:Top="0.75"
+          />
+        </PageSetup>
+        <Selected />
+        <Panes>
+          <Pane>
+            <Number>3</Number>
+            <ActiveRow>4</ActiveRow>
+            <ActiveCol>2</ActiveCol>
+          </Pane>
+        </Panes>
+        <ProtectObjects>False</ProtectObjects>
+        <ProtectScenarios>False</ProtectScenarios>
+      </WorksheetOptions>
+    </Worksheet>
+  </Workbook>
+</apex:page>

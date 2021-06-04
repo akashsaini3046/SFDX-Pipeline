@@ -1,0 +1,177 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="routeRecord" type="string" />
+  <aura:attribute name="rateItems" type="List" />
+  <aura:attribute name="extraRateItems" type="List" />
+  <aura:attribute name="rateMapping" type="List" />
+  <aura:attribute name="chargeLines" type="List" />
+  <aura:attribute name="totalAmount" type="String" />
+  <aura:attribute name="INSAmount" type="String" />
+  <aura:attribute name="SEDAmount" type="String" />
+  <aura:attribute name="subTotalAmount" type="String" />
+  <aura:attribute name="showTotal" type="boolean" default="false" />
+  <aura:attribute name="quoteDetail" type="boolean" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler name="change" value="{!v.routeRecord}" action="{!c.doInit}" />
+  <aura:handler name="change" value="{!v.chargeLines}" action="{!c.doInit}" />
+  <div class="rate-details-cont">
+    <aura:if isTrue="{!not(empty(v.rateItems))}">
+      <table width="100%" cellspacing="0" cellpadding="0" class="rate-det-tbl">
+        <thead>
+          <tr>
+            <td></td>
+            <td>{!$Label.c.CC_VC_RouteDet_Items}</td>
+            <td class="text-center">{!$Label.c.CC_VC_RouteDet_Qty}</td>
+            <td class="text-right no-wrap">{!$Label.c.CC_VC_RouteDet_Rates}</td>
+            <!--td class="text-right">{!$Label.c.CC_VC_RouteDet_Total}</!td-->
+          </tr>
+        </thead>
+        <tbody>
+          <aura:iteration
+            items="{!v.rateItems}"
+            var="rateItem"
+            indexVar="index"
+          >
+            <tr class="head-row">
+              <td>{!index + 1}.</td>
+              <td>
+                <h6>
+                  <b>
+                    <aura:if isTrue="{!not(empty(rateItem.year))}">
+                      {!rateItem.year} -&nbsp;
+                    </aura:if>
+                    {!rateItem.containerName}&nbsp;
+                    <span class="grey-text-9">
+                      <aura:unescapedHtml value="{!rateItem.commodityDesc}" />
+                    </span>
+                  </b>
+                </h6>
+              </td>
+              <td class="text-center">
+                <h6><b>{!rateItem.quantity}</b></h6>
+              </td>
+              <td class="text-right">
+                <h6>
+                  <b>
+                    <!--<lightning:formattedNumber value="{!rateItem.totalSum}" style="currency"
+                                            currencyCode="USD" />-->
+                    <ui:outputCurrency
+                      value="{!rateItem.totalSum}"
+                      format="$ ##,##,###,###.00"
+                    />
+                  </b>
+                </h6>
+              </td>
+              <!--td class="text-right">
+                                <h6>
+                                    <b>
+                                        <lightning:formattedNumber value="{!rateItem.totalSum}" style="currency"
+                                            currencyCode="USD" />
+                                    </b>
+                                </h6>
+                            </!td-->
+            </tr>
+            <tr>
+              <td colspan="4">
+                <ul class="item-descp">
+                  <aura:iteration items="{!rateItem.itemValues}" var="itemDet">
+                    <li>
+                      <span class="item-details">{!itemDet.Description}</span>
+                      <span class="item-price-details">
+                        <!--<lightning:formattedNumber value="{!itemDet.AmountTarget}" style="currency"
+                                                currencyCode="USD" />-->
+                        <ui:outputCurrency
+                          value="{!itemDet.AmountTarget}"
+                          format="$ ##,##,###,###.00"
+                        />
+                      </span>
+                    </li>
+                  </aura:iteration>
+                </ul>
+              </td>
+            </tr>
+          </aura:iteration>
+        </tbody>
+        <!--aura:if isTrue="{!v.showTotal}"-->
+        <div class="clearfix" />
+        <tr class="sed-prep-separation">
+          <td></td>
+          <td>
+            <h6><b>Sub Total</b></h6>
+          </td>
+          <td></td>
+          <!--td></!td-->
+          <td class="text-right">
+            <h6>
+              <b>
+                <ui:outputCurrency
+                  value="{!v.subTotalAmount}"
+                  format="$ ##,##,###,###.00"
+                />
+              </b>
+            </h6>
+          </td>
+        </tr>
+        <aura:if isTrue="{!v.extraRateItems.length>0}">
+          <div class="clearfix" />
+          <tr class="sed-prep-separation">
+            <td colspan="4">
+              <ul class="item-descp">
+                <!--li>
+                                    <span class="item-details">{!$Label.c.CC_Marine_Cargo_Insurance}</span>
+                                    <span class="item-price-details">
+                                        <ui:outputCurrency value="{!v.INSAmount}" format="$ ##,##,###,###.00"/>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="item-details">{!$Label.c.CC_EEI_SED_Preparation}</span>
+                                    <span class="item-price-details">
+                                        <ui:outputCurrency value="{!v.SEDAmount}" format="$ ##,##,###,###.00"/>
+                                    </span>
+                                </li-->
+                <aura:iteration items="{!v.extraRateItems}" var="itemDet">
+                  <li>
+                    <span class="item-details">{!itemDet.Description}</span>
+                    <span class="item-price-details">
+                      <ui:outputCurrency
+                        value="{!itemDet.AmountTarget}"
+                        format="$ ##,##,###,###.00"
+                      />
+                    </span>
+                  </li>
+                </aura:iteration>
+              </ul>
+            </td>
+          </tr>
+        </aura:if>
+        <div class="clearfix"></div>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td>
+              <h6><b>{!$Label.c.CC_VC_QuoSum_Total}</b></h6>
+            </td>
+            <td></td>
+            <!--td></!td-->
+            <td class="text-right">
+              <h6>
+                <b>
+                  <!--<lightning:formattedNumber value="{!v.totalAmount}" style="currency"
+                                                currencyCode="USD" />-->
+                  <ui:outputCurrency
+                    value="{!v.totalAmount}"
+                    format="$ ##,##,###,###.00"
+                  />
+                </b>
+              </h6>
+            </td>
+          </tr>
+        </tfoot>
+        <!--/aura:if-->
+      </table>
+    </aura:if>
+  </div>
+</aura:component>

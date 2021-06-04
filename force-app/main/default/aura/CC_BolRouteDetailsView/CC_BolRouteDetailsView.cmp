@@ -1,0 +1,65 @@
+<aura:component controller="routeDetailsController">
+  <aura:attribute name="data" type="object" required="true" />
+  <aura:attribute name="header" type="string" />
+
+  <div class="cr_shadow">
+    <h6 class="bold">{!v.header}</h6>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <div>
+          <span class="bol-view-labels">Vessel Name :</span>
+          <b class="bol-view-values">{!v.data.vesselName}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Voyage Number :</span>
+          <b class="bol-view-values">{!v.data.voyageNumber}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Flag :</span>
+          <b class="bol-view-values">{!v.data.flag}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Place of Receipt :</span>
+          <b class="bol-view-values">{!v.data.placeOfReciept}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Port of Loading :</span>
+          <b class="bol-view-values">{!v.data.portOfLoading}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Port of Discharge :</span>
+          <b class="bol-view-values">{!v.data.portOfDischarge}</b>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div>
+          <span class="bol-view-labels">Relay Point :</span>
+          <b class="bol-view-values">{!v.data.relayPoint}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels"
+            >Point &amp; Country of Origin of Goods :</span
+          >
+          <b class="bol-view-values">{!v.data.pointAndCountry}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Routing Details :</span>
+          <b class="bol-view-values">{!v.data.routingDetails}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Loading Pier :</span>
+          <b class="bol-view-values">{!v.data.loadingPier}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Place of Delivery :</span>
+          <b class="bol-view-values">{!v.data.placeOfDelivery}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Originals to be released at :</span>
+          <b class="bol-view-values">{!v.data.originalsToBeReleasedAt}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,381 @@
+<!--
+* Name: OpportunitySplitComponent 
+* Purpose: Lightning Component which opportunity split interface.
+* Author: Nagarro
+* Created Date: 18-Feb-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component
+  controller="OpportunitySplitController"
+  implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+>
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="boolShowFilterModal" type="Boolean" default="false" />
+  <aura:attribute name="lstOpportunityLineItem" type="List" />
+  <aura:attribute name="boolDataLoaded" type="Boolean" />
+  <aura:attribute name="objCurrentOpportunity" type="Opportunity" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="strSource" type="String" default="DESKTOP_CLOSED_WON" />
+  <aura:attribute name="lstServiceStatus" type="List" />
+  <aura:attribute name="decWonOppSize" type="Decimal" />
+  <aura:attribute name="decLostOppSize" type="Decimal" />
+  <aura:attribute
+    name="boolHasAccessToSelectService"
+    type="Boolean"
+    default="false"
+  />
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:if isTrue="{!v.boolHasAccessToSelectService}">
+    <aura:if
+      isTrue="{!and(v.boolShowFilterModal, (v.objCurrentOpportunity.StageName ==  $Label.c.OPS_LABEL_CLOSED_WON_OPP))}"
+    >
+      <aura:if
+        isTrue="{!or(v.objCurrentOpportunity.Is_Split_Taken_Care__c == false, v.strSource == 'QUICK_ACTION_DESKTOP')}"
+      >
+        <!-- Modal dialog starts -->
+        <div class="demo-only" style="height: 440px">
+          <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+          >
+            <div
+              class="{!v.strSource=='QUICK_ACTION_DESKTOP'?'quick-action-width-desktop slds-modal__container':'width-desktop slds-modal__container'}"
+            >
+              <header class="slds-modal__header">
+                <h2
+                  id="modal-heading-01"
+                  class="slds-text-heading_medium slds-hyphenate"
+                  style="font-weight: initial"
+                >
+                  {!$Label.c.OPS_LABEL_SPLIT_OPPORTUNITY}
+                </h2>
+                <aura:if isTrue="{!v.strSource !='QUICK_ACTION_DESKTOP'}">
+                  <h3>{!$Label.c.OPS_MESSAGE_SELECT_SERVICE_HELP}</h3>
+                </aura:if>
+              </header>
+              <div
+                class="slds-modal__content slds-p-around_medium"
+                id="modal-content-id-1"
+                style="
+                  min-height: 150px !important;
+                  background: rgb(241, 241, 241);
+                  padding-top: 13px !important;
+                "
+              >
+                <p style="width: 103%; margin-left: -20px">
+                  <!-- Modal dialog content starts -->
+                  <aura:if
+                    isTrue="{!or(v.boolDataLoaded, v.strSource =='QUICK_ACTION_DESKTOP')}"
+                  >
+                    <div
+                      class="slds-table--header-fixed_container"
+                      style="height: 250px"
+                    >
+                      <div
+                        class="slds-scrollable_y"
+                        style="
+                          height: 95% !important;
+                          min-width: 200px !important;
+                          overflow-x: auto !important;
+                        "
+                      >
+                        <!-- Table starts - which contains opportunity line items -->
+                        <table
+                          class="slds-table slds-table_bordered slds-table_cell-buffer slds-table--header-fixed"
+                        >
+                          <thead>
+                            <tr class="slds-line-height_reset">
+                              <th
+                                class="slds-m-around_medium"
+                                scope="col"
+                                style="min-width: 40px"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed"
+                                  title="{!$Label.c.OPS_LABEL_SERVICE_STATUS}"
+                                >
+                                  {!$Label.c.OPS_LABEL_IS_WON}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium"
+                                scope="col"
+                                style="width: 16%; word-wrap: break-word"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_SERVICE_NAME}"
+                                >
+                                  {!$Label.c.OPS_LABEL_NAME}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium"
+                                scope="col"
+                                style="width: 6%; word-wrap: break-word"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_TRADE}"
+                                >
+                                  {!$Label.c.OPS_LABEL_TRADE}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium"
+                                scope="col"
+                                style="width: 20%; word-wrap: break-word"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_ORIGIN_DESTINATION_COUNTRY}"
+                                >
+                                  {!$Label.c.OPS_LABEL_ORIGIN_DESTINATION_COUNTRY}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium responsiveHide slds-truncate"
+                                scope="col"
+                                style="width: 8%"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_QUANTITY}"
+                                >
+                                  {!$Label.c.OPS_LABEL_QUANTITY}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium responsiveHide slds-truncate"
+                                scope="col"
+                                style="width: 15%"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_SALES_PRICE}"
+                                >
+                                  {!$Label.c.OPS_LABEL_SALES_PRICE}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium responsiveHide slds-truncate"
+                                scope="col"
+                                style="width: 15%"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_QUOTED_PRICE}"
+                                >
+                                  {!$Label.c.OPS_LABEL_QUOTED_PRICE}
+                                </div>
+                              </th>
+                              <th
+                                class="slds-m-around_medium responsiveHide slds-truncate"
+                                scope="col"
+                                style="width: 15%"
+                              >
+                                <div
+                                  class="slds-truncate slds-cell-fixed slds-m-left_x-small"
+                                  title="{!$Label.c.OPS_LABEL_LOST_OPP_SIZE_SHORT}"
+                                >
+                                  {!$Label.c.OPS_LABEL_LOST_OPP_SIZE_SHORT}
+                                </div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <aura:iteration
+                              items="{!v.lstOpportunityLineItem}"
+                              var="objOppLineItem"
+                            >
+                              <tr>
+                                <td
+                                  title="Select service status"
+                                  style="min-width: 40px"
+                                >
+                                  <lightning:input
+                                    type="checkbox"
+                                    label=""
+                                    name="{!objOppLineItem.idLineItem}"
+                                    checked="{!objOppLineItem.boolServiceStatus}"
+                                    onchange="{!c.serviceStatusChangeHandler}"
+                                  />
+                                </td>
+                                <td style="width: 16%; word-wrap: break-word">
+                                  <span
+                                    title="{!objOppLineItem.strProductName}"
+                                    class="table-cell-word-wrap"
+                                    >{!objOppLineItem.strProductName}</span
+                                  >
+                                </td>
+                                <td style="width: 6%; word-wrap: break-word">
+                                  <span
+                                    title="{!objOppLineItem.strTrade}"
+                                    class="table-cell-word-wrap"
+                                    >{!objOppLineItem.strTrade}</span
+                                  >
+                                </td>
+                                <td style="width: 20%; word-wrap: break-word">
+                                  <aura:if
+                                    isTrue="{!or(not(empty(objOppLineItem.strOriginCountry)), not(empty(objOppLineItem.strDestinationCountry)))}"
+                                  >
+                                    <span
+                                      title="{!objOppLineItem.strOriginCountry + '/' + objOppLineItem.strDestinationCountry}"
+                                      class="table-cell-word-wrap"
+                                      >{!objOppLineItem.strOriginCountry + '/' +
+                                      objOppLineItem.strDestinationCountry}</span
+                                    >
+                                  </aura:if>
+                                </td>
+                                <td style="width: 8%" class="responsiveHide">
+                                  <span
+                                    title="{!objOppLineItem.decQuantity}"
+                                    class="table-cell-word-wrap"
+                                    >{!objOppLineItem.decQuantity}</span
+                                  >
+                                </td>
+                                <td style="width: 15%" class="responsiveHide">
+                                  <span
+                                    title="{!objOppLineItem.decUnitPrice}"
+                                    class="table-cell-word-wrap"
+                                    ><ui:outputCurrency
+                                      value="{!objOppLineItem.decUnitPrice}"
+                                  /></span>
+                                </td>
+                                <td style="width: 15%" class="responsiveHide">
+                                  <span
+                                    title="{!objOppLineItem.decTotalPrice}"
+                                    class="table-cell-word-wrap"
+                                    ><ui:outputCurrency
+                                      value="{!objOppLineItem.decTotalPrice}"
+                                  /></span>
+                                </td>
+                                <td style="width: 15%" class="responsiveHide">
+                                  <span
+                                    title="{!objOppLineItem.decLostTotalPrice}"
+                                    class="table-cell-word-wrap"
+                                    ><ui:outputCurrency
+                                      value="{!objOppLineItem.decLostTotalPrice}"
+                                  /></span>
+                                </td>
+                              </tr>
+                            </aura:iteration>
+                          </tbody>
+                        </table>
+                        <!-- Table ends - which contains opportunity line items -->
+                      </div>
+                    </div>
+                  </aura:if>
+                  <!-- Modal dialog content ends -->
+                </p>
+
+                <aura:if isTrue="{!v.boolDataLoaded}">
+                  <div class="slds-float_right">
+                    <span style="font-weight: bold"
+                      >{!$Label.c.OPS_LABEL_WON_OPP_SIZE}</span
+                    ><span class="slds-p-left_x-small"
+                      ><ui:outputCurrency value="{!v.decWonOppSize}"
+                    /></span>
+                    <span class="slds-p-left_large" style="font-weight: bold"
+                      >{!$Label.c.OPS_LABEL_LOST_OPP_SIZE}</span
+                    ><span class="slds-p-right_small slds-p-left_x-small">
+                      <ui:outputCurrency value="{!v.decLostOppSize}"
+                    /></span>
+                  </div>
+                </aura:if>
+              </div>
+              <footer class="slds-modal__footer">
+                <div class="slds-p-top_x-small">
+                  <lightning:button
+                    variant="brand"
+                    class="slds-float_right slds-m-right_small"
+                    title="{!$Label.c.OPS_LABEL_SPLIT}"
+                    label="{!$Label.c.OPS_LABEL_SPLIT}"
+                    onclick="{!c.handleSaveSplitClick}"
+                  />
+                  <lightning:button
+                    variant="Neutral"
+                    class="slds-float_right slds-m-right_small"
+                    title="{!$Label.c.OPS_LABEL_SPLIT}"
+                    label="{!$Label.c.OPS_LABEL_CLOSE}"
+                    onclick="{!c.handleCloselClick}"
+                  />
+                  <lightning:button
+                    variant="Neutral"
+                    class="slds-float_left slds-m-right_small"
+                    title="{!$Label.c.OPS_LABEL_MARK_ALL_WON}"
+                    label="{!$Label.c.OPS_LABEL_WON_ALL}"
+                    onclick="{!c.handleWonAllClick}"
+                  />
+                  <lightning:button
+                    variant="Neutral"
+                    class="slds-float_left slds-m-right_small"
+                    title="{!$Label.c.OPS_LABEL_MARK_ALL_LOST}"
+                    label="{!$Label.c.OPS_LABEL_ALL_LOST}"
+                    onclick="{!c.handleLostAllClick}"
+                  />
+                </div>
+              </footer>
+            </div>
+          </section>
+          <div
+            class="{!v.strSource=='QUICK_ACTION_DESKTOP'?'slds-backdrop slds-backdrop_open slds-backdrop_open-quickaction':'slds-backdrop slds-backdrop_open'}"
+          ></div>
+        </div>
+      </aura:if>
+    </aura:if>
+  </aura:if>
+
+  <aura:if
+    isTrue="{!and(v.boolShowFilterModal, (v.boolHasAccessToSelectService == true), (v.objCurrentOpportunity.StageName !=  $Label.c.OPS_LABEL_CLOSED_WON_OPP))}"
+  >
+    <aura:if isTrue="{!(v.strSource == 'QUICK_ACTION_DESKTOP')}">
+      <div style="padding-top: 15%; text-align: center">
+        {!$Label.c.OPS_MESSAGE_NOT_CLOSED_WON_OPP}
+      </div>
+    </aura:if>
+  </aura:if>
+
+  <aura:if
+    isTrue="{!and(v.boolShowFilterModal, (v.boolHasAccessToSelectService == false), (v.objCurrentOpportunity.StageName ==  $Label.c.OPS_LABEL_CLOSED_WON_OPP))}"
+  >
+    <aura:if isTrue="{!(v.strSource == 'QUICK_ACTION_DESKTOP')}">
+      <div style="padding-top: 15%; text-align: center">
+        {!$Label.c.OPS_MESSAGE_DONT_HAVE_ACCESS}
+      </div>
+    </aura:if>
+  </aura:if>
+
+  <!-- Modal dialog ends -->
+  <aura:if isTrue="{!v.boolSpinner}">
+    <aura:if isTrue="{!v.strSource == 'QUICK_ACTION_DESKTOP'}">
+      <lightning:spinner
+        size="large"
+        variant="brand"
+        style="background-color: transparent"
+      />
+    </aura:if>
+    <div
+      aura:id="spinnerId"
+      class="{!v.strSource=='QUICK_ACTION_DESKTOP'?'spinner-quickaction slds-spinner_container':'slds-spinner_container'}"
+    >
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">{!$Label.c.AD_LABEL_LOADING}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

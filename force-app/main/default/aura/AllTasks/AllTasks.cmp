@@ -1,0 +1,635 @@
+<aura:component access="global" controller="ADTasksController">
+  <aura:attribute name="taskControllerObj" type="ADTasksController" />
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="strSelectedFilterBy" type="String" />
+  <aura:attribute
+    name="listDateOptions"
+    type="List"
+    default="[{'label': 'Created Date', 'value': 'Created Date'}]"
+  />
+  <!-- {'label': 'Due Date', 'value': 'Due Date'} -->
+  <aura:attribute name="dateOptionSelected" type="String" />
+  <aura:attribute
+    name="createdDateOptionSelected"
+    type="Boolean"
+    default="FALSE"
+  />
+  <aura:attribute name="dueDateOptionSelected" type="Boolean" default="FALSE" />
+  <aura:attribute name="startDate" type="Date" />
+  <aura:attribute name="endDate" type="Date" />
+  <aura:attribute name="taskList" type="List" />
+  <aura:attribute name="taskListCopy" type="String" />
+  <aura:attribute name="allData" type="List" />
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="filteredTaskList" type="List" />
+  <aura:attribute name="sortedTaskList" type="List" />
+  <aura:attribute name="taskListLength" type="String" />
+  <aura:attribute
+    name="listSelectedOwners"
+    type="sObject[]"
+    default="[]"
+    description="Use,for store SELECTED sObject Records"
+  />
+  <aura:attribute name="showDueDateAscSorting" type="Boolean" default="false" />
+  <aura:attribute
+    name="showCreatedDateAscSorting"
+    type="Boolean"
+    default="false"
+  />
+  <aura:attribute name="showDueDateDescSorting" type="Boolean" default="true" />
+  <aura:attribute
+    name="showCreatedDateDescSorting"
+    type="Boolean"
+    default="true"
+  />
+  <aura:attribute name="sortingOptionSelected" type="String" />
+  <aura:attribute name="ownerIdList" type="List" />
+  <aura:attribute name="strSelectedYear" type="String" />
+  <aura:attribute name="strRelatedTo" type="String" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.getTasks}" />
+  <aura:handler
+    name="oSelectedRecordEvent"
+    event="c:selectedsObjectRecordsEvent"
+    action="{!c.getSelectedOwners}"
+  />
+
+  <aura:handler
+    name="selectedUsersEvent"
+    event="c:selectedUserRecordsEvent"
+    action="{!c.handleSelectedOwnersEvent}"
+  />
+
+  <aura:attribute name="columns" type="List" />
+
+  <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+  <aura:attribute name="pageSize" type="Integer" default="10" />
+  <aura:attribute name="totalPages" type="Integer" default="0" />
+  <aura:attribute name="pageListFirstElement" type="Integer" default="1" />
+  <aura:attribute name="pageListLastElement" type="Integer" default="1" />
+  <aura:attribute name="pageList" type="List" />
+  <aura:attribute name="boolShowAllTaskModal" type="Boolean" default="true" />
+
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+  <aura:attribute name="selectedLookUpRecords" type="sObject[]" default="[]" />
+
+  <aura:attribute name="lstFilterTaskByOptions" type="List" />
+  <aura:attribute name="strSelectedFilterTaskBy" type="String" />
+
+  <aura:attribute name="boolHasDataToDownload" type="Boolean" default="false" />
+
+  <aura:if isTrue="{!v.boolShowAllTaskModal}">
+    <div style="height: 600px !important">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-label="Master filter modal"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_small"
+            id="modal-content-id-1"
+            style="
+              min-height: 600px !important;
+              width: 900px;
+              margin-left: -20%;
+            "
+          >
+            <div class="slds-m-bottom_x-small">
+              <!-- TASK HEADING AND CROSS ICON DIV STARTS HERE -->
+              <div class="slds-p-bottom_x-small slds-float_right">
+                <!--         <lightning:button variant="base" iconName="utility:close" title="{!$Label.c.AD_LABEL_CLOSE}" onclick="{!c.handleModalBoxCloseClick}"/> -->
+                <lightning:button
+                  variant="base"
+                  title="{!$Label.c.AD_LABEL_CLOSE}"
+                  onclick="{!c.handleModalBoxCloseClick}"
+                >
+                  <lightning:icon
+                    iconName="utility:close"
+                    class="manageCloseIcon"
+                  />
+                </lightning:button>
+              </div>
+
+              <div
+                class="slds-m-top_xx-small slds-m-bottom_xx-small slds-float_left"
+              >
+                <div
+                  class="slds-float_left blueFontColour bold-font font-size-sixteen-px"
+                >
+                  {!$Label.c.AD_LABEL_BUTTON_FILTER_BY}
+                </div>
+              </div>
+              <div
+                class="slds-m-around_xx-small slds-p-right_xx-large slds-float_right"
+              >
+                <div class="slds-float_right task-heading">
+                  Tasks ({!v.taskListLength})
+                </div>
+              </div>
+            </div>
+            <!-- TASK HEADING AND CROSS ICON DIV ENDS HERE -->
+
+            <div
+              class="slds-m-bottom_small slds-p-top_large"
+              style="max-height: 200px; min-height: 200px"
+            >
+              <!-- FILTER BY, MULTISELECT LOOKUP, BUTTONS AND DATE FILTERS DIV STARTS HERE -->
+
+              <div class="slds-grid slds-wrap">
+                <div
+                  class="slds-size--3-of-10 slds-medium-size--3-of-10 slds-large-size--3-of-10"
+                >
+                  <p
+                    class="slds-truncate slds-p-right_xx-small slds-m-top_x-small slds-m-bottom_small"
+                    style="font-size: 13px; font-weight: bold"
+                  >
+                    {!$Label.c.AD_LABEL_MULTISELECT_LOOKUP_ASSIGNED_TO}
+                  </p>
+                  <div
+                    style="
+                      max-height: 225px;
+                      max-width: 240px;
+                      min-width: 240px;
+                    "
+                    class="slds-p-right_small"
+                  >
+                    <div class="slds-p-right_small">
+                      <c:reUsableMultiSelectLookup
+                        aura:id="reusableMultiSelectLookupComp"
+                        objectAPIName="task"
+                        IconName="standard:user"
+                        lstSelectedRecords="{!v.selectedLookUpRecords}"
+                        ownerIdList="{!v.ownerIdList}"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="slds-size--2-of-10 slds-medium-size--2-of-10 slds-large-size--2-of-10 slds-p-right_xx-small"
+                  style="width: 15%"
+                >
+                  <p
+                    class="slds-truncate slds-p-right_xx-large slds-m-top_x-small slds-m-bottom_small slds-float_left"
+                    style="font-size: 13px; font-weight: bold"
+                  >
+                    {!$Label.c.AD_LABEL_RELATED_TO}
+                  </p>
+                  <lightning:input
+                    name="relatedToText"
+                    variant="label-hidden"
+                    value="{!v.strRelatedTo}"
+                    placeholder="{!$Label.c.AD_MESSAGE_ENTER_REALATED_TO}"
+                    style="font-size: 13px; font-weight: normal"
+                  />
+                </div>
+
+                <div
+                  class="slds-size--2-of-10 slds-medium-size--2-of-10 slds-large-size--2-of-10 slds-p-right_xx-small"
+                  style="width: 15%"
+                >
+                  <p
+                    class="slds-truncate slds-p-right_xx-large slds-m-top_x-small slds-m-bottom_small slds-float_left"
+                    style="
+                      font-size: 13px;
+                      font-weight: bold;
+                      padding-left: 16%;
+                    "
+                  >
+                    {!$Label.c.AD_LABEL_STATUS}
+                  </p>
+                  <lightning:combobox
+                    variant="label-hidden"
+                    name="taskFilterBy"
+                    label="Status"
+                    value="{!v.strSelectedFilterTaskBy}"
+                    placeholder="Select Status"
+                    options="{! v.lstFilterTaskByOptions }"
+                    onchange=""
+                    style="
+                      font-size: 13px;
+                      font-weight: normal;
+                      width: 150px !important;
+                      padding-left: 16%;
+                    "
+                  />
+                </div>
+                <div
+                  class="slds-size--3-of-10 slds-medium-size--3-of-10 slds-large-size--3-of-10"
+                  style="display: block; width: 40%"
+                >
+                  <div
+                    class="slds-truncate slds-m-top_x-small slds-m-bottom_small"
+                    style="
+                      font-size: 13px;
+                      font-weight: bold;
+                      padding-left: 13%;
+                    "
+                  >
+                    {!$Label.c.AD_LABEL_CREATED_DATE}
+                  </div>
+
+                  <div class="slds-m-bottom_medium" style="display: none">
+                    <lightning:radioGroup
+                      name="dateOptions"
+                      options="{!v.listDateOptions}"
+                      value="{!v.dateOptionSelected}"
+                      type="radio"
+                      class="dateOptionClass bold-font"
+                      aura:id="dateRadioButton"
+                    />
+                  </div>
+
+                  <div
+                    class="slds-form slds-form_compound"
+                    style="display: block; padding-left: 13%"
+                  >
+                    <fieldset class="slds-form-element">
+                      <div class="slds-form-element__control">
+                        <div class="slds-form-element__group">
+                          <div class="slds-form-element__row">
+                            <div>
+                              <ui:inputDate
+                                aura:id="StartDateField"
+                                value="{!v.startDate}"
+                                displayDatePicker="true"
+                                format="MM/dd/yyyy"
+                                class="inputDateWidth"
+                              />
+                              <!--   <lightning:input aura:id="StartDateField" type="date" label="Start" name="startDate" value="{!v.startDate}" format="MM/dd/yyyy"/>-->
+                            </div>
+                            <div style="margin-top: 8px; margin-left: 16px">
+                              <label class="slds-form-element__label">To</label>
+                            </div>
+                            <div class="slds-m-left_medium">
+                              <ui:inputDate
+                                aura:id="EndDateField"
+                                value="{!v.endDate}"
+                                displayDatePicker="true"
+                                format="MM/dd/yyyy"
+                                class="inputDateWidth"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+
+              <div class="slds-grid slds-wrap">
+                <div
+                  class="slds-size--3-of-12 slds-medium-size--3-of-12 slds-large-size--3-of-12"
+                  style="width: 22%"
+                >
+                  <div class="slds-p-top_large slds-p-bottom_large">
+                    <lightning:button
+                      variant="brand"
+                      class="slds-float_left blue-button"
+                      title="{!$Label.c.AD_LABEL_BUTTON_APPLY}"
+                      label="{!$Label.c.AD_LABEL_BUTTON_APPLY}"
+                      onclick="{!c.handleFilterApplyClick}"
+                    />
+                    <lightning:button
+                      variant="brand"
+                      class="slds-float_left blue-button"
+                      title="{!$Label.c.AD_LABEL_BUTTON_RESET}"
+                      label="{!$Label.c.AD_LABEL_BUTTON_RESET}"
+                      onclick="{!c.handleResetClick}"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="slds-size--6-of-12 slds-medium-size--6-of-12 slds-large-size--6-of-12"
+                  style="padding-top: 24px; width: 56%"
+                >
+                  <aura:if isTrue="{!not(empty(v.taskList))}">
+                    <div>
+                      <!-- PAGINATION DIV STARTS HERE -->
+                      <lightning:layout
+                        multipleRows="true"
+                        horizontalAlign="center"
+                      >
+                        <lightning:layoutItem
+                          padding="around-none"
+                          flexibility="auto"
+                        >
+                          <lightning:button
+                            class="first-last-button"
+                            label="{!$Label.c.AD_LABEL_PAGINATION_FIRST}"
+                            iconName="utility:left"
+                            iconPosition="left"
+                            onclick="{!c.onFirst}"
+                            disabled="{! v.currentPageNumber == 1}"
+                          />
+                          <lightning:button
+                            class="next-prev-button"
+                            iconName="utility:chevronleft"
+                            iconPosition="left"
+                            onclick="{!c.onPrev}"
+                            disabled="{! v.currentPageNumber == 1}"
+                          />
+                          <span class="slds-p-horizontal_x-small">
+                            <a
+                              onclick="{!c.processMe}"
+                              name="1"
+                              class="{! (v.currentPageNumber == 1) ? 'selected' : ''}"
+                              >1</a
+                            >
+                          </span>
+
+                          <aura:if
+                            isTrue="{!and((v.totalPages)>7, (1 != v.pageListFirstElement-1))}"
+                          >
+                            <span class="slds-p-horizontal_xxx-small">
+                              <a>...</a>
+                            </span>
+                          </aura:if>
+
+                          <aura:iteration items="{!v.pageList}" var="item">
+                            <span class="slds-p-horizontal_x-small">
+                              <a
+                                onclick="{!c.processMe}"
+                                name="{!item}"
+                                class="{! (v.currentPageNumber == item) ? 'selected' : ''}"
+                                >{!item}</a
+                              >
+                            </span>
+                          </aura:iteration>
+
+                          <aura:if
+                            isTrue="{!and((v.totalPages)>7, (v.pageListLastElement+1 != v.totalPages))}"
+                          >
+                            <span class="slds-p-horizontal_xxx-small">
+                              <a>...</a>
+                            </span>
+                          </aura:if>
+
+                          <aura:if isTrue="{!(v.totalPages)>1}">
+                            <!-- If condition to prevent repetition on number 1 in case on single page -->
+                            <span class="slds-p-horizontal_x-small">
+                              <a
+                                onclick="{!c.processMe}"
+                                name="{!v.totalPages}"
+                                class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}"
+                                >{!v.totalPages}</a
+                              >
+                            </span>
+                          </aura:if>
+
+                          <lightning:button
+                            class="next-prev-button"
+                            iconName="utility:chevronright"
+                            iconPosition="right"
+                            disabled="{! v.currentPageNumber == v.totalPages}"
+                            onclick="{!c.onNext}"
+                          />
+                          <lightning:button
+                            class="first-last-button"
+                            label="{!$Label.c.AD_LABEL_PAGINATION_LAST}"
+                            iconName="utility:right"
+                            iconPosition="right"
+                            disabled="{! v.currentPageNumber == v.totalPages}"
+                            onclick="{!c.onLast}"
+                          />
+                        </lightning:layoutItem>
+                      </lightning:layout>
+                    </div>
+                    <!-- PAGINATION DIV ENDS HERE -->
+                  </aura:if>
+                </div>
+
+                <div
+                  class="slds-size--3-of-12 slds-medium-size--3-of-12 slds-large-size--3-of-12"
+                  style="width: 22%"
+                >
+                  <aura:if isTrue="{!not(empty(v.taskList))}">
+                    <!-- SORT BY DATE DIV STARTS HERE -->
+                    <div>
+                      <div class="slds-float_left"></div>
+                      <div
+                        class="slds-float_right slds-grid slds-wrap"
+                        style="padding-top: 6%"
+                      >
+                        <div>
+                          <lightning:icon
+                            class="manageIcon slds-m-right_xx-small slds-p-right_large hyper-link"
+                            onclick="{!c.handleDownloadClick}"
+                            iconName="utility:download"
+                            size="large"
+                            title="Download"
+                          />
+                        </div>
+                        <div>
+                          <aura:if isTrue="{!v.showDueDateAscSorting}">
+                            <a
+                              href="javascript:void(0)"
+                              onclick="{!c.handleSortByDueDateDesc}"
+                              class="slds-m-right_small blueFontColour sortByDateCSS"
+                            >
+                              <lightning:icon
+                                class="manageIcon slds-m-right_xx-small"
+                                iconName="utility:chevronup"
+                                size="large"
+                              />{!$Label.c.AD_LABEL_SORT_BY_DUE_DATE}
+                            </a>
+                          </aura:if>
+                          <aura:if isTrue="{!v.showDueDateDescSorting}">
+                            <a
+                              href="javascript:void(0)"
+                              onclick="{!c.handleSortByDueDateAsc}"
+                              class="slds-m-right_small blueFontColour sortByDateCSS"
+                            >
+                              <lightning:icon
+                                class="manageIcon slds-m-right_xx-small"
+                                iconName="utility:chevrondown"
+                                size="large"
+                              />{!$Label.c.AD_LABEL_SORT_BY_DUE_DATE}
+                            </a>
+                          </aura:if>
+                        </div>
+                        <div style="display: none">
+                          <aura:if isTrue="{!v.showCreatedDateAscSorting}">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                onclick="{!c.handleSortByCreatedDateDesc}"
+                                class="blueFontColour sortByDateCSS"
+                              >
+                                <lightning:icon
+                                  class="manageIcon slds-m-right_xx-small"
+                                  iconName="utility:chevronup"
+                                  size="large"
+                                />{!$Label.c.AD_LABEL_SORT_BY_CREATED_DATE}
+                              </a>
+                            </div>
+                          </aura:if>
+                          <aura:if isTrue="{!v.showCreatedDateDescSorting}">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                onclick="{!c.handleSortByCreatedDateAsc}"
+                                class="blueFontColour sortByDateCSS"
+                              >
+                                <lightning:icon
+                                  class="manageIcon slds-m-right_xx-small"
+                                  iconName="utility:chevrondown"
+                                  size="large"
+                                />{!$Label.c.AD_LABEL_SORT_BY_CREATED_DATE}
+                              </a>
+                            </div>
+                          </aura:if>
+                        </div>
+                      </div>
+                    </div>
+                  </aura:if>
+                  <!-- SORT BY DATE DIV ENDS HERE -->
+                </div>
+              </div>
+
+              <div class="slds-grid slds-wrap">
+                <div
+                  class="slds-size--1-of-2 slds-medium-size--1-of-1 slds-large-size--1-of-1"
+                >
+                  <aura:if isTrue="{!not(empty(v.taskList))}">
+                    <!-- TABLE(SORT BY DATE, TASK DETAILS, PAGINATION) STARTS HERE -->
+                    <hr
+                      class="slds-m-bottom_xx-small"
+                      style="margin-top: 0px"
+                    />
+                    <div style="height: 375px">
+                      <!-- TASK DETAILS DIV STARTS HERE -->
+                      <aura:if isTrue="{!not(empty(v.data))}">
+                        <aura:iteration items="{!v.data}" var="taskObj">
+                          <div
+                            class="slds-scrollable slds-m-bottom_xx-small slds-p-top_xx-small slds-p-right_xx-small"
+                            style="height: 110px; width: 870px"
+                          >
+                            <div class="slds-grid slds-wrap">
+                              <div
+                                class="slds-float_left slds-size--3-of-5 slds-medium-size--3-of-5 slds-large-size--3-of-5"
+                              >
+                                <p class="fontBold">
+                                  <span>{!taskObj.Subject}</span>
+                                  ({!taskObj.What.Type}:
+                                  <span
+                                    id="{!taskObj.WhatId}"
+                                    class="hyper-link"
+                                    onclick="{!c.navigateToRecordClick}"
+                                    >{!taskObj.What.Name}</span
+                                  >)
+                                </p>
+                              </div>
+
+                              <div
+                                class="slds-float_right slds-size--2-of-5 slds-medium-size--2-of-5 slds-large-size--2-of-5"
+                                style="text-align: right"
+                              >
+                                <aura:if
+                                  isTrue="{!not(empty(taskObj.ActivityDate))}"
+                                >
+                                  <p class="slds slds-p-right_small">
+                                    {!$Label.c.AD_LABEL_DUE_DATE_TIME}:
+                                    <lightning:formattedDateTime
+                                      aura:id="dt"
+                                      value="{!taskObj.ActivityDate}"
+                                      month="numeric"
+                                      day="numeric"
+                                      year="numeric"
+                                      timeZone="GMT"
+                                    />
+                                  </p>
+                                </aura:if>
+                              </div>
+                            </div>
+
+                            <p class="slds" id="blueFontColourSpan">
+                              {!$Label.c.AD_LABEL_ASSIGNED_TO}:
+                              <span>{!taskObj.Owner.Name}</span>
+                            </p>
+                            <p class="slds" id="blueFontColourSpan">
+                              {!$Label.c.AD_LABEL_STATUS}: {!taskObj.Status}
+                            </p>
+                            <p class="slds" id="blueFontColourSpan">
+                              {!$Label.c.AD_LABEL_TYPE}: {!taskObj.TaskSubtype}
+                            </p>
+
+                            <p class="slds">
+                              {!$Label.c.AD_LABEL_CREATED_DATE_TIME}:
+                              <lightning:formattedDateTime
+                                aura:id="dt"
+                                value="{!taskObj.CreatedDate}"
+                                month="numeric"
+                                day="numeric"
+                                year="numeric"
+                                hour="2-digit"
+                                minute="2-digit"
+                                hour12="true"
+                                timeZone="{!$Locale.timezone}"
+                              />
+                            </p>
+                            <p class="slds">{!taskObj.Description}</p>
+                            <br />
+                          </div>
+                          <hr
+                            class="hr-margin-top-chld hr-margin-bottom-chld"
+                          />
+                        </aura:iteration>
+                      </aura:if>
+                    </div>
+                    <!-- TASK DETAILS DIV ENDS HERE -->
+                  </aura:if>
+                  <!-- TABLE(SORT BY DATE, TASK DETAILS, PAGINATION) ENDS HERE -->
+
+                  <!-- IN CASE THERE ARE NO TASKS RETURNED DIV STARTS HERE-->
+                  <aura:if isTrue="{!(empty(v.taskList))}">
+                    <div style="height: 425px">
+                      <hr style="margin-top: 20px" />
+                      <p class="slds task-heading slds-m-top_small">
+                        {!$Label.c.AD_MESSAGE_NO_RECORDS_FOUND}
+                      </p>
+                    </div> </aura:if
+                  ><!-- IN CASE THERE ARE NO TASKS RETURNED DIV ENDS HERE-->
+                </div>
+              </div>
+            </div>
+            <!-- FILTER BY, MULTISELECT LOOKUP, BUTTONS AND DATE FILTERS DIV ENDS HERE -->
+
+            <!-- Lightning Spinner Starts-->
+            <aura:if isTrue="{!v.boolSpinner}">
+              <div
+                aura:id="spinnerId"
+                class="slds-spinner_container"
+                style="
+                  width: 900px;
+                  height: 600px;
+                  margin-top: 30%;
+                  margin-left: -20%;
+                "
+              >
+                <div
+                  class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+                  role="alert"
+                >
+                  <span class="slds-assistive-text"
+                    >{!$Label.c.AD_LABEL_LOADING}</span
+                  >
+                  <div class="slds-spinner__dot-a"></div>
+                  <div class="slds-spinner__dot-b"></div>
+                </div>
+              </div>
+            </aura:if>
+            <!-- Lightning Spinner Ends-->
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+</aura:component>

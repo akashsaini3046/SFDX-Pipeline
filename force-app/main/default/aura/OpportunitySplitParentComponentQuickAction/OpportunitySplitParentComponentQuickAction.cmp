@@ -1,0 +1,25 @@
+<aura:component
+  controller="OpportunitySplitController"
+  implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+>
+  <aura:attribute name="strTheme" type="String" />
+  <aura:attribute name="strRecordId" type="String" />
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:if isTrue="{!(v.strTheme == 'DESKTOP')}">
+    <c:OpportunitySplitComponent
+      strSource="QUICK_ACTION_DESKTOP"
+      recordId="{!v.strRecordId}"
+    />
+  </aura:if>
+
+  <aura:if isTrue="{!(v.strTheme == 'MOBILE')}">
+    <c:OpportunitySplitComponentMobile
+      strSource="MOBILE"
+      recordId="{!v.strRecordId}"
+    />
+  </aura:if>
+</aura:component>

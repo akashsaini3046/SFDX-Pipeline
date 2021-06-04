@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@example.com.invalid</email>
+    <name>Arrival Notices</name>
+    <queueMembers>
+        <users>
+            <user>luis.ponce@crowley.com</user>
+            <user>xochilt.hernandez@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Customer_Inquiry</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

@@ -1,0 +1,123 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <aura:attribute name="data" type="object" default="" />
+  <div class="row">
+    <div id="particulars" class="bol-rel-boxborder-4black">
+      <div
+        class="bol-rel-label"
+        style="text-align: center; border-bottom: solid 2px #888888"
+      >
+        PARTICULARS FURNISHED BY SHIPPER
+      </div>
+      <div>
+        <table class="table-pfbs" style="border: 0px none">
+          <tr>
+            <th>
+              <span class="bol-rel-label"
+                >(19) MARKS &amp; NOS./CONTAINER NO.</span
+              >
+            </th>
+            <th><span class="bol-rel-label">SEAL NO.</span></th>
+            <th><span class="bol-rel-label">(20) HTS NO.</span></th>
+            <th>
+              <span class="bol-rel-label"
+                >(21) NO. OF TRL / CONTS. / PKGS.</span
+              >
+            </th>
+            <th>
+              <span class="bol-rel-label">(22) DESCRIPTION OF CARGO</span>
+            </th>
+            <th><span class="bol-rel-label">(23) WEIGHT (LBS)</span></th>
+            <th><span class="bol-rel-label">(24) VGM WEIGHT (LBS)</span></th>
+            <th><span class="bol-rel-label">(25) TEMP. (F)</span></th>
+            <th><span class="bol-rel-label">CARGO VALUE (USD)</span></th>
+          </tr>
+          <aura:iteration items="{!v.data.cargoEquipment}" var="cargoEquip">
+            <tr>
+              <td>
+                <b>{!cargoEquip.containerNO1}{!cargoEquip.containerNO2}</b>
+              </td>
+              <td>
+                <aura:iteration items="{!cargoEquip.sealNumbers}" var="sNumber">
+                  <b>{!sNumber.strSealNumber}&nbsp;</b><br />
+                </aura:iteration>
+              </td>
+              <td>
+                <aura:iteration
+                  items="{!cargoEquip.htsNumbers}"
+                  var="htsNumber"
+                >
+                  <b>{!htsNumber.strHTSNoandDesc}&nbsp;</b><br />
+                </aura:iteration>
+              </td>
+              <td><b>{!cargoEquip.quantity}</b></td>
+              <td><b>{!cargoEquip.cargoDescription}</b></td>
+              <td><b>{!cargoEquip.weightLBS}</b></td>
+              <td><b>{!cargoEquip.vgmweightLBS}</b></td>
+              <td class="no-wrap">
+                <b
+                  >{!((empty(cargoEquip.temperatureF) ||
+                  (cargoEquip.temperatureF == null)) ? '' :
+                  cargoEquip.temperatureF+' F')}</b
+                >
+              </td>
+              <td class="no-wrap">
+                <b
+                  >{!((empty(cargoEquip.cargovalue) || (cargoEquip.cargovalue ==
+                  null)) ? '' : '$ '+cargoEquip.cargovalue)}</b
+                >
+              </td>
+            </tr>
+          </aura:iteration>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--Declaration-->
+  <div id="declaration" class="row bol-rel-boxborder-4black">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-8">
+          <p>
+            <br />
+            <span class="bol-rel-label">(25) HAZRDOUS DECLARATION</span><br />
+            <b>{!$Label.c.CC_HazardousDeclaration}</b>
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <div class="row">
+            <div class="col-sm-6 bol-rel-boxborder-4black">
+              <div>
+                <span class="bol-rel-label">CONTACT NAME</span><br />
+                <b>{!v.data.emergencyContactName}</b>
+              </div>
+            </div>
+            <div class="col-sm-6 bol-rel-boxborder-4black">
+              <div>
+                <span class="bol-rel-label">TELEPHONE NO.</span><br />
+                <b>{!v.data.emergencyContactPhone}</b>
+              </div>
+            </div>
+            <div class="col-sm-12 bol-rel-boxborder-4black">
+              <div>
+                <span class="bol-rel-label">SIGNATURE:</span><br />
+                <b></b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <p>
+            <br /> <span class="bol-rel-label">CLAUSES</span><br />
+            <b>{!$Label.c.CC_HazardousClauses}</b>
+            <br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

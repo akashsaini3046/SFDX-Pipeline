@@ -1,0 +1,51 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="termsAndConditions" type="List" />
+  <aura:attribute name="screen" type="string" default="Quote" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="change"
+    value="{!v.termsAndConditions}"
+    action="{!c.doInit}"
+  />
+
+  <ul class="slds-list_dotted route-terms-conditions">
+    <aura:iteration
+      items="{!v.termsAndConditions}"
+      var="termsAndCondition"
+      indexVar="index"
+    >
+      <li>
+        {!termsAndCondition}
+        <aura:if isTrue="{!v.screen == 'CreateBooking'}">
+          <aura:if isTrue="{!index == (v.termsAndConditions.length - 3)}">
+            <i><a href="https://www.Crowley.com">www.Crowley.com</a></i
+            >.
+          </aura:if>
+          <aura:if isTrue="{!index == (v.termsAndConditions.length-1)}">
+            <i
+              ><a
+                href="https://secure.directbiller.com/pbills/payer/welcomeDirect.do?h=77tzn5eeg"
+                >click here</a
+              ></i
+            >
+          </aura:if>
+          <aura:set attribute="else">
+            <aura:if isTrue="{!index == 10}">
+              <br />
+              <a
+                target="_blank"
+                href="https://www.crowley.com/what-we-do/shipping-and-logistics/tariff-rules-and-rates/liner-tariff-pages/liner-tariff-rules-and-rates/"
+              >
+                https://www.crowley.com/what-we-do/shipping-and-logistics/tariff-rules-and-rates/liner-tariff-pages/liner-tariff-rules-and-rates/
+              </a>
+            </aura:if>
+          </aura:set>
+        </aura:if>
+      </li>
+    </aura:iteration>
+  </ul>
+</aura:component>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@nagarro.com.invalid</email>
+    <name>Customer Inquiry</name>
+    <queueMembers>
+        <users>
+            <user>alma.vanegas@crowley.com</user>
+            <user>arturo.siguenza@crowley.com</user>
+            <user>beatriz.torres@crowley.com</user>
+            <user>byron.garcia@crowley.com</user>
+            <user>daniel.echeverria@crowley.com</user>
+            <user>david.rosales@crowley.com</user>
+            <user>emily.hernandez@crowley.com</user>
+            <user>farid.gomez@crowley.com</user>
+            <user>georgina.moreno@crowley.com</user>
+            <user>harold.majano@crowley.com</user>
+            <user>jose.garcia@crowley.com</user>
+            <user>jose.munoz@crowley.com</user>
+            <user>karla.velasquez@crowley.com</user>
+            <user>lesli.pacheco@crowley.com</user>
+            <user>luis.castillo@crowley.com</user>
+            <user>patricia.portillo@crowley.com</user>
+            <user>ricardo.martinez@crowley.com</user>
+            <user>roberto.martinez@crowley.com</user>
+            <user>rudy.munoz@crowley.com</user>
+            <user>verification.user@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Customer_Inquiry</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

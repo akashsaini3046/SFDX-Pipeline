@@ -1,0 +1,31 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+>
+  <div class="w-o-login-quotes-footer slds-no-print">
+    <div class="pull-left">
+      <span class="pull-left">
+        <a
+          class="contact-us-link"
+          href="https://www.crowley.com/contact-us/list-of-offices/"
+          target="_blank"
+          >{!$Label.c.CC_VC_FooterLeft1}</a
+        >
+      </span>
+      <a href="https://www.crowley.com/" target="_blank" class="website-link"
+        >{!$Label.c.CC_VC_FooterLeft2}</a
+      >
+    </div>
+    <div class="pull-right">
+      <span class="pull-left">
+        <a
+          class="chat-link"
+          href="https://messenger.providesupport.com/messenger/18fs965gg46521bqvex5h9l5ys.html"
+          target="_blank"
+          >{!$Label.c.CC_VC_FooterRight1}</a
+        >
+      </span>
+      &nbsp; {!$Label.c.CC_VC_FooterRight}
+    </div>
+  </div>
+</aura:component>

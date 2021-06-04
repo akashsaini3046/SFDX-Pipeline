@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="sortFieldName" type="string" />
+    <aura:attribute name="sortFieldLabel" type="string" />
+    <aura:attribute name="sortDirection" type="string" />
+</aura:event>

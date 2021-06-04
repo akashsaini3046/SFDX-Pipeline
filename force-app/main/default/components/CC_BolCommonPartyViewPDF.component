@@ -1,0 +1,151 @@
+<apex:component>
+  <apex:attribute name="header" type="String" description="passing header" />
+  <apex:attribute
+    name="data"
+    type="CC_BolPartyWrapper"
+    description="passing data"
+  />
+
+  <h3
+    style="
+      border-bottom: 2px solid #ccc;
+      font-size: 18px;
+      padding: 0px 0px 10px 0px;
+    "
+  >
+    {!header}
+  </h3>
+  <table style="width: 100%; font-family: sans-serif">
+    <tr>
+      <td style="width: 50%">
+        <table style="width: 100%">
+          <tr>
+            <td colspan="2">
+              <apex:outputPanel
+                rendered="{!IF((header == 'Forwarding Agent'), true, false)}"
+              >
+                <table style="width: 100%">
+                  <tr>
+                    <td valign="top" style="color: #999; width: 50%">
+                      FMC Number :
+                    </td>
+                    <td valign="top" style="width: 50%">
+                      {!IF(OR(ISBLANK(data.FMCNumber),(data.FMCNumber ==
+                      null)),'NA',data.FMCNumber)}
+                    </td>
+                  </tr>
+                </table>
+              </apex:outputPanel>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="color: #999; width: 50%">
+              Reference Number :
+            </td>
+            <td valign="top" style="width: 50%">
+              <apex:repeat value="{!data.referenceNumbers}" var="refNumber">
+                {!IF(OR(ISBLANK(refNumber.strRefNumber),(refNumber.strRefNumber
+                == null)),'NA',refNumber.strRefNumber)}<br />
+              </apex:repeat>
+              <apex:outputLabel
+                rendered="{!IF((data.referenceNumbers.size == 0),true,false)}"
+              >
+                NA<br />
+              </apex:outputLabel>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="color: #999; width: 50%">Name :</td>
+            <td valign="top" style="width: 50%">
+              {!IF(OR(ISBLANK(data.name),(data.name == null)),'NA',data.name)}
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="color: #999; width: 50%">
+              Complete Address :
+            </td>
+            <td valign="top" style="width: 50%">
+              {!IF(OR(ISBLANK(data.addressLine1),(data.addressLine1 ==
+              null)),'NA',data.addressLine1)}<br /> {!data.addressLine2}<br />
+              {!data.addressLine3}<br /> {!data.addressLine4}<br />
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="width: 50%">
+        <apex:outputPanel
+          rendered="{!IF((header == 'Consignee'), true, false)}"
+        >
+          <table style="width: 100%">
+            <tr>
+              <td valign="top" style="color: #999; width: 50%">
+                Destination Tax ID :
+              </td>
+              <td valign="top" style="width: 50%">
+                {!IF(OR(ISBLANK(data.destinationTaxIdType),(data.destinationTaxIdType
+                == null)),'',data.destinationTaxIdType+'-
+                ')}{!data.destinationTaxIdNumber}
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="color: #999; width: 50%">
+                Registration ID :
+              </td>
+              <td valign="top" style="width: 50%">
+                {!IF(OR(ISBLANK(data.registrationId),(data.registrationId ==
+                null)),'NA',data.registrationId)}
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="color: #999; width: 50%">
+                Tax ID Number :
+              </td>
+              <td valign="top" style="width: 50%">
+                {!IF(OR(ISBLANK(data.taxIdNumber),(data.taxIdNumber ==
+                null)),'NA',data.taxIdNumber)}
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="color: #999; width: 50%">
+                EIN/ SS Number :
+              </td>
+              <td valign="top" style="width: 50%">
+                {!IF(OR(ISBLANK(data.EINSSNumber),(data.EINSSNumber ==
+                null)),'NA',data.EINSSNumber)}
+              </td>
+            </tr>
+          </table>
+        </apex:outputPanel>
+        <apex:outputPanel
+          rendered="{!IF((header == 'Forwarding Agent'), true, false)}"
+        >
+          <table style="width: 100%">
+            <tr>
+              <td valign="top" style="color: #999; width: 50%">CHB Number :</td>
+              <td valign="top" style="width: 50%">
+                {!IF(OR(ISBLANK(data.CHBNumber),(data.CHBNumber ==
+                null)),'NA',data.CHBNumber)}
+              </td>
+            </tr>
+          </table>
+        </apex:outputPanel>
+        <table style="width: 100%">
+          <tr>
+            <td valign="top" style="color: #999; width: 50%">Email ID :</td>
+            <td valign="top" style="width: 50%">
+              {!IF(OR(ISBLANK(data.email),(data.email ==
+              null)),'NA',data.email)}
+            </td>
+          </tr>
+          <tr>
+            <td valign="top" style="color: #999; width: 50%">Phone Number :</td>
+            <td valign="top" style="width: 50%">
+              {!IF(OR(ISBLANK(data.phone),(data.phone ==
+              null)),'NA',data.phone)}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</apex:component>

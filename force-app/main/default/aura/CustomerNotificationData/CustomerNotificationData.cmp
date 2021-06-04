@@ -1,0 +1,26 @@
+<aura:component>
+  <aura:attribute name="customerNotifications" type="List" />
+
+  <aura:handler name="init" value="{! this}" action="{! c.doInit }" />
+
+  <lightning:layout multipleRows="true">
+    <aura:iteration
+      items="{!v.customerNotifications}"
+      var="customerNotificationList"
+    >
+      <aura:iteration items="{!customerNotificationList}" var="item">
+        <aura:if isTrue="{!item.label=='Customer Notification Name'}">
+          <lightning:layoutItem size="12" class="type-name">
+            <b>{!item.value} </b>
+          </lightning:layoutItem>
+        </aura:if>
+      </aura:iteration>
+      <aura:iteration items="{!customerNotificationList}" var="item">
+        <lightning:layoutItem size="2">
+          <b>{!item.label}:</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+      </aura:iteration>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

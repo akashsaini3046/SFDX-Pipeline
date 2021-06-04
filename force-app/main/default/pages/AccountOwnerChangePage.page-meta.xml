@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description
+  >This page is used to change the account owner. If the owner change has already been requested, then history along with the timestamp of each approval step is displayed.</description>
+    <label>AccountOwnerChangePage</label>
+</ApexPage>

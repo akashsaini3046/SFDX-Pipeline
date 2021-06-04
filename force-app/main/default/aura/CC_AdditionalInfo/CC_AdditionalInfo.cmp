@@ -1,0 +1,112 @@
+<aura:component>
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="createdQuoteIds" type="List" />
+  <aura:attribute name="screen" type="String" default="Quote" />
+  <aura:attribute name="additionalScreen" type="String" default="" />
+
+  <div class="c-container" id="containerId">
+    <form autocomplete="off">
+      <aura:if isTrue="{!v.screen=='Quote'}">
+        <aura:if isTrue="{!empty(v.createdQuoteIds)}">
+          <div class="no-rate-found">
+            <div class="row">
+              <div class="col-12">
+                <aura:if isTrue="{!!v.isPostLogin}">
+                  <h5>{!$Label.c.CC_AdditionInfo_PoL_Msg}</h5>
+                  <br />
+                  <aura:set attribute="else">
+                    <h5>{!$Label.c.CC_AdditionInfo_PoL_Msg}</h5>
+                    <br />
+                  </aura:set>
+                </aura:if>
+              </div>
+              <div class="col-12 without-label">
+                <label class="block-view"
+                  >Additional Information
+                  <span class="pull-right color-blue">(Optional)</span></label
+                >
+                <lightning:textarea
+                  value="{!v.bookingWrapper.booking.Additional_Information__c}"
+                  placeholder="Please provide additional details related to quote."
+                />
+              </div>
+            </div>
+          </div>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.createdQuoteIds))}">
+          <div class="no-rate-found">
+            <div class="row">
+              <div class="col-12 text-center">
+                <i class="icon-check-outline"></i>
+                <aura:if isTrue="{!!v.isPostLogin}">
+                  <h6>
+                    Quote number
+                    <span class="color-blue"
+                      >{!v.bookingWrapper.listQuote[0].Name}</span
+                    >
+                    has been successfully created. <br /> Your request requires
+                    additional attention from a Crowley representative. You will
+                    be contacted within 24 hours to discuss the details and
+                    provide further information. <br />To make a booking or for
+                    additional questions, please contact 1-800-276-9539, and an
+                    agent will assist you.
+                  </h6>
+                  <aura:set attribute="else">
+                    <h6>
+                      We have received your request. Quote number
+                      <span class="color-blue"
+                        >"{!v.bookingWrapper.listQuote[0].Name}"</span
+                      >
+                      has been successfully created. <br /> We will respond to
+                      you in 1 business day.
+                    </h6>
+                  </aura:set>
+                </aura:if>
+              </div>
+            </div>
+          </div>
+        </aura:if>
+      </aura:if>
+      <aura:if isTrue="{!v.screen=='CreateBooking'}">
+        <div class="no-rate-found">
+          <div class="row">
+            <aura:if isTrue="{!v.additionalScreen==''}">
+              <div class="col-12">
+                <h5>
+                  Rates are not available for selected combination. Please fill
+                  any additional information and click on submit.
+                </h5>
+                <br />
+              </div>
+              <div class="col-12 without-label">
+                <label class="block-view"
+                  >Additional Information
+                  <span class="pull-right color-blue">(Optional)</span></label
+                >
+                <lightning:textarea
+                  value="{!v.bookingWrapper.booking.Additional_Information__c}"
+                  placeholder="Please provide additional details related to booking."
+                />
+              </div>
+            </aura:if>
+            <aura:if isTrue="{!v.additionalScreen=='Rates not available'}">
+              <div class="col-12 text-center">
+                <i class="icon-check-outline"></i>
+                <h6>
+                  Booking number
+                  <span class="color-blue"
+                    >"{!v.bookingWrapper.booking.Booking_Number__c}"</span
+                  >
+                  has been successfully created. <br /> Booking Status is
+                  <b>Pending</b> and pending reason is
+                  <b>Rates not available</b>
+                </h6>
+              </div>
+            </aura:if>
+          </div>
+        </div>
+      </aura:if>
+    </form>
+  </div>
+</aura:component>

@@ -1,0 +1,123 @@
+<aura:component>
+  <aura:attribute name="ratings" type="List" default="" />
+  <aura:attribute name="ratingsTotal" type="Object" default="" />
+  <aura:attribute name="displayRates" type="boolean" />
+  <div class="record-form">
+    <div class="table-responsive">
+      <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+          <tr class="slds-text-title_caps">
+            <th scope="col">
+              <div class="slds-truncate" title="Freight Charges">
+                Freight Charges
+              </div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Rated As">Rated As</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="PER">PER</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Rate">Rate</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="To Be Pre-Paid In US Dollars">
+                To Be Pre-Paid In US Dollars
+              </div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="To Be Collected In US Dollars">
+                To Be Collected In US Dollars
+              </div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Foreign Currency">
+                Foreign Currency
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <aura:iteration items="{!v.ratings}" var="rating">
+            <tr>
+              <th scope="row" data-label="Freight Charges">
+                <div class="slds-truncate" title="{!rating.FreightChanges}">
+                  {!rating.FreightChanges}
+                </div>
+              </th>
+              <td data-label="Rated As">
+                <div class="slds-truncate" title="{!rating.RatedAs}">
+                  {!rating.RatedAs}
+                </div>
+              </td>
+              <td data-label="PER">
+                <div class="slds-truncate" title="{!rating.Per}">
+                  {!rating.Per}
+                </div>
+              </td>
+              <td data-label="Rate">
+                <div class="slds-truncate" title="{!rating.Rate}">
+                  {!rating.Rate}
+                </div>
+              </td>
+              <td data-label="To Be Pre-Paid In US Dollars">
+                <div class="slds-truncate" title="{!rating.ToBePrepaid}">
+                  {!rating.ToBePrepaid}
+                </div>
+              </td>
+              <td data-label="To Be Collected In US Dollars">
+                <div class="slds-truncate" title="{!rating.ToBeCollected}">
+                  {!rating.ToBeCollected}
+                </div>
+              </td>
+              <td data-label="Foreign Currency">
+                <div class="slds-truncate" title="{!rating.ForeignCurrency}">
+                  {!rating.ForeignCurrency}
+                </div>
+              </td>
+            </tr>
+          </aura:iteration>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th scope="row">
+              <b>
+                <div class="slds-truncate" title="Total">Total</div>
+              </b>
+            </th>
+            <td>
+              <b>
+                <div
+                  class="slds-truncate"
+                  title="{!v.ratingsTotal.ToBePrepaid}"
+                >
+                  <lightning:formattedNumber
+                    value="{!v.ratingsTotal.ToBePrepaid}"
+                    maximumFractionDigits="2"
+                  />
+                </div>
+              </b>
+            </td>
+            <td>
+              <b>
+                <div
+                  class="slds-truncate"
+                  title="{!v.ratingsTotal.ToBeCollected}"
+                >
+                  <lightning:formattedNumber
+                    value="{!v.ratingsTotal.ToBeCollected}"
+                    maximumFractionDigits="2"
+                  />
+                </div>
+              </b>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <aura:set attribute="else"> Rates not available. </aura:set>
+  </div>
+</aura:component>

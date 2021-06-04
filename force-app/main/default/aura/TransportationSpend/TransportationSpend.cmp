@@ -1,0 +1,100 @@
+<aura:component
+  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+  controller="TransportationSpendController"
+>
+  <aura:attribute
+    name="spendsList"
+    type="transportationSpendController.wrapperClass[]"
+  />
+  <aura:attribute name="totalAmount" type="Decimal" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="transSpendEvt"
+    event="c:TransportationSpendEvt"
+    action="{!c.handleTransSpendEvt}"
+  />
+
+  <lightning:card>
+    <h3 slot="title" class="slds-text-heading_small">
+      <b>Add Transportation Spend for Customer </b>
+      <div class="slds-float_right">
+        <b>Total Amount:<ui:outputCurrency value="{!v.totalAmount}" /></b>
+      </div>
+    </h3>
+    <h1>
+      <div
+        class="slds-table--header-fixed_container slds-border_top"
+        style="height: 450px"
+      >
+        <div class="slds-scrollable_y">
+          <table
+            class="slds-table slds-table--bordered slds-no-row-hover slds-table--header-fixed"
+          >
+            <thead>
+              <tr class="">
+                <th scope="col">
+                  <div class="slds-truncate"></div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate slds-cell-fixed" title="Service">
+                    Service
+                  </div>
+                </th>
+                <th scope="col">
+                  <div
+                    class="slds-truncate slds-cell-fixed"
+                    title="Sub-Service"
+                  >
+                    Sub-Service
+                  </div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate slds-cell-fixed" title="Amount">
+                    Amount
+                  </div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate slds-cell-fixed" title="Remarks">
+                    Remarks
+                  </div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <aura:iteration
+                items="{!v.spendsList}"
+                var="transSpend"
+                indexVar="index"
+              >
+                <c:TransportationSpendRow transSpend="{!transSpend}" />
+              </aura:iteration>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </h1>
+    <aura:set attribute="footer">
+      <lightning:button
+        variant="Brand"
+        class="slds-button slds-float--right"
+        label="Save"
+        onclick="{!c.save}"
+      />
+      <lightning:button
+        variant="Neutral"
+        class="slds-button slds-float--right"
+        label="Cancel"
+        onclick="{!c.handleExit}"
+      />
+    </aura:set>
+  </lightning:card>
+
+  <aura:html tag="style">
+    .slds-modal__container{ width: 85%; max-width: 70rem; } .modal-body{ height
+    : 575px !important; max-height: 590px !important; } .cuf-content { padding:
+    0 0rem !important; } .slds-p-around–medium { padding: 0rem !important; }
+    .slds-modal__content{ overflow-y: hidden !important; }
+  </aura:html>
+</aura:component>

@@ -1,0 +1,94 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="routeRecord" type="string" />
+  <aura:attribute name="startLocation" type="Object" />
+  <aura:attribute name="betweenLocations" type="List" />
+  <aura:attribute name="endLocation" type="Object" />
+  <aura:attribute name="originObject" type="Object" />
+  <aura:attribute name="destinationObject" type="Object" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler name="change" value="{!v.routeRecord}" action="{!c.doInit}" />
+
+  <div class="route-vert-path">
+    <div class="vert-route-row">
+      <span class="vert-route-stops"></span>
+      <!--i class="icon-map-pin vertical-route-icon"> {!v.startLocation.orgDest} </!i-->
+      <aura:if
+        isTrue="{!and(not(empty(v.startLocation.displayNameSubLoc)), not(equals(v.startLocation.orgDest, 'Door')))}"
+      >
+        {!v.startLocation.displayNameSubLoc}&nbsp;
+      </aura:if>
+      <aura:if
+        isTrue="{!and(not(empty(v.startLocation.displayCodeSubLoc)), not(equals(v.startLocation.orgDest, 'Door')))}"
+      >
+        ({!v.startLocation.displayCodeSubLoc})&nbsp;-&nbsp;
+      </aura:if>
+      {!v.startLocation.displayName}&nbsp;<aura:if
+        isTrue="{!not(empty(v.originObject.code))}"
+        >({!v.originObject.code})</aura:if
+      >
+    </div>
+
+    <aura:iteration
+      items="{!v.betweenLocations}"
+      var="location"
+      indexVar="index"
+    >
+      <div class="vert-route-row">
+        <aura:if isTrue="{!equals(location.iconShown, 'R')}">
+          <span class="transport-type rail"></span>
+          <aura:set attribute="else">
+            <aura:if isTrue="{!equals(location.iconShown, 'O')}">
+              <span class="transport-type ship"></span>
+              <aura:set attribute="else">
+                <span class="transport-type truck"></span>
+              </aura:set>
+            </aura:if>
+          </aura:set>
+        </aura:if>
+        <span class="vert-route-stops"></span>
+        <!--i class="icon-map-pin vertical-route-icon">{!location.orgDest}</!i-->
+        <aura:if isTrue="{!not(empty(location.displayNameSubLoc))}">
+          {!location.displayNameSubLoc}&nbsp;
+        </aura:if>
+        <aura:if isTrue="{!not(empty(location.displayCodeSubLoc))}">
+          ({!location.displayCodeSubLoc})&nbsp;-&nbsp;
+        </aura:if>
+        {!location.displayName}&nbsp;({!location.displayCode})
+      </div>
+    </aura:iteration>
+
+    <div class="vert-route-row">
+      <aura:if isTrue="{!equals(v.endLocation.iconShown, 'R')}">
+        <span class="transport-type rail"></span>
+        <aura:set attribute="else">
+          <aura:if isTrue="{!equals(v.endLocation.iconShown, 'O')}">
+            <span class="transport-type ship"></span>
+            <aura:set attribute="else">
+              <span class="transport-type truck"></span>
+            </aura:set>
+          </aura:if>
+        </aura:set>
+      </aura:if>
+      <span class="vert-route-stops"></span>
+      <!--i class="icon-map-pin vertical-route-icon"> {!v.endLocation.orgDest}</!i-->
+      <aura:if
+        isTrue="{!and(not(empty(v.endLocation.displayNameSubLoc)), not(equals(v.endLocation.orgDest, 'Door')))}"
+      >
+        {!v.endLocation.displayNameSubLoc}&nbsp;
+      </aura:if>
+      <aura:if
+        isTrue="{!and(not(empty(v.endLocation.displayCodeSubLoc)), not(equals(v.endLocation.orgDest, 'Door')))}"
+      >
+        ({!v.endLocation.displayCodeSubLoc})&nbsp;-&nbsp;
+      </aura:if>
+      {!v.endLocation.displayName}&nbsp;<aura:if
+        isTrue="{!not(empty(v.destinationObject.code))}"
+        >({!v.destinationObject.code})</aura:if
+      >
+    </div>
+  </div>
+</aura:component>

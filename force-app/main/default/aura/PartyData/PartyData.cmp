@@ -1,0 +1,54 @@
+<aura:component>
+  <aura:attribute name="parties" type="List" />
+  <aura:attribute name="partyMap" type="Map" />
+  <aura:attribute name="concatenateAddress" type="string" />
+
+  <aura:handler name="init" value="{! this}" action="{! c.doInit }" />
+
+  <lightning:layout multipleRows="true">
+    <aura:iteration items="{!v.partyMap}" var="partyMap">
+      <aura:iteration items="{!partyMap.otherData}" var="item">
+        <aura:if isTrue="{!item.label == 'Type'}">
+          <lightning:layoutItem size="12" class="type-name">
+            <b> {!item.value} </b>
+          </lightning:layoutItem>
+        </aura:if>
+      </aura:iteration>
+      <div class="split-left">
+        <lightning:layoutItem>
+          <lightning:layout multipleRows="true">
+            <aura:iteration items="{!partyMap.otherData}" var="item">
+              <lightning:layoutItem size="3">
+                <b>{!item.label}:</b>
+              </lightning:layoutItem>
+              <lightning:layoutItem size="3">
+                {!item.value}
+              </lightning:layoutItem>
+            </aura:iteration>
+          </lightning:layout>
+        </lightning:layoutItem>
+      </div>
+      <div class="split-right">
+        <div class="slds-box">
+          <lightning:layoutItem>
+            <lightning:layout multipleRows="true">
+              <lightning:layoutItem size="12">
+                <b> Address Details</b>
+              </lightning:layoutItem>
+              <aura:iteration items="{!partyMap.addressData}" var="item">
+                <lightning:layoutItem size="3">
+                  <b>{!item.label}:</b>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="9">
+                  {!item.value}
+                </lightning:layoutItem>
+                <br />
+              </aura:iteration>
+            </lightning:layout>
+          </lightning:layoutItem>
+        </div>
+      </div>
+      <lightning:layout> </lightning:layout>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

@@ -1,0 +1,1218 @@
+<aura:component controller="CC_CargoController">
+  <aura:attribute name="tariffsCommodities" type="List" />
+  <aura:attribute name="tariffsEquipments" type="List" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="commodityTypes" type="List" />
+  <aura:attribute name="containers" type="List" />
+  <aura:attribute name="imdgClassesList" type="List" />
+  <aura:attribute name="commodityOptions" type="List" />
+  <aura:attribute name="containerOptions" type="List" />
+  <aura:attribute name="selectedSizeType" type="String" />
+  <aura:attribute name="cargoList" type="CC_BookingWrapper.CargoWrapper[]" />
+  <aura:attribute name="screen" type="String" default="Quote" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+  <aura:attribute name="lstVentSettings" type="List" />
+  <aura:attribute name="lstMarineCargoInsur" type="List" />
+  <aura:attribute name="lstContentType" type="List" />
+  <aura:attribute name="lstPackageType" type="List" />
+  <aura:attribute
+    name="lstHazardSubstance"
+    type="CC_BookingWrapper.HazardousSubstanceWrapper[]"
+  />
+  <aura:attribute name="hazardIndex" type="Integer" />
+  <aura:attribute name="hazardSearchStr" type="String" />
+  <aura:attribute
+    name="filetype"
+    type="List"
+    default="['.png', '.jpg', '.jpeg']"
+  />
+  <aura:attribute name="bookingId" type="String" />
+  <aura:attribute
+    name="newCommodity"
+    type="Commodity__c"
+    default="{ 'sobjectType': 'Commodity__c' }"
+  />
+  <aura:attribute
+    name="lstCommodityWrapper"
+    type="CC_BookingWrapper.CommodityWrapper[]"
+  />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+  <aura:handler
+    name="fileUploadEvent"
+    event="c:FileUploadEvent"
+    action="{!c.handleFileUploadEvent}"
+  />
+  <aura:handler
+    name="MaxfileSizeEvent"
+    event="c:CC_MaxFileUploadEvent"
+    action="{!c.handleMaxSizeError}"
+  />
+
+  <aura:method
+    name="validateContainerData"
+    action="{!c.validateContainerData}"
+    access="public"
+  >
+    <aura:attribute name="isValidContainer" type="boolean" default="false" />
+  </aura:method>
+  <aura:method
+    name="uploadfile"
+    action="{!c.uploadfile}"
+    access="public"
+  ></aura:method>
+
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+  <div id="containerId">
+    <!--IF: For Quote Screen-->
+    <!--Else: For Booking Screen-->
+    <aura:if isTrue="{!v.screen != 'CreateBooking'}">
+      <!--For testing Purpose chaged to !='Quote'-->
+      <aura:iteration
+        items="{!v.cargoList[0].listFreightDetailWrapper}"
+        var="freight"
+        indexVar="indexOuter"
+      >
+        <aura:iteration
+          items="{!freight.listRequirementWrapper}"
+          var="container"
+          indexVar="index"
+        >
+          <div>
+            <div class="row">
+              <div class="col-sm-2 grey-bg-search without-label">
+                <!-- SearchKeyWord="{!container.containerDesc}" -->
+                <!--c:CC_CustomLookupInput fieldLabel="Size / Type" placeholder="Search" requiredInput="true"
+                            functionality="Container:Size_Type" aura:id="sizeTypeId" index="{!index}"
+                            clickedItem="{!container.containerDesc}" clickedItemId="{!container.container.Id}" /-->
+                <label><span class="slds-required">*</span>Size / Type</label
+                ><br />
+                <c:CC_CustomSelectBoxCmp
+                  aura:id="containerTypesId"
+                  containerCode="{!container.containerType}"
+                  infoText="{!container.containerDesc}"
+                  options="{!v.containerOptions}"
+                  isRequired="true"
+                  index="{!index}"
+                  functionality="Container:Size_Type"
+                  isLabelMatch="true"
+                />
+              </div>
+              <div class="col-sm-1">
+                <lightning:input
+                  type="number"
+                  required="true"
+                  label="Quantity"
+                  value="{!container.requirement.Quantity__c}"
+                  aura:id="inputFieldId"
+                  pattern="[0-9]*"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  min="1"
+                  maxlength="3"
+                />
+              </div>
+              <!--Gross Weight: START-->
+              <div class="col-sm-1 p-r-0">
+                <lightning:input
+                  type="number"
+                  required="false"
+                  label="Cargo Weight"
+                  step="0.01"
+                  value="{!container.requirement.Weight__c}"
+                  aura:id="inputFieldId"
+                  min="1"
+                  maxlength="5"
+                />
+              </div>
+              <div class="col p-0 unit-col without-label">
+                <label>&nbsp;</label>
+                <lightning:select
+                  value="{!container.requirement.Weights_Unit_of_Measure__c}"
+                  aura:id="InputSelectSingle"
+                >
+                  <option value="lb">lb</option>
+                  <option value="kg">kg</option>
+                </lightning:select>
+              </div>
+              <!--Gross Weight: END-->
+              <!--div class="col-sm-3 without-label">
+                            <label ><span class="slds-required">*</span>Commodity Type <lightning:helptext content="Select Cargo, NOS for Dry Containers and Refrigerated Cargo for Reefer Containers." class="nor-icon"/> </label>
+                            <lightning:select aura:id="selectTypeId" required="true" value="{!container.commodityCode}" >
+                                <option value="">Select type</option>
+                                <aura:iteration items="{!v.tariffsCommodities}" var="commodity">
+                                    <option class="contracted-tariffs" value="{!commodity.Commodity_Code__c}" selected="{!commodity.Commodity_Code__c == container.commodityCode}">%&nbsp;{!commodity.Commodity_Name__c}</option>
+                                </aura:iteration>
+                                <aura:iteration items="{!v.commodityTypes}" var="commodity">
+                                    <option value="{!commodity.Commodity_Code__c}" selected="{!commodity.Commodity_Code__c == container.commodityCode}">{!commodity.Commodity_Name__c}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                        </div-->
+              <div class="col-sm-2 without-label">
+                <label
+                  ><span class="slds-required">*</span>Commodity Type
+                  <lightning:helptext
+                    content="Select Cargo, NOS for Dry Containers and Refrigerated Cargo for Reefer Containers."
+                    class="nor-icon"
+                  /> </label
+                ><br />
+                <c:CC_CustomSelectBoxCmp
+                  aura:id="commodityTypesId"
+                  infoText="{!container.commodityDesc}"
+                  functionality="Container:commodityType"
+                  containerCode="{!container.commodityCode}"
+                  options="{!v.commodityOptions}"
+                  index="{!index}"
+                  isLabelMatch="true"
+                  isRequired="true"
+                />
+              </div>
+              <div class="col-sm-4 without-label">
+                <div class="cargo-toggle-sections">
+                  <label
+                    >Hazardous
+                    <lightning:helptext
+                      content="Hazardous indicator will be applicable for all containers."
+                      class="nor-icon"
+                    />
+                  </label>
+                  <lightning:input
+                    styleclass="toggleCls"
+                    type="toggle"
+                    name="toggleButton"
+                    aura:id="hazardousbtn"
+                    messageToggleActive="Yes"
+                    messageToggleInactive="No"
+                    checked="{!v.cargoList[0].isHazardous}"
+                  />
+                </div>
+                <!--div class="cargo-toggle-sections">
+                                <label>Out Of Gauge</label>
+                                <lightning:input styleclass="toggleCls" type="toggle" name="toggleButton"
+                                                 aura:id="outofgaugebtn" messageToggleActive="Yes" messageToggleInactive="No"
+                                                 checked="{!container.requirement.OutOfGauge__c}" />
+                            </div-->
+                <div class="cargo-toggle-sections">
+                  <label>Shipper Owned</label>
+                  <lightning:input
+                    styleclass="toggleCls"
+                    type="toggle"
+                    name="toggleButton"
+                    aura:id="shippersbtn"
+                    label=""
+                    messageToggleActive="Yes"
+                    messageToggleInactive="No"
+                    checked="{!container.requirement.IsShippersOwn__c}"
+                  />
+                </div>
+                <aura:if isTrue="{!container.requirement.Running_Reefer__c}">
+                  <div class="cargo-toggle-sections">
+                    <label
+                      >NOR
+                      <lightning:helptext
+                        content="Non Operating Reefer"
+                        class="nor-icon"
+                      />
+                    </label>
+                    <lightning:input
+                      styleclass="toggleCls"
+                      type="toggle"
+                      name="toggleButton"
+                      label=""
+                      messageToggleActive="Yes"
+                      messageToggleInactive="No"
+                      checked="{!container.requirement.IsNonOperativeReefer__c}"
+                    />
+                  </div>
+                </aura:if>
+              </div>
+
+              <div class="col-1">
+                <label class="block-view">&nbsp;</label>
+                <aura:if isTrue="{!index!=0}">
+                  <a
+                    href=""
+                    id="{!index}"
+                    class="removeButton"
+                    onclick="{!c.removeItem}"
+                    >- Remove</a
+                  >
+                </aura:if>
+              </div>
+
+              <aura:if isTrue="{!v.cargoList[0].isHazardous}">
+                <div class="col-sm-2 grey-bg-search">
+                  <lightning:select
+                    label="IMDG Class"
+                    required="true"
+                    aura:id="selectId"
+                    value="{!container.requirement.IMDG_Class__c}"
+                  >
+                    <option value="">--Select--</option>
+                    <aura:iteration
+                      items="{!v.imdgClassesList}"
+                      var="imdgClass"
+                    >
+                      <option
+                        value="{!imdgClass.value}"
+                        selected="{!container.requirement.IMDG_Class__c == imdgClass.value}"
+                      >
+                        {!imdgClass.label}
+                      </option>
+                    </aura:iteration>
+                  </lightning:select>
+                </div>
+              </aura:if>
+            </div>
+            <!--Optional Services Section: START-->
+            <div class="row">
+              <c:CC_OptionalServices
+                aura:id="optionalServiceComp"
+                index="{!index}"
+                masterObjServices="{!container.requirement}"
+                lstMarineCargoInsur="{!v.lstMarineCargoInsur}"
+              />
+            </div>
+            <!--Optional Services Section: END-->
+            <div class="separator-line"></div>
+          </div>
+        </aura:iteration>
+        <lightning:button
+          variant="brand"
+          label="Add More +"
+          class="comment-post-btn"
+          title="Add More +"
+          onclick="{!c.addItem}"
+        />
+      </aura:iteration>
+      <!--For Booking Screen-->
+      <aura:set attribute="else">
+        <aura:iteration
+          items="{!v.cargoList[0].listFreightDetailWrapper}"
+          var="freight"
+          indexVar="indexOuter"
+        >
+          <aura:iteration
+            items="{!freight.listRequirementWrapper}"
+            var="container"
+            indexVar="index"
+          >
+            <div>
+              <div class="row">
+                <div class="col-sm-2 grey-bg-search without-label">
+                  <!--c:CC_CustomLookupInput fieldLabel="Size / Type" placeholder="Search"
+                                        requiredInput="true" functionality="Container:Size_Type"
+                                        SearchKeyWord="{!container.containerDesc}" aura:id="sizeTypeId"
+                                        index="{!index}" /-->
+                  <label><span class="slds-required">*</span>Size / Type</label
+                  ><br />
+                  <c:CC_CustomSelectBoxCmp
+                    aura:id="containerTypesId"
+                    containerCode="{!container.containerDesc}"
+                    options="{!v.containerOptions}"
+                    isRequired="true"
+                    index="{!index}"
+                    functionality="Container:Size_Type"
+                    isLabelMatch="true"
+                  />
+                </div>
+                <div class="col-sm-1">
+                  <lightning:input
+                    type="number"
+                    required="true"
+                    label="Quantity"
+                    value="{!container.requirement.Quantity__c}"
+                    aura:id="inputFieldId"
+                    pattern="[0-9]*"
+                    messageWhenPatternMismatch="Please enter whole number"
+                    min="1"
+                    maxlength="3"
+                  />
+                </div>
+                <!--div class="col-sm-3 without-label">
+                                    <label ><span class="slds-required">*</span>Commodity Type <lightning:helptext content="Select Cargo, NOS for Dry Containers and Refrigerated Cargo for Reefer Containers." class="nor-icon"/> </label>
+                                    <lightning:select aura:id="selectTypeId" required="true" value="{!container.commodityCode}" >
+                                        <option value="">Select type</option>
+                                        <aura:iteration items="{!v.tariffsCommodities}" var="commodity">
+                                            <option class="contracted-tariffs" value="{!commodity.Commodity_Code__c}" selected="{!commodity.Commodity_Code__c == container.commodityCode}">%&nbsp;{!commodity.Commodity_Name__c}</option>
+                                        </aura:iteration>
+                                        <aura:iteration items="{!v.commodityTypes}" var="commodity">
+                                            <option value="{!commodity.Commodity_Code__c}" selected="{!commodity.Commodity_Code__c == container.commodityCode}">{!commodity.Commodity_Name__c}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div-->
+
+                <!--Gross Weight: START-->
+                <div class="col-sm-1 p-r-0">
+                  <!--Edit:001-->
+                  <lightning:input
+                    type="number"
+                    required="false"
+                    label="Cargo Weight"
+                    step="0.01"
+                    value="{!container.requirement.Weight__c}"
+                    aura:id="inputFieldId"
+                    min="1"
+                  />
+                </div>
+                <div class="col p-0 unit-col without-label">
+                  <label>&nbsp;</label>
+                  <lightning:select
+                    value="{!container.requirement.Weights_Unit_of_Measure__c}"
+                    aura:id="InputSelectSingle"
+                  >
+                    <option value="lb">lb</option>
+                    <option value="kg">kg</option>
+                  </lightning:select>
+                </div>
+                <!--Gross Weight: END-->
+
+                <div class="col-sm-2 without-label">
+                  <label
+                    ><span class="slds-required">*</span>Commodity Type
+                    <lightning:helptext
+                      content="Select Cargo, NOS for Dry Containers and Refrigerated Cargo for Reefer Containers."
+                      class="nor-icon"
+                    /> </label
+                  ><br />
+                  <c:CC_CustomSelectBoxCmp
+                    aura:id="commodityTypesId"
+                    containerCode="{!container.commodityCode}"
+                    options="{!v.commodityOptions}"
+                    isRequired="true"
+                  />
+                </div>
+                <div class="col-sm-4 without-label">
+                  <div class="cargo-toggle-sections">
+                    <label
+                      >Hazardous
+                      <lightning:helptext
+                        content="Hazardous indicator will be applicable for all containers."
+                        class="nor-icon"
+                      />
+                    </label>
+                    <lightning:input
+                      styleclass="toggleCls"
+                      type="toggle"
+                      name="toggleButton"
+                      aura:id="hazardousbtn"
+                      id="hazardousbtn"
+                      messageToggleActive="Yes"
+                      messageToggleInactive="No"
+                      checked="{!v.cargoList[0].isHazardous}"
+                      value="{!v.cargoList[0].isHazardous}"
+                      onchange="{!c.changeHazardToggle}"
+                    />
+                  </div>
+                  <div class="cargo-toggle-sections">
+                    <label>Out Of Gauge</label>
+                    <lightning:input
+                      styleclass="toggleCls"
+                      type="toggle"
+                      name="toggleButton"
+                      aura:id="outofgaugebtn"
+                      messageToggleActive="Yes"
+                      messageToggleInactive="No"
+                      checked="{!container.requirement.OutOfGauge__c}"
+                      onchange="{!c.changeOutOfGauge}"
+                    />
+                  </div>
+                  <div class="cargo-toggle-sections">
+                    <!--Edit:001-->
+                    <label>Shipper Owned</label>
+                    <lightning:input
+                      styleclass="toggleCls"
+                      type="toggle"
+                      name="toggleButton"
+                      aura:id="shippersbtn"
+                      label=""
+                      messageToggleActive="Yes"
+                      messageToggleInactive="No"
+                      checked="{!container.requirement.IsShippersOwn__c}"
+                    />
+                  </div>
+                  <aura:if isTrue="{!container.requirement.Running_Reefer__c}">
+                    <div class="cargo-toggle-sections">
+                      <label
+                        >NOR
+                        <lightning:helptext
+                          content="Non Operating Reefer"
+                          class="nor-icon"
+                        />
+                      </label>
+                      <lightning:input
+                        styleclass="toggleCls"
+                        type="toggle"
+                        name="toggleButton"
+                        label=""
+                        messageToggleActive="Yes"
+                        messageToggleInactive="No"
+                        checked="{!container.requirement.IsNonOperativeReefer__c}"
+                      />
+                    </div>
+                  </aura:if>
+                </div>
+                <div class="col-1">
+                  <label class="block-view">&nbsp;</label>
+                  <aura:if isTrue="{!index!=0}">
+                    <a
+                      href=""
+                      id="{!index}"
+                      class="removeButton"
+                      onclick="{!c.removeItem}"
+                      >- Remove</a
+                    >
+                  </aura:if>
+                </div>
+                <br />
+              </div>
+              <aura:if isTrue="{!container.requirement.IsShippersOwn__c}"
+                ><!--Edit:001-->
+                <div class="row">
+                  <div class="col-sm-2">
+                    <lightning:input
+                      type="number"
+                      label="Declared Value of Cargo (USD)"
+                      value="{!container.requirement.Declared_Value_Of_Cargo_USD__c}"
+                      aura:id="inputFieldId"
+                      placeholder="Enter"
+                    />
+                  </div>
+                </div>
+              </aura:if>
+              <aura:if isTrue="{!container.requirement.OutOfGauge__c}">
+                <div class="row">
+                  <div class="col-12"><b>Out of Gauge Details</b></div>
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Top"
+                      value="{!container.requirement.TopValue__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                    />
+
+                    <aura:if isTrue="{!container.requirement.TopUnit__c== 1}">
+                      <span class="measurement-unit">ft</span>
+                    </aura:if>
+                    <aura:if isTrue="{!container.requirement.TopUnit__c== 0}">
+                      <span class="measurement-unit">m</span>
+                    </aura:if>
+                  </div>
+
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Left"
+                      value="{!container.requirement.LeftValue__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                    />
+                    <aura:if isTrue="{!container.requirement.LeftUnit__c== 1}">
+                      <span class="measurement-unit">ft</span>
+                    </aura:if>
+                    <aura:if isTrue="{!container.requirement.LeftUnit__c== 0}">
+                      <span class="measurement-unit">m</span>
+                    </aura:if>
+                  </div>
+
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Right"
+                      value="{!container.requirement.RightValue__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                    />
+
+                    <aura:if isTrue="{!container.requirement.RightUnit__c== 1}">
+                      <span class="measurement-unit">ft</span>
+                    </aura:if>
+                    <aura:if isTrue="{!container.requirement.RightUnit__c== 0}">
+                      <span class="measurement-unit">m</span>
+                    </aura:if>
+                  </div>
+
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Front"
+                      value="{!container.requirement.FrontValue__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                    />
+
+                    <aura:if isTrue="{!container.requirement.FrontUnit__c== 1}">
+                      <span class="measurement-unit">ft</span>
+                    </aura:if>
+                    <aura:if isTrue="{!container.requirement.FrontUnit__c== 0}">
+                      <span class="measurement-unit">m</span>
+                    </aura:if>
+                  </div>
+
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Door"
+                      value="{!container.requirement.DoorValue__c}"
+                      name="{!index}"
+                      aura:id="inputFieldId"
+                    />
+
+                    <aura:if isTrue="{!container.requirement.DoorUnit__c== 1}">
+                      <span class="measurement-unit">ft</span>
+                    </aura:if>
+                    <aura:if isTrue="{!container.requirement.DoorUnit__c== 0}">
+                      <span class="measurement-unit">m</span>
+                    </aura:if>
+                  </div>
+
+                  <div class="col-sm-1 col-6 measurement-unit-col">
+                    <lightning:input
+                      type="number"
+                      label="Weight"
+                      value="{!container.requirement.Weight__c}"
+                      aura:id="inputFieldId"
+                      required="true"
+                      min="1"
+                      maxlength="5"
+                      max="{!container.requirement.Weights_Unit_of_Measure__c== 'kg' ? '36288' : '80000'}"
+                      messageWhenRangeOverflow="{!container.requirement.Weights_Unit_of_Measure__c== 'kg' ? 'Value can not be greater than 36,288' : 'Value can not be greater than 80,000'}"
+                    />
+                    <aura:if
+                      isTrue="{!container.requirement.Weights_Unit_of_Measure__c == 'lb'}"
+                    >
+                      <span class="measurement-unit">lb</span>
+                    </aura:if>
+                    <aura:if
+                      isTrue="{!container.requirement.Weights_Unit_of_Measure__c == 'kg'}"
+                    >
+                      <span class="measurement-unit">kg</span>
+                    </aura:if>
+                  </div>
+                </div>
+              </aura:if>
+              <!--Reefer Details: START-->
+              <aura:if isTrue="{!container.requirement.Running_Reefer__c}">
+                <div class="row">
+                  <div class="col-sm-3"><b>Reefer Details</b></div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-sm-2" style="padding-right: 0">
+                    <lightning:input
+                      type="number"
+                      required="true"
+                      label="Temperature"
+                      value="{!container.requirement.Temperature__c}"
+                      aura:id="inputFieldId"
+                      pattern="[0-9]*"
+                      messageWhenPatternMismatch="Please enter whole number"
+                    />
+                  </div>
+                  <div
+                    class="col-1"
+                    style="padding-left: 0; padding-top: 20.5px"
+                  >
+                    <lightning:select
+                      value="{!container.requirement.Temperatures_Unit_of_Measure__c}"
+                      aura:id="InputSelectSingle"
+                    >
+                      <option value="F">°F</option>
+                      <option value="C">°C</option>
+                    </lightning:select>
+                  </div>
+                  <div class="col-sm-2 without-label">
+                    <label
+                      ><span class="slds-required">*</span>Vent Settings</label
+                    ><br />
+                    <c:CC_CustomSelectBoxCmp
+                      aura:id="commodityTypesId"
+                      containerCode="{!container.requirement.Ventilated__c}"
+                      options="{!v.lstVentSettings}"
+                      isRequired="true"
+                    />
+                  </div>
+                </div>
+              </aura:if>
+              <!--Reefer Details: END-->
+
+              <!--Optional Services Section: START-->
+              <div class="row">
+                <c:CC_OptionalServices
+                  aura:id="optionalServiceComp"
+                  index="{!index}"
+                  masterObjServices="{!container.requirement}"
+                  lstMarineCargoInsur="{!v.lstMarineCargoInsur}"
+                />
+              </div>
+              <!--Optional Services Section: END-->
+
+              <!--Hazardous Details:: START-->
+              <aura:if isTrue="{!v.cargoList[0].isHazardous}">
+                <div class="row" id="commDiv">
+                  <div class="col-sm-12">
+                    <lightning:accordion
+                      aura:id="accordion"
+                      activeSectionName=""
+                      allowMultipleSectionsOpen="true"
+                    >
+                      <lightning:accordionSection
+                        name="HazardousDetails"
+                        label="HAZARDOUS DETAILS"
+                      >
+                        <aura:iteration
+                          items="{!v.lstCommodityWrapper}"
+                          var="varCommodity"
+                          indexVar="indexComm"
+                        >
+                          <aura:if isTrue="{!indexComm == 0}">
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <lightning:input
+                                  autocomplete="off"
+                                  type="text"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="Emergency Contact Person"
+                                  placeholder="{!if(index!=0,' ','Enter name')}"
+                                  required="true"
+                                  value="{!varCommodity.commodity.Emergency_Contact_Name__c}"
+                                  maxlength="250"
+                                />
+                              </div>
+                              <div class="col-sm-3">
+                                <lightning:input
+                                  autocomplete="off"
+                                  type="text"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="Emergency Contact Number"
+                                  placeholder="{!if(index!=0,' ','Enter Contact Number')}"
+                                  required="true"
+                                  value="{!varCommodity.commodity.Emergency_Contact_Number__c}"
+                                  maxlength="250"
+                                />
+                              </div>
+                              <div class="col-sm-3">
+                                <lightning:input
+                                  autocomplete="off"
+                                  type="text"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="Haz Contract Number"
+                                  placeholder="{!if(index!=0,' ','Enter Contract Number')}"
+                                  value="{!varCommodity.commodity.Contract_Number__c}"
+                                  maxlength="250"
+                                />
+                              </div>
+                            </div>
+                            <aura:if isTrue="{!index==0}">
+                              <div class="row">
+                                <div class="col-sm-5">
+                                  <div class="file-upload">
+                                    <c:FileUpload
+                                      aura:id="fileUploadCmp"
+                                      screen="{!v.screen}"
+                                    >
+                                    </c:FileUpload>
+                                  </div>
+                                </div>
+                              </div>
+                            </aura:if>
+                            <div class="separator-line"></div>
+                          </aura:if>
+
+                          <!--div id="containerChildId">
+                                                        <c:CC_HazardousDetails aura:id="hazDetailComp" index="{!indexComm}" masterObjCommodity="{!varCommodity.commodity}" 
+                                                                               lstContentType="{!v.lstContentType}" lstPackageType="{!v.lstPackageType}" SearchKeyWord="{!varCommodity.substanceDesc}"/>
+                                                    </div-->
+
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <aura:if isTrue="{!index==0}">
+                                <lightning:input
+                                  autocomplete="on"
+                                  type="search"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="UN Number"
+                                  id="{!indexComm}"
+                                  placeholder="Search..."
+                                  required="true"
+                                  value="{!varCommodity.substanceDesc}"
+                                  onchange="{!c.inputValueChange}"
+                                  onclick="{!c.onSubstanceSearch}"
+                                />
+                                <aura:set attribute="else">
+                                  <lightning:input
+                                    autocomplete="on"
+                                    type="text"
+                                    aura:id="inputFieldId"
+                                    disabled="true"
+                                    label="UN Number"
+                                    id="{!index}"
+                                    placeholder=""
+                                    required="true"
+                                    value="{!varCommodity.substanceDesc}"
+                                  />
+                                </aura:set>
+                              </aura:if>
+                            </div>
+
+                            <div class="col-sm-3 without-label">
+                              <label>Content Type</label><br />
+                              <c:CC_CustomSelectBoxCmp
+                                aura:id="hazardousSelctBox"
+                                containerCode="{!varCommodity.commodity.Content_Type__c}"
+                                options="{!v.lstContentType}"
+                                isDisabled="{!if(index!=0,true,false)}"
+                              />
+                            </div>
+                            <aura:if
+                              isTrue="{!and(varCommodity.commodity.Name__c !='', varCommodity.commodity.Name__c !=undefined)}"
+                            >
+                              <div class="col-sm-2">
+                                <lightning:input
+                                  autocomplete="off"
+                                  type="text"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="Permit Number"
+                                  placeholder="{!if(index!=0,' ','Enter number')}"
+                                  value="{!varCommodity.commodity.Permit_Number__c}"
+                                  maxlength="250"
+                                  onchange="{!c.inputValueChange}"
+                                />
+                              </div>
+                              <div class="col-sm-2">
+                                <lightning:input
+                                  autocomplete="off"
+                                  type="text"
+                                  aura:id="inputFieldId"
+                                  disabled="{!index!=0}"
+                                  label="Ex Number"
+                                  placeholder="{!if(index!=0,' ','Enter number')}"
+                                  required="true"
+                                  value="{!varCommodity.commodity.Ex_Number__c}"
+                                  maxlength="80"
+                                  onchange="{!c.inputValueChange}"
+                                />
+                              </div>
+                            </aura:if>
+                            <div class="col-sm-2">
+                              <label class="block-view">&nbsp;</label>
+                              <aura:if isTrue="{!index==0}">
+                                <aura:if isTrue="{!indexComm!=0}">
+                                  <a
+                                    href=""
+                                    id="{!indexComm}"
+                                    class="removeButton"
+                                    onclick="{!c.removeCommodityItem}"
+                                    >- Remove</a
+                                  >
+                                </aura:if>
+                              </aura:if>
+                            </div>
+                          </div>
+                          <aura:if
+                            isTrue="{!and(varCommodity.commodity.Name__c !='', varCommodity.commodity.Name__c !=undefined)}"
+                          >
+                            <br /><br />
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <table
+                                  class="slds-table slds-table_fixed-layout"
+                                  style="table-layout: auto"
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate">Name</span>
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate">Class</span>
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Variation</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Packaging Group</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Secondary Class</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Tertiary Class</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Marine Pollutant</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"
+                                          >Limited Quantity</span
+                                        >
+                                      </th>
+                                      <th scope="col" class="slds-cell-wrap">
+                                        <span class="slds-truncate"></span>
+                                      </th>
+                                    </tr>
+                                    <br />
+                                  </thead>
+                                  <tbody>
+                                    <tr class="get-quote-container">
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Name__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Primary_Class__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Variation__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Package_Group__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Secondary_Class__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Tertiary_Class__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Marine_Pollutant_Indicator__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        {!varCommodity.commodity.Limited_Quantity_Indicator__c}
+                                      </td>
+                                      <td class="slds-cell-wrap">
+                                        <aura:if isTrue="{!index==0}">
+                                          <a
+                                            id="{!indexComm}"
+                                            onclick="{!c.changeSubstance}"
+                                            >Change</a
+                                          >
+                                        </aura:if>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <br /><br />
+
+                            <div class="row">
+                              <div class="col-sm-3">
+                                <div class="row">
+                                  <div class="col-sm-9 p-r-0">
+                                    <lightning:input
+                                      autocomplete="off"
+                                      type="number"
+                                      label="Flash Temperature"
+                                      disabled="{!index!=0}"
+                                      value="{!varCommodity.commodity.Flash_Temperature_value__c}"
+                                      aura:id="inputFieldId"
+                                      placeholder="{!if(index!=0,' ','Enter temperature')}"
+                                      onchange="{!c.inputValueChange}"
+                                    />
+                                  </div>
+                                  <div class="col p-0 unit-col without-label">
+                                    <label>&nbsp;</label>
+                                    <lightning:select
+                                      value="{!varCommodity.commodity.Flash_Temperature_Unit_of_Measure__c}"
+                                      disabled="{!index!=0}"
+                                      aura:id="InputSelectSingle"
+                                      onchange="{!c.inputValueChange}"
+                                    >
+                                      <option value="F">°F</option>
+                                      <option value="C">°C</option>
+                                    </lightning:select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="row">
+                                  <div class="col-sm-9 p-r-0">
+                                    <lightning:input
+                                      type="number"
+                                      autocomplete="off"
+                                      label="Report Spill Quantity"
+                                      disabled="{!index!=0}"
+                                      min="1"
+                                      value="{!varCommodity.commodity.Reported_Quantity__c}"
+                                      aura:id="inputFieldId"
+                                      placeholder="{!if(index!=0,' ','Enter quantity')}"
+                                      onchange="{!c.inputValueChange}"
+                                    />
+                                  </div>
+                                  <div class="col p-0 unit-col without-label">
+                                    <label>&nbsp;</label>
+                                    <lightning:select
+                                      value="{!varCommodity.commodity.Quantity_Unit_of_Measure__c}"
+                                      disabled="{!index!=0}"
+                                      aura:id="InputSelectSingle"
+                                      onchange="{!c.inputValueChange}"
+                                    >
+                                      <option value="F">ml</option>
+                                      <option value="C">l</option>
+                                    </lightning:select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="row">
+                                  <div class="col-sm-9 p-r-0">
+                                    <lightning:input
+                                      autocomplete="off"
+                                      type="number"
+                                      label="Weight"
+                                      step="0.01"
+                                      disabled="{!index!=0}"
+                                      min="1"
+                                      value="{!varCommodity.commodity.Weight_value__c}"
+                                      aura:id="inputFieldId"
+                                      placeholder="{!if(index!=0,' ','Enter weight')}"
+                                      onchange="{!c.inputValueChange}"
+                                    />
+                                  </div>
+                                  <div class="col p-0 unit-col without-label">
+                                    <label>&nbsp;</label>
+                                    <lightning:select
+                                      value="{!varCommodity.commodity.Weight_Unit_of_Measure__c}"
+                                      disabled="{!index!=0}"
+                                      aura:id="InputSelectSingle"
+                                      onchange="{!c.inputValueChange}"
+                                    >
+                                      <option value="lb">lb</option>
+                                      <option value="kg">kg</option>
+                                    </lightning:select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-3 without-label">
+                                <label>Type of Package</label><br />
+                                <c:CC_CustomSelectBoxCmp
+                                  aura:id="hazardousSelctBox"
+                                  containerCode="{!varCommodity.commodity.Type_of_Package__c}"
+                                  options="{!v.lstPackageType}"
+                                  isDisabled="{!if(index!=0,true,false)}"
+                                />
+                              </div>
+                            </div>
+                          </aura:if>
+                          <div class="separator-line"></div>
+                        </aura:iteration>
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <aura:if isTrue="{!index==0}">
+                              <a onclick="{!c.addCommodityItem}"
+                                >+ Hazardous Commodity Add Button</a
+                              >
+                            </aura:if>
+                          </div>
+                        </div>
+                      </lightning:accordionSection>
+                    </lightning:accordion>
+                  </div>
+                </div>
+              </aura:if>
+              <!--Hazardous Details:: END-->
+
+              <!--Line Sperator-->
+              <div class="separator-line"></div>
+            </div>
+          </aura:iteration>
+          <lightning:button
+            variant="brand"
+            label="Add More +"
+            class="comment-post-btn"
+            title="Add More +"
+            onclick="{!c.addItem}"
+          />
+        </aura:iteration>
+      </aura:set>
+    </aura:if>
+  </div>
+
+  <!--Hazardous Details Popup: START-->
+  <div class="slds-m-around_medium hideDiv" aura:id="popupModal">
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-labelledby="modal-heading-01"
+      aria-modal="true"
+      aria-describedby="modal-content-id-1"
+      class="slds-modal slds-fade-in-open slds-modal_large"
+    >
+      <div class="slds-modal__container">
+        <header class="slds-modal__header text-left">
+          <i onclick="{! c.handleCancel }" class="close-dlg"></i>
+          <h6 style="text-align: initial"><b>Select Hazardous Items</b></h6>
+          <div class="row">
+            <div class="col-sm-3">
+              <lightning:input
+                autocomplete="on"
+                type="search"
+                label="UN Number"
+                placeholder="Search..."
+                value="{!v.hazardSearchStr}"
+                onchange="{!c.onChangeSearchStr}"
+                aura:id="searchIcon"
+                id="searchIcon"
+              />
+            </div>
+            <!--div aura:id="searchIcon" id="searchIcon" class="col-sm-1"
+                            onclick="{!c.onChangeSearchStr}" style='padding-left:0;padding-top: 20px;'>
+                            <lightning:icon aura:id="searchIcon" id="searchIcon" onclick="{!c.onChangeSearchStr}"
+                                class="slds-icon slds-icon slds-icon-text-default" iconName="utility:search"
+                                size="medium" alternativeText="icon" />
+                        </div-->
+          </div>
+        </header>
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          style="overflow-x: auto"
+          id="modal-content-id-1"
+        >
+          <div class="row">
+            <div class="col-sm-12">
+              <table
+                class="slds-table slds-table_fixed-layout"
+                style="table-layout: auto"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col" class="slds-cell-wrap">Select</th>
+                    <th scope="col" class="slds-cell-wrap">Name</th>
+                    <th scope="col" class="slds-cell-wrap">Class</th>
+                    <th scope="col" class="slds-cell-wrap">Variation</th>
+                    <th scope="col" class="slds-cell-wrap">Packaging Group</th>
+                    <th scope="col" class="slds-cell-wrap">Secondary Class</th>
+                    <th scope="col" class="slds-cell-wrap">Tertiary Class</th>
+                    <th scope="col" class="slds-cell-wrap">Marine Pollutant</th>
+                    <th scope="col" class="slds-cell-wrap">Limited Quantity</th>
+                  </tr>
+                  <br />
+                </thead>
+                <tbody>
+                  <aura:iteration
+                    items="{!v.lstHazardSubstance}"
+                    var="substances"
+                    indexVar="indexSubstance"
+                  >
+                    <tr
+                      class="get-quote-container"
+                      onclick="{!c.onRadioChange}"
+                      id="{!indexSubstance}"
+                      aura:id="{!indexSubstance}"
+                      value="{!substances.isSelected}"
+                    >
+                      <td id="{!indexSubstance}" aura:id="{!indexSubstance}">
+                        <lightning:input
+                          class="un-dlg-radio"
+                          type="radio"
+                          id="{!indexSubstance}"
+                          aura:id="{!indexSubstance}"
+                          name="select"
+                          value="{!substances.isSelected}"
+                          checked="{!substances.isSelected}"
+                          onclick="{!c.onRadioChange}"
+                        />
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.SubstanceName}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.PrimaryClass}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.Variation}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.PackingGroup}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.SecondaryClass}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.TertiaryClass}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.MarinePollutant}
+                      </td>
+                      <td
+                        class="slds-cell-wrap"
+                        id="{!indexSubstance}"
+                        aura:id="{!indexSubstance}"
+                      >
+                        {!substances.LimitedQuantity}
+                      </td>
+                    </tr>
+                    <br />
+                  </aura:iteration>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <footer class="slds-modal__footer slds-theme_default">
+          <div class="createquote-actions">
+            <lightning:button
+              variant="brand"
+              label="CONFIRM"
+              title="CREATE"
+              onclick="{! c.handleConfirmPopup }"
+            />
+          </div>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+  <!--Hazardous Details Popup: START-->
+</aura:component>

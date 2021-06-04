@@ -1,0 +1,29 @@
+.THIS .font-blue {
+  color: #0095ff !important;
+}
+
+.THIS.hr-margin-top {
+  margin-top: 10px !important;
+}
+
+.THIS.hr-margin-bottom {
+  margin-bottom: 10px !important;
+}
+
+.THIS .hr-margin-top-chld {
+  margin-top: 10px !important;
+}
+
+.THIS .hr-margin-bottom-chld {
+  margin-bottom: 10px !important;
+}
+
+.THIS.slds-spinner_container {
+  z-index: 10000;
+  position: fixed;
+}
+
+.THIS .activityHeading {
+  font-weight: bold;
+  font-size: 18px;
+}

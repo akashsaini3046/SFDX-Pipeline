@@ -1,0 +1,52 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  access="global"
+>
+  <aura:attribute name="data" type="object" />
+  <aura:attribute name="header" type="string" />
+  <aura:attribute name="heading" type="string" />
+  <aura:attribute name="routingData" type="object" />
+
+  <div aura:id="partyDetails" class="col-sm-6 bol-rel-boxborder-4black">
+    <div class="bol-rel-label" style="max-width: 400px">{!v.heading}</div>
+    <aura:if isTrue="{!v.routingData}">
+      <div><b>{!v.routingData}</b><br /></div>
+      <aura:set attribute="else">
+        <aura:if isTrue="{!v.header != 'ForwardingAgent'}">
+          <div class="bol-rel-boxborder-4black bol-rel-refnumbox">
+            <span class="bol-rel-label">REFERENCE NO.</span><br />
+            <aura:iteration
+              items="{!v.data.referenceNumbers}"
+              var="refNumber"
+              indexVar="index"
+            >
+              <b>{!refNumber.strRefNumber}</b><br />
+            </aura:iteration>
+          </div>
+          <aura:set attribute="else">
+            <div class="bol-rel-fmc-chb-align" style="width: 200px">
+              <div class="bol-rel-boxborder-4black bol-rel-fmc-chb-numbox">
+                <span class="bol-rel-label">FMC NO.</span><br />
+                <b>{!v.data.FMCNumber}</b><br />
+              </div>
+              <div
+                class="bol-rel-boxborder-4black bol-rel-fmc-chb-numbox"
+                style="position: absolute; top: 0px; right: 0px"
+              >
+                <span class="bol-rel-label">CHB NO.</span><br />
+                <b>{!v.data.CHBNumber}</b><br />
+              </div>
+            </div>
+          </aura:set>
+        </aura:if>
+        <div>
+          <b
+            >{!v.data.name}<br /> {!v.data.addressLine1}<br />
+            {!v.data.addressLine2}<br /> {!v.data.addressLine3}<br />
+            {!v.data.addressLine4}</b
+          >
+        </div>
+      </aura:set>
+    </aura:if>
+  </div>
+</aura:component>

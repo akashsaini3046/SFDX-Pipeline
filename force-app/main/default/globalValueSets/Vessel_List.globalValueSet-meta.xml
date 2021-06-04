@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>453</fullName>
+        <default>false</default>
+        <label>Barge 455-3</label>
+    </customValue>
+    <customValue>
+        <fullName>455</fullName>
+        <default>false</default>
+        <label>Barge 455-4</label>
+    </customValue>
+    <customValue>
+        <fullName>ADVENT</fullName>
+        <default>false</default>
+        <label>Adventurer</label>
+    </customValue>
+    <customValue>
+        <fullName>AFA</fullName>
+        <default>false</default>
+        <label>AS Fabrizia</label>
+    </customValue>
+    <customValue>
+        <fullName>AFC</fullName>
+        <default>false</default>
+        <label>AS Floriana</label>
+    </customValue>
+    <customValue>
+        <fullName>AFE</fullName>
+        <default>false</default>
+        <label>AS Federica</label>
+    </customValue>
+    <customValue>
+        <fullName>AFI</fullName>
+        <default>false</default>
+        <label>AS Fiorella</label>
+    </customValue>
+    <customValue>
+        <fullName>AFL</fullName>
+        <default>false</default>
+        <label>AS Floretta</label>
+    </customValue>
+    <customValue>
+        <fullName>AFS</fullName>
+        <default>false</default>
+        <label>AS Faustina</label>
+    </customValue>
+    <customValue>
+        <fullName>ANJ</fullName>
+        <default>false</default>
+        <label>MV Andromeda J</label>
+    </customValue>
+    <customValue>
+        <fullName>ANN</fullName>
+        <default>false</default>
+        <label>Anne</label>
+    </customValue>
+    <customValue>
+        <fullName>APE</fullName>
+        <default>false</default>
+        <label>AS Petulia</label>
+    </customValue>
+    <customValue>
+        <fullName>ASL</fullName>
+        <default>false</default>
+        <label>AS Laguna</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM</fullName>
+        <default>false</default>
+        <label>Asian Moon</label>
+    </customValue>
+    <customValue>
+        <fullName>ASP</fullName>
+        <default>false</default>
+        <label>AS Petra</label>
+    </customValue>
+    <customValue>
+        <fullName>ATD</fullName>
+        <default>false</default>
+        <label>Asian Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>AWD</fullName>
+        <default>false</default>
+        <label>Asiatic Wind</label>
+    </customValue>
+    <customValue>
+        <fullName>AZH</fullName>
+        <default>false</default>
+        <label>Asiatic Horizon</label>
+    </customValue>
+    <customValue>
+        <fullName>BCS</fullName>
+        <default>false</default>
+        <label>BC Singapore</label>
+    </customValue>
+    <customValue>
+        <fullName>BEL</fullName>
+        <default>false</default>
+        <label>WARNOW BELUGA</label>
+    </customValue>
+    <customValue>
+        <fullName>BEX</fullName>
+        <default>false</default>
+        <label>Babun Express</label>
+    </customValue>
+    <customValue>
+        <fullName>BFI</fullName>
+        <default>false</default>
+        <label>FS Ipanema</label>
+    </customValue>
+    <customValue>
+        <fullName>BFL</fullName>
+        <default>false</default>
+        <label>BF Leticia</label>
+    </customValue>
+    <customValue>
+        <fullName>BLN</fullName>
+        <default>false</default>
+        <label>Belen</label>
+    </customValue>
+    <customValue>
+        <fullName>BNT</fullName>
+        <default>false</default>
+        <label>Boston Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>CBM</fullName>
+        <default>false</default>
+        <label>Caribe Mariner</label>
+    </customValue>
+    <customValue>
+        <fullName>CBY</fullName>
+        <default>false</default>
+        <label>Campeche Bay</label>
+    </customValue>
+    <customValue>
+        <fullName>CFP</fullName>
+        <default>false</default>
+        <label>CFS Paceno</label>
+    </customValue>
+    <customValue>
+        <fullName>CHART</fullName>
+        <default>false</default>
+        <label>Slot Charter</label>
+    </customValue>
+    <customValue>
+        <fullName>CLG</fullName>
+        <default>false</default>
+        <label>CARIBE LEGEND</label>
+    </customValue>
+    <customValue>
+        <fullName>CNV</fullName>
+        <default>false</default>
+        <label>Caribe Navigator</label>
+    </customValue>
+    <customValue>
+        <fullName>CPG</fullName>
+        <default>false</default>
+        <label>CFS Pagola</label>
+    </customValue>
+    <customValue>
+        <fullName>CPJ</fullName>
+        <default>false</default>
+        <label>CFS Panjang</label>
+    </customValue>
+    <customValue>
+        <fullName>CPL</fullName>
+        <default>false</default>
+        <label>CFS Pafilia</label>
+    </customValue>
+    <customValue>
+        <fullName>CPR</fullName>
+        <default>false</default>
+        <label>CFS Pacora</label>
+    </customValue>
+    <customValue>
+        <fullName>CPV</fullName>
+        <default>false</default>
+        <label>CFS Panavera</label>
+    </customValue>
+    <customValue>
+        <fullName>CRY</fullName>
+        <default>false</default>
+        <label>Contship Ray</label>
+    </customValue>
+    <customValue>
+        <fullName>CSI</fullName>
+        <default>false</default>
+        <label>Contship Ice</label>
+    </customValue>
+    <customValue>
+        <fullName>CSZ</fullName>
+        <default>false</default>
+        <label>Contship Zoe</label>
+    </customValue>
+    <customValue>
+        <fullName>CXP</fullName>
+        <default>false</default>
+        <label>Caribbean Express</label>
+    </customValue>
+    <customValue>
+        <fullName>DAJ</fullName>
+        <default>false</default>
+        <label>Diana J</label>
+    </customValue>
+    <customValue>
+        <fullName>DEL</fullName>
+        <default>false</default>
+        <label>Delphinus</label>
+    </customValue>
+    <customValue>
+        <fullName>DEN</fullName>
+        <default>false</default>
+        <label>Deneb J</label>
+    </customValue>
+    <customValue>
+        <fullName>DUMMY</fullName>
+        <default>false</default>
+        <label>DUMMY VESSEL</label>
+    </customValue>
+    <customValue>
+        <fullName>EC</fullName>
+        <default>false</default>
+        <label>El Conquistador</label>
+    </customValue>
+    <customValue>
+        <fullName>ECO</fullName>
+        <default>false</default>
+        <label>El Coqui</label>
+    </customValue>
+    <customValue>
+        <fullName>EMI</fullName>
+        <default>false</default>
+        <label>EMILIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ER</fullName>
+        <default>false</default>
+        <label>El Rey</label>
+    </customValue>
+    <customValue>
+        <fullName>FAL</fullName>
+        <default>false</default>
+        <label>Falmouth</label>
+    </customValue>
+    <customValue>
+        <fullName>FEL</fullName>
+        <default>false</default>
+        <label>AS Felicia</label>
+    </customValue>
+    <customValue>
+        <fullName>FOU</fullName>
+        <default>false</default>
+        <label>Fouma</label>
+    </customValue>
+    <customValue>
+        <fullName>FT</fullName>
+        <default>false</default>
+        <label>TMT Fortaleza</label>
+    </customValue>
+    <customValue>
+        <fullName>FYN</fullName>
+        <default>false</default>
+        <label>MV Vega Fynen</label>
+    </customValue>
+    <customValue>
+        <fullName>GFT</fullName>
+        <default>false</default>
+        <label>Green Forest</label>
+    </customValue>
+    <customValue>
+        <fullName>GSR</fullName>
+        <default>false</default>
+        <label>Green Star</label>
+    </customValue>
+    <customValue>
+        <fullName>HAU</fullName>
+        <default>false</default>
+        <label>Hansa Augsburg</label>
+    </customValue>
+    <customValue>
+        <fullName>HEX</fullName>
+        <default>false</default>
+        <label>Habib Express</label>
+    </customValue>
+    <customValue>
+        <fullName>HHB</fullName>
+        <default>false</default>
+        <label>Hohebank</label>
+    </customValue>
+    <customValue>
+        <fullName>HOH</fullName>
+        <default>false</default>
+        <label>Hoheriff</label>
+    </customValue>
+    <customValue>
+        <fullName>HTR</fullName>
+        <default>false</default>
+        <label>Hamburg Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>JES</fullName>
+        <default>false</default>
+        <label>Jennifer Scheppers</label>
+    </customValue>
+    <customValue>
+        <fullName>JV</fullName>
+        <default>false</default>
+        <label>TMT Jacksonville</label>
+    </customValue>
+    <customValue>
+        <fullName>KBZ</fullName>
+        <default>false</default>
+        <label>K Breeze</label>
+    </customValue>
+    <customValue>
+        <fullName>KSM</fullName>
+        <default>false</default>
+        <label>K Storm</label>
+    </customValue>
+    <customValue>
+        <fullName>KYD</fullName>
+        <default>false</default>
+        <label>Kydon</label>
+    </customValue>
+    <customValue>
+        <fullName>LAE</fullName>
+        <default>false</default>
+        <label>AS Laetitia</label>
+    </customValue>
+    <customValue>
+        <fullName>LIO</fullName>
+        <default>false</default>
+        <label>Lion</label>
+    </customValue>
+    <customValue>
+        <fullName>LNA</fullName>
+        <default>false</default>
+        <label>Lena</label>
+    </customValue>
+    <customValue>
+        <fullName>LP</fullName>
+        <default>false</default>
+        <label>La Princesa</label>
+    </customValue>
+    <customValue>
+        <fullName>LR</fullName>
+        <default>false</default>
+        <label>La Reina</label>
+    </customValue>
+    <customValue>
+        <fullName>MBS</fullName>
+        <default>false</default>
+        <label>Melbourne Strait</label>
+    </customValue>
+    <customValue>
+        <fullName>MCH</fullName>
+        <default>false</default>
+        <label>Midnight Chief</label>
+    </customValue>
+    <customValue>
+        <fullName>MCZ</fullName>
+        <default>false</default>
+        <label>Midnight Czar</label>
+    </customValue>
+    <customValue>
+        <fullName>MDD</fullName>
+        <default>false</default>
+        <label>Midnight Dream</label>
+    </customValue>
+    <customValue>
+        <fullName>MIM</fullName>
+        <default>false</default>
+        <label>Mimer</label>
+    </customValue>
+    <customValue>
+        <fullName>MJ</fullName>
+        <default>false</default>
+        <label>Marty J</label>
+    </customValue>
+    <customValue>
+        <fullName>MM</fullName>
+        <default>false</default>
+        <label>Miami</label>
+    </customValue>
+    <customValue>
+        <fullName>MNC</fullName>
+        <default>false</default>
+        <label>Midnight Coast</label>
+    </customValue>
+    <customValue>
+        <fullName>MNT</fullName>
+        <default>false</default>
+        <label>Midnight Tide</label>
+    </customValue>
+    <customValue>
+        <fullName>MNW</fullName>
+        <default>false</default>
+        <label>Midnight Wolf</label>
+    </customValue>
+    <customValue>
+        <fullName>MSP</fullName>
+        <default>false</default>
+        <label>Miami Super</label>
+    </customValue>
+    <customValue>
+        <fullName>MST</fullName>
+        <default>false</default>
+        <label>Midnight Stone</label>
+    </customValue>
+    <customValue>
+        <fullName>NDC</fullName>
+        <default>false</default>
+        <label>Nordbaltic</label>
+    </customValue>
+    <customValue>
+        <fullName>NDJ</fullName>
+        <default>false</default>
+        <label>NADJA</label>
+    </customValue>
+    <customValue>
+        <fullName>NYT</fullName>
+        <default>false</default>
+        <label>New York Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>OMB</fullName>
+        <default>false</default>
+        <label>OM BONITATIS</label>
+    </customValue>
+    <customValue>
+        <fullName>ORC</fullName>
+        <default>false</default>
+        <label>ORINOCO</label>
+    </customValue>
+    <customValue>
+        <fullName>PAR</fullName>
+        <default>false</default>
+        <label>Paradero</label>
+    </customValue>
+    <customValue>
+        <fullName>PAV</fullName>
+        <default>false</default>
+        <label>Pavo J</label>
+    </customValue>
+    <customValue>
+        <fullName>PAX</fullName>
+        <default>false</default>
+        <label>Contship Pax</label>
+    </customValue>
+    <customValue>
+        <fullName>PCN</fullName>
+        <default>false</default>
+        <label>Pacon</label>
+    </customValue>
+    <customValue>
+        <fullName>PCT</fullName>
+        <default>false</default>
+        <label>Pacific Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>PEJ</fullName>
+        <default>false</default>
+        <label>Pegasus J</label>
+    </customValue>
+    <customValue>
+        <fullName>PLA</fullName>
+        <default>false</default>
+        <label>As Palatia</label>
+    </customValue>
+    <customValue>
+        <fullName>PPX</fullName>
+        <default>false</default>
+        <label>Pepin Express</label>
+    </customValue>
+    <customValue>
+        <fullName>PRM</fullName>
+        <default>false</default>
+        <label>PERITO MORENO</label>
+    </customValue>
+    <customValue>
+        <fullName>RANGER</fullName>
+        <default>false</default>
+        <label>Ranger</label>
+    </customValue>
+    <customValue>
+        <fullName>REG</fullName>
+        <default>false</default>
+        <label>Regula</label>
+    </customValue>
+    <customValue>
+        <fullName>RNA</fullName>
+        <default>false</default>
+        <label>Runa</label>
+    </customValue>
+    <customValue>
+        <fullName>ROT</fullName>
+        <default>false</default>
+        <label>Rothorn</label>
+    </customValue>
+    <customValue>
+        <fullName>SAB</fullName>
+        <default>false</default>
+        <label>AS Sabrina</label>
+    </customValue>
+    <customValue>
+        <fullName>SAG</fullName>
+        <default>false</default>
+        <label>Saga</label>
+    </customValue>
+    <customValue>
+        <fullName>SAO</fullName>
+        <default>false</default>
+        <label>San Amerigo</label>
+    </customValue>
+    <customValue>
+        <fullName>SAT</fullName>
+        <default>false</default>
+        <label>Saturn</label>
+    </customValue>
+    <customValue>
+        <fullName>SAV</fullName>
+        <default>false</default>
+        <label>AS Savanna</label>
+    </customValue>
+    <customValue>
+        <fullName>SEP</fullName>
+        <default>false</default>
+        <label>Sara Express</label>
+    </customValue>
+    <customValue>
+        <fullName>SMB</fullName>
+        <default>false</default>
+        <label>Samba</label>
+    </customValue>
+    <customValue>
+        <fullName>SNA</fullName>
+        <default>false</default>
+        <label>San Andres</label>
+    </customValue>
+    <customValue>
+        <fullName>SNB</fullName>
+        <default>false</default>
+        <label>Sonderborg</label>
+    </customValue>
+    <customValue>
+        <fullName>SNT</fullName>
+        <default>false</default>
+        <label>AS Samanta</label>
+    </customValue>
+    <customValue>
+        <fullName>SON</fullName>
+        <default>false</default>
+        <label>Seaboard Ocean</label>
+    </customValue>
+    <customValue>
+        <fullName>SRE</fullName>
+        <default>false</default>
+        <label>Sara Regina</label>
+    </customValue>
+    <customValue>
+        <fullName>SWG</fullName>
+        <default>false</default>
+        <label>Sandwig</label>
+    </customValue>
+    <customValue>
+        <fullName>TAJ</fullName>
+        <default>false</default>
+        <label>Xpress Tajumulco</label>
+    </customValue>
+    <customValue>
+        <fullName>TAO</fullName>
+        <default>false</default>
+        <label>Taino</label>
+    </customValue>
+    <customValue>
+        <fullName>TAP</fullName>
+        <default>false</default>
+        <label>Taipei Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>TBN</fullName>
+        <default>false</default>
+        <label>TBN</label>
+    </customValue>
+    <customValue>
+        <fullName>TGO</fullName>
+        <default>false</default>
+        <label>Tango III</label>
+    </customValue>
+    <customValue>
+        <fullName>TOT</fullName>
+        <default>false</default>
+        <label>Toronto Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>TPT</fullName>
+        <default>false</default>
+        <label>Tampa Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>TRT</fullName>
+        <default>false</default>
+        <label>Trinidad Trader</label>
+    </customValue>
+    <customValue>
+        <fullName>TUC</fullName>
+        <default>false</default>
+        <label>Tucana J</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGDFN</fullName>
+        <default>false</default>
+        <label>Defender</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGENS</fullName>
+        <default>false</default>
+        <label>Ensign</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGEXP</fullName>
+        <default>false</default>
+        <label>Explorer</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGMON</fullName>
+        <default>false</default>
+        <label>Monitor</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGOWD</fullName>
+        <default>false</default>
+        <label>Ocean Wind</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGOWV</fullName>
+        <default>false</default>
+        <label>Ocean Wave</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGPAT</fullName>
+        <default>false</default>
+        <label>Patriarch</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGSEN</fullName>
+        <default>false</default>
+        <label>Sentinel</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGSNT</fullName>
+        <default>false</default>
+        <label>Sentry</label>
+    </customValue>
+    <customValue>
+        <fullName>TUGSUN</fullName>
+        <default>false</default>
+        <label>Ocean Sun</label>
+    </customValue>
+    <customValue>
+        <fullName>URL</fullName>
+        <default>false</default>
+        <label>Uncle Rolly</label>
+    </customValue>
+    <customValue>
+        <fullName>VAN</fullName>
+        <default>false</default>
+        <label>Vanquish</label>
+    </customValue>
+    <customValue>
+        <fullName>VAR</fullName>
+        <default>false</default>
+        <label>Varamo</label>
+    </customValue>
+    <customValue>
+        <fullName>VEG</fullName>
+        <default>false</default>
+        <label>Vega Sachsen</label>
+    </customValue>
+    <customValue>
+        <fullName>VES</fullName>
+        <default>false</default>
+        <label>Vega Scorpio</label>
+    </customValue>
+    <customValue>
+        <fullName>VGL</fullName>
+        <default>false</default>
+        <label>Contship Air</label>
+    </customValue>
+    <customValue>
+        <fullName>VGO</fullName>
+        <default>false</default>
+        <label>Vega Omega</label>
+    </customValue>
+    <customValue>
+        <fullName>VGV</fullName>
+        <default>false</default>
+        <label>Vega Virgo</label>
+    </customValue>
+    <customValue>
+        <fullName>VGZ</fullName>
+        <default>false</default>
+        <label>Vega Zeta</label>
+    </customValue>
+    <customValue>
+        <fullName>VSA</fullName>
+        <default>false</default>
+        <label>Vega Sagitarius</label>
+    </customValue>
+    <customValue>
+        <fullName>VTG</fullName>
+        <default>false</default>
+        <label>Vantage</label>
+    </customValue>
+    <customValue>
+        <fullName>WARRIO</fullName>
+        <default>false</default>
+        <label>Warrior</label>
+    </customValue>
+    <customValue>
+        <fullName>WDO</fullName>
+        <default>false</default>
+        <label>Warnow Dolphin</label>
+    </customValue>
+    <customValue>
+        <fullName>WSG</fullName>
+        <default>false</default>
+        <label>Watermark St George</label>
+    </customValue>
+    <customValue>
+        <fullName>WSH</fullName>
+        <default>false</default>
+        <label>Weisshorn</label>
+    </customValue>
+    <customValue>
+        <fullName>WWL</fullName>
+        <default>false</default>
+        <label>Warnow Whale</label>
+    </customValue>
+    <customValue>
+        <fullName>YER</fullName>
+        <default>false</default>
+        <label>Yerupaja</label>
+    </customValue>
+    <description>Vessel Name and Code</description>
+    <masterLabel>Vessel List</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

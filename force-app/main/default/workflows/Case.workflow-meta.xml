@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Send_BL_Case_Auto_Response_Notification</fullName>
+        <description>Send BL Case Auto Response Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>pf_blrevisionsb@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/BL_Revision_Auto_Response_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_Arrival_Notice_email_to_customer_on_closed_new_cases</fullName>
+        <description
+    >Send an Spanish Arrival Notice email to customer on closed new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>arrivalnotices@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template_For_Manually_Created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_Arrival_Notices_email_alert_to_Customer_on_new_cases</fullName>
+        <description
+    >Send an Spanish Arrival Notices email alert to Customer on new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>arrivalnotices@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_email_alert_to_Customer_on_new_cases</fullName>
+        <description
+    >Send an Spanish email alert to Customer on new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>crowleycustomercare@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_email_alert_to_Customer_on_new_cases_booking</fullName>
+        <description
+    >Send an Spanish email alert to Customer on new cases booking</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_email_to_customer_on_closed_new_cases</fullName>
+        <description
+    >Send an Spanish email to customer on closed new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>crowleycustomercare@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template_For_Manually_Created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_Spanish_email_to_customer_on_closed_new_cases_booking</fullName>
+        <description
+    >Send an Spanish email to customer on closed new cases booking</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Spanish_Customer_Inquiry_Assigned_Template_For_Manually_Created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_email_alert_to_customer_on_Arrival_Notice_case_creation</fullName>
+        <description
+    >Send an email alert to customer on Arrival Notice case creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>arrivalnotices@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_an_email_alert_to_customer_on_case_creation</fullName>
+        <description
+    >Send an email alert to customer on customer inquiry case creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>crowleycustomercare@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_email_alert_to_customer_on_case_creation_booking</fullName>
+        <description
+    >Send an email alert to customer on customer inquiry case creation booking</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_an_email_alert_to_the_URE</fullName>
+        <description>Send an email alert to the URE</description>
+        <protected>false</protected>
+        <recipients>
+            <field>URE_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/BL_Revision_URE_Template</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_english_email_to_customer_Arrival_Notices_after_closed_new_cases</fullName>
+        <description
+    >Send an english email to customer Arrival Notices after closed new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>arrivalnotices@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template_for_Manually_created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_english_email_to_customer_after_closed_new_cases</fullName>
+        <description
+    >Send an english email to customer after closed new cases</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>crowleycustomercare@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template_for_Manually_created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_an_english_email_to_customer_after_closed_new_cases_booking</fullName>
+        <description
+    >Send an english email to customer after closed new cases booking</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template
+    >Service_Cloud_Email_Templates/Customer_Inquiry_Assigned_Template_for_Manually_created_cases</template>
+    </alerts>
+    <alerts>
+        <fullName
+    >Send_notification_to_customer_when_case_is_in_Analysis</fullName>
+        <description
+    >Send notification to customer when case is in Analysis</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>pf_blrevisionsb@crowley.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template
+    >Service_Cloud_Email_Templates/BL_Revision_case_notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Arrival_Notice_Case_update</fullName>
+        <field>Arrival_Notice_Case__c</field>
+        <literalValue>1</literalValue>
+        <name>Arrival Notice Case update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_RT_to_Customer_Inquiry</fullName>
+        <description
+    >Change record type from Create Customer Inquiry to Customer Inquiry.</description>
+        <field>RecordTypeId</field>
+        <lookupValue>Customer_Inquiry</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Change RT to Customer Inquiry</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_RT_to_booking_request_close</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Booking_Request_Case</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Change RT to booking request close</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_RT_to_customer_inquiry_close</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Customer_Inquiry_Case</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Change RT to customer inquiry close</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Internal_Contact_Updation</fullName>
+        <field>Internal_Contact__c</field>
+        <literalValue>1</literalValue>
+        <name>Internal Contact Updation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_RT_to_Customer_Inquiry</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Customer_Inquiry</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Set RT to Customer Inquiry</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_to_Publishing</fullName>
+        <field>Status</field>
+        <literalValue>Publishing</literalValue>
+        <name>Status to Publishing</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Trouble_Lane_case_update</fullName>
+        <field>Trouble_Lane_Case__c</field>
+        <literalValue>1</literalValue>
+        <name>Trouble Lane case update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Auto_Response_Checkbox</fullName>
+        <field>Auto_Response_Sent__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Auto Response Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_B_L_Record_Type</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>B_L_Revision</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update BL Record Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Booking_Request_RT</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Booking_Request</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Booking Request RT</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Case</fullName>
+        <field>Status</field>
+        <literalValue>Assigned</literalValue>
+        <name>Update Case</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Case_Record_type</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Pricing_Rate_Issue</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Case Record type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Date_Time_Assigned_field</fullName>
+        <field>Date_Time_Assigned__c</field>
+        <formula>NOW()</formula>
+        <name>Update Date/Time Assigned field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Priority_Trouble_Lane</fullName>
+        <field>Priority</field>
+        <literalValue>Urgent</literalValue>
+        <name>Update Priority Trouble Lane</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_owner_to_Publishing_queue</fullName>
+        <field>OwnerId</field>
+        <lookupValue>Rate_Publishing</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Update owner to Publishing queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_to_Assigned</fullName>
+        <field>Status</field>
+        <literalValue>Assigned</literalValue>
+        <name>Update status to Assigned</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_to_edit_Booking_Request</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Booking_Request</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update to edit Booking Request</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>change_record_type_to_close_BL_Revision</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>BL_Revision_Read_Only</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>change record type to close BL Revision</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_effective_date</fullName>
+        <field>Effective_Date__c</field>
+        <formula>Today()</formula>
+        <name>update effective date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_filed_date</fullName>
+        <field>Filed_Date__c</field>
+        <formula>Today()</formula>
+        <name>update filed date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_status_to_inanalysis</fullName>
+        <field>Status</field>
+        <literalValue>In Analysis</literalValue>
+        <name>update status to inanalysis</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>All case Type Internal contact</fullName>
+        <actions>
+            <name>Internal_Contact_Updation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SuppliedEmail</field>
+            <operation>contains</operation>
+            <value>@crowley.com</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Arrival Notice Case</fullName>
+        <actions>
+            <name>Arrival_Notice_Case_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Customer Inquiry</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>contains</operation>
+            <value>Arrival Notices</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create Customer Inquiry</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Arrival Notices English New Case on Closed Cases</fullName>
+        <actions>
+            <name
+      >Send_an_english_email_to_customer_Arrival_Notices_after_closed_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >IF(   AND(ISNULL(ContactId), ISBLANK(ContactId)),   false,   AND(      OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),     OR(ISPICKVAL( Contact.Language_Preference__c , &apos;English&apos;), ISNULL( TEXT(Contact.Language_Preference__c ) ), ISBLANK(TEXT(Contact.Language_Preference__c ))  ),      AND( NOT(ISNULL( Original_Case_2__c )) , NOT(ISBLANK( Original_Case_2__c )) ),     OR(        NOT( ISNULL( Contact.Email )),        NOT( ISNULL(SuppliedEmail))     ),       CONTAINS(Owner:Queue.QueueName, &apos;Arrival Notice&apos;)       ) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Arrival Notices English Original Cases</fullName>
+        <actions>
+            <name
+      >Send_an_email_alert_to_customer_on_Arrival_Notice_case_creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >IF(   AND(ISNULL(ContactId), ISBLANK(ContactId)),   false,   AND(      OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),     OR(ISPICKVAL( Contact.Language_Preference__c , &apos;English&apos;), ISNULL( TEXT(Contact.Language_Preference__c ) ), ISBLANK(TEXT(Contact.Language_Preference__c ))  ),      OR(ISNULL( Original_Case_2__c ),ISBLANK( Original_Case_2__c )),     OR(        NOT( ISNULL( Contact.Email )),        NOT( ISNULL(SuppliedEmail))     ),       CONTAINS(Owner:Queue.QueueName, &apos;Arrival Notice&apos;)       ) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Arrival Notices Spanish New Case on Closed Cases</fullName>
+        <actions>
+            <name
+      >Send_an_Spanish_Arrival_Notice_email_to_customer_on_closed_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >IF( AND(ISNULL(ContactId), ISBLANK(ContactId)), false, AND( OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ), ISPICKVAL( Contact.Language_Preference__c , &apos;Spanish&apos;), AND( NOT(ISNULL( Original_Case_2__c )) , NOT(ISBLANK( Original_Case_2__c )) ), OR( NOT( ISNULL( Contact.Email )), NOT( ISNULL(SuppliedEmail)) ), CONTAINS(Owner:Queue.QueueName, &apos;Arrival Notice&apos;) ) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Arrival Notices Spanish Original Cases</fullName>
+        <actions>
+            <name
+      >Send_an_Spanish_Arrival_Notices_email_alert_to_Customer_on_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >IF(   AND(ISNULL(ContactId), ISBLANK(ContactId)),   false,   AND(      OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),     ISPICKVAL( Contact.Language_Preference__c , &apos;Spanish&apos;),      OR(ISNULL( Original_Case_2__c ),ISBLANK( Original_Case_2__c )),     OR(        NOT( ISNULL( Contact.Email )),        NOT( ISNULL(SuppliedEmail))     ),     CONTAINS(Owner:Queue.QueueName, &apos;Arrival Notice&apos;)     ) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Customer Inquiry English New Case on Closed Cases</fullName>
+        <actions>
+            <name
+      >Send_an_english_email_to_customer_after_closed_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Auto_Response_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(
+AND(ISNULL(ContactId), ISBLANK(ContactId)),
+false,
+AND(
+OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),
+OR(ISPICKVAL( Contact.Language_Preference__c , &apos;English&apos;), ISNULL( TEXT(Contact.Language_Preference__c ) ), ISBLANK(TEXT(Contact.Language_Preference__c )) ),
+AND( NOT(ISNULL( Original_Case_2__c )) , NOT(ISBLANK( Original_Case_2__c )) ),
+OR(
+NOT( ISNULL( Contact.Email )),
+NOT( ISNULL(SuppliedEmail))
+),
+OR(CONTAINS(Owner:Queue.QueueName, &apos;Customer Inquiry&apos;),CONTAINS(Owner:Queue.QueueName, &apos;Trouble Lane&apos;)),
+OR(AND(
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Arrival_Notice_Email) ),
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_BL_Revision_Email) ),
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Booking_Request_Email) )
+), ISNULL(To_Address__c),ISBLANK(To_Address__c)),
+NOT( Auto_Response_Sent__c )
+)
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Customer Inquiry English Original Cases</fullName>
+        <actions>
+            <name>Send_an_email_alert_to_customer_on_case_creation</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Auto_Response_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(
+  AND(ISNULL(ContactId), ISBLANK(ContactId)),
+  false,
+  AND( 
+    OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type  ),
+    OR(ISPICKVAL( Contact.Language_Preference__c , &apos;English&apos;), ISNULL( TEXT(Contact.Language_Preference__c ) ), ISBLANK(TEXT(Contact.Language_Preference__c ))  ),
+     OR(ISNULL( Original_Case_2__c ),ISBLANK( Original_Case_2__c )),
+    OR(
+       NOT( ISNULL( Contact.Email )),
+       NOT( ISNULL(SuppliedEmail))
+    ),
+   OR(CONTAINS(Owner:Queue.QueueName, &apos;Customer Inquiry&apos;),CONTAINS(Owner:Queue.QueueName, &apos;Trouble Lane&apos;)),
+     OR(AND(
+        NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Arrival_Notice_Email) ),
+        NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_BL_Revision_Email) ),
+        NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Booking_Request_Email) )
+    ), ISNULL(To_Address__c),ISBLANK(To_Address__c))    ,
+    NOT( Auto_Response_Sent__c )
+   )
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Customer Inquiry Spanish New Case on Closed Cases</fullName>
+        <actions>
+            <name>Send_an_Spanish_email_to_customer_on_closed_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(
+    AND(ISNULL(ContactId), ISBLANK(ContactId)),
+        false,
+        AND(
+            OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),
+            ISPICKVAL( Contact.Language_Preference__c , &apos;Spanish&apos;),
+            AND( NOT(ISNULL( Original_Case_2__c )) , NOT(ISBLANK( Original_Case_2__c )) ),
+            OR(
+                NOT( ISNULL( Contact.Email )),
+                NOT( ISNULL(SuppliedEmail))
+            ),
+            OR(CONTAINS(Owner:Queue.QueueName, &apos;Customer Inquiry&apos;),CONTAINS(Owner:Queue.QueueName, &apos;Trouble Lane&apos;)),
+            AND(
+                NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Arrival_Notice_Email) ),
+                NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_BL_Revision_Email) ),
+                NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Booking_Request_Email) )
+            ),
+            NOT( Auto_Response_Sent__c )
+        )
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName
+    >Auto-Response Customer Inquiry Spanish Original Cases</fullName>
+        <actions>
+            <name>Send_an_Spanish_email_alert_to_Customer_on_new_cases</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(
+AND(ISNULL(ContactId), ISBLANK(ContactId)),
+false,
+AND(
+OR(RecordType.Id = $Label.Create_Customer_Inquiry_Record_Type,RecordType.Id =$Label.Customer_Inquiry_Record_Type ),
+ISPICKVAL( Contact.Language_Preference__c , &apos;Spanish&apos;),
+OR(ISNULL( Original_Case_2__c ),ISBLANK( Original_Case_2__c )),
+OR(
+NOT( ISNULL( Contact.Email )),
+NOT( ISNULL(SuppliedEmail))
+),
+OR(CONTAINS(Owner:Queue.QueueName, &apos;Customer Inquiry&apos;),CONTAINS(Owner:Queue.QueueName, &apos;Trouble Lane&apos;)),
+OR(AND(
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Arrival_Notice_Email) ),
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_BL_Revision_Email) ),
+NOT( CONTAINS( LOWER(To_Address__c) , $Label.Crowley_Booking_Request_Email) )
+), ISNULL(To_Address__c),ISBLANK(To_Address__c)) ,
+NOT( Auto_Response_Sent__c )
+)
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>BL Revision case notification</fullName>
+        <actions>
+            <name>Send_BL_Case_Auto_Response_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Auto_Response_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+        OR(RecordType.Id = $Label.BL_Revision_Record_Type ,RecordType.Id = $Label.Create_BL_Revision_Record_Type),
+        NOT( Auto_Response_Sent__c )
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Booking Request Reopen Case</fullName>
+        <actions>
+            <name>Update_Booking_Request_RT</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( PRIORVALUE(IsClosed), NOT(IsClosed), RecordTypeId =  $Label.Booking_Request_Case_Record_Type_15 )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Case Assignment</fullName>
+        <actions>
+            <name>Update_Case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >ISBLANK( Owner:Queue.Id ) &amp;&amp; ( RecordType.Id  &lt;&gt;  $Label.Rate_Proposal_Record_Type || RecordType.Id  &lt;&gt; $Label.Customer_Inquiry_Record_Type || RecordType.Id  &lt;&gt;  $Label.Pricing_Rating_Issue || RecordType.Id  &lt;&gt;  $Label.Create_Pricing_Rate_Issue   )  &amp;&amp;  ISPICKVAL( Status , &apos;Open&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Case Assignment Customer Inquiry</fullName>
+        <actions>
+            <name>Update_status_to_Assigned</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >ISBLANK( Owner:Queue.Id )&amp;&amp; RecordType.Id  =  $Label.Customer_Inquiry_Record_Type &amp;&amp;  ISPICKVAL( Status , &apos;Open&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Case close record type BL Revision</fullName>
+        <actions>
+            <name>change_record_type_to_close_BL_Revision</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( RecordType.Id = $Label.B_L_Revision_record_type , IsClosed )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change Pricing Rate Issue Record Type</fullName>
+        <actions>
+            <name>Update_Case_Record_type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create Pricing Rate Issue</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change RT on case Close booking request</fullName>
+        <actions>
+            <name>Change_RT_to_booking_request_close</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( RecordType.Id =  $Label.Booking_Request_Record_Type  , IsClosed )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change RT on case Close customer inquiry</fullName>
+        <actions>
+            <name>Change_RT_to_customer_inquiry_close</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( RecordType.Id =  $Label.Customer_Inquiry_Record_Type  , IsClosed )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change record type for BL Revision</fullName>
+        <actions>
+            <name>Update_B_L_Record_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create BL Revision</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Change record type for Customer Inquiry</fullName>
+        <actions>
+            <name>Change_RT_to_Customer_Inquiry</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create Customer Inquiry</value>
+        </criteriaItems>
+        <description
+    >Change record type from Create Customer Inquiry to Customer Inquiry</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Customer Inquiry Reopen case</fullName>
+        <actions>
+            <name>Set_RT_to_Customer_Inquiry</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >AND( PRIORVALUE(IsClosed), NOT(IsClosed), RecordTypeId =  $Label.Customer_Inquiry_Case_Record_Type_15)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Evaluate Date%2FTime Assigned</fullName>
+        <actions>
+            <name>Update_Date_Time_Assigned_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+ISBLANK(Date_Time_Assigned__c),
+ISCHANGED( OwnerId ),
+LEFT(OwnerId, 3 ) = &quot;005&quot;,
+LEFT(PRIORVALUE(OwnerId), 3) = &quot;00G&quot;
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Rate Issue on publishing</fullName>
+        <actions>
+            <name>update_effective_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>update_filed_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >RecordType.Id  =  $Label.Rating_Issue_record_type  &amp;&amp;  ISPICKVAL( Status ,&apos;Resolving Case&apos;) &amp;&amp;  TEXT(PRIORVALUE( Status ) ) = &apos;Publishing&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Trouble Lane Priority Update</fullName>
+        <actions>
+            <name>Trouble_Lane_case_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Priority_Trouble_Lane</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND (3 OR 5 OR 6) AND 4</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create Customer Inquiry</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Customer Inquiry</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subject</field>
+            <operation>contains</operation>
+            <value>Trouble Lane</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Trouble Lane</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subject</field>
+            <operation>contains</operation>
+            <value>TROUBLE LANE</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subject</field>
+            <operation>contains</operation>
+            <value>TroubleLane</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Record type Booking Request</fullName>
+        <actions>
+            <name>Update_to_edit_Booking_Request</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Create Booking Request</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update to Publishing on rate Issue</fullName>
+        <actions>
+            <name>Status_to_Publishing</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_owner_to_Publishing_queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 4 ) AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Case.Customers_Approval__c</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Pricing Rate Issue</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>In Analysis</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Customers_Approval__c</field>
+            <operation>equals</operation>
+            <value>Not Required</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>case assignment Rate Issue</fullName>
+        <actions>
+            <name>update_status_to_inanalysis</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula
+    >ISBLANK( Owner:Queue.Id ) &amp;&amp; (RecordType.Id =  $Label.Pricing_Rating_Issue || RecordType.Id =  $Label.Create_Pricing_Rate_Issue ) &amp;&amp; ISPICKVAL( Status , &apos;Open&apos;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

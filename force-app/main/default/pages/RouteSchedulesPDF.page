@@ -1,0 +1,796 @@
+<apex:page
+  controller="RoutePDFController"
+  showHeader="false"
+  sidebar="false"
+  renderAs="pdf"
+  applyBodyTag="false"
+>
+  <apex:stylesheet value="{!$Resource.RoutePDFCss}" />
+  <head>
+    <style type="text/css" media="print">
+      * {
+      font-family: Arial Unicode MS, Helvetica, sans-serif;"
+      }
+      @page {
+      @top-center {
+      content: element(header);
+      }
+
+      @bottom-left {
+      content: element(footer);
+      }
+      }
+
+      div.header {
+      text-align: center;
+      position: running(header);
+      width: 100%;
+      }
+
+
+      div.footer {
+      display: block;
+      padding: 5px;
+      position: running(footer);
+      }
+
+      .centered {
+      text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span style="float: left; width: 100%; padding: 10px 0">
+        <apex:image
+          value="{!$Resource.velozLogoGreyPng}"
+          alt="Crowley Logo"
+          width="700px"
+        />
+      </span>
+    </div>
+    <div class="footer">
+      <div
+        style="
+          width: 100%;
+          float: left;
+          border-top: 1px solid #ccc;
+          padding-top: 10px;
+        "
+      >
+        <div
+          style="
+            float: left;
+            width: 50%;
+            height: 60px;
+            font-family: Arial Unicode MS, Helvetica, sans-serif;
+            font-size: 12px;
+          "
+        >
+          <a
+            class="contact-us-link"
+            href="https://www.crowley.com/contact-us/list-of-offices/"
+            target="_blank"
+            style="color: #000; text-decoration: none"
+          >
+            Contact Us</a
+          >
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a
+            href="https://www.crowley.com/"
+            target="_blank"
+            class="website-link"
+            style="color: #d3232a; text-decoration: none"
+            >Crowley.com</a
+          >
+        </div>
+        <div
+          style="
+            float: right;
+            width: 50%;
+            height: 60px;
+            text-align: right;
+            font-family: Arial Unicode MS, Helvetica, sans-serif;
+            font-size: 12px;
+          "
+        >
+          © 2020 Crowley Maritime Corporation
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div
+        style="
+          width: 100%;
+          font-family: Arial Unicode MS, Helvetica, sans-serif;
+          line-height: 18px;
+          font-size: 12px;
+        "
+      >
+        <h6>
+          <apex:outputText rendered="{!if(numberOfSchedules==1,false,true)}">
+            {!numberOfSchedules} Schedules
+          </apex:outputText>
+          <apex:outputText rendered="{!if(numberOfSchedules==1,true,false)}">
+            {!numberOfSchedules} Schedule
+          </apex:outputText>
+        </h6>
+        <br />
+        <apex:repeat value="{!schedules}" var="schedule">
+          <div
+            style="
+              border: 1px solid #f3f3f3;
+              background-color: #fff;
+              box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.15);
+              margin-bottom: 15px;
+            "
+          >
+            <table cellpadding="0" cellspacong="0" width="100%">
+              <tr>
+                <td>Departure : <b>{!schedule.scheduleStartDate}</b></td>
+                <td align="center">
+                  Transit Time :
+                  <b>
+                    <apex:outputText
+                      rendered="{!if(schedule.scheduleTransitDays == 0,false,true)}"
+                      >{!schedule.scheduleTransitDays}
+                      <apex:outputText
+                        rendered="{!if(schedule.scheduleTransitDays == 1,true,false)}"
+                      >
+                        Day</apex:outputText
+                      >
+                      <apex:outputText
+                        rendered="{!if(schedule.scheduleTransitDays == 1,false,true)}"
+                      >
+                        Days</apex:outputText
+                      >
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(schedule.scheduleTransitHours == 0,false,true)}"
+                    >
+                      {!schedule.scheduleTransitHours}
+                      <apex:outputText
+                        rendered="{!if(schedule.scheduleTransitHours == 1,true,false)}"
+                      >
+                        Hour</apex:outputText
+                      >
+                      <apex:outputText
+                        rendered="{!if(schedule.scheduleTransitHours == 1,false,true)}"
+                      >
+                        Hours</apex:outputText
+                      >
+                    </apex:outputText>
+                  </b>
+                </td>
+
+                <td align="right">
+                  Arrival : <b>{!schedule.scheduleEndDate}</b>
+                </td>
+              </tr>
+            </table>
+            <br />
+            <table cellpadding="0" cellspacong="0" width="100%">
+              <tr>
+                <td align="left" style="color: #028fa0">
+                  <apex:image
+                    value="{!$Resource.iconOriginBluePDF}"
+                    alt="Veloz Logo"
+                    width="22px"
+                  />
+                  <br />
+                  <apex:outputLabel
+                    rendered="{!if(schedule.originMove=='D',true,false)}"
+                  >
+                    Door
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.originMove=='P',true,false)}"
+                  >
+                    Port
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.originMove=='R',true,false)}"
+                  >
+                    Rail
+                  </apex:outputLabel>
+                </td>
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==1),true,false)}"
+                >
+                  <apex:repeat
+                    value="{!schedule.betweenPortsOnly}"
+                    var="betLocation"
+                    first="0"
+                    rows="1"
+                  >
+                    <apex:outputText
+                      rendered="{!if(schedule.startMode=='',false,true)}"
+                    >
+                      <td>
+                        <span
+                          style="
+                            background-color: #028fa0;
+                            color: #fff;
+                            display: inline-block;
+                            padding: 4px;
+                            width: 85px;
+                          "
+                          >{!schedule.startMode}</span
+                        >
+                      </td>
+                    </apex:outputText>
+
+                    <td align="center" style="color: #028fa0">
+                      <apex:image
+                        value="{!$Resource.iconOriginBluePDF}"
+                        alt="Veloz Logo"
+                        width="22px"
+                      />
+                      <br />
+                      {!betLocation['orgDest']}
+                    </td>
+
+                    <apex:outputText
+                      rendered="{!if(schedule.endMode=='',false,true)}"
+                    >
+                      <td>
+                        <span
+                          style="
+                            background-color: #028fa0;
+                            color: #fff;
+                            display: inline-block;
+                            padding: 4px;
+                            width: 85px;
+                            text-align: center;
+                          "
+                          >{!schedule.endMode}</span
+                        >
+                      </td>
+                    </apex:outputText>
+                  </apex:repeat>
+                </apex:outputText>
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==2),true,false)}"
+                >
+                  <apex:repeat
+                    value="{!schedule.betweenPortsOnly}"
+                    var="betLocation"
+                    first="0"
+                    rows="1"
+                  >
+                    <apex:outputText
+                      rendered="{!if(not(schedule.startMode.empty),true,false)}"
+                    >
+                      <td align="center">
+                        <span
+                          style="
+                            background-color: #028fa0;
+                            color: #fff;
+                            display: inline-block;
+                            padding: 4px;
+                            width: 85px;
+                          "
+                          >{!schedule.startMode}</span
+                        >
+                      </td>
+                    </apex:outputText>
+
+                    <td align="center" style="color: #028fa0">
+                      <apex:image
+                        value="{!$Resource.iconOriginBluePDF}"
+                        alt="Veloz Logo"
+                        width="22px"
+                      /><br />
+                      {!betLocation['orgDest']}
+                    </td>
+                  </apex:repeat>
+
+                  <apex:repeat
+                    value="{!schedule.betweenPortsOnly}"
+                    var="betLocation"
+                    first="1"
+                    rows="1"
+                  >
+                    <td align="center" style="color: #028fa0">
+                      <apex:image
+                        value="{!$Resource.iconOriginBluePDF}"
+                        alt="Veloz Logo"
+                        width="22px"
+                      /><br />
+                      {!betLocation['orgDest']}
+                    </td>
+
+                    <apex:outputText
+                      rendered="{!if(not(schedule.endMode.empty),true,false)}"
+                    >
+                      <td align="center">
+                        <span
+                          style="
+                            background-color: #028fa0;
+                            color: #fff;
+                            display: inline-block;
+                            padding: 4px;
+                            width: 85px;
+                          "
+                          >{!schedule.endMode}</span
+                        >
+                      </td>
+                    </apex:outputText>
+                  </apex:repeat>
+                </apex:outputText>
+                <apex:outputText
+                  rendered="{!if(or(schedule.betweenPortsOnly.empty,schedule.betweenPortsOnly.size==0),true,false)}"
+                >
+                  <apex:outputText
+                    rendered="{!if(schedule.startMode=='',false,true)}"
+                  >
+                    <td>{!schedule.startMode}</td>
+                  </apex:outputText>
+                </apex:outputText>
+
+                <td align="right" style="color: #028fa0">
+                  <apex:image
+                    value="{!$Resource.iconOriginBluePDF}"
+                    alt="Veloz Logo"
+                    width="22px"
+                  /><br />
+                  <apex:outputLabel
+                    rendered="{!if(schedule.destMove=='D',true,false)}"
+                  >
+                    Door
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.destMove=='P',true,false)}"
+                  >
+                    Port
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.destMove=='R',true,false)}"
+                  >
+                    Rail
+                  </apex:outputLabel>
+                </td>
+              </tr>
+              <tr>
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==2),true,false)}"
+                >
+                  <td colspan="6">
+                    <div style="border-bottom: 1px dashed #000"></div>
+                  </td>
+                </apex:outputText>
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==1),true,false)}"
+                >
+                  <td colspan="4">
+                    <div style="border-bottom: 1px dashed #000"></div>
+                  </td>
+                </apex:outputText>
+                <apex:outputText
+                  rendered="{!if(and(or(schedule.betweenPortsOnly.empty,schedule.betweenPortsOnly.size==1),schedule.startMode=''),true,false)}"
+                >
+                  <td colspan="2">
+                    <div style="border-bottom: 1px dashed #000"></div>
+                  </td>
+                </apex:outputText>
+                <apex:outputText
+                  rendered="{!if(and(or(schedule.betweenPortsOnly.empty,schedule.betweenPortsOnly.size==1),not(schedule.startMode='')),true,false)}"
+                >
+                  <td colspan="3">
+                    <div style="border-bottom: 1px dashed #000"></div>
+                  </td>
+                </apex:outputText>
+              </tr>
+
+              <tr>
+                <td valign="top" style="text-align: left">
+                  <apex:outputText
+                    rendered="{!if(schedule.originMove=='D',false,true)}"
+                  >
+                    <apex:outputText
+                      rendered="{!if(not(schedule.startLoc['displayNameSubLoc'].empty),true,false)}"
+                    >
+                      {!schedule.startLoc['displayNameSubLoc']}&nbsp;({!schedule.startLoc['displayCodeSubLoc']})
+                    </apex:outputText>
+                    {!schedule.startLoc['displayName']}
+                    <br />({!schedule.startPoint})
+                  </apex:outputText>
+                  <apex:outputText
+                    rendered="{!if(and(schedule.originMove=='D',booking.Customer_Origin_Country__c=='US'),true,false)}"
+                  >
+                    {!schedule.startLoc['displayName']}
+                    <br />({!booking.Customer_Origin_Zip__c})
+                  </apex:outputText>
+                  <apex:outputText
+                    rendered="{!if(and(schedule.originMove=='D',not(booking.Customer_Origin_Country__c=='US')),true,false)}"
+                  >
+                    {!schedule.startLoc['displayName']}
+                  </apex:outputText>
+                </td>
+
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==1),true,false)}"
+                >
+                  <apex:outputText
+                    rendered="{!if(not(schedule.startMode==''),true,false)}"
+                  >
+                    <td>&nbsp;</td>
+                  </apex:outputText>
+                  <apex:repeat
+                    value="{!schedule.betweenPortsOnly}"
+                    var="betLocation"
+                  >
+                    <td align="center" valign="top" style="text-align: center">
+                      {!betLocation['displayNameSubLoc']}
+                      &nbsp;({!betLocation['displayCodeSubLoc']}) <br />
+                      {!betLocation['displayName']}&nbsp;({!betLocation['displayCode']})
+                    </td>
+                  </apex:repeat>
+                  <apex:outputText
+                    rendered="{!if(not(schedule.endMode==''),true,false)}"
+                  >
+                    <td>&nbsp;</td>
+                  </apex:outputText>
+                </apex:outputText>
+
+                <apex:outputText
+                  rendered="{!if(and(not(schedule.betweenPortsOnly.empty),schedule.betweenPortsOnly.size==2),true,false)}"
+                >
+                  <td>&nbsp;</td>
+                  <apex:repeat
+                    value="{!schedule.betweenPortsOnly}"
+                    var="betLocation"
+                  >
+                    <td align="center" valign="top" style="text-align: center">
+                      {!betLocation['displayNameSubLoc']}
+                      &nbsp;({!betLocation['displayCodeSubLoc']}) <br />
+                      {!betLocation['displayName']}&nbsp;({!betLocation['displayCode']})
+                    </td>
+                  </apex:repeat>
+                  <td>&nbsp;</td>
+                </apex:outputText>
+
+                <apex:outputText
+                  rendered="{!if(or(schedule.betweenPortsOnly.empty,schedule.betweenPortsOnly.size==0),true,false)}"
+                >
+                  <apex:outputText
+                    rendered="{!if(schedule.startMode=='',false,true)}"
+                  >
+                    <td>&nbsp;</td>
+                  </apex:outputText>
+
+                  <td align="right" valign="top">
+                    <apex:outputText
+                      rendered="{!if(schedule.destMove=='D',false,true)}"
+                    >
+                      <apex:outputText
+                        rendered="{!if(not(schedule.endLoc['displayNameSubLoc'].empty),true,false)}"
+                      >
+                        {!schedule.endLoc['displayNameSubLoc']}&nbsp;({!schedule.endLoc['displayCodeSubLoc']})
+                      </apex:outputText>
+                      {!schedule.endLoc['displayName']}
+                      <br />({!schedule.endPoint})
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(and(schedule.destMove=='D',booking.Customer_Destination_Country__c=='US'),true,false)}"
+                    >
+                      {!schedule.endLoc['displayName']}
+                      <br />({!booking.Customer_Destination_Zip__c})
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(and(schedule.destMove=='D',not(booking.Customer_Destination_Country__c=='US')),true,false)}"
+                    >
+                      {!schedule.endLoc['displayName']}
+                    </apex:outputText>
+                  </td>
+                </apex:outputText>
+
+                <apex:outputText
+                  rendered="{!if(or(schedule.betweenPortsOnly.empty,schedule.betweenPortsOnly.size==0),false,true)}"
+                >
+                  <td align="right" valign="top">
+                    <apex:outputText
+                      rendered="{!if(schedule.destMove=='D',false,true)}"
+                    >
+                      <apex:outputText
+                        rendered="{!if(not(schedule.endLoc['displayNameSubLoc'].empty),true,false)}"
+                      >
+                        {!schedule.endLoc['displayNameSubLoc']}&nbsp;({!schedule.endLoc['displayCodeSubLoc']})
+                      </apex:outputText>
+                      {!schedule.endLoc['displayName']}
+                      <br />({!schedule.endPoint})
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(and(schedule.destMove=='D',booking.Customer_Destination_Country__c=='US'),true,false)}"
+                    >
+                      {!schedule.endLoc['displayName']}
+                      <br />({!booking.Customer_Destination_Zip__c})
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(and(schedule.destMove=='D',not(booking.Customer_Destination_Country__c=='US')),true,false)}"
+                    >
+                      {!schedule.endLoc['displayName']}
+                    </apex:outputText>
+                  </td>
+                </apex:outputText>
+              </tr>
+            </table>
+
+            <hr style="margin: 20px 0" />
+
+            <table cellpadding="0" cellspacong="0" width="100%">
+              <tr style="background-color: #f3f3f3">
+                <td></td>
+                <td
+                  style="
+                    border-left: 1px dashed #000;
+                    position: relative;
+                    padding-left: 20px;
+                  "
+                >
+                  <span
+                    style="
+                      left: -6px;
+                      top: 10px;
+                      height: 10px;
+                      width: 10px;
+                      border-radius: 30px;
+                      background: #fff;
+                      border: 1px solid #00aabe;
+                      position: absolute;
+                    "
+                  ></span>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.originMove=='D',false,true)}"
+                  >
+                    <apex:outputText
+                      rendered="{!if(not(schedule.endLoc['displayNameSubLoc'].empty),true,false)}"
+                    >
+                      {!schedule.startLoc['displayNameSubLoc']}&nbsp;({!schedule.startLoc['displayCodeSubLoc']})
+                      &nbsp; - <br />
+                    </apex:outputText>
+                    {!schedule.startLoc['displayName']} &nbsp;
+                    ({!schedule.startPoint})
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(and(schedule.originMove=='D',booking.Customer_Origin_Country__c=='US'),true,false)}"
+                  >
+                    {!schedule.startLoc['displayName']}
+                    <br />({!booking.Customer_Origin_Zip__c})
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(and(schedule.originMove=='D',not(booking.Customer_Origin_Country__c=='US')),true,false)}"
+                  >
+                    {!schedule.startLoc['displayName']}
+                  </apex:outputLabel>
+                </td>
+                <td>Arrival : <b> - </b></td>
+                <td>Departure : <b>{!schedule.startLoc['departure']}</b></td>
+              </tr>
+              <apex:repeat value="{!schedule.betweenLocations}" var="location">
+                <tr>
+                  <td align="center">
+                    <apex:outputText
+                      rendered="{!if(location['iconShown']=='R',true,false)}"
+                    >
+                      <apex:image
+                        value="{!$Resource.railIconImage}"
+                        alt="Rail"
+                        width="22px"
+                      />
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(or(location['iconShown']=='O',location['iconShown']=='F'),true,false)}"
+                    >
+                      <apex:image
+                        value="{!$Resource.shipIconImage}"
+                        alt="Ship"
+                        width="22px"
+                      />
+                    </apex:outputText>
+                    <apex:outputText
+                      rendered="{!if(not(or(location['iconShown']=='O',location['iconShown']=='F',location['iconShown']=='R')),true,false)}"
+                    >
+                      <apex:image
+                        value="{!$Resource.truckIconImage}"
+                        alt="Truck"
+                        width="22px"
+                      />
+                    </apex:outputText>
+                  </td>
+                  <apex:outputText
+                    rendered="{!if(or(location['vesselName']==null,location['vesselName']==''),true,false)}"
+                  >
+                    <td style="border-left: 1px dashed #000"></td>
+                  </apex:outputText>
+                  <apex:outputText
+                    rendered="{!if(and(not(location['vesselName']==null),not(location['vesselName']=='')),true,false)}"
+                  >
+                    <td
+                      style="
+                        border-left: 1px dashed #000;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                      "
+                    >
+                      <table cellpadding="0" cellspacong="0" width="100%">
+                        <tr>
+                          <td>
+                            <apex:outputText
+                              rendered="{!if(not(location['vesselName'].empty),true,false)}"
+                            >
+                              Vessel Name :<br />
+                              <span style="color: #028fa0"
+                                ><b>{!location['vesselName']}</b></span
+                              >
+                            </apex:outputText>
+                          </td>
+                          <td>
+                            <apex:outputText
+                              rendered="{!if(not(location['voyageNumber'].empty),true,false)}"
+                            >
+                              Voyage Number : <br />
+                              <span style="color: #028fa0"
+                                ><b>{!location['voyageNumber']}</b></span
+                              >
+                            </apex:outputText>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </apex:outputText>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr style="background-color: #f3f3f3">
+                  <td></td>
+                  <td
+                    style="
+                      border-left: 1px dashed #000;
+                      position: relative;
+                      padding-left: 20px;
+                    "
+                  >
+                    <span
+                      style="
+                        left: -6px;
+                        top: 10px;
+                        height: 10px;
+                        width: 10px;
+                        border-radius: 30px;
+                        background: #fff;
+                        border: 1px solid #00aabe;
+                        position: absolute;
+                      "
+                    ></span>
+                    {!location['displayNameSubLoc'] }&nbsp; (
+                    {!location['displayCodeSubLoc']} ) &nbsp; - <br />
+                    {!location['displayName'] }&nbsp; (
+                    {!location['displayCode']} )
+                  </td>
+                  <td>Arrival : <b> {!location['arrival']} </b></td>
+                  <td>Departure : <b>{!location['departure']}</b></td>
+                </tr>
+              </apex:repeat>
+
+              <tr>
+                <td align="center">
+                  <apex:outputText
+                    rendered="{!if(schedule.endLoc['iconShown']=='R',true,false)}"
+                  >
+                    <apex:image
+                      value="{!$Resource.railIconImage}"
+                      alt="Rail"
+                      width="22px"
+                    />
+                  </apex:outputText>
+                  <apex:outputText
+                    rendered="{!if(or(schedule.endLoc['iconShown']=='O',schedule.endLoc['iconShown']=='F'),true,false)}"
+                  >
+                    <apex:image
+                      value="{!$Resource.shipIconImage}"
+                      alt="Ship"
+                      width="22px"
+                    />
+                  </apex:outputText>
+                  <apex:outputText
+                    rendered="{!if(not(or(schedule.endLoc['iconShown']=='O',schedule.endLoc['iconShown']=='F',schedule.endLoc['iconShown']=='R')),true,false)}"
+                  >
+                    <apex:image
+                      value="{!$Resource.truckIconImage}"
+                      alt="Truck"
+                      width="22px"
+                    />
+                  </apex:outputText>
+                </td>
+                <td
+                  style="
+                    border-left: 1px dashed #000;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                  "
+                >
+                  <table cellpadding="0" cellspacong="0" width="100%">
+                    <tr>
+                      <td>
+                        <apex:outputText
+                          rendered="{!if(not(schedule.endLoc['vesselName'].empty),true,false)}"
+                        >
+                          Vessel Name :<br />
+                          <span style="color: #028fa0"
+                            ><b>{!schedule.endLoc['vesselName']}</b></span
+                          >
+                        </apex:outputText>
+                      </td>
+                      <td>
+                        <apex:outputText
+                          rendered="{!if(not(schedule.endLoc['voyageNumber'].empty),true,false)}"
+                        >
+                          Voyage Number : <br />
+                          <span style="color: #028fa0"
+                            ><b>{!schedule.endLoc['voyageNumber']}</b></span
+                          >
+                        </apex:outputText>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr style="background-color: #f3f3f3">
+                <td></td>
+                <td
+                  style="
+                    border-left: 1px dashed #000;
+                    position: relative;
+                    padding-left: 20px;
+                  "
+                >
+                  <span
+                    style="
+                      left: -6px;
+                      top: 10px;
+                      height: 10px;
+                      width: 10px;
+                      border-radius: 30px;
+                      background: #fff;
+                      border: 1px solid #00aabe;
+                      position: absolute;
+                    "
+                  ></span>
+                  <apex:outputLabel
+                    rendered="{!if(schedule.destMove=='D',false,true)}"
+                  >
+                    <apex:outputText
+                      rendered="{!if(not(schedule.endLoc['displayNameSubLoc'].empty),true,false)}"
+                    >
+                      {!schedule.endLoc['displayNameSubLoc']}&nbsp;({!schedule.endLoc['displayCodeSubLoc']})
+                      &nbsp; -
+                    </apex:outputText>
+                    <br />
+                    {!schedule.endLoc['displayName']} &nbsp;
+                    ({!schedule.endPoint})
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(and(schedule.destMove=='D',booking.Customer_Destination_Country__c=='US'),true,false)}"
+                  >
+                    {!schedule.endLoc['displayName']}
+                    <br />({!booking.Customer_Destination_Zip__c})
+                  </apex:outputLabel>
+                  <apex:outputLabel
+                    rendered="{!if(and(schedule.destMove=='D',not(booking.Customer_Destination_Country__c=='US')),true,false)}"
+                  >
+                    {!schedule.endLoc['displayName']}
+                  </apex:outputLabel>
+                </td>
+                <td>Arrival : <b>{!schedule.endLoc['arrival']}</b></td>
+                <td>Departure : <b> - </b></td>
+              </tr>
+            </table>
+          </div>
+        </apex:repeat>
+      </div>
+    </div>
+  </body>
+</apex:page>

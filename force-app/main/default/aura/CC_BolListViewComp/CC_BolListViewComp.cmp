@@ -1,0 +1,212 @@
+<aura:component
+  implements="forceCommunity:availableForAllPageTypes"
+  controller="CC_BOLListController"
+  access="global"
+>
+  <aura:attribute name="data" type="List" />
+  <aura:attribute name="modifiedData" type="List" />
+  <aura:handler
+    name="change"
+    value="{!v.data}"
+    action="{!c.handleDataValueChange}"
+  />
+  <aura:attribute name="showSendEmail" type="boolean" default="false" />
+  <aura:attribute name="strBookingId" type="String" />
+  <aura:attribute name="strBolId" type="String" />
+  <aura:attribute name="strBolName" type="String" />
+  <aura:attribute
+    name="headerVal"
+    type="String"
+    default="Email Shipping Instruction"
+  />
+  <aura:attribute
+    name="typeOfEmail"
+    type="String"
+    default="Shipping Instruction"
+  />
+  <aura:attribute
+    name="emailTemplateName"
+    type="String"
+    default="{!$Label.c.Shipping_Instruction_Email_Template}"
+  />
+
+  <lightning:navigation aura:id="navigationService" />
+  <div class="c-container">
+    <div class="booking-tab-data block-view">
+      <aura:iteration items="{!v.modifiedData}" var="item">
+        <div class="booking-list-data-row booking-details-row row">
+          <div class="col">
+            <div
+              class="booking-id"
+              id="{!item.billOfLading.Id + ' ' + item.billOfLading.Booking_Number__c + ' ' + item.billOfLading.Bill_of_lading_Status__c}"
+              onclick="{!c.handlePageNavigation}"
+            >
+              <span><a>{!item.billOfLading.Bill_Of_Lading_Number__c}</a></span>
+            </div>
+            <aura:if
+              isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'RR'}"
+            >
+              <div class="booking-status confirmed">Bol for Release</div>
+            </aura:if>
+            <aura:if
+              isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'SUBMITTED'}"
+            >
+              <div class="{!'booking-status '+item.billOfLading.statusClass}">
+                Submitted
+              </div>
+            </aura:if>
+            <aura:if
+              isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'IN PROCESS'}"
+            >
+              <div class="{!'booking-status '+item.billOfLading.statusClass}">
+                In Process
+              </div>
+            </aura:if>
+            <aura:if
+              isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'PENDING'}"
+            >
+              <div class="{!'booking-status '+item.billOfLading.statusClass}">
+                Pending
+              </div>
+            </aura:if>
+            <aura:if
+              isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'DOC RECEIVED'}"
+            >
+              <div class="{!'booking-status '+item.billOfLading.statusClass}">
+                Doc Received
+              </div>
+            </aura:if>
+          </div>
+          <div class="col">
+            <div id="{!item.booking.Account__r.Id}">
+              <span>BOOKING NUMBER</span>
+            </div>
+            <div>
+              <span class="weight-500 color-blue"
+                >{!item.billOfLading.Booking_Number__r.Booking_Number__c}</span
+              >
+            </div>
+          </div>
+          <div class="col">
+            <div id="{!item.booking.Account__r.Id}">
+              <span>ACCOUNT</span>
+            </div>
+            <div>
+              <span class="weight-500 color-blue">
+                {!item.billOfLading.Booking_Number__r.Account__r.Name}
+              </span>
+            </div>
+          </div>
+          <div class="col">
+            <div id="{!item.booking.Account__r.Id}">
+              <span>VOYAGE NUMBER</span>
+            </div>
+            <div>
+              <span class="weight-500"
+                >{!item.billOfLading.Origin_Voyage__c}</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <div id="{!item.booking.Account__r.Id}">
+              <span>PORT OF LOAD</span>
+            </div>
+            <div>
+              <span class="weight-500"
+                >{!item.billOfLading.Load_Port_Description__c}</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <div id="{!item.booking.Account__r.Id}">
+              <span>SAIL DATE</span>
+            </div>
+            <div>
+              <span class="weight-500">
+                <lightning:formattedDateTime
+                  value="{!item.billOfLading.Booking_Number__r.Date_of_Loading__c}"
+                />
+              </span>
+            </div>
+          </div>
+
+          <div class="booking-cols action-col">
+            <span class="overflow-menu">
+              <lightning:buttonMenu
+                class="pull-right"
+                iconName="utility:threedots_vertical"
+                menuAlignment="center"
+                iconSize="medium"
+                variant="border-filled"
+                alternativeText="Options"
+                name="{!item.billOfLading.Id + ' ' + item.billOfLading.Booking_Number__c + ' ' + item.billOfLading.Name}"
+                onselect="{! c.handleMenuSelect }"
+                disabled="{!if(item.billOfLading.Bill_of_lading_Status__c == 'DOC RECEIVED', true, false)}"
+              >
+                <aura:if
+                  isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'IN PROCESS'}"
+                >
+                  <!--<lightning:menuItem label="View" value="view INPROCESS" /> -->
+                  <lightning:menuItem label="Email" value="" disabled="true" />
+                  <lightning:menuItem
+                    label="Download"
+                    value=""
+                    disabled="true"
+                  />
+                </aura:if>
+                <aura:if
+                  isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'PENDING'}"
+                >
+                  <!--<lightning:menuItem label="View" value="view PENDING" /> -->
+                  <lightning:menuItem label="Email" value="" disabled="true" />
+                  <lightning:menuItem
+                    label="Download"
+                    value=""
+                    disabled="true"
+                  />
+                </aura:if>
+                <aura:if
+                  isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'SUBMITTED'}"
+                >
+                  <!--<lightning:menuItem label="View" value="view SUBMITTED" /> -->
+                  <lightning:menuItem label="Email" value="email SUBMITTED" />
+                  <lightning:menuItem
+                    label="Download"
+                    value="download SUBMITTED"
+                  />
+                </aura:if>
+                <aura:if
+                  isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'BOL FOR REVIEW'}"
+                >
+                  <!--<lightning:menuItem label="View" value="view BOLFORREVIEW" /> -->
+                  <!--<lightning:menuItem label="Download" value="download BOLFORREVIEW" />-->
+                  <!--<lightning:menuItem label="Email" value="email BOLFORREVIEW" /> -->
+                </aura:if>
+                <aura:if
+                  isTrue="{!item.billOfLading.Bill_of_lading_Status__c == 'RR'}"
+                >
+                  <!--<lightning:menuItem label="View" value="view RR" /> -->
+                  <lightning:menuItem label="Email" value="email RR" />
+                  <lightning:menuItem label="Download" value="download RR" />
+                </aura:if>
+              </lightning:buttonMenu>
+            </span>
+          </div>
+        </div>
+      </aura:iteration>
+    </div>
+    <aura:if isTrue="{!v.showSendEmail}">
+      <c:CC_BOLShippingInstructionEmail
+        bookingId="{!v.strBookingId}"
+        showEmail="{!v.showSendEmail}"
+        bolId="{!v.strBolId}"
+        bolName="{!v.strBolName}"
+        header="{!v.headerVal}"
+        typeOfEmail="{!v.typeOfEmail}"
+        emailTemplateName="{!v.emailTemplateName}"
+      />
+    </aura:if>
+  </div>
+</aura:component>

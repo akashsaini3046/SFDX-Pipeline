@@ -1,0 +1,175 @@
+<!--
+* Name: Task 
+* Purpose: Lightning Component which shows task on summary screen
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+
+<aura:component
+  implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+  access="global"
+  controller="ADTasksController"
+>
+  <aura:attribute name="recordId" type="Id" />
+  <aura:attribute name="taskControllerObj" type="ADTasksController" />
+  <aura:attribute name="taskList" type="List" />
+  <aura:attribute name="taskListRight" type="List" />
+  <aura:attribute name="lstFilterTaskStatusByOptions" type="List" />
+  <aura:handler name="init" value="{!this}" action="{!c.getAllTasks}" />
+  <aura:attribute name="showTaskComp" type="Boolean" default="false" />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute name="lstDefaultFilterTaskStatusByOptions" type="String" />
+  <aura:attribute
+    name="strSelectedYear"
+    type="String"
+    description="Used to store the year value selected"
+  />
+  <aura:handler
+    event="c:AD_EVTMasterFilter"
+    action="{!c.handleMasterFilterEvent}"
+  />
+
+  <aura:dependency resource="markup://c:AllTasks" />
+  <div style="height: 395px">
+    <p class="slds-truncate slds-m-bottom_x-small" id="taskHeading">
+      Tasks ({!v.taskControllerObj.totalTaskCount})
+    </p>
+    <div class="slds-grid slds-wrap slds-m-bottom_xx-small">
+      <div>
+        <p
+          class="cornersPadding slds-truncate slds-m-right_x-small slds-p-right_xx-small"
+          id="openTask"
+        >
+          <span
+            >{!$Label.c.AD_LABEL_OPEN}:
+            {!v.taskControllerObj.openTaskCount}</span
+          >
+        </p>
+      </div>
+      <div>
+        <p
+          class="slds-truncate cornersPadding slds-m-right_x-small slds-p-horizontal_xx-small"
+          id="closedTask"
+        >
+          <span
+            >{!$Label.c.AD_LABEL_CLOSED}:
+            {!v.taskControllerObj.closedTaskCount}</span
+          >
+        </p>
+      </div>
+      <div>
+        <p
+          class="slds-truncate cornersPadding slds-p-horizontal_xx-small"
+          id="overdueTask"
+        >
+          <span
+            >{!$Label.c.AD_LABEL_OVERDUE}:
+            {!v.taskControllerObj.overdueTaskCount}</span
+          >
+        </p>
+      </div>
+    </div>
+    <div style="height: 285px">
+      <div
+        style="float: left; width: 50%; padding-right: 5%"
+        class="slds-border_right"
+      >
+        <aura:iteration items="{!v.taskList}" var="taskObj" end="3">
+          <div>
+            <div>
+              <div class="slds-float_left titleWidth">
+                <p class="fontBold slds-truncate">
+                  <span>{!taskObj.Subject}</span>
+                </p>
+              </div>
+
+              <div class="slds-float_right">
+                <p class="slds">
+                  <lightning:formattedDateTime
+                    aura:id="dt"
+                    value="{!taskObj.ActivityDate}"
+                    month="numeric"
+                    day="numeric"
+                    year="numeric"
+                    timeZone="GMT"
+                  />
+                </p>
+              </div>
+            </div>
+            <br />
+
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_ASSIGNED_TO}:
+              <span>{!taskObj.Owner.Name}</span>
+            </p>
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_STATUS}: {!taskObj.Status}
+            </p>
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_TYPE}: {!taskObj.TaskSubtype}
+            </p>
+            <p class="slds slds-truncate">{!taskObj.Description}</p>
+            <br />
+          </div>
+        </aura:iteration>
+      </div>
+
+      <div style="float: right; width: 50%; padding-left: 5%">
+        <aura:iteration items="{!v.taskList}" var="taskObj" start="3" end="6">
+          <div>
+            <div>
+              <div class="slds-float_left titleWidth">
+                <p class="fontBold slds-truncate">
+                  <span>{!taskObj.Subject}</span>
+                </p>
+              </div>
+
+              <div class="slds-float_right">
+                <p class="slds">
+                  <lightning:formattedDateTime
+                    aura:id="dt"
+                    value="{!taskObj.ActivityDate}"
+                    month="numeric"
+                    day="numeric"
+                    year="numeric"
+                    timeZone="GMT"
+                  />
+                </p>
+              </div>
+            </div>
+            <br />
+
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_ASSIGNED_TO}:
+              <span>{!taskObj.Owner.Name}</span>
+            </p>
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_STATUS}: {!taskObj.Status}
+            </p>
+            <p class="slds" id="blueFontColourSpan">
+              {!$Label.c.AD_LABEL_TYPE}: {!taskObj.TaskSubtype}
+            </p>
+
+            <p class="slds slds-truncate">{!taskObj.Description}</p>
+            <br />
+          </div>
+        </aura:iteration>
+      </div>
+    </div>
+    <div class="slds-m-top_xx-large slds-p-top_medium">
+      <aura:if isTrue="{!not(empty(v.taskControllerObj.taskList))}">
+        <a
+          href="javascript:void(0)"
+          onclick="{!c.handleViewAllTaskClick}"
+          id="blueFontColour"
+          class="boldFont"
+        >
+          {!$Label.c.AD_LABEL_VIEW_ALL_TASKS}
+        </a>
+      </aura:if>
+    </div>
+  </div>
+  <div aura:id="AllTaskModalDialog" />
+</aura:component>

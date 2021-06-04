@@ -1,0 +1,293 @@
+<aura:component>
+  <aura:attribute name="screen" type="String" default="Booking" />
+  <aura:attribute name="measureFT_M" type="String" default="ft" />
+  <aura:attribute name="measureIN_CM" type="String" default="in" />
+  <aura:attribute name="weightUnit" type="String" default="lb" />
+  <aura:attribute name="unitMeasure" type="Boolean" default="false" />
+  <aura:attribute name="cargoList" type="CC_BookingWrapper.CargoWrapper[]" />
+  <aura:attribute name="inchesOptions" type="List" />
+  <aura:attribute name="errorMsg" type="String" default="" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+  <aura:if isTrue="{!v.errorMsg !=''}">
+    <div class="error-message">{!v.errorMsg}</div>
+  </aura:if>
+  <aura:iteration
+    items="{!v.cargoList[0].listFreightDetailWrapper}"
+    var="breakbulk"
+    indexVar="index"
+  >
+    <div class="row break-bulk-details">
+      <div class="col-2 grey-bg-search">
+        <lightning:select
+          label="Type of Package"
+          aura:id="selectId"
+          required="true"
+          value="{!breakbulk.typeOfPackage}"
+        >
+          <option value="">Select type</option>
+          <option value="BOAT">Boat on Trailer</option>
+          <option value="NIT">Cargo, Not In Container</option>
+        </lightning:select>
+      </div>
+
+      <div class="col-2 grey-bg-search">
+        <lightning:input
+          type="number"
+          label="Quantity"
+          aura:id="inputFieldId"
+          placeholder=""
+          required="true"
+          value="{!breakbulk.freightDetail.Freight_Quantity__c}"
+          pattern="[0-9]*"
+          messageWhenPatternMismatch="Please enter whole number"
+          maxlength="3"
+        />
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <lightning:input
+          type="number"
+          label="Length"
+          value="{!breakbulk.freightDetail.Length_Major__c}"
+          name="{!index}"
+          aura:id="inputFieldId"
+          pattern="[0-9]*"
+          messageWhenPatternMismatch="Please enter whole number"
+          maxlength="2"
+          max="{!breakbulk.measureUnit== 'kg/m' ? '25' : '83'}"
+          messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can not be greater than 83'}"
+        />
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">ft</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">m</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <label></label>
+        <aura:if isTrue="{!breakbulk.freightDetail.Length_Major__c>0}">
+          <lightning:input
+            type="number"
+            label=""
+            value="{!breakbulk.freightDetail.Length_Minor__c}"
+            name="{!index}"
+            aura:id="inputFieldId"
+            pattern="[0-9]*"
+            messageWhenPatternMismatch="Please enter whole number"
+            maxlength="3"
+            max="{!breakbulk.measureUnit== 'kg/m' ? '99' : '11'}"
+            messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+          />
+
+          <aura:set attribute="else">
+            <lightning:input
+              type="number"
+              label=""
+              value="{!breakbulk.freightDetail.Length_Minor__c}"
+              name="{!index}"
+              aura:id="inputFieldId"
+              pattern="[0-9]*"
+              messageWhenPatternMismatch="Please enter whole number"
+              maxlength="4"
+              max="{!breakbulk.measureUnit== 'kg/m' ? '2530' : '999'}"
+              messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 2530' : 'Value can not be greater than 999'}"
+            />
+          </aura:set>
+        </aura:if>
+
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">in</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">cm</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <lightning:input
+          type="number"
+          label="Width"
+          value="{!breakbulk.freightDetail.Width_Major__c}"
+          name="{!index}"
+          aura:id="inputFieldId"
+          pattern="[0-9]*"
+          messageWhenPatternMismatch="Please enter whole number"
+          maxlength="2"
+          max="{!breakbulk.measureUnit== 'kg/m' ? '25' : '83'}"
+          messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can not be greater than 83'}"
+        />
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">ft</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">m</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <label></label>
+        <aura:if isTrue="{!breakbulk.freightDetail.Width_Major__c>0}">
+          <lightning:input
+            type="number"
+            label=""
+            value="{!breakbulk.freightDetail.Width_Minor__c}"
+            name="{!index}"
+            aura:id="inputFieldId"
+            pattern="[0-9]*"
+            messageWhenPatternMismatch="Please enter whole number"
+            maxlength="3"
+            max="{!breakbulk.measureUnit== 'kg/m' ? '99' : '11'}"
+            messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+          />
+
+          <aura:set attribute="else">
+            <lightning:input
+              type="number"
+              label=""
+              value="{!breakbulk.freightDetail.Width_Minor__c}"
+              name="{!index}"
+              aura:id="inputFieldId"
+              pattern="[0-9]*"
+              messageWhenPatternMismatch="Please enter whole number"
+              maxlength="4"
+              max="{!breakbulk.measureUnit== 'kg/m' ? '2530' : '999'}"
+              messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not greater be than 2530' : 'Value can not be greater than 999'}"
+            />
+          </aura:set>
+        </aura:if>
+
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">in</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">cm</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <lightning:input
+          type="number"
+          label="Height"
+          value="{!breakbulk.freightDetail.Height_Major__c}"
+          name="{!index}"
+          aura:id="inputFieldId"
+          pattern="[0-9]*"
+          messageWhenPatternMismatch="Please enter whole number"
+          maxlength="2"
+          max="{!breakbulk.measureUnit== 'kg/m' ? '25' : '83'}"
+          messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 25' : 'Value can not be greater than 83'}"
+        />
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">ft</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">m</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <label></label>
+        <aura:if isTrue="{!breakbulk.freightDetail.Height_Major__c>0}">
+          <lightning:input
+            type="number"
+            label=""
+            value="{!breakbulk.freightDetail.Height_Minor__c}"
+            name="{!index}"
+            aura:id="inputFieldId"
+            pattern="[0-9]*"
+            messageWhenPatternMismatch="Please enter whole number"
+            maxlength="3"
+            max="{!breakbulk.measureUnit== 'kg/m' ? '99' : '11'}"
+            messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 99' : 'Value can not be greater than 11'}"
+          />
+
+          <aura:set attribute="else">
+            <lightning:input
+              type="number"
+              label=""
+              value="{!breakbulk.freightDetail.Height_Minor__c}"
+              name="{!index}"
+              aura:id="inputFieldId"
+              pattern="[0-9]*"
+              messageWhenPatternMismatch="Please enter whole number"
+              maxlength="4"
+              max="{!breakbulk.measureUnit== 'kg/m' ? '2530' : '999'}"
+              messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not greater be than 2530' : 'Value can not be greater than 999'}"
+            />
+          </aura:set>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">in</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">cm</span>
+        </aura:if>
+      </div>
+      <div class="col-1 measurement-unit-col">
+        <lightning:input
+          type="number"
+          label="Weight"
+          value="{!breakbulk.freightDetail.Declared_Weight_Value__c}"
+          aura:id="inputFieldId"
+          required="true"
+          maxlength="5"
+          max="{!breakbulk.measureUnit== 'kg/m' ? '36288' : '80000'}"
+          messageWhenRangeOverflow="{!breakbulk.measureUnit== 'kg/m' ? 'Value can not be greater than 36,288' : 'Value can not be greater than 80,000'}"
+        />
+        <aura:if isTrue="{!breakbulk.measureUnit=='lb/ft'}">
+          <span class="measurement-unit">lb</span>
+        </aura:if>
+        <aura:if isTrue="{!breakbulk.measureUnit=='kg/m'}">
+          <span class="measurement-unit">kg</span>
+        </aura:if>
+      </div>
+
+      <div class="col-1 without-label">
+        <label class="no-wrap">lb/ft - kg/m</label>
+        <lightning:input
+          styleclass="toggleCls"
+          type="toggle"
+          name="{!index}"
+          messageToggleActive="kg/m"
+          messageToggleInactive="lb/ft"
+          onchange="{!c.getUnitOfMeasure}"
+          checked="{!(breakbulk.measureUnit=='kg/m')}"
+        />
+      </div>
+      <div class="col-11 grey-bg-search">
+        <lightning:textarea
+          label="Description"
+          placeholder="Describe what is in the package?"
+          value="{!breakbulk.freightDetail.Description__c}"
+        />
+      </div>
+      <div class="col-1">
+        <label class="block-view">&nbsp;</label>
+        <aura:if isTrue="{!index!=0}">
+          <a
+            href=""
+            id="{!index}"
+            class="removeButton"
+            onclick="{!c.removeItem}"
+            >- Remove</a
+          >
+        </aura:if>
+      </div>
+      <div class="separator-line"></div>
+    </div>
+  </aura:iteration>
+  <lightning:button
+    variant="brand"
+    label="ADD MORE +"
+    class="comment-post-btn"
+    title="ADD MORE"
+    onclick="{!c.addItem}"
+  />
+  <aura:method
+    name="validateBreakbulData"
+    action="{!c.validateBreakbulkData}"
+    access="public"
+  >
+    <aura:attribute name="isValidBreakbulk" type="boolean" default="false" />
+  </aura:method>
+</aura:component>

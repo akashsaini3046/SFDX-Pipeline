@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@nagarro.com.invalid</email>
+    <name>BL Revision</name>
+    <queueMembers>
+        <roles>
+            <role>Admin_Freight_Services_Training</role>
+            <role>Leader_Freight_Services</role>
+            <role>Manager_BL_Revisions_Frt_Services</role>
+            <role>Manager_BL_Revisions_Frt_Services_Martinez_Fernando</role>
+            <role>Manager_Freight_Services_Customer_Dispute_Resolution</role>
+            <role>Manager_Freight_Services_Training</role>
+            <role>Manager_Freight_Services_US_Southbound</role>
+            <role>Manager_Freight_Services_Customer_Ops</role>
+            <role>Manager_Freight_Services_Customer_Ops_Garcia_Jose</role>
+            <role>Manager_Freight_Services_Customer_Ops_Luis_Martinez</role>
+            <role>Manager_Freight_Services_Customer_Ops_Rodrigo_Rivas</role>
+            <role>Manager_Freight_Services_Customer_Ops_Rudy_Munoz</role>
+            <role>Manager_Freight_Services_Customer_Ops_Yeny_Segovia</role>
+            <role>Manager_Freight_Services_Process_Improvement</role>
+            <role>Rep_BL_Revisions_Frt_Services_Martinez_Fernando</role>
+            <role>Rep_Freight_Services_Customer_Dispute_Resolution</role>
+            <role>Rep_Freight_Services_Training</role>
+            <role>Rep_Freight_Services_US_Southbound</role>
+            <role>Rep_Freight_Services_Customer_Ops_Garcia_Jose</role>
+            <role>Rep_Freight_Services_Customer_Ops_Rodrigo_Rivas</role>
+            <role>Rep_Freight_Services_Customer_Ops_Rudy_Munoz</role>
+            <role>Rep_Freight_Services_Customer_Ops_Yeny_Segovia</role>
+            <role>Rep_Freight_Services_Customer_Ops_Level_1</role>
+            <role>Rep_Freight_Services_Customer_Ops_Luis_Martinez</role>
+            <role>Rep_Freight_Services_Customer_Ops</role>
+            <role>Rep_Freight_Services_Process_Improvement</role>
+        </roles>
+        <users>
+            <user>validatesm@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

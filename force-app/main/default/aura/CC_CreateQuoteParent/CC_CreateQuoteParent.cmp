@@ -1,0 +1,326 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+  access="global"
+  controller="CC_QuoteController"
+>
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                                                                                                               $Resource.jquery224 , 
+                                                                                                               $Resource.customJs , 
+                                                                                                               $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+                                                                                                               }"
+  />
+
+  <ltng:require styles="{! $Resource.NewStyle}" />
+  <ltng:require styles="{!$Resource.Crowley_theme}" />
+
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute name="selectedOriginLocation" type="String" />
+  <aura:attribute name="selectedDestinationLocation" type="String" />
+  <aura:attribute name="originMove" type="String" />
+  <aura:attribute name="destinationMove" type="String" />
+  <aura:attribute name="firstName" type="String" />
+  <aura:attribute name="accountName" type="String" />
+  <aura:attribute name="emailAddress" type="String" />
+  <aura:attribute name="contactNumber" type="String" />
+  <aura:attribute name="tariffsCommodities" type="List" />
+  <aura:attribute name="vehichleCommodities" type="List" />
+  <aura:attribute name="tariffsEquipments" type="List" />
+  <aura:attribute name="bookingWrapper" type="CC_BookingWrapper" />
+  <aura:attribute name="softshipRatingResponse" type="Object" />
+  <aura:attribute name="currentStep" type="string" default="1" />
+  <aura:attribute name="internal" type="Boolean" default="1" />
+  <aura:attribute name="currentUser" type="User" />
+  <aura:attribute name="isQuoteSummary" type="Boolean" default="false" />
+  <aura:attribute name="createdQuoteIds" type="List" />
+  <aura:attribute name="selectedRoutesList" type="List" />
+  <aura:attribute name="validationError" type="List" />
+  <aura:attribute name="sendQuoteEmailId" type="String" default="" />
+  <aura:attribute name="cargoType" type="String" default="container" />
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="isLoadingFindRates" type="boolean" default="false" />
+  <aura:attribute name="isLoadingCreateQuote" type="boolean" default="false" />
+  <aura:attribute name="rateMapping" type="List" />
+  <aura:attribute name="commodityTypes" type="List" default="[]" />
+  <aura:attribute name="isdisplayRatePage" type="boolean" default="false" />
+  <aura:attribute name="serverError" type="string" />
+  <aura:attribute name="searchKeywordPOL" type="String" default="" />
+  <aura:attribute name="searchKeywordPOD" type="String" default="" />
+  <aura:attribute name="clickedItemOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemIdOrigin" type="String" default="" />
+  <aura:attribute name="clickedItemDestination" type="String" default="" />
+  <aura:attribute name="clickedItemIdDestination" type="String" default="" />
+  <aura:attribute name="clickedItemPol" type="String" default="" />
+  <aura:attribute name="clickedItemIdPol" type="String" default="" />
+  <aura:attribute name="clickedItemPod" type="String" default="" />
+  <aura:attribute name="clickedItemIdPod" type="String" default="" />
+
+  <aura:attribute name="accountLookup" type="String" default="null" />
+
+  <aura:handler
+    event="c:CreateParentQuoteAppEvent"
+    action="{!c.handleApplicationEvent}"
+  />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.handleRefreshCmp}"
+  />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner
+      alternativeText="Fetching Rates for You !!!!!"
+      title="Fetching Rates for You"
+      size="medium"
+    />
+  </aura:if>
+  <aura:if isTrue="{!v.isLoadingFindRates }">
+    <div class="crowley-loader">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+      <h1 class="text-center">
+        Please wait, we are finding the best rate options for you.
+      </h1>
+    </div>
+  </aura:if>
+  <aura:if isTrue="{!v.isLoadingCreateQuote }">
+    <div class="crowley-loader">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+      <h1 class="text-center">
+        Please wait, we are generating quotes for you.
+      </h1>
+    </div>
+  </aura:if>
+  <form autocomplete="off">
+    <div class="{!if(v.isPostLogin,'','ship-background-image-container')}">
+      <aura:if isTrue="{!!v.isQuoteSummary}">
+        <aura:if isTrue="{!!v.isPostLogin}">
+          <h5 class="quote-heading">Get a Quote</h5>
+        </aura:if>
+        <div class="c-container get-quote-container">
+          <div class="progress-steps">
+            <lightning:progressIndicator
+              currentStep="{!v.currentStep}"
+              type="base"
+            >
+              <lightning:progressStep
+                id="step1"
+                label="Origin Destination"
+                value="1"
+                onclick="{!c.selectFromHeaderStep1}"
+              />
+              <div class="steps">
+                <span class="step-number">1</span>
+                <div class="step-name">Origin Destination</div>
+              </div>
+
+              <lightning:progressStep
+                id="step2"
+                label="Cargo Details"
+                value="2"
+                onclick="{!c.selectFromHeaderStep2}"
+              />
+              <div class="steps">
+                <span class="step-number">2</span>
+                <div class="step-name">Cargo Details</div>
+              </div>
+
+              <lightning:progressStep
+                id="step3"
+                label="Routes"
+                value="3"
+                onclick="{!c.selectFromHeaderStep3}"
+              />
+              <div class="steps">
+                <span class="step-number">3</span>
+                <div class="step-name">Routes</div>
+              </div>
+            </lightning:progressIndicator>
+          </div>
+          <aura:if isTrue="{!v.bookingWrapper.isError}">
+            <div class="error-message">
+              <p>{!v.bookingWrapper.errorMessage}</p>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!equals(v.serverError, 'Timeout')}">
+            <div class="error-message">
+              <p>
+                {!$Label.c.ServerErrorMsg}&nbsp;{!v.bookingWrapper.booking.Customer_Email__c}
+                .
+              </p>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!equals(v.serverError, 'NotReachable')}">
+            <div class="error-message">
+              <p>
+                {!$Label.c.ServerNotReachable}&nbsp;{!v.bookingWrapper.booking.Customer_Email__c}
+                .
+              </p>
+            </div>
+          </aura:if>
+          <aura:iteration
+            items="{!v.validationError}"
+            var="error"
+            indexVar="index"
+          >
+            <div class="error-message">{!error}</div>
+          </aura:iteration>
+          <div class="{!v.currentStep == '1' ? 'slds-show' : 'slds-hide'}">
+            <!-- selectedOriginLocation="{!v.selectedOriginLocation}" -->
+            <c:CC_OriginDestination
+              bookingWrapper="{!v.bookingWrapper}"
+              aura:id="originDestinationId"
+              isPostLogin="{!v.isPostLogin}"
+              tariffsCommodities="{!v.tariffsCommodities}"
+              vehichleCommodities="{!v.vehichleCommodities}"
+              tariffsEquipments="{!v.tariffsEquipments}"
+              originMove="{!v.originMove}"
+              destinationMove="{!v.destinationMove}"
+              searchKeywordPOL="{!v.searchKeywordPOL}"
+              searchKeywordPOD="{!v.searchKeywordPOD}"
+              clickedItemOrigin="{!v.clickedItemOrigin}"
+              clickedItemIdOrigin="{!v.clickedItemIdOrigin}"
+              clickedItemDestination="{!v.clickedItemDestination}"
+              clickedItemIdDestination="{!v.clickedItemIdDestination}"
+              clickedItemPol="{!v.clickedItemPol}"
+              clickedItemIdPol="{!v.clickedItemIdPol}"
+              clickedItemPod="{!v.clickedItemPod}"
+              clickedItemIdPod="{!v.clickedItemIdPod}"
+            />
+          </div>
+
+          <aura:if isTrue="{!v.currentStep == '2'}">
+            <c:CC_CargoDetails
+              bookingWrapper="{!v.bookingWrapper}"
+              cargoType="{!v.cargoType}"
+              isPostLogin="{!v.isPostLogin}"
+              aura:id="cargoDetailId"
+              tariffsEquipments="{!v.tariffsEquipments}"
+              commodityTypes="{!v.commodityTypes}"
+              tariffsCommodities="{!v.tariffsCommodities}"
+              vehichleCommodities="{!v.vehichleCommodities}"
+            />
+          </aura:if>
+          <aura:if isTrue="{!v.currentStep == '3'}">
+            <aura:if isTrue="{!v.isdisplayRatePage}">
+              <c:CC_VelozRoutes
+                bookingWrapper="{!v.bookingWrapper}"
+                rateMapping="{!v.rateMapping}"
+                responseWrapper="{!v.softshipRatingResponse}"
+                selectedRoutesList="{!v.selectedRoutesList}"
+              />
+            </aura:if>
+            <aura:if isTrue="{!!v.isdisplayRatePage}">
+              <c:CC_AdditionalInfo
+                bookingWrapper="{!v.bookingWrapper}"
+                createdQuoteIds="{!v.createdQuoteIds}"
+                isPostLogin="{!v.isPostLogin}"
+              />
+            </aura:if>
+          </aura:if>
+        </div>
+        <aura:set attribute="else">
+          <aura:if isTrue="{!!v.isPostLogin}">
+            <h5 class="quote-heading">Quote Summary</h5>
+            <div class="ship-background-image"></div>
+          </aura:if>
+          <div class="c-container get-quote-container">
+            <c:CC_VelozQuoteSummary
+              quoteObjectList="{!v.createdQuoteIds}"
+              sendQuoteEmailId="{!v.sendQuoteEmailId}"
+              isPostLogin="{!v.isPostLogin}"
+              contactNumber="{!v.contactNumber}"
+              firstName="{!v.firstName}"
+              accountName="{!v.accountName}"
+              emailAddress="{!v.emailAddress}"
+              accountLookup="{!v.accountLookup}"
+            />
+          </div>
+        </aura:set>
+
+        <div class="clearfix"></div>
+        <div class="createquote-actions">
+          <aura:if isTrue="{!v.currentStep != '1'}">
+            <lightning:button
+              variant="neutral"
+              label="{!$Label.c.CC_VC_Routes_Back}"
+              title="Back"
+              onclick="{! c.moveBack }"
+            />
+          </aura:if>
+          <aura:if isTrue="{!v.currentStep != '3'}">
+            <lightning:button
+              variant="brand"
+              label="Next"
+              title="Next"
+              onclick="{! c.moveNext }"
+            />
+          </aura:if>
+          <aura:if
+            isTrue="{!and(v.currentStep == '3',!v.softshipRatingResponse.success)}"
+          >
+            <aura:if isTrue="{!empty(v.createdQuoteIds)}">
+              <lightning:button
+                variant="brand"
+                label="Submit"
+                title="Submit"
+                onclick="{!c.submit }"
+              />
+            </aura:if>
+            <aura:if isTrue="{!not(empty(v.createdQuoteIds))}">
+              <lightning:button
+                variant="brand"
+                label="New Quote"
+                title="New Quote"
+                onclick="{!c.newQuote}"
+              />
+            </aura:if>
+          </aura:if>
+          <aura:if
+            isTrue="{!and(v.currentStep == '3', v.softshipRatingResponse.success)}"
+          >
+            <aura:if isTrue="{!v.isdisplayRatePage}">
+              <lightning:button
+                label="{!$Label.c.CC_VC_Routes_Send_Quote}"
+                title="{!$Label.c.CC_VC_Routes_Send_Quote}"
+                onclick="{! c.handleSendQuote }"
+                disabled="{!empty(v.selectedRoutesList)}"
+              />
+              <lightning:button
+                label="{!$Label.c.CC_VC_Routes_Create_Quote}"
+                title="{!$Label.c.CC_VC_Routes_Create_Quote}"
+                onclick="{! c.handleCreateQuote }"
+                variant="brand"
+                disabled="{!empty(v.selectedRoutesList)}"
+              />
+            </aura:if>
+            <aura:if isTrue="{!!v.isdisplayRatePage}">
+              <aura:if isTrue="{!empty(v.createdQuoteIds)}">
+                <lightning:button
+                  variant="brand"
+                  label="Submit"
+                  title="Submit"
+                  onclick="{!c.submit }"
+                />
+              </aura:if>
+              <aura:if isTrue="{!not(empty(v.createdQuoteIds))}">
+                <lightning:button
+                  variant="brand"
+                  label="New Quote"
+                  title="New Quote"
+                  onclick="{!c.newQuote}"
+                />
+              </aura:if>
+            </aura:if>
+          </aura:if>
+        </div>
+      </aura:if>
+    </div>
+  </form>
+</aura:component>

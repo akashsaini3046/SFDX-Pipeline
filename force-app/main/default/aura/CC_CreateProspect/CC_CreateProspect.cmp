@@ -1,0 +1,435 @@
+<aura:component
+  controller="CC_CreateProspectCtrl"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="contactNumber" type="String" />
+  <aura:attribute name="firstName" type="String" />
+  <aura:attribute name="lastName" type="String" />
+  <aura:attribute name="accountName" type="String" />
+  <aura:attribute name="emailAddress" type="String" />
+  <aura:attribute name="marketSegment" type="String" />
+  <aura:attribute name="countryName" type="String" />
+  <aura:attribute name="cityName" type="String" />
+  <aura:attribute name="zipCode" type="String" />
+  <aura:attribute name="address" type="String" />
+  <aura:attribute name="countryNameContact" type="String" />
+  <aura:attribute name="cityNameContact" type="String" />
+  <aura:attribute name="zipCodeContact" type="String" />
+  <aura:attribute name="addressContact" type="String" />
+  <aura:attribute name="stateSelected" type="String" />
+  <aura:attribute name="showStateField" type="Boolean" default="false" />
+  <aura:attribute
+    name="showErrorContactMessage"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute name="showCreateProspect" type="boolean" default="false" />
+  <aura:attribute name="showCreateAddress" type="boolean" default="false" />
+  <aura:attribute name="showCreateContact" type="boolean" default="false" />
+  <aura:attribute name="selectedAddressPol" type="String" />
+  <aura:attribute name="selectedAddressPolId" type="String" />
+  <aura:attribute name="showAddressSection" type="boolean" default="false" />
+  <aura:attribute name="showProspectModel" type="boolean" default="true" />
+  <aura:attribute name="disableAcount" type="boolean" default="false" />
+  <aura:attribute
+    name="showProspectCreatedMessage"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="marketSegments" type="List" />
+  <aura:attribute name="countryNames" type="List" />
+  <aura:attribute name="stateNames" type="List" />
+  <aura:attribute name="selectedAccountPol" type="String" />
+  <aura:attribute name="selectedAccountPolId" type="String" />
+  <aura:attribute name="allObjects" type="Object" />
+  <aura:attribute name="errorContact" type="Object" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    name="change"
+    value="{!v.selectedAddressPolId}"
+    action="{!c.handleSelectedAddressPolIdChange}"
+  />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+
+  <aura:if isTrue="{!v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+
+  <aura:if isTrue="{!v.showProspectModel}">
+    <div class="slds-m-around_medium">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open slds-modal_large"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_medium dlg-content"
+            id="modal-content-id-1"
+          >
+            <i onclick="{! c.handleCancel }" class="close-dlg"></i>
+            <div>
+              <aura:if isTrue="{!v.showCreateProspect}">
+                <h6><b> Create New Prospect</b></h6>
+              </aura:if>
+              <aura:if isTrue="{!v.showCreateAddress}">
+                <h6><b> Create New Address</b></h6>
+              </aura:if>
+              <aura:if isTrue="{!v.showCreateContact}">
+                <h6><b> Create New Contact</b></h6>
+              </aura:if>
+
+              <h6 class="acc-det-dialog-head">Account Details</h6>
+              <div class="row">
+                <div class="col-sm-3">
+                  <lightning:input
+                    autocomplete="off"
+                    type="text"
+                    aura:id="accountNameId"
+                    required="true"
+                    label="Account Name"
+                    placeholder="Enter Account Name"
+                    value="{!v.accountName}"
+                    disabled="{!v.disableAcount}"
+                  />
+                </div>
+                <div class="col-sm-3">
+                  <lightning:select
+                    label="Market Segment"
+                    required="true"
+                    aura:id="requiredId"
+                    value="{!v.marketSegment}"
+                    disabled="{!v.disableAcount}"
+                  >
+                    <aura:iteration items="{!v.marketSegments}" var="item">
+                      <option value="{!item.value}">{!item.label}</option>
+                    </aura:iteration>
+                  </lightning:select>
+                </div>
+              </div>
+              <h6 class="acc-det-dialog-head">Location Details</h6>
+              <div class="row">
+                <aura:if isTrue="{!v.showCreateContact}">
+                  <aura:if isTrue="{!v.showAddressSection}">
+                    <div class="col-sm-2">
+                      <lightning:select
+                        label="Country"
+                        required="true"
+                        aura:Id="requiredId"
+                        value="{!v.countryName}"
+                        onchange="{!c.handleCountryChange}"
+                      >
+                        <option value="">-- Select country --</option>
+                        <aura:iteration items="{!v.countryNames}" var="item">
+                          <option value="{!item.value}">{!item.label}</option>
+                        </aura:iteration>
+                      </lightning:select>
+                    </div>
+                    <div class="col-sm-3">
+                      <lightning:input
+                        autocomplete="off"
+                        type="text"
+                        aura:id="cityId"
+                        label="City Name"
+                        placeholder="Enter your city name"
+                        value="{!v.cityName}"
+                        maxlength="250"
+                        required="true"
+                      />
+                    </div>
+                    <div class="col-sm-2">
+                      <lightning:input
+                        autocomplete="off"
+                        type="text"
+                        aura:id="zipcodeId"
+                        label="Zip Code"
+                        placeholder="Enter zip code"
+                        value="{!v.zipCode}"
+                        maxlength="250"
+                        required="{!equals(v.countryName, 'US')}"
+                      />
+                    </div>
+                    <div class="col-sm-5">
+                      <lightning:input
+                        autocomplete="off"
+                        type="textarea"
+                        aura:id="addressId"
+                        label="Address"
+                        placeholder="Enter your address"
+                        value="{!v.address}"
+                        required="true"
+                      />
+                    </div>
+                    <aura:set attribute="else">
+                      <div class="col-sm-3">
+                        <c:CC_CustomLookupInput
+                          fieldLabel="Address"
+                          placeholder="Search"
+                          requiredInput="true"
+                          functionality="Booking:BusinessLocationAccountDependent"
+                          SearchKeyWord="{!v.selectedAddressPol}"
+                          aura:id="addressLocationId"
+                          showCreateAddress="{!v.showAddressSection}"
+                          dependentId="{!v.selectedAccountPolId}"
+                          hasCreateAddressButton="true"
+                          displayType="NameAndButton"
+                        />
+                      </div>
+                    </aura:set>
+                  </aura:if>
+                  <aura:set attribute="else">
+                    <div class="col-sm-2">
+                      <lightning:select
+                        label="Country"
+                        required="true"
+                        aura:Id="requiredId"
+                        value="{!v.countryName}"
+                        onchange="{!c.handleCountryChange}"
+                      >
+                        <option value="">-- Select country --</option>
+                        <aura:iteration items="{!v.countryNames}" var="item">
+                          <option value="{!item.value}">{!item.label}</option>
+                        </aura:iteration>
+                      </lightning:select>
+                    </div>
+                    <div class="col-sm-3">
+                      <lightning:input
+                        autocomplete="off"
+                        type="text"
+                        aura:id="cityId"
+                        label="City Name"
+                        placeholder="Enter your city name"
+                        value="{!v.cityName}"
+                        maxlength="250"
+                        required="true"
+                      />
+                    </div>
+                    <div class="col-sm-2">
+                      <lightning:input
+                        autocomplete="off"
+                        type="text"
+                        aura:id="zipcodeId"
+                        label="Zip Code"
+                        placeholder="Enter zip code"
+                        value="{!v.zipCode}"
+                        maxlength="250"
+                        required="{!equals(v.countryName, 'US')}"
+                      />
+                    </div>
+                    <div class="col-sm-5">
+                      <lightning:input
+                        autocomplete="off"
+                        type="textarea"
+                        aura:id="addressId"
+                        label="Address"
+                        placeholder="Enter your address"
+                        value="{!v.address}"
+                        required="true"
+                      />
+                    </div>
+                  </aura:set>
+                </aura:if>
+              </div>
+              <aura:if isTrue="{!v.showStateField}">
+                <div class="row">
+                  <div class="col-sm-2">
+                    <lightning:select
+                      label="State"
+                      required="true"
+                      aura:Id="requiredId"
+                      value="{!v.stateSelected}"
+                    >
+                      <aura:iteration items="{!v.stateNames}" var="item">
+                        <option value="{!item.value}">{!item.label}</option>
+                      </aura:iteration>
+                    </lightning:select>
+                  </div>
+                </div>
+              </aura:if>
+              <aura:if isTrue="{!!v.showCreateAddress}">
+                <h6 class="acc-det-dialog-head">Contact Details</h6>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <lightning:input
+                      autocomplete="off"
+                      type="text"
+                      aura:id="firstNameId"
+                      required="true"
+                      label="First Name"
+                      placeholder="Enter your first name"
+                      value="{!v.firstName}"
+                      maxlength="250"
+                    />
+                  </div>
+                  <div class="col-sm-3">
+                    <lightning:input
+                      autocomplete="off"
+                      type="text"
+                      aura:id="lastNameId"
+                      label="Last Name"
+                      placeholder="Enter your last name"
+                      value="{!v.lastName}"
+                      maxlength="250"
+                      required="true"
+                    />
+                  </div>
+                  <div class="col-sm-3">
+                    <lightning:input
+                      autocomplete="off"
+                      type="email"
+                      aura:id="emailAddressId"
+                      label="Email Id"
+                      placeholder="Enter your email Id"
+                      value="{!v.emailAddress}"
+                      required="true"
+                      messageWhenPatternMismatch="Please enter a valid email address!"
+                      messageWhenValueMissing="Please enter a valid email address!"
+                      pattern="^(([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)(\s*;\s*|\s*$))*$"
+                    />
+                  </div>
+                  <div class="col-sm-3">
+                    <lightning:input
+                      autocomplete="off"
+                      type="text"
+                      aura:id="contactNumberId"
+                      label="Contact Number"
+                      placeholder="Enter your phone number"
+                      value="{!v.contactNumber}"
+                      messageWhenPatternMismatch="Please enter a valid Phone Number."
+                      maxlength="15"
+                      minlength="7"
+                      pattern="[+\-()0-9]*"
+                      required="true"
+                    />
+                  </div>
+                </div>
+              </aura:if>
+            </div>
+            <div class="separator-line"></div>
+            <div class="createquote-actions">
+              <lightning:button
+                variant="neutral"
+                label="CANCEL"
+                title="CANCEL"
+                onclick="{! c.handleCancel }"
+              />
+              <lightning:button
+                variant="brand"
+                label="CREATE"
+                title="CREATE"
+                onclick="{! c.handleCreate }"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+
+  <aura:if isTrue="{!v.showProspectCreatedMessage}">
+    <div class="slds-m-around_xx-large">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_medium text-center dlg-content"
+            id="modal-content-id-1"
+          >
+            <i class="icon-check-outline"></i>
+            <aura:if isTrue="{!v.showCreateProspect}">
+              <h6>
+                <span
+                  >Prospect&nbsp;<b>"{!v.accountName}"</b>&nbsp;has been
+                  successfully created.</span
+                >
+              </h6>
+            </aura:if>
+            <aura:if isTrue="{!v.showCreateAddress}">
+              <h6>
+                <span
+                  >Business Location for
+                  Account&nbsp;<b>"{!v.accountName}"</b>&nbsp;has been
+                  successfully created.</span
+                >
+              </h6>
+            </aura:if>
+            <aura:if isTrue="{!v.showCreateContact}">
+              <h6>
+                <span
+                  >Contact for Account&nbsp;<b>"{!v.accountName}"</b>&nbsp;has
+                  been successfully created.</span
+                >
+              </h6>
+            </aura:if>
+            <br />
+            <lightning:button
+              class="max-w-100"
+              variant="brand"
+              label="CLOSE"
+              title="CLOSE"
+              onclick="{! c.handleCancel }"
+            />
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+
+  <aura:if isTrue="{!v.showErrorContactMessage}">
+    <div class="slds-m-around_xx-large">
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <div
+            class="slds-modal__content slds-p-around_medium text-center dlg-content"
+            id="modal-content-id-1"
+          >
+            <i class="icon-warning-outline"></i>
+            <h6>
+              <span>
+                <b
+                  >"{!v.errorContact.FirstName}&nbsp;{!v.errorContact.LastName}"</b
+                >
+                Contact already exist for
+                Account&nbsp;<b>"{!v.accountName}"</b>.
+              </span>
+            </h6>
+            <br />
+            <lightning:button
+              class="max-w-100"
+              variant="brand"
+              label="CLOSE"
+              title="CLOSE"
+              onclick="{! c.handleContactErrorCancel }"
+            />
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+  </aura:if>
+</aura:component>

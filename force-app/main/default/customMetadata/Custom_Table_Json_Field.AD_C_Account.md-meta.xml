@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>AD-C-Account</label>
+    <protected>false</protected>
+    <values>
+        <field>Class_Name__c</field>
+        <value xsi:type="xsd:string">acc-col account-name-col</value>
+    </values>
+    <values>
+        <field>Custom_Table_Json__c</field>
+        <value xsi:type="xsd:string">Account_Detail_Contacts</value>
+    </values>
+    <values>
+        <field>Data_type__c</field>
+        <value xsi:type="xsd:string">url</value>
+    </values>
+    <values>
+        <field>Date_Format__c</field>
+        <value xsi:nil="true" />
+    </values>
+    <values>
+        <field>Field_Name__c</field>
+        <value xsi:type="xsd:string">Account.Name</value>
+    </values>
+    <values>
+        <field>Is_Reference__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Is_Table_Column__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Label__c</field>
+        <value xsi:type="xsd:string">Account</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Redirect_Url__c</field>
+        <value xsi:type="xsd:string">/accountDetail/{AccountId}</value>
+    </values>
+</CustomMetadata>

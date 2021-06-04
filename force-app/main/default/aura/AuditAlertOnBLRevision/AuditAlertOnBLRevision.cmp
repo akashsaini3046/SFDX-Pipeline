@@ -1,0 +1,17 @@
+<aura:component
+  implements="flexipage:availableForRecordHome,force:hasRecordId"
+  access="global"
+  controller="AuditAlertController"
+>
+  <!-- <aura:attribute name="recordId" type="string"/>-->
+  <aura:attribute name="caseRecord" type="Object" />
+
+  <force:recordData
+    aura:id="forceRecordDataCmp"
+    recordId="{!v.recordId}"
+    layoutType="FULL"
+    fields="Audit__c, Show_Popup__c"
+    targetRecord="{!v.caseRecord}"
+    recordUpdated="{!c.recordUpdated}"
+  />
+</aura:component>

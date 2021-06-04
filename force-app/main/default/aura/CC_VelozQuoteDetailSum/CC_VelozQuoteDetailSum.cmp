@@ -1,0 +1,326 @@
+<aura:component
+  controller="CC_VelozQuoteDetailSumCtrl"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="componentName" type="string" />
+  <aura:attribute name="isPostLogin" type="Boolean" default="false" />
+  <aura:attribute name="isQuoteDetail" type="Boolean" />
+  <aura:attribute name="recordId" type="string" />
+  <aura:attribute name="quoteWrapper" type="Object" />
+  <aura:attribute name="quoteName" type="string" />
+  <aura:attribute name="quotationDate" type="string" />
+  <aura:attribute name="quotationNumber" type="string" />
+  <aura:attribute name="quotationAccountName" type="string" />
+  <aura:attribute name="quotationContractNumber" type="string" />
+  <aura:attribute name="cargoReadyDate" type="string" />
+  <aura:attribute name="validToDate" type="string" />
+  <aura:attribute name="chargeLines" type="List" />
+  <aura:attribute name="originObject" type="Object" />
+  <aura:attribute name="destinationObject" type="Object" />
+  <aura:attribute name="transitTime" type="Integer" />
+  <aura:attribute name="transitTimeHours" type="Integer" />
+  <aura:attribute name="receiptType" type="String" />
+  <aura:attribute name="deliveryType" type="String" />
+  <aura:attribute name="totalAmount" type="String" />
+  <aura:attribute name="LoadPort" type="String" />
+  <aura:attribute name="DischargePort" type="String" />
+  <aura:attribute name="showCargo" type="boolean" />
+
+  <aura:attribute name="isLoading" type="boolean" default="false" />
+  <aura:attribute name="showSendEmail" type="boolean" default="false" />
+  <aura:attribute name="expandText" type="string" default="Expand" />
+  <aura:attribute name="routeRecord" type="Object" />
+  <aura:attribute name="rateMapping" type="List" />
+  <aura:attribute name="termsAndConditions" type="List" />
+  <aura:attribute
+    name="showTermsAndConditions"
+    type="boolean"
+    default="false"
+  />
+  <aura:attribute name="section" type="String" default="chargeLine" />
+
+  <aura:attribute name="internalComm" type="boolean" default="false" />
+  <aura:attribute name="quotationEmail" type="string" />
+  <aura:attribute name="quotationPhone" type="string" />
+  <aura:attribute name="quotationStatus" type="string" />
+
+  <aura:attribute name="recordURL" type="String" />
+  <aura:attribute name="showThings" type="Boolean" default="false" />
+
+  <aura:attribute name="CaseNo" type="string" />
+
+  <lightning:navigation aura:id="navigationService" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler
+    event="c:CC_GlobalSearchEvent"
+    action="{!c.handleSearchEvent}"
+  />
+  <aura:registerEvent name="selectedItemEvent" type="c:CC_SelectedItemEvt" />
+
+  <aura:if isTrue="{! v.isLoading }">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+  <div class="summary-head">
+    <div class="row">
+      <div class="col-sm-6">
+        <aura:if isTrue="{!or(v.internalComm, v.isPostLogin)}">
+          <h6>
+            <b
+              >{!$Label.c.CC_VC_QuoSum_QuoteNum}:&nbsp;<span class="color-blue"
+                >{!v.quotationNumber}</span
+              ></b
+            >
+          </h6>
+          <h6>
+            <span class="color-blue status-icon"
+              >&nbsp;{!v.quotationStatus}</span
+            >
+          </h6>
+          <aura:set attribute="else">
+            <h6>
+              <b
+                >{!$Label.c.CC_VC_QuoSum_QuoteNum}&nbsp;<span class="color-blue"
+                  >{!v.quotationNumber}</span
+                >&nbsp;{!$Label.c.CC_VC_QuoSum_Confirmed}</b
+              >
+            </h6>
+            <p>{!$Label.c.CC_VC_QuoSum_Thank_you}</p>
+          </aura:set>
+        </aura:if>
+      </div>
+      <div class="col-sm-6">
+        <div class="text-right">
+          <lightning:button
+            class="max-w-100 slds-button_destructive"
+            label="{!$Label.c.CC_VC_QuoSum_Email}"
+            variant="brand"
+            onclick="{! c.handleEmailModal}"
+          />
+          <aura:if isTrue="{!or(v.internalComm, v.isPostLogin)}">
+            <lightning:button
+              class="max-w-100 slds-button_destructive"
+              label="{!$Label.c.CC_VC_QuoSum_Requote}"
+              variant="brand"
+              onclick="{!c.handleRequote}"
+            />
+            <!--lightning:button class="max-w-100 slds-button_destructive" label="{!$Label.c.CC_EC_QuoSum_Book}"
+                                        variant="brand" onclick="{!c.handleBook}" /-->
+            <lightning:button
+              class="max-w-100 slds-button_destructive"
+              label="{!$Label.c.CC_EC_QuoSum_Download}"
+              variant="brand"
+              onclick="{!c.downloadPDF}"
+            />
+            <!--<iframe src="{!v.recordURL}" width="120px;" height="40px;" frameBorder="0"/> -->
+
+            <aura:set attribute="else">
+              <lightning:button
+                class="max-w-100 slds-button_destructive"
+                label="{!$Label.c.CC_VC_QuoSum_NewQuote}"
+                variant="brand"
+                onclick="{!c.handleRequote}"
+              />
+              <!-- onclick="{! c.handleNewQuote}" -->
+            </aura:set>
+          </aura:if>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <aura:if isTrue="{!and(not(v.isPostLogin), not(v.isQuoteDetail))}">
+        <div class="want-to-book">
+          <div class="row">
+            <div class="col-sm-6">{!$Label.c.CC_VC_QuoSum_WantToBook}</div>
+            <div class="col-sm-6">
+              {!$Label.c.CC_VC_QuoSum_FeelFree}
+              <span class="call-us-quote"
+                >&nbsp;{!$Label.c.CC_VC_QuoSum_CallNumber}</span
+              >&nbsp;{!$Label.c.CC_VC_QuoSum_Within_US}<br />
+              {!$Label.c.CC_VC_QuoSum_Outside_US}&nbsp;<a
+                class="color-blue"
+                target="_blank"
+                href="https://www.crowley.com/contact-us/list-of-offices/"
+                >{!$Label.c.CC_VC_QuoSum_Outside_US_address}</a
+              >
+            </div>
+          </div>
+        </div>
+      </aura:if>
+      <aura:if isTrue="{!or(v.internalComm, v.isPostLogin)}">
+        <div>
+          <span class="quote-dates"
+            >{!$Label.c.CC_VC_QuoSum_CustomerName} :</span
+          >
+          <b>{!v.quoteName}</b>
+        </div>
+        <div>
+          <span class="quote-dates">{!$Label.c.CC_VC_QuoSum_EmailId} :</span>
+          <b>{!v.quotationEmail}</b>
+        </div>
+        <div>
+          <span class="quote-dates"
+            >{!$Label.c.CC_VC_QuoSum_PhoneNumber} :</span
+          >
+          <b>{!v.quotationPhone}</b>
+        </div>
+        <div>
+          <span class="quote-dates"
+            >{!$Label.c.CC_VC_QuoSum_AccountName} :</span
+          >
+          <b>{!v.quotationAccountName}</b>
+        </div>
+        <div>
+          <span class="quote-dates"
+            >{!$Label.c.CC_VC_QuoSum_ContractNumber} :</span
+          >
+          <b>{!v.quotationContractNumber}</b>
+        </div>
+      </aura:if>
+    </div>
+    <div class="col-sm-6">
+      <div>
+        <span class="quote-dates">{!$Label.c.CC_VC_QuoSum_QuoteDate} :</span>
+        <b>{!v.quotationDate}</b>
+      </div>
+      <div>
+        <span class="quote-dates">{!$Label.c.CC_VC_QuoSum_QuotationNum} :</span>
+        <b>{!v.quotationNumber}</b>
+      </div>
+      <div>
+        <span class="quote-dates">{!$Label.c.CC_VC_QuoSum_ReadyDate} :</span>
+        <b>{!v.cargoReadyDate}</b>
+      </div>
+      <div>
+        <span class="quote-dates">{!$Label.c.CC_VC_QuoSum_ValidFromTo} :</span>
+        <b>{!v.quotationDate} - {!v.validToDate}</b>
+      </div>
+      <aura:if
+        isTrue="{!v.quotationStatus == $Label.c.CC_VC_QuoSum_StatusPricing}"
+      >
+        <div>
+          <span class="quote-dates">Case Number :</span> <b>{!v.CaseNo}</b>
+        </div>
+      </aura:if>
+      <div>
+        <span class="quote-dates">Port of Loading :</span> <b>{!v.LoadPort}</b>
+      </div>
+      <div>
+        <span class="quote-dates">Port of Discharge :</span>
+        <b>{!v.DischargePort}</b>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="route-map route-map-summary">
+        <div class="route-map-line quotes-summary-map-line">
+          <div class="total-trans-days">
+            <aura:if isTrue="{!or(v.transitTime > 0, v.transitTimeHours > 0)}">
+              {!$Label.c.CC_VC_QuoSum_TransitTime} :
+              <aura:if isTrue="{!v.transitTime > 0}"
+                >{!v.transitTime}&nbsp;{!$Label.c.CC_VC_QuoSum_Day}{!if(v.transitTime
+                > 1 , 's', '')}&nbsp;</aura:if
+              >
+              <aura:if isTrue="{!v.transitTimeHours > 0}"
+                >{!v.transitTimeHours}&nbsp;{!$Label.c.CC_VC_QuoSum_Hour}{!if(v.transitTimeHours
+                > 1 , 's', '')}</aura:if
+              >
+              <aura:set attribute="else">
+                {!$Label.c.CC_VC_QuoSum_TransitTime} : NA
+              </aura:set>
+            </aura:if>
+          </div>
+          <div class="start-point">
+            <div class="porttoport">
+              <i class="icon-map-pin icon-port"> {!v.originObject.type}</i>
+              <span>
+                {!v.originObject.displayName} <br />
+                <aura:if isTrue="{!not(empty(v.originObject.code))}"
+                  >({!v.originObject.code})</aura:if
+                >
+              </span>
+            </div>
+          </div>
+
+          <div class="end-point">
+            <div class="porttoport">
+              <i class="icon-port icon-map-pin"> {!v.destinationObject.type}</i>
+              <span>
+                {!v.destinationObject.displayName} <br />
+                <aura:if isTrue="{!not(empty(v.destinationObject.code))}"
+                  >({!v.destinationObject.code})</aura:if
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <table width="100%" cellspacing="0" cellpadding="0" class="rate-det-tbl">
+        <thead bgcolor="red">
+          <tr>
+            <td>{!$Label.c.CC_VC_QuoSum_PlaceofReceipt}</td>
+            <td>{!$Label.c.CC_VC_QuoSum_ReceiptType}</td>
+            <td>{!$Label.c.CC_VC_QuoSum_DeliveryType}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {!v.originObject.displayName} <br />
+              <aura:if isTrue="{!not(empty(v.originObject.code))}"
+                >({!v.originObject.code})</aura:if
+              >
+            </td>
+            <td>{!v.receiptType}</td>
+            <td>{!v.deliveryType}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <aura:if
+    isTrue="{!and(v.chargeLines.length == 0,v.showCargo,v.quoteWrapper.listfreights.length > 0)}"
+  >
+    <c:CC_VelozQuoteCargoDetails
+      CargoType="{!v.quoteWrapper.CargoType}"
+      freights="{!v.quoteWrapper.listfreights}"
+      requirements="{!v.quoteWrapper.listrequirements}"
+      containerTypes="{!v.quoteWrapper.containerTypes}"
+    />
+  </aura:if>
+  <c:CC_VelozRouteDetRate
+    chargeLines="{!v.chargeLines}"
+    totalAmount="{!v.totalAmount}"
+    showTotal="true"
+    quoteDetail="{!v.isQuoteDetail}"
+  />
+
+  <div class="expandable-t-c">
+    <span class="pull-left">
+      <h6 class="bold">{!$Label.c.CC_VC_QuoSum_T_C}</h6>
+    </span>
+    <a class="pull-right" onclick="{!c.handleExpand}"
+      >{!v.expandText} <i class="view-more-dropdown"></i
+    ></a>
+  </div>
+  <aura:if isTrue="{!v.showTermsAndConditions}">
+    <c:CC_VelozRouteDetClause termsAndConditions="{!v.termsAndConditions}" />
+  </aura:if>
+
+  <aura:if isTrue="{!v.showSendEmail}">
+    <c:CC_VelozRouteEmailQuote
+      QuoteId="{!v.recordId}"
+      showEmail="{!v.showSendEmail}"
+      EmailId="{!v.quoteWrapper.quoteRecord.Customer_Email__c}"
+      ContactName="{!v.quoteWrapper.quoteRecord.Contact_Name__c}"
+      CompanyName="{!v.quoteWrapper.quoteRecord.Company_Name__c}"
+      ContactNumber="{!v.quoteWrapper.quoteRecord.Contact_Number__c}"
+      internalComm="{!v.internalComm}"
+    />
+  </aura:if>
+</aura:component>

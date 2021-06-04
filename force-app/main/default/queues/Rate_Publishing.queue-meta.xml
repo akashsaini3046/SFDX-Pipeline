@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@nagarro.com.invalid</email>
+    <name>Rate Publishing</name>
+    <queueMembers>
+        <roles>
+            <role>Leader_Pricing</role>
+            <role>Manager_Pricing_C_King</role>
+            <role>Manager_Pricing_Dasha_Gorshkova</role>
+            <role>Manager_Pricing_Erjon_Miruku</role>
+            <role>Manager_Pricing_Fadi_Azzo</role>
+            <role>Manager_Pricing_Harvey_Simmons</role>
+            <role>Manager_Pricing_J_Heatherley</role>
+            <role>Manager_Pricing_Laura_Robertson</role>
+            <role>Manager_Pricing_Morgan_Lauren</role>
+            <role>Manager_Pricing_Paul_Gonzalez</role>
+            <role>Manager_Pricing_R_Arnold</role>
+            <role>Manager_Pricing_Rose_Rahm</role>
+            <role>Manager_Pricing_Scott_Hanson</role>
+            <role>Rep_Pricing_Rose_Rahm</role>
+            <role>Rep_Pricing_Scott_Hansan</role>
+            <role>Rep_Pricing_Fadi_Azzo</role>
+            <role>Rep_Pricing_Laura_Robertson</role>
+            <role>Rep_Pricing_Harvey_Simmons_Level_2</role>
+            <role>Rep_Pricing_Erjon_Miruko</role>
+            <role>Rep_Pricing_Dasha_Gorshkova</role>
+            <role>Rep_Pricing_J_Heatherly</role>
+            <role>Rep_Pricing</role>
+        </roles>
+        <users>
+            <user>verification.user@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

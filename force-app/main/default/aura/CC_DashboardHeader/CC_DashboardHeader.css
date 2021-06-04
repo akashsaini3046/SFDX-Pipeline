@@ -1,0 +1,13 @@
+.THIS .fliph {
+  display: none;
+}
+.THIS .active {
+  display: block;
+}
+.THIS .inactive {
+  display: none;
+}
+.THIS .hamburger-menu {
+  margin: 24px 20px;
+  float: left;
+}

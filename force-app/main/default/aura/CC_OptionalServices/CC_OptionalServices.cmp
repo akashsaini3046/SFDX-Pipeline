@@ -1,0 +1,309 @@
+<aura:component access="global" controller="CC_CargoController">
+  <aura:attribute name="masterObjServices" type="Object"></aura:attribute>
+  <aura:attribute name="index" type="Integer"></aura:attribute>
+  <aura:attribute name="lstMarineCargoInsur" type="List" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:method
+    name="validateContainerData"
+    action="{!c.validateContainerData}"
+    access="public"
+  >
+    <aura:attribute name="isValidContainer" type="boolean" default="false" />
+  </aura:method>
+
+  <aura:method
+    name="refreshServices"
+    action="{!c.reInit}"
+    access="public"
+  ></aura:method>
+  <div class="col-sm-12 optional-services-list">
+    <lightning:accordion
+      aura:id="accordion"
+      activeSectionName=""
+      allowMultipleSectionsOpen="true"
+    >
+      <lightning:accordionSection
+        name="OptionalServices"
+        label="Optional Services"
+      >
+        <div class="row">
+          <div class="col-sm-4">
+            <label>Marine Cargo Insurance</label><br />
+            <c:CC_CustomSelectBoxCmp
+              aura:id="OppServiceTypesId"
+              containerCode="{!v.masterObjServices.Marine_Cargo_Insurance__c}"
+              options="{!v.lstMarineCargoInsur}"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack20"
+              checked="{!v.masterObjServices.Bonded_Cargo_Doc_Fee__c}"
+              value="{!v.masterObjServices.Bonded_Cargo_Doc_Fee__c}"
+              label="Bonded Cargo Document Fee"
+            />
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-6 p-t-10 without-label">
+                <lightning:input
+                  type="checkbox"
+                  aura:id="boxPack6"
+                  class="pull-left"
+                  checked="{!v.masterObjServices.Additional_Chains__c}"
+                  value="{!v.masterObjServices.Additional_Chains__c}"
+                  name="{!v.index}"
+                  onchange="{!c.handleNumberChange}"
+                />
+                <label
+                  >Additional Chains
+                  <lightning:helptext
+                    content="{!$Label.c.CC_AdditionalChainStraps}"
+                    class="nor-icon"
+                  />
+                </label>
+              </div>
+              <div class="col-3">
+                <lightning:input
+                  type="number"
+                  value="{!v.masterObjServices.Additional_Chains_Qty__c}"
+                  disabled="{!!v.masterObjServices.Additional_Chains__c}"
+                  pattern="[0-9]*"
+                  required="true"
+                  class="qty-mandatory"
+                  placeholder="Qty."
+                  aura:id="inputFieldId"
+                  min="1"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  maxlength="3"
+                ></lightning:input>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack3"
+              checked="{!v.masterObjServices.BOL_Processing_Fee__c}"
+              value="{!v.masterObjServices.BOL_Processing_Fee__c}"
+              label="BOL Processing Fee"
+            />
+          </div>
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack8"
+                            checked="{!v.masterObjServices.Do_not_Advance__c}"
+                            value="{!v.masterObjServices.Do_not_Advance__c}" label="Do not Advance" />
+                    </div>-->
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack9"
+              checked="{!v.masterObjServices.Customs_Brokerage__c}"
+              value="{!v.masterObjServices.Customs_Brokerage__c}"
+              label="Custom Brokerage"
+            />
+          </div>
+
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack2"
+              checked="{!v.masterObjServices.Labels_Placards__c}"
+              value="{!v.masterObjServices.Labels_Placards__c}"
+              label="Labels &amp; Placards"
+            />
+          </div>
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack11"
+                            checked="{!v.masterObjServices.Caricom_Invoice_Preparation__c}"
+                            value="{!v.masterObjServices.Caricom_Invoice_Preparation__c}"
+                            label="Caricom Invoice Preparation" />
+                    </div>-->
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack12"
+                            checked="{!v.masterObjServices.Do_not_Split__c}"
+                            value="{!v.masterObjServices.Do_not_Split__c}" label="Do not Split" />
+                    </div>-->
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack17"
+              checked="{!v.masterObjServices.VGM_Certification__c}"
+              value="{!v.masterObjServices.VGM_Certification__c}"
+              label="VGM Certification"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack1"
+              checked="{!v.masterObjServices.EEI_Preparation__c}"
+              value="{!v.masterObjServices.EEI_Preparation__c}"
+              label="EEI Preparation"
+            />
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-6 p-t-10 without-label">
+                <lightning:input
+                  type="checkbox"
+                  aura:id="boxPack10"
+                  class="pull-left"
+                  checked="{!v.masterObjServices.Additional_Straps__c}"
+                  value="{!v.masterObjServices.Additional_Straps__c}"
+                  onchange="{!c.handleNumberChange}"
+                />
+                <label
+                  >Additional Straps
+                  <lightning:helptext
+                    content="{!$Label.c.CC_AdditionalChainStraps}"
+                    class="nor-icon"
+                  />
+                </label>
+              </div>
+              <div class="col-3">
+                <lightning:input
+                  type="number"
+                  value="{!v.masterObjServices.Additional_Straps_Qty__c}"
+                  disabled="{!!v.masterObjServices.Additional_Straps__c}"
+                  pattern="[0-9]*"
+                  required="true"
+                  placeholder="Qty."
+                  aura:id="inputFieldId"
+                  min="1"
+                  maxlength="3"
+                  class="qty-mandatory"
+                  messageWhenPatternMismatch="Please enter whole number"
+                ></lightning:input>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack21"
+                            checked="{!v.masterObjServices.Customs_Exam__c}"
+                            value="{!v.masterObjServices.Customs_Exam__c}" label="Customs Exam" />
+                    </div>-->
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack16"
+              checked="{!v.masterObjServices.Excess_Fuel_in_Vehicles_RO_RO__c}"
+              value="{!v.masterObjServices.Excess_Fuel_in_Vehicles_RO_RO__c}"
+              label="Excess Fuel in Vehicles/RO-RO"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack13"
+                            checked="{!v.masterObjServices.Fumigate__c}" value="{!v.masterObjServices.Fumigate__c}"
+                            label="Fumigate" />
+                    </div>-->
+          <!--<div class="col-sm-3 p-t-10">
+                        <lightning:input type="checkbox" aura:id="boxPack14"
+                                         checked="{!v.masterObjServices.Additional_Tarps__c}"
+                                         value="{!v.masterObjServices.Additional_Tarps__c}"
+                                         label="Tarp" />
+                    </div>-->
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack19"
+              checked="{!v.masterObjServices.Diversion_or_Reconsignment__c}"
+              value="{!v.masterObjServices.Diversion_or_Reconsignment__c}"
+              label="Diversion or Reconsignment"
+            />
+          </div>
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack4"
+              checked="{!v.masterObjServices.LoadLast_HotHatch__c}"
+              value="{!v.masterObjServices.LoadLast_HotHatch__c}"
+              label="Load Last (Hot Hatch)"
+            />
+          </div>
+          <div class="col-sm-4 p-t-10">
+            <div class="row">
+              <div class="col-6 p-t-10">
+                <lightning:input
+                  type="checkbox"
+                  aura:id="boxPack7"
+                  checked="{!v.masterObjServices.Multiple_BoL_Fee__c}"
+                  onchange="{!c.handleNumberChange}"
+                  value="{!v.masterObjServices.Multiple_BoL_Fee__c}"
+                  label="Multiple BOL Fee"
+                />
+              </div>
+              <div class="col-3">
+                <lightning:input
+                  type="number"
+                  value="{!v.masterObjServices.Additional_BoLs__c}"
+                  disabled="{!!v.masterObjServices.Multiple_BoL_Fee__c}"
+                  pattern="[0-9]*"
+                  required="true"
+                  class="qty-mandatory"
+                  placeholder="Qty."
+                  aura:id="inputFieldId"
+                  min="1"
+                  messageWhenPatternMismatch="Please enter whole number"
+                  maxlength="3"
+                ></lightning:input>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack5"
+              checked="{!v.masterObjServices.Importer_Security_Filing__c}"
+              value="{!v.masterObjServices.Importer_Security_Filing__c}"
+              label="Importer Security Filling"
+            />
+          </div>
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack18"
+              checked="{!v.masterObjServices.Wire_Pick_End_Down_Charge__c}"
+              value="{!v.masterObjServices.Wire_Pick_End_Down_Charge__c}"
+              label="Wire Pick/End Down Charge"
+            />
+          </div>
+          <div class="col-sm-4 p-t-10">
+            <lightning:input
+              type="checkbox"
+              aura:id="boxPack15"
+              checked="{!v.masterObjServices.Late_Documentation_Fee__c}"
+              value="{!v.masterObjServices.Late_Documentation_Fee__c}"
+              label="Late Documentation Fee"
+            />
+          </div>
+          <div class="col-sm-4"></div>
+        </div>
+
+        <!--<div class="row">
+                   
+                    <div class="col-sm-3"></div>
+                    
+                    <div class="col-sm-3"></div>
+                </div>  -->
+      </lightning:accordionSection>
+    </lightning:accordion>
+  </div>
+</aura:component>

@@ -1,0 +1,22 @@
+<!--
+* Name: AD_ActualValueComponent 
+* Purpose: Lightning Component which shows actual value
+* Author: Nagarro
+* Created Date: 06-Feb-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component>
+  <div class="slds-grid slds-wrap">
+    <div
+      class="slds-size--5-of-12 slds-medium-size--4-of-12 slds-large-size--3-of-12 slds-p-top_x-small slds-p-left_none slds-p-bottom_x-small"
+    >
+      <p class="revenueValueCSS">$XXXX</p>
+    </div>
+    <div
+      class="slds-size--7-of-12 slds-medium-size--8-of-12 slds-large-size--9-of-12 slds-p-top_x-small slds-p-left_xx-large slds-float_right slds-p-right_none slds-p-bottom_x-small"
+    >
+      <p class="small-font">Actual revenue will be available shortly</p>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AnimationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <animationFrequency>sometimes</animationFrequency>
+    <developerName>Pricing_Rating_Issue</developerName>
+    <isActive>true</isActive>
+    <masterLabel>Pricing Rating Issue</masterLabel>
+    <recordTypeContext>Custom</recordTypeContext>
+    <recordTypeName>Pricing_Rate_Issue</recordTypeName>
+    <sobjectType>Case</sobjectType>
+    <targetField>Status</targetField>
+    <targetFieldChangeToValues>Closed</targetFieldChangeToValues>
+</AnimationRule>

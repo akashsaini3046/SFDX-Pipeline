@@ -1,0 +1,124 @@
+<template>
+  <div class="level-zero-dashboard">
+    <div class="dashboard-company-name">Control Center:{userAccountName}</div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="dashboard-white-containers">
+          <div class="upload-photo">
+            <div onclick={handleAvatarClick}>
+              <span class="uploadPic"></span>
+            </div>
+            <div if:true={showUploadModal}>
+              <section
+                role="dialog"
+                tabindex="-1"
+                aria-labelledby="modal-heading-01"
+                aria-modal="true"
+                aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open"
+              >
+                <div class="slds-modal__container">
+                  <!-- modal header start -->
+                  <header class="slds-modal__header">
+                    <h2
+                      id="modal-heading-01"
+                      class="slds-text-heading_medium slds-hyphenate"
+                    >
+                      Upload Profile Picture
+                    </h2>
+                  </header>
+                  <!-- modal body start -->
+                  <div
+                    class="slds-modal__content slds-p-around_medium"
+                    id="modal-content-id-1"
+                  >
+                    <lightning-file-upload
+                      label="On click of avatar"
+                      name="fileUploader"
+                      accept={acceptedFormats}
+                    >
+                    </lightning-file-upload>
+                  </div>
+                  <!-- modal footer start-->
+                  <footer class="slds-modal__footer">
+                    <button
+                      class="slds-button slds-button_neutral"
+                      onclick={closeModal}
+                    >
+                      Cancel
+                    </button>
+                  </footer>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="hello-username">
+            <h2>Hello {userFirstName}</h2>
+            <p>{message}</p>
+            <div class="slds-progress-bar">
+              <lightning-progress-bar value={progressPercent}>
+              </lightning-progress-bar>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="try-now-arrow">
+            Complete your profile
+            <div class="arrow-icon"><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="blue-bg-img track-shipments-block">
+          <h2>Track Your Shipment.</h2>
+          <p class="trackherelabel">Already have a shipment Id track here</p>
+          <div class="track-shipment-field">
+            <input
+              type="text"
+              id="text-input-id-1"
+              placeholder="Enter Tracking Id"
+              class="slds-input"
+            />
+            <div class="arrow-icon"><span></span></div>
+          </div>
+
+          <a href="#" class="link-in-bluebg"> Track multiple shipment</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="blue-bg-img purple-bg">
+          <h2>Get a quote</h2>
+          <p></p>
+
+          <div class="try-now-arrow">
+            Try Now
+            <!-- <div class="arrow-icon"><span></span></div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="blue-bg-img dark-pink-bg">
+          <h2>Route a Shipment</h2>
+          <p></p>
+          <div class="try-now-arrow">
+            Try Now
+            <!-- <div class="arrow-icon"><span></span></div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="blue-bg-img light-orange-bg">
+          <h2>Liked Crowley Veloz Portal</h2>
+          <p>Would you like to explore more</p>
+
+          <div class="try-now-arrow">
+            Request for full access
+            <!-- <div class="arrow-icon"><span></span></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

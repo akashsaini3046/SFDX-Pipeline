@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Access_to_Customer_Ops_Cases</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Access to Customer Ops Cases</label>
+        <sharedTo>
+            <group>Customer_Ops_Group</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Case_Type__c</field>
+            <operation>equals</operation>
+            <value>Booking Request,Customer Inquiry</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>Access_to_all_case_types_for_Managers</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Access to all case types for Managers</label>
+        <sharedTo>
+            <group>Service_Manager_Group</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sharing_Cases_with_internal_users</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Sharing Cases with Crowley internal users.</description>
+        <label>Sharing Cases with internal users</label>
+        <sharedTo>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>All_Crowley_Internal_Users</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Customer Care Agents Queue(Marketing-ES)</label>
+    <protected>false</protected>
+    <values>
+        <field>nfvoice__QueueId__c</field>
+        <value
+      xsi:type="xsd:string"
+    >83062d0a-86ec-4d9a-9c8c-6ce23ae8199c</value>
+    </values>
+    <values>
+        <field>nfvoice__Service_Entity__c</field>
+        <value xsi:type="xsd:string">nfvoice__Default</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Queue - Northeast</name>
+    <queueMembers>
+        <users>
+            <user>adrian.ross@crowley.com</user>
+            <user>gregory.rigdon@crowley.com</user>
+            <user>jackie.gonsalez@crowley.com</user>
+            <user>janet.ramos@crowley.com</user>
+            <user>john.kelley@crowley.com</user>
+            <user>justin.gibson@crowley.com</user>
+            <user>karben.mejia@crowley.com</user>
+            <user>kevin.jackson@crowley.com</user>
+            <user>lilly.berrios@crowley.com</user>
+            <user>lina.gonzalez@crowley.com</user>
+            <user>marketing@crowley.com</user>
+            <user>marta.antonelli@crowley.com</user>
+            <user>ned.lagoy@crowley.com</user>
+            <user>peter.noyer@crowley.com</user>
+            <user>rebecca.cobb@crowley.com</user>
+            <user>robert.goldenberg@crowley.com</user>
+            <user>shelrinda.waters@crowley.com</user>
+            <user>tishlee.rivera@crowley.com</user>
+            <user>tricia.williams@crowley.com</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+</Queue>

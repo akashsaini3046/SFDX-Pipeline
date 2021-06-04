@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ApexTestSuite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <testClassName>AccountOwnerAndMktSegmentUpdateBatchTest</testClassName>
+    <testClassName>AccountOwnerChange_Test</testClassName>
+    <testClassName>AccountTeamMemberInfoDeleteBatchTest</testClassName>
+    <testClassName>AccountTeamTriggerHandler_Test</testClassName>
+    <testClassName>AccountTriggerHandler_Test</testClassName>
+    <testClassName>ADAccountDashboardTest</testClassName>
+    <testClassName>ADTaskExportToExcelControllerTest</testClassName>
+    <testClassName>AllExternalReportClassTest</testClassName>
+    <testClassName>BusinessLocationHandler_Test</testClassName>
+    <testClassName>ContactTriggerHandlerTest</testClassName>
+    <testClassName>EmailMessageTriggerHandler_Test</testClassName>
+    <testClassName>EventTriggerHandlerTest</testClassName>
+    <testClassName>GetTaskAttachment_Test</testClassName>
+    <testClassName>GoalRelationshipTriggerHandlerTest</testClassName>
+    <testClassName>InitiativeRelationAddCmpControllerTest</testClassName>
+    <testClassName>InitiativeTriggerHandlerTest</testClassName>
+    <testClassName>LeadTriggerHandler_Test</testClassName>
+    <testClassName>NewAccountTeamBatchTest</testClassName>
+    <testClassName>OpportunitySplitControllerTest</testClassName>
+    <testClassName>OpportunityTeamMemberTriggerHandlerTest</testClassName>
+    <testClassName>OpportunityTriggerHandler_Test</testClassName>
+    <testClassName>SendEmailToPricingTeamControllerTest</testClassName>
+    <testClassName>TaskTriggerHandlerTest</testClassName>
+    <testClassName>TestDataUtility</testClassName>
+    <testClassName>Test_CaseTriggerHandler</testClassName>
+    <testClassName>Test_ContentDocumentLinkTriggerHandler</testClassName>
+    <testClassName>UserFinderUtilityTest</testClassName>
+    <testClassName>UserTriggerHandlerTest</testClassName>
+</ApexTestSuite>

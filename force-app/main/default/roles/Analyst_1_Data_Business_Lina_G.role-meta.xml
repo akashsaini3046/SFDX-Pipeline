@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseAccessLevel>Edit</caseAccessLevel>
+    <contactAccessLevel>Edit</contactAccessLevel>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>Analyst 1, Data Business -Lina G</name>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Director_Bus_Intel_Analytics_Tishlee_R</parentRole>
+</Role>

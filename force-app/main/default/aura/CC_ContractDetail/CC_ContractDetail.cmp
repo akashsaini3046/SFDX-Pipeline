@@ -1,0 +1,78 @@
+<aura:component
+  controller="CC_ContractDetailController"
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="tableJson" type="String" />
+  <aura:attribute name="records" type="List" />
+  <aura:attribute name="contract" type="Contract" />
+  <aura:attribute name="columns" type="List" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <div class="breadcrumbs-search-row block-view">
+    <div class="pull-left">
+      <lightning:breadcrumbs>
+        <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+        <lightning:breadcrumb
+          label="Accounts"
+          onclick="{!c.navigateToAccount}"
+        />
+        <lightning:breadcrumb
+          label="{!v.contract.Account.Name}"
+          onclick="{!c.navigateToAccountDetail}"
+        />
+        <lightning:breadcrumb
+          label="{!v.contract.Softship_Contract_Number__c}"
+          onclick="{!c.navigateToRecord}"
+        />
+      </lightning:breadcrumbs>
+    </div>
+  </div>
+
+  <div class="accounts-page-wrapper">
+    <div class="accountname-header block-view">
+      <div class="pull-left m-b-10">
+        Contract Number&nbsp;<b class="color-blue">{!v.contract.Name}</b>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="accounts-table block-view">
+      <div class="table-head">
+        <div class="row-data-repeat">
+          <aura:iteration items="{!v.columns}" var="col">
+            <div class="acc-col">{!col}</div>
+          </aura:iteration>
+        </div>
+      </div>
+      <div class="table-body">
+        <aura:iteration items="{!v.records}" var="affiliate" indexVar="index">
+          <div class="row-data-repeat">
+            <div class="index-col">{!index + 1}</div>
+            <aura:iteration items="{!affiliate}" var="recElement">
+              <aura:if isTrue="{!recElement.dataType == 'url'}">
+                <div
+                  class="acc-col"
+                  onclick="{!c.viewdetail}"
+                  id="{!recElement.redirectUrl}"
+                >
+                  <label>{!recElement.label}</label>
+                  <a>{!recElement.value}</a>
+                </div>
+                <aura:set attribute="else">
+                  <div class="acc-col">
+                    <label>{!recElement.label}</label>
+                    {!recElement.value}
+                  </div>
+                </aura:set>
+              </aura:if>
+            </aura:iteration>
+          </div>
+        </aura:iteration>
+      </div>
+    </div>
+  </div>
+</aura:component>

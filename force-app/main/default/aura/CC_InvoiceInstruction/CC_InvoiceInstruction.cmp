@@ -1,0 +1,126 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+  <aura:attribute name="data" type="object" />
+  <aura:attribute name="invoicingData" type="List" />
+  <aura:attribute name="totalSum" type="String" />
+  <aura:attribute
+    name="createdBySearchField"
+    type="String"
+    default="BOL LoadPort"
+  />
+  <!-- Collapse attributes-->
+  <aura:attribute name="collapseExpand" type="String" default="COLLAPSE" />
+  <aura:attribute name="isExpand" type="Boolean" default="true" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute
+    name="isViewOnly"
+    type="boolean"
+    default="false"
+    description="Used for view only"
+  />
+
+  <div class="cr_shadow">
+    <div class="row">
+      <span class="col-sm-6 pull-left">
+        <h6 class="bold">Invoicing Instructions</h6>
+      </span>
+      <aura:if isTrue="{!!v.isViewOnly}">
+        <div
+          class="col-sm-6 pull-right text-right color-blue cursor-pointer"
+          onclick="{!c.handleCollapse}"
+        >
+          {!v.collapseExpand}
+        </div>
+      </aura:if>
+    </div>
+    <hr />
+    <aura:if isTrue="{!v.isExpand}">
+      <table class="rate-det-tbl bol-invoicing-tbl">
+        <aura:iteration
+          items="{!v.invoicingData}"
+          var="chargeLine"
+          indexVar="chargeLineKey"
+        >
+          <!--<tr>
+                    <td colsplan="8" class="grey-text-9 bold"><aura:unescapedHtml value="{!chargeLine.label}"></aura:unescapedHtml></td>
+                </tr> -->
+          <thead class="bdr-0">
+            <tr>
+              <td>Freight<br /> Charges</td>
+              <td>Rated <br />As(in USD)</td>
+              <td>Per</td>
+              <td>Rate <br />Tariffs</td>
+              <td>Payment<br /> Terms</td>
+              <td>Payer<br /> Name</td>
+              <td>Payment<br /> Location</td>
+              <td>Value<br /> (in USD)</td>
+            </tr>
+          </thead>
+          <aura:iteration items="{!chargeLine.value}" var="charge">
+            <tr>
+              <td>{!charge.strFreightCharge}</td>
+              <td class="no-wrap">$ {!charge.strRatedAs}</td>
+              <td>{!charge.strPer}</td>
+              <td class="no-wrap">$ {!charge.strRateTarrif}</td>
+              <td>
+                <aura:if isTrue="{!!v.isViewOnly}">
+                  <lightning:select value="{!charge.strPaymentTerm}">
+                    <option value="">Select one..</option>
+                    <option value="CC">COLLECT</option>
+                    <option value="PP">PREPAID</option>
+                  </lightning:select>
+                  <aura:set attribute="else">
+                    <aura:if isTrue="{!charge.strPaymentTerm == 'CC'}">
+                      COLLECT
+                    </aura:if>
+                    <aura:if isTrue="{!charge.strPaymentTerm == 'PP'}">
+                      PREPAID
+                    </aura:if>
+                  </aura:set>
+                </aura:if>
+              </td>
+              <td class="without-label">
+                <aura:if isTrue="{!!v.isViewOnly}">
+                  <c:CC_CustomLookupInput
+                    placeholder="Search"
+                    requiredInput="false"
+                    functionality="BOLListFilter:Account"
+                    SearchKeyWord="{!charge.strPayerName}"
+                  />
+                  <aura:set attribute="else"> {!charge.strPayerName} </aura:set>
+                </aura:if>
+              </td>
+              <td class="without-label">
+                <aura:if isTrue="{!!v.isViewOnly}">
+                  <c:CC_CustomLookupInput
+                    placeholder="Search"
+                    requiredInput="false"
+                    functionality="BOLListFilter:LoadPort"
+                    SearchKeyWord="{!charge.strPaymentLocation}"
+                    displayType="{!v.createdBySearchField}"
+                  />
+                  <aura:set attribute="else">
+                    {!charge.strPaymentLocation}
+                  </aura:set>
+                </aura:if>
+              </td>
+              <td class="no-wrap">$ {!charge.strValue}</td>
+            </tr>
+          </aura:iteration>
+          <thead class="bdr-0">
+            <tr>
+              <td colspan="6"></td>
+              <td class="text-center"><h6 class="bold">Total</h6></td>
+              <td align="left">
+                <h6 class="bold">$ {!chargeLine.amount}</h6>
+              </td>
+            </tr>
+          </thead>
+          <tr>
+            <td colspan="8"></td>
+          </tr>
+        </aura:iteration>
+        <!-- <div>Gross Total {!v.totalSum}</div> -->
+      </table>
+    </aura:if>
+  </div>
+</aura:component>

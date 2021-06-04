@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>FindARouteQA</label>
+    <protected>false</protected>
+    <values>
+        <field>Baseurl__c</field>
+        <value xsi:type="xsd:string">https://qa.api.crowley.com</value>
+    </values>
+    <values>
+        <field>Certificate_Name__c</field>
+        <value xsi:nil="true" />
+    </values>
+    <values>
+        <field>Client_Id__c</field>
+        <value xsi:type="xsd:string">7c31cc4c09784134b66243fd81bfbdb2</value>
+    </values>
+    <values>
+        <field>Client_Secret__c</field>
+        <value xsi:type="xsd:string">D085A1eaD04d4D218791Ced64B60aCf4</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event template" access="GLOBAL">
+    <aura:attribute name="state" type="string"/>
+    <aura:attribute name="key" type="string"/>
+    <aura:attribute name="message" type="string"/>
+</aura:event>

@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT" description="Pagination">
+
+    <aura:attribute name="offset" type="Integer"/>
+    <aura:attribute name="limit" type="Integer"/>
+    <aura:attribute name="startRange" type="Integer"/>
+    <aura:attribute name="showRecords" type="Integer"/>
+
+</aura:event>

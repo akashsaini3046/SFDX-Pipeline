@@ -1,0 +1,33 @@
+<aura:component implements="forceCommunity:themeLayout">
+  <ltng:require
+    styles="{! $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/css/bootstrap.min.css'}"
+    scripts="{!join(',', 
+                           $Resource.jquery224 , 
+                           $Resource.customJs , 
+                           $Resource.bootstrap337 + '/bootstrap-4.3.1-dist/js/bootstrap.min.js')
+    }"
+  />
+  <aura:attribute name="headerPanel" type="Aura.Component[]" />
+  <aura:attribute name="sidebar" type="Aura.Component[]" />
+  <aura:attribute name="footerPanel" type="Aura.Component[]" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <div class="container">
+    <div class="header">{!v.headerPanel}</div>
+    <div class="row-content">
+      <!--<div id="verticalMenuDiv" class="side-menu sidebar">
+                {!v.sidebar} 
+            </div>-->
+      <div
+        aura:id="ContentDiv"
+        id="DashboardContentDiv"
+        class="dasboard-content standard-container"
+      >
+        {!v.body}
+        <div class="clearfix"></div>
+      </div>
+      <div class="footer">{!v.footerPanel}</div>
+    </div>
+  </div>
+</aura:component>

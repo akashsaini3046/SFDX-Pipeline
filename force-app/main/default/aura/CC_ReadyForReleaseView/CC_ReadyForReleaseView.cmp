@@ -1,0 +1,249 @@
+<aura:component
+  controller="BOLEditController"
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute name="strBookingId" type="String" />
+  <aura:attribute name="strBolId" type="String" />
+  <aura:attribute name="BOL" type="object" />
+  <aura:attribute name="ShipperList" type="LIST" />
+  <aura:attribute name="ConsigneeList" type="LIST" />
+  <aura:attribute name="currentDate" type="Date" />
+  <aura:attribute name="strBolName" type="String" />
+  <aura:attribute type="Boolean" name="boolSpinner" default="false" />
+  <aura:attribute name="showSendEmail" type="boolean" default="false" />
+  <aura:attribute name="headerVal" type="String" />
+  <aura:attribute name="typeOfEmail" type="String" />
+  <aura:attribute name="emailTemplateName" type="String" />
+  <aura:attribute
+    name="componentName"
+    type="string"
+    default="CC_BillofLading"
+  />
+
+  <ltng:require styles="{!$Resource.NewStyle}" />
+  <lightning:navigation aura:id="navigationService" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+
+  <div class="breadcrumbs-search-row block-view">
+    <div class="pull-left">
+      <h5>Bill of Lading</h5>
+      <lightning:breadcrumbs>
+        <lightning:breadcrumb label="Home" onclick="{!c.navigateToHome}" />
+        <lightning:breadcrumb
+          label="Bills of Lading"
+          onclick="{!c.navigateToBOL}"
+        />
+        <lightning:breadcrumb
+          label="{!v.BOL.customerReference.billOfLadingNumber}"
+        />
+      </lightning:breadcrumbs>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="cr-head breadcrumbs-search-row block-view">
+    <div class="pull-left">
+      <h5>
+        <span class="color-blue">
+          <b>{!v.BOL.customerReference.billOfLadingNumber}</b>
+        </span>
+        <span class="grey-text-9 status-icon">
+          <aura:if isTrue="{!v.BOL.customerReference.bolStatus == 'RR'}">
+            <span class="greenText"> BOL for Release</span>
+            <aura:set attribute="else">
+              {!v.BOL.customerReference.bolStatus}
+            </aura:set>
+          </aura:if>
+        </span>
+      </h5>
+    </div>
+
+    <div class="pull-right createquote-actions m-0">
+      <aura:if isTrue="{!v.BOL.customerReference.bolStatus == 'RR'}">
+        <lightning:button
+          variant="brand"
+          class="width-unset slds-button_brand"
+          label="Email"
+          onclick="{!c.handleEmailModal}"
+        />
+        <lightning:button
+          variant="brand"
+          class="width-unset slds-button_brand m-l-10"
+          label="DOWNLOAD"
+          onclick="{!c.handleDownloadPDF}"
+        />
+      </aura:if>
+
+      <aura:if
+        isTrue="{!v.BOL.customerReference.bolStatus == 'BOL FOR REVIEW'}"
+      >
+        <lightning:button
+          variant="brand"
+          class="width-unset slds-button_brand m-l-10"
+          label="APPROVE"
+        />
+      </aura:if>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="cr_shadow">
+    <div class="row">
+      <div class="col-sm-12">
+        <!--SHIPPER-->
+        <div class="row">
+          <aura:if isTrue="{!not(empty(v.BOL))}">
+            <aura:iteration items="{!v.ShipperList}" var="shipper">
+              <c:CC_BolCommonPartyReview
+                data="{!shipper}"
+                heading="{!'(2) SHIPPER (Complete Name, Address'+' &amp; '+ 'ZipCode)'}"
+                header="Shipper"
+              />
+            </aura:iteration>
+          </aura:if>
+          <div aura:id="bookingInfo" class="col-sm-6 bol-rel-boxborder-4black">
+            <aura:if isTrue="{!not(empty(v.BOL))}">
+              <c:CC_BolBookingDetailReview data="{!v.BOL}" />
+            </aura:if>
+          </div>
+        </div>
+        <div class="row">
+          <!--CONSIGNEE-->
+          <aura:if isTrue="{!not(empty(v.BOL))}">
+            <aura:iteration items="{!v.ConsigneeList}" var="consignee">
+              <c:CC_BolCommonPartyReview
+                data="{!consignee}"
+                heading="{!'(5) CONSIGNEE (Complete Name, Address'+' &amp; '+ 'ZipCode)'}"
+                header="Consignee"
+              />
+            </aura:iteration>
+          </aura:if>
+          <!--Farwarder-->
+          <aura:if isTrue="{!not(empty(v.BOL))}">
+            <aura:iteration items="{!v.BOL.forwarderLst}" var="forwarder">
+              <c:CC_BolCommonPartyReview
+                data="{!forwarder}"
+                heading="{!'(6) FORWARDING AGENT (Complete Name, Address'+' &amp; '+ 'ZipCode)'}"
+                header="ForwardingAgent"
+              />
+            </aura:iteration>
+          </aura:if>
+        </div>
+
+        <!--Notify Party-->
+        <div class="row">
+          <aura:if isTrue="{!not(empty(v.BOL))}">
+            <aura:iteration items="{!v.BOL.notifyPartyLst}" var="notifyParty">
+              <c:CC_BolCommonPartyReview
+                data="{!notifyParty}"
+                heading="{!'(7) NOTIFY PARTY (Complete Name, Address'+' &amp; '+ 'ZipCode)'}"
+                header="NotifyParty"
+              />
+            </aura:iteration>
+          </aura:if>
+          <!--Also Notify Party-->
+          <aura:if isTrue="{!not(empty(v.BOL))}">
+            <aura:iteration
+              items="{!v.BOL.alsoNotifyPartyLst}"
+              var="alsoNotifyParty"
+            >
+              <c:CC_BolCommonPartyReview
+                data="{!alsoNotifyParty}"
+                heading="{!'(8) ALSO NOTIFY - ROUTING'+' &amp; '+ 'INSTRUCTIONS'}"
+                header="AlsoNotifyParty"
+                routingData="{!v.BOL.routingInstructions}"
+              />
+            </aura:iteration>
+          </aura:if>
+        </div>
+        <!--div class="row"-->
+        <aura:if isTrue="{!not(empty(v.BOL))}">
+          <c:CC_BOLRouteDetailView data="{!v.BOL}" />
+        </aura:if>
+        <!--Shippers Particulars-->
+        <!--/div-->
+        <aura:if isTrue="{!not(empty(v.BOL))}">
+          <c:CC_ShipperParticularsView data="{!v.BOL}" />
+        </aura:if>
+        <!--Invoicing Instructions-->
+        <div class="row">
+          <div id="invoicingInstructions">
+            <aura:if isTrue="{!not(empty(v.BOL.chargeLine))}">
+              <c:CC_InvoiceInstructionView data="{!v.BOL.chargeLine}" />
+            </aura:if>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-sm-12 bol-rel-boxborder-4black"
+            style="border-top: 0px none"
+          >
+            <div class="row">
+              <div class="col-sm-12">
+                <br />
+                <span class="bol-rel-label text-uppercase">Declaration :</span>
+                <!--<div class="separator-line"></div>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <span style="font-weight: normal"
+                  >RECEIVED BY THE CARRIER AS DESCRIBED ON THE REVERSE HEREOF
+                  FROM THE ABOVE NAMED SHIPPER. THE GOODS, OR PACKAGES SAID TO
+                  CONTAIN GOODS, HEREIN DESCRIBED ABOVE, IN APPARENT GOOD ORDER
+                  AND CONDITION UNLESS OTHERWISE NOTED HEREON, TO BE HELD AND
+                  TRANSPORTED SUBJECT TO ALL WRITTEN, TYPED, PRINTED OR STAMPED
+                  PROVISIONS OF THIS BILL OF LADING. ON THIS AND ON THE REVERSE
+                  SIDE HEREOF, TO THE PORT OR PLACE OF DISCHARGE NAMED ABOVE OR
+                  SO NEAR THERE UNTO AS THE SHIP CAN ALWAYS SAFELY GET AND LEAVE
+                  ALWAYS AFLOAT AT ALL STAGES AND CONDITIONS OF WATER AND
+                  WEATHER AND THERE TO BE DELIVERED OR TRANSHIPPED ON PAYMENT OF
+                  THE CHARGES HEREON.
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <br />
+                <p>
+                  <span>DATED :</span>
+                  <b>
+                    <!--lightning:formattedDateTime class="text-uppercase" value="{!v.currentDate}" /-->
+                  </b>
+                </p>
+                <p><span>SIGNED ON BEHALF OF CARRIER :</span> <b></b></p>
+                <p><span>BY :</span> <b></b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aura:if isTrue="{!v.showSendEmail}">
+    <c:CC_BOLShippingInstructionEmail
+      bookingId="{!v.strBookingId}"
+      showEmail="{!v.showSendEmail}"
+      bolId="{!v.strBolId}"
+      bolName="{!v.strBolName}"
+      header="{!v.headerVal}"
+      typeOfEmail="{!v.typeOfEmail}"
+      emailTemplateName="{!v.emailTemplateName}"
+    />
+  </aura:if>
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

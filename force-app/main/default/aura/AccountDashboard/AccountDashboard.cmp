@@ -1,0 +1,100 @@
+<!--
+* Name: AccountDashboard 
+* Purpose: Lightning Component which acts as parent to hold other child components
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component
+  controller="ADAccountDashboardController"
+  implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId"
+>
+  <aura:attribute name="idAccountId" type="Id" />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute name="boolSpinner" type="Boolean" default="false" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <!-- including filter component -->
+  <div aura:id="filterComponentDiv"></div>
+
+  <div class="slds-grid slds-wrap">
+    <div
+      class="slds-size--8-of-12 slds-medium-size--8-of-12 slds-large-size--8-of-12 slds-p-right_small slds-border_right"
+    >
+      <!-- including opportunity chart component -->
+      <div aura:id="opportunityChartComponentDiv"></div>
+    </div>
+    <div
+      class="slds-size--4-of-12 slds-medium-size--4-of-12 slds-large-size--4-of-12 slds-p-right_small slds-p-left_small"
+    >
+      <div
+        class="slds-grid slds-wrap"
+        style="
+          height: 265px !important;
+          max-height: 265px !important;
+          min-height: 265px !important;
+        "
+      >
+        <div
+          class="slds-size--12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12 slds-p-right_small slds-p-left_small"
+        >
+          <!-- including opportunity conversion rate component -->
+          <div aura:id="opportunityConversionRateComponentDiv"></div>
+          <hr style="margin-top: 5% !important; margin-bottom: 5% !important" />
+        </div>
+
+        <div
+          class="slds-size--12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12 slds-p-right_small slds-p-left_small"
+        >
+          <!-- including Actual vs Normalised component -->
+          <div aura:id="actualVsNormalisedRevenue"></div>
+          <hr style="margin-top: 5% !important; margin-bottom: 2% !important" />
+        </div>
+
+        <div
+          class="slds-size--12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12 slds-p-right_small slds-p-left_small"
+        >
+          <!-- including Actual Value component -->
+          <div aura:id="actualValue"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="hr-margin-top hr-margin-bottom" />
+
+  <div>
+    <div class="slds-m-left_small slds-m-bottom_x-small">
+      <p class="slds activityHeading">Activities</p>
+    </div>
+    <div class="slds-grid slds-wrap">
+      <div
+        class="slds-size--12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12 slds-p-right_small slds-p-left_small"
+      >
+        <!-- including opportunity conversion rate component -->
+        <div aura:id="taskComponentDiv"></div>
+      </div>
+
+      <div
+        class="slds-size--6-of-12 slds-medium-size--6-of-12 slds-large-size--6-of-12 slds-p-right_small slds-p-left_small slds-border_left"
+        style="display: none"
+      >
+        <!-- <div aura:id="notesComponentDiv"></div> -->
+      </div>
+    </div>
+  </div>
+
+  <aura:if isTrue="{!v.boolSpinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+      <div
+        class="slds-spinner--brand slds-spinner slds-spinner--large slds-is-relative"
+        role="alert"
+      >
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

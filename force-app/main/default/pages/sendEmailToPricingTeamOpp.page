@@ -1,0 +1,64 @@
+<!--
+* Name: sendEmailToPricingTeamOpp
+* Purpose: Used to select email ids of the pricing team for sending email request.
+* Author: Nagarro
+-->
+<apex:page
+  standardController="Opportunity"
+  extensions="SendEmailToPricingTeamController"
+  showHeader="false"
+  sidebar="false"
+  lightningStylesheets="true"
+>
+  <apex:slds />
+  <apex:form>
+    <style>
+      .messageText {
+        display: inline-block;
+        margin-right: 800px;
+      }
+    </style>
+    <script>
+      function afterEmailSend() {
+        console.log("Inside email sent ");
+        redirectToOpportunity();
+      }
+    </script>
+    <apex:pageBlock>
+      <apex:actionFunction action="{!redirect}" name="redirectToOpportunity" />
+      <apex:sectionHeader title="Send Email To Pricing Team" />
+      <apex:pageMessages />
+
+      <apex:pageBlockSection dir="LTR">
+        <apex:outputField value="{!Opportunity.name}" />
+        <apex:outputField value="{!Opportunity.AccountId}" />
+        <apex:outputField value="{!Opportunity.Contact__c}" />
+        <apex:outputField
+          value="{!Opportunity.Proposal_Submission_Due_Date__c}"
+        />
+        <apex:inputField value="{!Opportunity.PricingTeamEmailPicklist__c}" />
+        <apex:outputField value="{!Opportunity.Service_Type__c}" />
+      </apex:pageBlockSection>
+
+      <apex:pageblockButtons location="bottom">
+        <apex:commandButton value="Send Email" action="{!sendEmail}" />
+        <apex:commandButton
+          value="Cancel"
+          action="{!URLFOR($Action.Opportunity.View,Opportunity.Id)}"
+          immediate="true"
+        />
+      </apex:pageblockButtons>
+    </apex:pageBlock>
+    <script>
+      var imsg = "{!emailMessageSent}";
+
+      console.log(imsg);
+      if (imsg == "true") {
+        //alert(imsg);
+        setTimeout(function () {
+          afterEmailSend();
+        }, 3000);
+      }
+    </script>
+  </apex:form>
+</apex:page>

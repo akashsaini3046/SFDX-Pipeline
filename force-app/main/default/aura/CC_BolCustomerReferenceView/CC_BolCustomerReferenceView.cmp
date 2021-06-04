@@ -1,0 +1,117 @@
+<aura:component>
+  <aura:attribute name="BOL" type="object" access="global" />
+  <aura:attribute name="header" type="string" />
+  <div class="cr_shadow">
+    <h6 class="bold">{!v.header}</h6>
+    <hr />
+    <div class="row">
+      <div class="col-sm-4">
+        <div>
+          <span class="bol-view-labels">Customer Sent Date :</span>
+          <b class="bol-view-values"
+            ><lightning:formattedDateTime value="{!v.BOL.sentDate}"
+          /></b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Contract Number :</span>
+          <b class="bol-view-values">{!v.BOL.contractNumber}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">SCAC Code :</span>
+          <b class="bol-view-values">{!v.BOL.scacCode}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Cargo Available for Transport :</span>
+          <b class="bol-view-values"
+            ><lightning:formattedDateTime
+              value="{!v.BOL.cargoAvailableForTransportDate}"
+          /></b>
+        </div>
+        <aura:iteration items="{!v.BOL.inbondList}" var="inb" indexVar="index">
+          <div>
+            <span class="bol-view-labels">Inbond Type :</span>
+            <b class="bol-view-values">{!inb.inbondType}</b>
+          </div>
+          <div>
+            <span class="bol-view-labels">Inbond Number :</span>
+            <b class="bol-view-values">{!inb.inbondNumber}</b>
+          </div>
+        </aura:iteration>
+      </div>
+      <div class="col-sm-4">
+        <div>
+          <span class="bol-view-labels">Booking Number :</span>
+          <b class="bol-view-values">{!v.BOL.bookingNumber}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">ITN Number :</span>
+          <b class="bol-view-values">
+            <aura:iteration
+              items="{!v.BOL.itnNumberLst}"
+              var="itn"
+              indexVar="index"
+            >
+              {!itn.strItnNumber}<br />
+            </aura:iteration>
+          </b>
+        </div>
+        <aura:iteration items="{!v.BOL.partyList}" var="cusref">
+          <aura:if isTrue="{!cusref.partyType == 'CON'}">
+            <div>
+              <span class="bol-view-labels">Consignee Ref. No. :</span>
+              <b class="bol-view-values">{!cusref.referenceNumber}</b>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!cusref.partyType == 'SHP'}">
+            <div>
+              <span class="bol-view-labels">Exporter Ref. No. :</span>
+              <b class="bol-view-values">{!cusref.referenceNumber}</b>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!cusref.partyType == 'NO2'}">
+            <div>
+              <span class="bol-view-labels">Also Notify Ref. No. :</span>
+              <b class="bol-view-values">{!cusref.referenceNumber}</b>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!cusref.partyType == 'NOT'}">
+            <div>
+              <span class="bol-view-labels">Notify Ref. No. :</span>
+              <b class="bol-view-values">{!cusref.referenceNumber}</b>
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!cusref.partyType == 'FOR'}">
+            <div>
+              <span class="bol-view-labels">Forwarder Ref. No. :</span>
+              <b class="bol-view-values">{!cusref.referenceNumber}</b>
+            </div>
+          </aura:if>
+        </aura:iteration>
+      </div>
+      <div class="col-sm-4">
+        <div>
+          <lightning:input
+            type="checkbox"
+            label="EEI preparation support required "
+            checked="{!v.BOL.eeiSupport}"
+            disabled="true"
+          />
+        </div>
+        <div>
+          <span class="bol-view-labels">EIN Number :</span>
+          <b class="bol-view-values">{!v.BOL.einNumber}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Exemption Clause :</span>
+          <b class="bol-view-values">{!v.BOL.exemptionClause}</b>
+        </div>
+        <div>
+          <span class="bol-view-labels">Option 4 Date :</span>
+          <b class="bol-view-values"
+            ><lightning:formattedDateTime value="{!v.BOL.option4Date}"
+          /></b>
+        </div>
+      </div>
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldOverrides>
+        <field>ToIds</field>
+        <formula>Case.ContactId</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>ValidatedFromAddress</field>
+        <formula
+    >IF( Case.RecordType.Id  =  $Label.B_L_Revision_record_type , $Label.BL_Revision_From_Address  ,  IF(Case.RecordType.Id  = $Label.Rating_Issue_record_type ,  $Label.Pricing_Rate_Issue_From_Address , 
+IF(Case.RecordType.Id = $Label.Booking_Request_Record_Type &amp;&amp; ISPICKVAL(Case.Origin, &apos;EDI/GT NEXUS&apos;), $Label.Booking_Services_From_Address, IF(Case.RecordType.Id = $Label.Booking_Request_Record_Type , $Label.Booking_From_Address ,IF(Case.RecordType.Id = $Label.Customer_Inquiry_Record_Type &amp;&amp;  Case.Arrival_Notice_Case__c,   $Label.Arrival_Notice_Email_address,IF(Case.RecordType.Id = $Label.Customer_Inquiry_Record_Type,$Label.Customer_Inquiry_From_Address,$User.Email) ) ) )))</formula>
+    </fieldOverrides>
+    <optionsCreateFeedItem>true</optionsCreateFeedItem>
+    <quickActionLayout>
+        <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
+        <quickActionLayoutColumns>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>ValidatedFromAddress</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>ToAddress</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>CcAddress</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>BccAddress</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Subject</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>HtmlBody</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+        </quickActionLayoutColumns>
+        <quickActionLayoutColumns />
+    </quickActionLayout>
+    <standardLabel>SendEmail</standardLabel>
+    <targetObject>EmailMessage</targetObject>
+    <targetParentField>Parent</targetParentField>
+    <type>SendEmail</type>
+</QuickAction>

@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Event template">
+
+    <aura:attribute name="quoteIds" type="List" />
+    <aura:attribute name="sendQuoteEmailId" type="String" />
+	<aura:attribute name="action" type="String" />
+</aura:event>

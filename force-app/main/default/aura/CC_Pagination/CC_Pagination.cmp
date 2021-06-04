@@ -1,0 +1,54 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute name="totalRange" type="Integer" default="50" />
+  <aura:attribute name="startRange" type="Integer" default="30" />
+  <aura:attribute name="endRange" type="Integer" />
+  <aura:attribute name="showRecords" type="Integer" default="9" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:method name="callDoInit" action="{!c.doInit}" access="PUBLIC" />
+
+  <aura:registerEvent name="paginationEvent" type="c:CC_PaginationEvt" />
+  <div class="pull-right">
+    <!-- <span class="pull-left mobile-hide">View</span> -->
+    <span class="pull-left">
+      <span class="pull-left">View</span>
+      <lightning:select
+        class="show-numbers pull-left without-label"
+        aura:id="showRecords"
+        name="showRecords"
+        label=""
+        value="{! v.showRecords }"
+        onchange="{!c.handleShowRecords}"
+      >
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </lightning:select>
+    </span>
+    <span class="page-range mobile-hide"
+      >{!v.startRange} - {!if( lessthan(v.endRange, v.totalRange), v.endRange,
+      v.totalRange)} of {!v.totalRange}</span
+    >
+    <div class="pull-right">
+      <lightning:button
+        class="pagination-left slds-button_destructive"
+        label=""
+        iconName="utility:chevronleft"
+        onclick="{! c.handlePrevious}"
+        disabled="{!if(or(v.startRange == 1, lessthan(v.startRange, 1)), true, false)}"
+      />
+      <lightning:button
+        class="pagination-right slds-button_destructive"
+        label=""
+        iconName="utility:chevronright"
+        onclick="{! c.handleNext}"
+        disabled="{!if(or(v.endRange == v.totalRange, greaterthan(v.endRange, v.totalRange)), true, false)}"
+      />
+    </div>
+  </div>
+</aura:component>

@@ -1,0 +1,101 @@
+<aura:component>
+  <aura:attribute name="bookingFieldNameValue" type="Map" />
+  <aura:attribute name="bookingServiceTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingIMTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingTMSTypeFieldNameValue" type="Map" />
+  <aura:attribute name="bookingCustomerOriginFieldNameValue" type="Map" />
+  <aura:attribute name="bookingCustomerDestinationFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectingCarrierFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectAtLocFieldNameValue" type="Map" />
+  <aura:attribute name="bookingConnectToLocFieldNameValue" type="Map" />
+  <aura:attribute name="displayRates" type="boolean" default="false" />
+  <aura:attribute name="ratings" type="List" default="" />
+  <aura:attribute name="ratingsTotal" type="Object" default="" />
+
+  <lightning:layout multipleRows="true">
+    <lightning:layoutItem size="12" class="center-align">
+      <b> GENERAL DETAIL</b>
+    </lightning:layoutItem>
+    <br /><br />
+    <aura:iteration items="{!v.bookingFieldNameValue}" var="nameValue">
+      <lightning:layoutItem size="2" class="right-wrap">
+        <b>{!nameValue.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!nameValue.value} </lightning:layoutItem>
+    </aura:iteration>
+    <br /><br />
+    <lightning:layoutItem size="12" class="center-align">
+      <b> OTHER DETAILS(SERVICE, IM, TMS) </b>
+    </lightning:layoutItem>
+    <br /><br />
+    <aura:iteration items="{!v.bookingServiceTypeFieldNameValue}" var="item">
+      <lightning:layoutItem size="2" class="right-wrap">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <aura:iteration items="{!v.bookingIMTypeFieldNameValue}" var="item">
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <aura:iteration items="{!v.bookingTMSTypeFieldNameValue}" var="item">
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <br /><br />
+    <lightning:layoutItem size="12" class="center-align">
+      <b> ORIGIN </b>
+    </lightning:layoutItem>
+    <br /><br />
+    <aura:iteration items="{!v.bookingCustomerOriginFieldNameValue}" var="item">
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <br /><br />
+    <lightning:layoutItem size="12" class="center-align">
+      <b> DESTINATION </b>
+    </lightning:layoutItem>
+    <br /><br />
+    <aura:iteration
+      items="{!v.bookingCustomerDestinationFieldNameValue}"
+      var="item"
+    >
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <br /><br />
+    <lightning:layoutItem size="12" class="center-align">
+      <b> CONNECTING DETAILS </b>
+    </lightning:layoutItem>
+    <br /><br />
+    <aura:iteration items="{!v.bookingConnectAtLocFieldNameValue}" var="item">
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <aura:iteration items="{!v.bookingConnectToLocFieldNameValue}" var="item">
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+    <aura:iteration
+      items="{!v.bookingConnectingCarrierFieldNameValue}"
+      var="item"
+    >
+      <lightning:layoutItem size="2">
+        <b>{!item.label}:</b>
+      </lightning:layoutItem>
+      <lightning:layoutItem size="2"> {!item.value} </lightning:layoutItem>
+    </aura:iteration>
+  </lightning:layout>
+</aura:component>

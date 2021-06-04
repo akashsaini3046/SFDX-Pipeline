@@ -1,0 +1,176 @@
+<aura:component access="global">
+  <!-- Filter Attributes -->
+  <aura:attribute
+    name="showFilterAndSearchButton"
+    type="boolean"
+    default="true"
+  />
+  <aura:attribute
+    name="showCreateShippingInstructionButton"
+    type="boolean"
+    default="true"
+  />
+  <aura:attribute
+    name="filterButtonLabel"
+    type="String"
+    default="Use Filter(s)"
+  />
+  <aura:attribute name="showFilters" type="boolean" default="false" />
+  <aura:attribute name="bolSelectedAccId" type="String" />
+  <aura:attribute name="bolSelectedBookingId" type="String" />
+  <aura:attribute name="bolSelectedUserId" type="String" />
+  <aura:attribute name="bolSailDateFrom" type="String" />
+  <aura:attribute name="bolSailDateTo" type="String" />
+  <aura:attribute name="showClearAllButton" type="boolean" default="true" />
+  <aura:attribute name="searchTheList" type="string" />
+
+  <!-- Filter input component attributes-->
+  <aura:attribute name="accountSearchKeyWord" type="String" />
+  <aura:attribute name="bookingSearchKeyWord" type="String" />
+  <aura:attribute name="createdBySearchKeyWord" type="String" />
+  <aura:attribute
+    name="bookingSearchField"
+    type="String"
+    default="BOL BookingNumber"
+  />
+  <aura:attribute
+    name="createdBySearchField"
+    type="String"
+    default="BOL LoadPort"
+  />
+  <aura:attribute
+    name="bolLoadPortSearchField"
+    type="String"
+    default="BOL LoadPort"
+  />
+  <aura:attribute name="accountDetailPage" type="Boolean" default="false" />
+
+  <!-- Event registration -->
+  <aura:registerEvent name="searchListEvent" type="c:CC_SearchListEvt" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeSelectedItemId}"
+  />
+  <aura:registerEvent name="filterEvent" type="c:CC_FilterEvt" />
+
+  <lightning:navigation aura:id="navigationService" />
+
+  <!-- Filter and search -->
+
+  <div class="row">
+    <aura:if isTrue="{!v.showFilterAndSearchButton}">
+      <div class="col-2">
+        <lightning:button
+          label="{!v.filterButtonLabel}"
+          iconName="utility:filterList"
+          onclick="{! c.handleFilter}"
+          class="slds-button_destructive"
+        />
+      </div>
+
+      <div class="col-4">
+        <div
+          aura:id="searchDiv"
+          class="without-label mobile-hide"
+          onkeyup="{!c.handleSearchListEnterPress}"
+        >
+          <lightning:input
+            aura:id="enter-search"
+            name="searchTheList"
+            placeholder="Search the list"
+            type="search"
+            onblur="{!c.handleSearchList}"
+          />
+        </div>
+      </div>
+    </aura:if>
+
+    <!--<aura:if isTrue="{!v.showCreateShippingInstructionButton}">
+            <div class="col-3">
+                <lightning:button label="CREATE SHIPPING INSTRUCTIONS" variant="brand"
+                    onclick="{!c.navigateToCreateShipInst}" />
+            </div>
+
+        </aura:if>-->
+  </div>
+
+  <!-- Filters-->
+  <aura:if isTrue="{!v.showFilters}">
+    <div class="filter-container block-view">
+      <aura:if isTrue="{!!v.accountDetailPage}">
+        <div class="filter-columns without-label">
+          <label>Account</label>
+          <c:CC_CustomLookupInput
+            placeholder="Search"
+            requiredInput="false"
+            functionality="BOLListFilter:Account"
+            SearchKeyWord="{!v.accountSearchKeyWord}"
+          />
+        </div>
+      </aura:if>
+
+      <div class="filter-columns without-label">
+        <label>Booking Number</label>
+        <c:CC_CustomLookupInput
+          placeholder="Search"
+          requiredInput="false"
+          functionality="BOLListFilter:Booking"
+          SearchKeyWord="{!v.bookingSearchKeyWord}"
+          displayType="{!v.bookingSearchField}"
+        />
+      </div>
+
+      <div class="filter-columns without-label filter-origin-dest-col">
+        <label>Port of Load</label>
+        <c:CC_CustomLookupInput
+          placeholder="Search"
+          requiredInput="false"
+          functionality="BOLListFilter:LoadPort"
+          SearchKeyWord="{!v.createdBySearchKeyWord}"
+          displayType="{!v.createdBySearchField}"
+        />
+      </div>
+
+      <div class="filter-columns without-label">
+        <label>Sail Date</label>
+        <lightning:input
+          placeholder="From"
+          aura:id="dateBOLSailFrom"
+          name="dateBOLSailFrom"
+          value="{!v.bolSailDateFrom}"
+          type="date"
+        />
+      </div>
+      <div class="filter-columns without-label">
+        <label></label>
+        <lightning:input
+          placeholder="To"
+          aura:id="dateBOLSailTo"
+          name="dateBOLSailTo"
+          label="&nbsp;"
+          value="{!v.bolSailDateTo}"
+          type="date"
+        />
+      </div>
+
+      <div class="filter-apply-clear-button">
+        <span class="clear-apply-btn">
+          <lightning:button
+            class="pull-left max-w-100 slds-button_neutral slds-button_destructive"
+            label="Apply"
+            variant="brand"
+            onclick="{!c.handleApplyFilter}"
+          />
+          <aura:if isTrue="{!v.showClearAllButton}">
+            <lightning:button
+              class="pull-left max-w-100 slds-button_neutral"
+              label="Clear All"
+              onclick="{!c.handleClearAll}"
+            />
+          </aura:if>
+        </span>
+      </div>
+    </div>
+  </aura:if>
+</aura:component>

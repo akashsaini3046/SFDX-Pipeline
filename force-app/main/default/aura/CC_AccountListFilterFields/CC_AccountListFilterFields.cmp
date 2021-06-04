@@ -1,0 +1,104 @@
+<aura:component
+  implements="force:appHostable,lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable"
+  access="global"
+>
+  <aura:attribute name="cvifId" type="string" />
+  <aura:attribute name="parentCvifId" type="string" />
+  <aura:attribute name="accountOwner" type="string" />
+  <aura:attribute name="salesRepRegions" type="string" />
+  <aura:attribute name="accountTypes" type="List" />
+  <aura:attribute name="accountType" type="string" />
+  <aura:attribute name="searchRegion" type="string" />
+  <aura:attribute name="searchAccountId" type="String" />
+  <aura:attribute name="searchparentAccountId" type="String" />
+  <aura:attribute name="searchAccountName" type="String" />
+  <aura:attribute name="searchparentAccountName" type="String" />
+
+  <aura:registerEvent name="filterEvent" type="c:CC_FilterEvt" />
+  <aura:handler
+    name="selectedItemEvent"
+    event="c:CC_SelectedItemEvt"
+    action="{!c.changeItemId}"
+  />
+
+  <div class="filter-container block-view">
+    <div class="filter-columns without-label">
+      <label>Account Name</label>
+      <c:CC_CustomLookupInput
+        placeholder="Search"
+        requiredInput="false"
+        SearchKeyWord="{!v.searchAccountName}"
+        functionality="AccountFilter:AccountName"
+      />
+    </div>
+    <div class="filter-columns without-label">
+      <label>CVIF ID</label>
+      <lightning:input
+        aura:id="cvifIdInput"
+        name="cvifIdInput"
+        placeholder="Search"
+        value="{!v.cvifId}"
+      />
+    </div>
+    <div class="filter-columns without-label">
+      <label>Parent Account</label>
+      <c:CC_CustomLookupInput
+        placeholder="Search"
+        requiredInput="false"
+        SearchKeyWord="{!v.searchparentAccountName}"
+        functionality="AccountFilter:ParentAccountName"
+      />
+    </div>
+    <div class="filter-columns without-label">
+      <label>Parent CVIF ID</label>
+      <lightning:input
+        aura:id="cvifIdInput"
+        name="cvifIdInput"
+        placeholder="Search"
+        value="{!v.parentCvifId}"
+      />
+    </div>
+    <div class="filter-columns without-label">
+      <label>Account Owner</label>
+      <lightning:input
+        aura:id="accountOwner"
+        name="accountOwner"
+        placeholder="Search"
+        value="{!v.accountOwner}"
+      />
+    </div>
+    <div class="filter-columns without-label">
+      <label>Sales Rep Region</label>
+      <lightning:select name="searchRegion" value="{!v.searchRegion}">
+        <option value="">Select Region</option>
+        <aura:iteration items="{!v.salesRepRegions}" var="item">
+          <option text="{!item.label}" value="{!item.value}" />
+        </aura:iteration>
+      </lightning:select>
+    </div>
+    <div class="filter-columns without-label">
+      <label>Type</label>
+      <lightning:select name="accountType" value="{!v.accountType}">
+        <option value="">Select Type</option>
+        <aura:iteration items="{!v.accountTypes}" var="item">
+          <option text="{!item.label}" value="{!item.value}" />
+        </aura:iteration>
+      </lightning:select>
+    </div>
+    <div class="text-right filter-apply-clear-button">
+      <span class="clear-apply-btn">
+        <lightning:button
+          class="pull-left max-w-100 slds-button_neutral slds-button_destructive"
+          label="Apply"
+          variant="brand"
+          onclick="{! c.handleApply}"
+        />
+        <lightning:button
+          class="pull-left max-w-100 slds-button_neutral"
+          label="Clear All"
+          onclick="{! c.handleClearAll}"
+        />
+      </span>
+    </div>
+  </div>
+</aura:component>

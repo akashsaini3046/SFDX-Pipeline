@@ -1,0 +1,103 @@
+<!--
+* Name: Notes 
+* Purpose: Lightning Component which shows notes on summary screen
+* Author: Nagarro
+* Created Date: 08-Jan-2019
+* Modification History
+*  Modification #   Story/Defect#      Modified By     Date   Description
+-->
+<aura:component
+  implements="force:hasRecordId,flexipage:availableForAllPageTypes"
+  access="global"
+  controller="ADNotesController"
+>
+  <aura:attribute name="recordId" type="Id" />
+  <aura:attribute name="notesControllerObj" type="ADNotesController" />
+  <aura:handler name="init" value="{!this}" action="{!c.getAllNotes}" />
+  <aura:attribute name="listNoteIdAndDescription" type="List" />
+  <aura:attribute name="listNoteIdAndParentObjectName" type="List" />
+  <aura:attribute name="listNoteIdAndParentRecordName" type="List" />
+  <aura:attribute name="strCurrentYear" type="String" />
+  <aura:attribute
+    name="strSelectedYear"
+    type="String"
+    description="Used to store the year value selected"
+  />
+  <aura:handler
+    event="c:AD_EVTMasterFilter"
+    action="{!c.handleMasterFilterEvent}"
+  />
+
+  <aura:dependency resource="markup://c:AllNotes" />
+  <div style="height: 350px">
+    <p class="slds-truncate slds-m-bottom_x-small" id="noteHeading">
+      Notes ({!v.notesControllerObj.totalNotesCount})
+    </p>
+    <div style="height: 315px">
+      <aura:iteration
+        items="{!v.notesControllerObj.notesList}"
+        var="notesObj"
+        end="3"
+      >
+        <div>
+          <div>
+            <div class="slds-float_left titleWidth">
+              <p class="fontBold slds-truncate">
+                <span>{!notesObj.Title}</span>
+              </p>
+            </div>
+            <div class="slds-float_right">
+              <p class="slds">
+                <lightning:formattedDateTime
+                  aura:id="dt"
+                  value="{!notesObj.CreatedDate}"
+                  month="numeric"
+                  day="numeric"
+                  year="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                  hour12="true"
+                  timeZone="{!$Locale.timezone}"
+                />
+              </p>
+            </div>
+          </div>
+
+          <br />
+          <p class="slds" id="blueFontColourSpan">
+            by <span>{!notesObj.CreatedBy.Name}</span>
+          </p>
+          <aura:iteration
+            items="{!v.listNoteIdAndDescription}"
+            var="obj"
+            indexVar="key"
+          >
+            <aura:if isTrue="{!notesObj.Id==obj.key}">
+              <p
+                class="slds slds-truncate uiOutputRichText descriptionHeight"
+                aura:id="decription"
+              >
+                <aura:unescapedHtml value="{!obj.value}" />
+              </p>
+            </aura:if>
+          </aura:iteration>
+          <br />
+        </div>
+      </aura:iteration>
+    </div>
+    <div>
+      <aura:if isTrue="{!not(empty(v.notesControllerObj.notesList))}">
+        <a
+          href="javascript:void(0)"
+          onclick="{!c.displayAllNotes}"
+          id="blueFontColour"
+          class="boldFont"
+        >
+          {!$Label.c.AD_LABEL_VIEW_ALL_NOTES}
+        </a>
+      </aura:if>
+    </div>
+  </div>
+
+  <div aura:id="AllNotesModalDialog" />
+</aura:component>

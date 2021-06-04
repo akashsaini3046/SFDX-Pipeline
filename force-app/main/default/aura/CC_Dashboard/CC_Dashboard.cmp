@@ -1,0 +1,20 @@
+<aura:component
+  implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute
+    name="DisplayComponent"
+    type="String"
+    default="c:CC_UnderMaintenance"
+  />
+  <aura:attribute
+    name="componentName"
+    type="String"
+    default="CC_UnderMaintenance"
+  />
+  <aura:registerEvent name="highlightMenuOption" type="c:CC_HighlightedMenu" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler event="c:CC_HomeScreenEvent" action="{!c.changeHomeScreen}" />
+
+  <div aura:id="displayScreen">{!v.body}</div>
+</aura:component>
